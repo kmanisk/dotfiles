@@ -1,0 +1,125 @@
+// Zed settings //
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  //tab width
+  "tabs": {
+    // "file_icons": true,
+    "git_status": true,
+  },
+  "tab_bar": {
+    "show_nav_history_buttons": false,
+  },
+  //terminal
+  "terminal": {
+    "copy_on_select": true,
+    "default_width": 187,
+    "line_height": {
+      "custom": 1.0
+    },
+    "shell": "system"
+  },
+  //code formatter
+  "format_on_save": "on",
+  "formatter": {
+    "language_server": {
+      "name": "prettier"
+    }
+  },
+  //toolbar
+  "toolbar": {
+    "breadcrumbs": false,
+    "quick_actions": false
+  },
+  "when_closing_with_no_tabs": "keep_window_open",
+  "autosave": "on_focus_change",
+  "autosave_delay": 1500,
+  "autosave_on_focus_change": true,
+  "autosave_on_window_change": true,
+  "autosave_on_build": true,
+  "autosave_on_build_delay": 1500,
+  "autosave_on_build_events": [
+    "build",
+    "run",
+    "debug"
+  ],
+  "autosave_on_build_events_delay": 1500,
+  "vim": {
+    "use_system_clipboard": "on_yank"
+  },
+  "vim_mode": true,
+  "ui_font_size": 18,
+  "buffer_font_size": 18,
+  "buffer_font_features": {
+    "liga": true
+  },
+  "theme": {
+    "mode": "system",
+    "light": "One Light",
+    "dark": "Github Dark Tritanopia"
+  },
+  "relative_line_numbers": true,
+  "buffer_font_family": "JetBrains Mono NL",
+  "scrollbar": {
+    "show": "never"
+  },
+  // Indentation, rainbow indentation
+  "indent_guides": {
+    "enabled": true,
+    "coloring": "indent_aware"
+  },
+  "inlay_hints": {
+    "enabled": true
+  }, // File scan exclusions, hide on the file explorer and search
+  "file_scan_exclusions": [
+    "**/.git",
+    "**/.svn",
+    "**/.hg",
+    "**/CVS",
+    "**/.DS_Store",
+    "**/Thumbs.db",
+    "**/.classpath",
+    "**/.settings",
+    // above is default from Zed
+    "**/out",
+    "**/dist",
+    "**/.husky",
+    "**/.turbo",
+    "**/.vscode-test",
+    "**/.vscode",
+    "**/.next",
+    "**/.storybook",
+    "**/.tap",
+    "**/.nyc_output",
+    "**/report",
+    "**/node_modules"
+  ],
+  // Turn off telemetry
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false
+  },
+  // Move all panel to the right
+  "project_panel": {
+    "button": true,
+    "dock": "right",
+    "git_status": true
+  },
+  "outline_panel": {
+    "dock": "right"
+  },
+  "collaboration_panel": {
+    "dock": "left"
+  },
+  // Move some unnecessary panels to the left
+  "notification_panel": {
+    "dock": "left"
+  },
+  "chat_panel": {
+    "dock": "left"
+  }
+}

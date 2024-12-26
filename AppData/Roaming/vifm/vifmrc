@@ -287,6 +287,7 @@ nnoremap <space>c :change<cr>
 nnoremap <space>nf :mkcd<space>
 nnoremap <space>nd :touch<space>
 nnoremap <space> <nop> 
+nnoremap <space>e :!explorer.exe . <cr>
 
 " map za to show hidden files to .
 nnoremap . za
