@@ -34,3 +34,4 @@ Write-Host "Installing tools via Chocolatey..."
 choco install vscodium vscode neovim zoxide neovide rust ueli starship fastfetch make lsd bat lazygit grep greenshot -y
 Write-Host "All packages installed successfully!"
 
+#added via edit
