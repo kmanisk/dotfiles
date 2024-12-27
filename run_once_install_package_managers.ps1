@@ -46,4 +46,22 @@ choco install autohotkey vscodium vscode neovim zoxide ripgrep neovide rust star
 
 Write-Host "All package managers and tools installed successfully!"
 
-#checking to do winget
+# Check if winget is installed
+try {
+	$wingetVersion = winget --version
+	Write-Host "winget is already installed. Version: $wingetVersion"
+}
+catch {
+	Write-Host "winget is not installed. Installing winget..."
+
+	# Install App Installer from Microsoft Store (if not installed)
+	$appInstaller = Get-AppxPackage -Name "*AppInstaller*"
+	if ($appInstaller -eq $null) {
+		Write-Host "App Installer not found. Installing from Microsoft Store..."
+		# Open Microsoft Store for App Installer
+		Start-Process "ms-windows-store://pdp/?productid=9NBLGGH42THS"
+	}
+	else {
+		Write-Host "App Installer already installed."
+	}
+}
