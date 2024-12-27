@@ -21,7 +21,8 @@ scoopsetup
 
 # Install tools via Scoop
 Write-Host "Installing tools via Scoop..."
-scoop install zed cmake 7zip vifm gcc jetbrainsmono-nf-mono innounp winaero-tweaker chezmoi
+scoop install cmake 7zip vifm gcc jetbrainsmono-nf-mono innounp winaero-tweaker chezmoi
+scoop install versions/zed-nightly
 
 # Check if Chocolatey is installed, if not install it
 if (-not (Get-Command choco -ErrorAction SilentlyContinue)) {
@@ -47,21 +48,20 @@ choco install autohotkey vscodium vscode neovim zoxide ripgrep neovide rust star
 Write-Host "All package managers and tools installed successfully!"
 
 # Check if winget is installed
-try {
-	$wingetVersion = winget --version
-	Write-Host "winget is already installed. Version: $wingetVersion"
+function Install-Winget {
+	if (!(Get-Command winget -ErrorAction SilentlyContinue)) {
+		Write-Output "winget not found. Installing winget..."
+		if ([System.Environment]::OSVersion.Version -ge [Version]"10.0.19041") {
+			Start-Process "ms-windows-store://pdp/?productid=9NBLGGH4NNS1" -NoNewWindow
+			Write-Output "The Microsoft Store is opening. Please install the 'App Installer' package to get winget."
+		}
+		else {
+			Write-Output "Your Windows version does not support winget. Please upgrade to Windows 10 2004 or later."
+		}
+	}
+ else {
+		Write-Output "winget is already installed."
+	}
 }
-catch {
-	Write-Host "winget is not installed. Installing winget..."
 
-	# Install App Installer from Microsoft Store (if not installed)
-	$appInstaller = Get-AppxPackage -Name "*AppInstaller*"
-	if ($appInstaller -eq $null) {
-		Write-Host "App Installer not found. Installing from Microsoft Store..."
-		# Open Microsoft Store for App Installer
-		Start-Process "ms-windows-store://pdp/?productid=9NBLGGH42THS"
-	}
-	else {
-		Write-Host "App Installer already installed."
-	}
-}
+Install-Winget
