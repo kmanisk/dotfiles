@@ -67,18 +67,18 @@ function startup () {
     Write-Host "Startup function completed."
 }
 startup
-function prompt-user {
-    $response = Read-Host "Do you want to proceed terminal and powershell 7? (yes/no)"
-    if ($response -eq "yes") {
-        Write-Host "User chose to proceed with the task."
-        choco install powershell-core microsoft-windows-terminal
-        copy-autohotkey-scripts
-    }
-    else {
-        Write-Host "User chose not to proceed with the task."
-    }
-}
-prompt-user
+# function prompt-user {
+#     $response = Read-Host "Do you want to proceed terminal and powershell 7? (yes/no)"
+#     if ($response -eq "yes") {
+#         Write-Host "User chose to proceed with the task."
+#         choco install powershell-core microsoft-windows-terminal
+#         copy-autohotkey-scripts
+#     }
+#     else {
+#         Write-Host "User chose not to proceed with the task."
+#     }
+# }
+# prompt-user
 
 
 Write-Host "run_install_windows_packs.ps1 ran hhere old one" -ForegroundColor Green
