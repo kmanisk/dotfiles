@@ -27,9 +27,11 @@ function osd-layout {
     Write-Host "Files copied successfully to the target locations."
 }
 osd-layout
+
 function copy-autohotkey-scripts {
     $sourcePath = "$HOME\.local\share\chezmoi\appdata\local\autohotkey"
     $startupFolder = Join-Path $env:APPDATA "Microsoft\Windows\Start Menu\Programs\Startup"
+    $ahkPath = "C:\Program Files\AutoHotkey\AutoHotkey.exe"  # Update the path if AutoHotkey is installed elsewhere
 
     # Ensure the source directory exists
     if (Test-Path $sourcePath) {
@@ -39,11 +41,9 @@ function copy-autohotkey-scripts {
         $scripts = Get-ChildItem -Path $sourcePath -Filter *.ahk
         foreach ($script in $scripts) {
             Write-Host "Running script: $($script.FullName)"
+            # Run each script using AutoHotkey
+            Start-Process $ahkPath -ArgumentList $script.FullName
         }
-        Set-Location -Path $sourcePath
-        ArrowKeysMapping.ahk
-        AutoCorrect.ahk
-
 
         Write-Host "Copying AutoHotkey scripts from $sourcePath to $startupFolder..."
         Copy-Item -Path "$sourcePath\*" -Destination $startupFolder -Recurse -Force
