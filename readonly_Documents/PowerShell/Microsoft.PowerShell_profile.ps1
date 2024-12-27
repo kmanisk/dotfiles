@@ -9,6 +9,22 @@ $env:EDITOR = "nvim"
 function q{exit}
 function stat{chezmoi status}
 
+function size {
+param (
+        [string]$folderPath
+    )
+
+    $folderSize = Get-ChildItem -Path $folderPath -Recurse | Measure-Object -Property Length -Sum
+    $folderSizeInMB = [math]::round($folderSize.Sum / 1MB, 2)
+
+    if ($folderSizeInMB -lt 1) {
+        $folderSizeInKB = [math]::round($folderSize.Sum / 1KB, 2)
+        return "Size : $folderSizeInKB KB"
+    } else {
+        return "$Size : $folderSizeInMB MB"
+    }
+}
+
 function madd {
     $modifiedFiles = chezmoi status | Where-Object { $_ -match 'MM' }
     foreach ($file in $modifiedFiles) {
