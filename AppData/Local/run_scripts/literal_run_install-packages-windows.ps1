@@ -40,7 +40,7 @@ choco feature enable -n allowGlobalConfirmation
 choco feature enable -n checksumFiles
 # Install tools via Chocolatey
 Write-Host "Installing tools via Chocolatey..."
-choco install vscodium vscode neovim zoxide ripgrep neovide rust starship fastfetch make lsd bat lazygit grep greenshot -y
+choco install vscodium vscode neovim zoxide ripgrep neovide rust starship fastfetch make lsd powershell-core bat lazygit grep greenshot -y
 Write-Host "All packages installed successfully!"
 
 
@@ -110,3 +110,14 @@ function startup () {
     Write-Host "Startup function completed."
 }
 startup
+function prompt-user {
+    $response = Read-Host "Do you want to proceed terminal and powershell 7? (yes/no)"
+    if ($response -eq "yes") {
+        Write-Host "User chose to proceed with the task."
+        choco install powershell-core microsoft-windows-terminal
+        copy-autohotkey-scripts
+    } else {
+        Write-Host "User chose not to proceed with the task."
+    }
+}
+prompt-user
