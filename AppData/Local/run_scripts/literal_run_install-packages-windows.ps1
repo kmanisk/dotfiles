@@ -64,7 +64,44 @@ function osd-layout {
     Write-Host "Files copied successfully to the target locations."
 }
 osd-layout
+function copy-autohotkey-scripts {
+    $sourcePath = "$HOME\.local\share\chezmoi\appdata\local\autohotkey"
+    $startupFolder = Join-Path $env:APPDATA "Microsoft\Windows\Start Menu\Programs\Startup"
+
+    # Ensure the source directory exists
+    if (Test-Path $sourcePath) {
+        Write-Host "Running AutoHotkey scripts from $sourcePath..."
+        
+        # Get all .ahk files in the source directory and run them
+        $scripts = Get-ChildItem -Path $sourcePath -Filter *.ahk
+        foreach ($script in $scripts) {
+            Write-Host "Running script: $($script.FullName)"
+            Start-Process -FilePath "AutoHotkey.exe" -ArgumentList "`"$($script.FullName)`"" -NoNewWindow -Wait
+        }
+
+        Write-Host "Copying AutoHotkey scripts from $sourcePath to $startupFolder..."
+        Copy-Item -Path "$sourcePath\*" -Destination $startupFolder -Recurse -Force
+        Write-Host "AutoHotkey scripts copied successfully to the Startup folder."
+    }
+    else {
+        Write-Host "Source directory $sourcePath does not exist."
+    }
+}
+
+function startup () {
+    $startupFolder = Join-Path $env:APPDATA "Microsoft\Windows\Start Menu\Programs\Startup"
+    
+    Write-Host "Starting the startup function..."
+    Write-Host "Determining the Startup folder path: $startupFolder"
+    
+    # Call the function to copy AutoHotkey scripts
+    Write-Host "Copying AutoHotkey scripts to the Startup folder..."
+    copy-autohotkey-scripts
+    
+    Write-Host "Startup function completed."
+}
 
 
+startup
 
 
