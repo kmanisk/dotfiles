@@ -28,7 +28,7 @@ else {
 # Configure Chocolatey settings
 Write-Host "Configuring Chocolatey settings..." -ForegroundColor Yellow
 choco feature enable -n allowGlobalConfirmation
-choco feature enable -n checksumFiles
+choco feature enable -n allowemptychecksums
 # Install tools via Chocolatey
 Write-Host "Installing tools via Chocolatey..."
 choco install vscodium vscode neovim zoxide neovide rust ueli starship fastfetch make lsd bat lazygit grep greenshot -y
