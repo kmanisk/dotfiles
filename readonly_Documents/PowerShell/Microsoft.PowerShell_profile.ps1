@@ -57,8 +57,11 @@ function dp {
     Set-Location -path "$HOME"
 }
 function dall {
+    Write-Host "Changes Done..."
     stat
+Write-Host "\n Adding all the changes to dot repo"
     madd
+Write-Host "\n Pusing Everything"
     dp 
     }
     
