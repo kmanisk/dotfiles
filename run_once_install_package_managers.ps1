@@ -1,20 +1,21 @@
 Write-Host "Starting package manager installation..."
 # Check if Scoop is installed, if not install it
 if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
-    Write-Host "Scoop is not installed. Installing Scoop..."
-    Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
-    iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
-} else {
-    Write-Host "Scoop is already installed."
+	Write-Host "Scoop is not installed. Installing Scoop..."
+	Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
+	iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
+}
+else {
+	Write-Host "Scoop is already installed."
 }
 
 function scoopsetup() {
-    scoop bucket add main https://github.com/ScoopInstaller/Main.git
-    scoop bucket add extras https://github.com/ScoopInstaller/Extras
-    scoop bucket add versions https://github.com/ScoopInstaller/Versions
-    scoop bucket add nerd-fonts https://github.com/matthewjberger/scoop-nerd-fonts
-    scoop bucket add shemnei https://github.com/Shemnei/scoop-bucket
-    scoop bucket add volllly https://github.com/volllly/scoop-bucket
+	scoop bucket add main https://github.com/ScoopInstaller/Main.git
+	scoop bucket add extras https://github.com/ScoopInstaller/Extras
+	scoop bucket add versions https://github.com/ScoopInstaller/Versions
+	scoop bucket add nerd-fonts https://github.com/matthewjberger/scoop-nerd-fonts
+	scoop bucket add shemnei https://github.com/Shemnei/scoop-bucket
+	scoop bucket add volllly https://github.com/volllly/scoop-bucket
 }
 scoopsetup
 
@@ -24,13 +25,14 @@ scoop install zed cmake 7zip vifm gcc jetbrainsmono-nf-mono innounp winaero-twea
 
 # Check if Chocolatey is installed, if not install it
 if (-not (Get-Command choco -ErrorAction SilentlyContinue)) {
-    Write-Host "Chocolatey is not installed. Installing Chocolatey..."
-    Set-ExecutionPolicy Bypass -Scope Process -Force
-    Invoke-WebRequest https://community.chocolatey.org/install.ps1 -OutFile install.ps1
-    .\install.ps1
-    Remove-Item -Force install.ps1
-} else {
-    Write-Host "Chocolatey is already installed."
+	Write-Host "Chocolatey is not installed. Installing Chocolatey..."
+	Set-ExecutionPolicy Bypass -Scope Process -Force
+	Invoke-WebRequest https://community.chocolatey.org/install.ps1 -OutFile install.ps1
+	.\install.ps1
+	Remove-Item -Force install.ps1
+}
+else {
+	Write-Host "Chocolatey is already installed."
 }
 
 # Configure Chocolatey settings
@@ -43,3 +45,5 @@ Write-Host "Installing tools via Chocolatey..."
 choco install autohotkey vscodium vscode neovim zoxide ripgrep neovide rust starship fastfetch make lsd powershell-core bat lazygit grep greenshot -y
 
 Write-Host "All package managers and tools installed successfully!"
+
+#checking to do winget
