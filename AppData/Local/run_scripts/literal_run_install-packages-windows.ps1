@@ -10,6 +10,15 @@ else {
     Write-Host "Scoop is already installed."
 }
 
+function scoopsetup() {
+    scoop bucket add main https://github.com/ScoopInstaller/Main.git
+    scoop bucket add extras https://github.com/ScoopInstaller/Extras
+    scoop bucket add versions https://github.com/ScoopInstaller/Versions
+    scoop bucket add nerd-fonts https://github.com/matthewjberger/scoop-nerd-fonts
+    scoop bucket add shemnei https://github.com/Shemnei/scoop-bucket
+    scoop bucket add volllly https://github.com/volllly/scoop-bucket
+}
+scoopsetup
 # Install tools via Scoop
 Write-Host "Installing tools via Scoop..."
 scoop install ripgrep zed cmake 7zip vifm gcc jetbrainsmono-nf-mono innounp winaero-tweaker chezmoi
@@ -100,8 +109,4 @@ function startup () {
     
     Write-Host "Startup function completed."
 }
-
-
 startup
-
-
