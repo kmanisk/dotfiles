@@ -124,4 +124,4 @@
 # prompt-user
 #
 #
-Write-Host "run_install_windows_packs.ps1" -ForegroundColor Green
+Write-Host "run_install_windows_packs.ps1 ran hhere old one" -ForegroundColor Green
