@@ -58,7 +58,7 @@ function dp {
 }
 function dall {
     Write-Host "Changes Done..."
-    stat
+    st
     Write-Host ""  # Add an empty line for new line
     Write-Host "Adding all the changes to dot repo"
     madd
@@ -69,7 +69,7 @@ function dall {
 }
 function dallm {
     Write-Host "Changes Done..."
-    stat
+    st
     Write-Host ""  # Add an empty line for new line
     Write-Host "Adding all the changes to dot repo"
     madd
