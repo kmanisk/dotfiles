@@ -116,7 +116,8 @@ function prompt-user {
         Write-Host "User chose to proceed with the task."
         choco install powershell-core microsoft-windows-terminal
         copy-autohotkey-scripts
-    } else {
+    }
+    else {
         Write-Host "User chose not to proceed with the task."
     }
 }

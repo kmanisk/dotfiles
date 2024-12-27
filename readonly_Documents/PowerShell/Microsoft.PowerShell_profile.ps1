@@ -9,6 +9,7 @@ $env:EDITOR = "nvim"
 function q{exit}
 function st{chezmoi status}
 
+
 function size {
 param (
         [string]$folderPath
