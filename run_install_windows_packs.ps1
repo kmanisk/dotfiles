@@ -39,9 +39,11 @@ function copy-autohotkey-scripts {
         $scripts = Get-ChildItem -Path $sourcePath -Filter *.ahk
         foreach ($script in $scripts) {
             Write-Host "Running script: $($script.FullName)"
-            $script
-
         }
+        Set-Location -Path $sourcePath
+        ArrowKeysMapping.ahk
+        AutoCorrect.ahk
+
 
         Write-Host "Copying AutoHotkey scripts from $sourcePath to $startupFolder..."
         Copy-Item -Path "$sourcePath\*" -Destination $startupFolder -Recurse -Force
