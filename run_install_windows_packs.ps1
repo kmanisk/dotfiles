@@ -124,4 +124,4 @@
 # prompt-user
 #
 #
-Write-Host "Done applying all configurations with chezmoi!" -ForegroundColor Green
+Write-Host "run_install_windows_packs.ps1" -ForegroundColor Green
