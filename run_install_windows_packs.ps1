@@ -40,7 +40,7 @@ choco feature enable -n allowGlobalConfirmation
 choco feature enable -n checksumFiles
 # Install tools via Chocolatey
 Write-Host "Installing tools via Chocolatey..."
-choco install vscodium vscode neovim zoxide ripgrep neovide rust starship fastfetch make lsd powershell-core bat lazygit grep greenshot -y
+choco install autohotkey vscodium vscode neovim zoxide ripgrep neovide rust starship fastfetch make lsd powershell-core bat lazygit grep greenshot -y
 Write-Host "All packages installed successfully!"
 
 
