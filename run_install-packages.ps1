@@ -7,6 +7,7 @@ if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
     Add-AppxPackage -Path "Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle"
     Remove-Item -Force "Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle"
 }
+
 # Check if Chocolatey is installed, if not install it
 if (-not (Get-Command choco -ErrorAction SilentlyContinue)) {
     Write-Host "Chocolatey is not installed. Installing Chocolatey..."
