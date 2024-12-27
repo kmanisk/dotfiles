@@ -7,6 +7,22 @@ function ff($name) {
 }
 $env:EDITOR = "nvim"
 function q{exit}
+function stat{chezmoi status}
+
+function madd {
+    $modifiedFiles = chezmoi status | Where-Object { $_ -match 'MM' }
+    foreach ($file in $modifiedFiles) {
+        # Remove "MM" and get the absolute path
+        $filePath = $file.Trim() -replace '^MM\s*', ''
+        $absolutePath = Join-Path $env:USERPROFILE $filePath
+        
+        # Output the absolute path
+        Write-Host $absolutePath
+        
+        # Add the file to chezmoi
+        chezmoi add $absolutePath
+    }
+}
 function dpush {
     Write-Host "Starting automation"
     Set-Location -Path "$HOME\.local\share\chezmoi"
