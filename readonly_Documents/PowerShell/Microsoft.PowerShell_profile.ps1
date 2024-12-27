@@ -48,6 +48,14 @@ function dpush {
     git push -u origin master
     Set-Location -path "$HOME"
 }
+function dp {
+    Write-Host "Starting automation"
+    Set-Location -Path "$HOME\.local\share\chezmoi"
+    git add .
+    git commit -m "added quick"
+    git push -u origin master
+    Set-Location -path "$HOME"
+}
 # Enhanced PowerShell Experience
 # Enhanced PSReadLine Configuration
 #$PSReadLineOptions = @{
