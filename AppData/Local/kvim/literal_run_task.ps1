@@ -3,10 +3,10 @@ Write-Host "Starting installation of package managers..."
 # Check if Winget is installed, if not install it
 if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
     Write-Host "Winget is not installed. Installing Winget..."
-    # Winget is part of App Installer, so we install it via Microsoft Store if not already present
-    Add-AppxPackage -Path "https://aka.ms/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.appx" -Force
+    Invoke-WebRequest -Uri "https://github.com/microsoft/winget-cli/releases/download/v1.9.25200/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle" -OutFile "Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle"
+    Add-AppxPackage -Path "Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle"
+    Remove-Item -Force "Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle"
 }
-
 # Check if Chocolatey is installed, if not install it
 if (-not (Get-Command choco -ErrorAction SilentlyContinue)) {
     Write-Host "Chocolatey is not installed. Installing Chocolatey..."
