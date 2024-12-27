@@ -7,7 +7,7 @@ function ff($name) {
 }
 $env:EDITOR = "nvim"
 function q{exit}
-function stat{chezmoi status}
+function st{chezmoi status}
 
 function size {
 param (
@@ -59,12 +59,14 @@ function dp {
 function dall {
     Write-Host "Changes Done..."
     stat
-Write-Host "\n Adding all the changes to dot repo"
+    Write-Host ""  # Add an empty line for new line
+    Write-Host "Adding all the changes to dot repo"
     madd
-Write-Host "\n Pusing Everything"
-    dp 
-    }
-    
+    Write-Host ""  # Add an empty line for new line
+    Write-Host "Pushing Everything"
+    dp
+    Write-Host ""  # Add an empty line for new line
+}
 # Enhanced PowerShell Experience
 # Enhanced PSReadLine Configuration
 #$PSReadLineOptions = @{
