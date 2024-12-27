@@ -111,6 +111,7 @@ mark e E:/Downloads/
 mark v ~/AppData/Roaming/VSCodium/User/
 mark d ~/Downloads/
 mark D ~/Documents/
+mark g ~/.local/share/chezmoi/
 
 
 
@@ -288,7 +289,7 @@ nnoremap <space>nf :mkcd<space>
 nnoremap <space>nd :touch<space>
 nnoremap <space> <nop> 
 nnoremap <space>e :!explorer.exe . <cr>
-
+nnoremap <space>g :!powershell -Command "Start-Process wt.exe -ArgumentList '-d', (Get-Location).Path"<cr>
 " map za to show hidden files to .
 nnoremap . za
 
