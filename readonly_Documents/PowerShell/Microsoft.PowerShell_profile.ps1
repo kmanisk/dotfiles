@@ -67,6 +67,17 @@ function dall {
     dp
     Write-Host ""  # Add an empty line for new line
 }
+function dallm {
+    Write-Host "Changes Done..."
+    stat
+    Write-Host ""  # Add an empty line for new line
+    Write-Host "Adding all the changes to dot repo"
+    madd
+    Write-Host ""  # Add an empty line for new line
+    Write-Host "Pushing Everything"
+    dpush
+    Write-Host ""  # Add an empty line for new line
+}
 # Enhanced PowerShell Experience
 # Enhanced PSReadLine Configuration
 #$PSReadLineOptions = @{
