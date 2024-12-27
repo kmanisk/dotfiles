@@ -56,6 +56,12 @@ function dp {
     git push -u origin master
     Set-Location -path "$HOME"
 }
+function dall {
+    stat
+    madd
+    dp 
+    }
+    
 # Enhanced PowerShell Experience
 # Enhanced PSReadLine Configuration
 #$PSReadLineOptions = @{
