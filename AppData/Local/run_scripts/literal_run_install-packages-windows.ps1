@@ -21,7 +21,7 @@ function scoopsetup() {
 scoopsetup
 # Install tools via Scoop
 Write-Host "Installing tools via Scoop..."
-scoop install ripgrep zed cmake 7zip vifm gcc jetbrainsmono-nf-mono innounp winaero-tweaker chezmoi
+scoop install zed cmake 7zip vifm gcc jetbrainsmono-nf-mono innounp winaero-tweaker chezmoi
 
 # Check if Chocolatey is installed, if not install it
 if (-not (Get-Command choco -ErrorAction SilentlyContinue)) {
@@ -40,7 +40,7 @@ choco feature enable -n allowGlobalConfirmation
 choco feature enable -n checksumFiles
 # Install tools via Chocolatey
 Write-Host "Installing tools via Chocolatey..."
-choco install vscodium vscode neovim zoxide neovide rust ueli starship fastfetch make lsd bat lazygit grep greenshot -y
+choco install vscodium vscode neovim zoxide ripgrep neovide rust starship fastfetch make lsd bat lazygit grep greenshot -y
 Write-Host "All packages installed successfully!"
 
 
