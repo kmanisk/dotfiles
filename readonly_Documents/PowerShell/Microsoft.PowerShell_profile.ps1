@@ -7,7 +7,15 @@ function ff($name) {
 }
 $env:EDITOR = "nvim"
 function q{exit}
-
+function dpush {
+    Write-Host "Starting automation"
+    Set-Location -Path "$HOME\.local\share\chezmoi"
+    git add .
+    $userinp = Read-Host -Prompt "Enter commit message"
+    git commit -m "$userinp"
+    git push -u origin master
+    Set-Location -path "$HOME"
+}
 # Enhanced PowerShell Experience
 # Enhanced PSReadLine Configuration
 #$PSReadLineOptions = @{

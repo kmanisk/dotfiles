@@ -215,7 +215,6 @@
 	"prettier.trailingComma": "all",
 	"cody.commandCodeLenses": true,
 	"workbench.productIconTheme": "jetbrains-idea-product-icon-theme",
-	"window.menuBarVisibility": "compact",
 	"[java]": {
 		"editor.defaultFormatter": "redhat.java"
 	},
@@ -228,4 +227,5 @@
 	"editor.lineDecorationsWidth": 10,
 	"editor.folding": false,
 	"editor.glyphMargin": false,
+	"window.menuBarVisibility": "compact",
 }

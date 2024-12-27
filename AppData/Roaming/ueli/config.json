@@ -793,6 +793,18 @@
 					"needsUserConfirmationBeforeExecution": false,
 					"tags": [],
 					"type": "URL"
+				},
+				{
+					"description": "",
+					"executionArgument": "https://github.com/",
+					"icon": {
+						"parameter": "",
+						"type": "URL"
+					},
+					"name": "github",
+					"needsUserConfirmationBeforeExecution": false,
+					"tags": [],
+					"type": "URL"
 				}
 			]
 		},
