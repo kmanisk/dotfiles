@@ -47,7 +47,7 @@ function dpush {
     $userinp = Read-Host -Prompt "Enter commit message"
     git commit -m "$userinp"
     git push -u origin master
-    Set-Location -path "$HOME"
+    #Set-Location -path "$HOME"
 }
 function dp {
     Write-Host "Starting automation"
@@ -55,7 +55,7 @@ function dp {
     git add .
     git commit -m "added quick"
     git push -u origin master
-    Set-Location -path "$HOME"
+    #Set-Location -path "$HOME"
 }
 function dall {
     Write-Host "Changes Done..."
