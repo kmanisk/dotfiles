@@ -8,6 +8,7 @@ function ff($name) {
 $env:EDITOR = "nvim"
 function q{exit}
 function st{chezmoi status}
+function chm{ chezmoi managed}
 
 function dfor {
     $deletedFiles = chezmoi status | Where-Object { $_ -match '^DA' }
