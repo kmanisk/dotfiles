@@ -73,17 +73,47 @@ Install-Scoop
 Install-Chocolatey
 Install-Winget
 
+# Function to install packages via Scoop based on a package list file
+function Install-ScoopPackages {
+	param (
+		[string]$packageListFile
+	)
+
+	Write-Host "Installing tools via Scoop from $packageListFile..."
+	Get-Content $packageListFile | ForEach-Object {
+		scoop install $_
+	}
+}
+
+# Function to install packages via Chocolatey based on a package list file
+function Install-ChocoPackages {
+	param (
+		[string]$packageListFile
+	)
+
+	Write-Host "Installing tools via Chocolatey from $packageListFile..."
+	Get-Content $packageListFile | ForEach-Object {
+		choco install $_ -y
+	}
+}
+
+# Example usage
+$installerPath = "$HOME\.local\share\chezmoi\AppData\Local\installer"
+$packageListFile = "$installerPath\scoop.txt"
+Install-ScoopPackages -packageListFile $packageListFile
+
 # Prompt the user to choose the installation type
 $choice = Read-Host "Choose installation type (minimal/full)"
-$installerPath = "c:\Users\Manisk\.local\share\chezmoi\AppData\Local\installer\"
 
 if ($choice -eq "minimal") {
 	$packageListFile = "$installerPath\minimal.txt"
 	Install-ChocoPackages -packageListFile $packageListFile
+	Install-ScoopPackages -packageListFile "$installerPath\scoop.txt"
 }
 elseif ($choice -eq "full") {
 	$packageListFile = "$installerPath\full.txt"
 	Install-ChocoPackages -packageListFile $packageListFile
+	Install-ScoopPackages -packageListFile "$installerPath\scoop.txt"
 }
 else {
 	Write-Host "Invalid choice. Exiting..."
