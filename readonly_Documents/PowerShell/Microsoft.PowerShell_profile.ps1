@@ -67,7 +67,7 @@ function dp {
     Write-Host "Starting automation"
     Set-Location -Path "$HOME\.local\share\chezmoi"
     git add .
-    git commit -m "added quick"
+    git commit -m "added lazyily .files"
     git push -u origin master
     #Set-Location -path "$HOME"
 }
@@ -95,7 +95,7 @@ function dall {
 
 function gall {
     git add .
-    git commit -m "changes Lazyily"
+    git commit -m "for readme file"
     git push -u origin master
 }
 function dallm {
