@@ -113,7 +113,7 @@ if ($choice -eq "minimal") {
 elseif ($choice -eq "full") {
 	$packageListFile = "$installerPath\full.txt"
 	Install-ChocoPackages -packageListFile $packageListFile
-	Install-ScoopPackages -packageListFile "$installerPath\scoop.txt"
+	Install-ScoopPackages -packageListFile "$installerPath\scoop_full.txt"
 }
 else {
 	Write-Host "Invalid choice. Exiting..."
