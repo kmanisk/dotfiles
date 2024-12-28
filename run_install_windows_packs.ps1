@@ -1,4 +1,4 @@
-function osd-layout {
+function Install-OSDLayout {
     # Set location to the source directory
     Set-Location -Path "$HOME\.local\share\chezmoi\appdata\local\OSD"
 
@@ -26,7 +26,7 @@ function osd-layout {
 
     Write-Host "Files copied successfully to the target locations."
 }
-osd-layout
+Install-OSDLayout
 ## Path to the installer file
 $installerPath = "C:\Users\Manisk\AppData\Local\installer\MLWapp2.6.x64.exe"
 
