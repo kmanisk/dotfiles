@@ -1,0 +1,9 @@
+neovim
+ripgrep
+grep
+bat
+make 
+less 
+lazygit
+zoxide
+
