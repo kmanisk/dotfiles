@@ -246,6 +246,26 @@ Set-Alias c vscode.exe
 Set-Alias -Name cpy -Value Set-Clipboard
 Set-Alias -Name dq -Value driverquery
 
+function cpyfile {
+    param (
+        [string]$filePath
+    )
+    
+    Get-Content $filePath | Set-Clipboard
+}
+
+function cpypath {
+    param (
+        [string]$path
+    )
+
+    # Get the full path (directory + file/folder name)
+    $fullPath = (Get-Item $path).FullName
+    
+    # Copy the full path to the clipboard
+    $fullPath | Set-Clipboard
+}
+
 function fst { param($searchString) findstr /i "$searchString" }
 # Git Shortcuts
 function gs { git status }
@@ -335,6 +355,7 @@ function trash($path) {
 function home {cd "C:\Users\Manisk"}
 # Navigation Shortcuts
 function docs { Set-Location -Path $HOME\Documents }
+function doc { Set-Location -Path $HOME\Documents }
 function local {Set-Location -Path $HOME\AppData\Local\}
 function roam{ Set-Location -path $home\appdata\Roaming\}
 function des { Set-Location -Path $HOME\Desktop }
@@ -457,6 +478,10 @@ function which($name) {
 }
 
 Set-Alias -Name np -Value Notepad++.exe
+
+function sed($file, $find, $replace) {
+    (Get-Content $file).replace("$find", $replace) | Set-Content $file
+}
 
 # Define the function to set brightness based on a scale of 1 to 10
 function Set-Brightness {
