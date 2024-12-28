@@ -1,4 +1,5 @@
 Write-Host "Starting package manager installation..."
+
 # Check if Scoop is installed, if not install it
 if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
 	Write-Host "Scoop is not installed. Installing Scoop..."
@@ -20,9 +21,9 @@ function scoopsetup() {
 scoopsetup
 
 # Install tools via Scoop
-Write-Host "Installing tools via Scoop..."
-scoop install cmake 7zip vifm gcc jetbrainsmono-nf-mono innounp winaero-tweaker chezmoi
-scoop install versions/zed-nightly
+# Write-Host "Installing tools via Scoop..."
+# scoop install cmake 7zip vifm gcc jetbrainsmono-nf-mono innounp winaero-tweaker chezmoi
+# scoop install versions/zed-nightly
 
 # Check if Chocolatey is installed, if not install it
 if (-not (Get-Command choco -ErrorAction SilentlyContinue)) {
@@ -41,11 +42,17 @@ Write-Host "Configuring Chocolatey settings..." -ForegroundColor Yellow
 choco feature enable -n allowGlobalConfirmation
 choco feature enable -n checksumFiles
 
-# Install tools via Chocolatey
-Write-Host "Installing tools via Chocolatey..."
-choco install autohotkey vscodium vscode neovim zoxide ripgrep neovide rust starship fastfetch make lsd powershell-core bat lazygit grep greenshot -y
+# Function to install packages via Chocolatey based on a package list file
+function Install-ChocoPackages {
+	param (
+		[string]$packageListFile
+	)
 
-Write-Host "All package managers and tools installed successfully!"
+	Write-Host "Installing tools via Chocolatey from $packageListFile..."
+	Get-Content $packageListFile | ForEach-Object {
+		choco install $_ -y
+	}
+}
 
 # Check if winget is installed
 function Install-Winget {
@@ -65,3 +72,21 @@ function Install-Winget {
 }
 
 Install-Winget
+
+# Prompt the user to choose the installation type
+$choice = Read-Host "Choose installation type (minimal/full)"
+$installerPath = "c:\Users\Manisk\.local\share\chezmoi\AppData\Local\installer\"
+
+if ($choice -eq "minimal") {
+	$packageListFile = "$installerPath\minimal.txt"
+	Install-ChocoPackages -packageListFile $packageListFile
+}
+elseif ($choice -eq "full") {
+	$packageListFile = "$installerPath\full.txt"
+	Install-ChocoPackages -packageListFile $packageListFile
+}
+else {
+	Write-Host "Invalid choice. Exiting..."
+}
+
+Write-Host "All package managers and tools installed successfully!"
