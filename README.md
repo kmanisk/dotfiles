@@ -18,6 +18,7 @@ Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
 iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
 scoop install main/gh
 scoop install main/git
+scoop install main/chezmoi
 ```
 ### Configure Git
 ```bash
