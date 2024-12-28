@@ -13,14 +13,95 @@ function ff($name) {
         Write-Output "$($_.FullName)"
     }
 }
+
+
+#only cd to the dir
+#function fcd {
+#    $dir = Get-ChildItem -Directory | Select-Object -ExpandProperty FullName | fzf --preview 'ls -a {1}' --height 40% --border
+#    if ($dir) {
+#        # Change location in the current session
+#        Set-Location $dir
+#    }
+#}
+
+
+#dynamic can go ~ to home or .. one dir up but closes itself
+# function fzcd {
+#  
+#     # Get current location
+#     $currentDir = Get-Location
+#
+#     # Add a "Go Home" option and "Go Up One Level" option
+#     $directories = @(
+#         "~"  # Go Home
+#         ".." # Go Up One Level
+#         (Get-ChildItem -Directory -Path $currentDir) | Select-Object -ExpandProperty FullName
+#     )
+#
+#     # Use fzf to let the user select a directory
+#     $selectedDir = $directories | fzf --preview 'ls -a {1}' --height 40% --border
+#
+#     # If user selects a directory, change to that directory
+#     if ($selectedDir) {
+#         if ($selectedDir -eq "~") {
+#             # Go to home directory
+#             Set-Location $env:USERPROFILE
+#         }
+#         elseif ($selectedDir -eq "..") {
+#             # Go up one directory
+#             Set-Location (Split-Path $currentDir -Parent)
+#         }
+#         else {
+#             # Change to the selected directory
+#             Set-Location $selectedDir
+#         }
+#     }
+# }
+#
+
+function fcd {
+    # Get current location
+    $currentDir = Get-Location
+
+    # Add a "Go Home" option and "Go Up One Level" option
+    $directories = @(
+        "~"  # Go Home
+        ".." # Go Up One Level
+        "D:\" # D: drive root
+        "E:\" # E: drive root
+        "F:\" # F: drive root
+        "G:\" # G: drive root
+        (Get-ChildItem -Directory -Path $currentDir -Recurse) | Select-Object -ExpandProperty FullName
+    )
+
+    # Use fzf to let the user select a directory
+    $selectedDir = $directories | fzf --preview 'ls -a {1}' --height 40% --border
+
+    # If user selects a directory, change to that directory
+    if ($selectedDir) {
+        if ($selectedDir -eq "~") {
+            # Go to home directory
+            Set-Location $env:USERPROFILE
+        }
+        elseif ($selectedDir -eq "..") {
+            # Go up one directory
+            Set-Location (Split-Path $currentDir -Parent)
+        }
+        else {
+            # Change to the selected directory
+            Set-Location $selectedDir
+        }
+    }
+}
+
 $env:EDITOR = "nvim"
-function q{exit}
-function st{chezmoi status}
-function chm{ chezmoi managed}
+function q { exit }
+function st { chezmoi status }
+function chm { chezmoi managed }
 
 function cadd {
     param (
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [string]$Path
     )
     chezmoi add $Path
@@ -42,7 +123,7 @@ function dfor {
 }
 
 function size {
-param (
+    param (
         [string]$folderPath
     )
 
@@ -52,7 +133,8 @@ param (
     if ($folderSizeInMB -lt 1) {
         $folderSizeInKB = [math]::round($folderSize.Sum / 1KB, 2)
         return "Size : $folderSizeInKB KB"
-    } else {
+    }
+    else {
         return "$Size : $folderSizeInMB MB"
     }
 }
@@ -98,7 +180,7 @@ function dall {
     # Check for 'DA' elements and call dfor if there are any
     $deletedFiles = chezmoi status | Where-Object { $_ -match '^DA' }
     if ($deletedFiles.Count -gt 0) {
-      Write-Host "Deleting any file removed from the Home Directory if any:"
+        Write-Host "Deleting any file removed from the Home Directory if any:"
         dfor
         Write-Host ""  # Add an empty line for new line
     }
@@ -125,7 +207,7 @@ function dallm {
     # Check for 'DA' elements and call dfor if there are any
     $deletedFiles = chezmoi status | Where-Object { $_ -match '^DA' }
     if ($deletedFiles.Count -gt 0) {
-      Write-Host "Deleting any file removed from the Home Directory if any:"
+        Write-Host "Deleting any file removed from the Home Directory if any:"
         dfor
         Write-Host ""  # Add an empty line for new line
     }
@@ -143,8 +225,8 @@ Set-PSReadLineOption -MaximumHistoryCount 10000
 $scriptblock = {
     param($wordToComplete, $commandAst, $cursorPosition)
     $customCompletions = @{
-        'git' = @('status', 'add', 'commit', 'push', 'pull', 'clone', 'checkout')
-        'npm' = @('install', 'start', 'run', 'test', 'build')
+        'git'  = @('status', 'add', 'commit', 'push', 'pull', 'clone', 'checkout')
+        'npm'  = @('install', 'start', 'run', 'test', 'build')
         'deno' = @('run', 'compile', 'bundle', 'test', 'lint', 'fmt', 'cache', 'info', 'doc', 'upgrade')
     }
     
@@ -160,9 +242,9 @@ Register-ArgumentCompleter -Native -CommandName git, npm, deno -ScriptBlock $scr
 $scriptblock = {
     param($wordToComplete, $commandAst, $cursorPosition)
     dotnet complete --position $cursorPosition $commandAst.ToString() |
-        ForEach-Object {
-            [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
-        }
+    ForEach-Object {
+        [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
+    }
 }
 Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock $scriptblock
 
@@ -189,7 +271,7 @@ Set-PSReadLineOption -MaximumHistoryCount 10000
 function Get-PubIP { (Invoke-WebRequest http://ifconfig.me/ip).Content }
 # Set UNIX-like aliases for the admin command, so sudo <command> will run the command with elevated rights.
 Set-Alias -Name su -Value admin
-function rel{
+function rel {
     & $profile
 }
 function unzip ($file) {
@@ -200,7 +282,7 @@ function unzip ($file) {
 
 # Open WinUtil full-release
 function winutil {
-	irm https://christitus.com/win | iex
+    irm https://christitus.com/win | iex
 }
 # Admin Check and Prompt Customization
 $isAdmin = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
@@ -210,9 +292,9 @@ function prompt {
 $adminSuffix = if ($isAdmin) { " [ADMIN]" } else { "" }
 $Host.UI.RawUI.WindowTitle = "PowerShell {0}$adminSuffix" -f $PSVersionTable.PSVersion.ToString()
 
-function local {cd "C:\Users\Manisk\AppData\Local\"}
-function test1 {cd "G:\"}
-function roam {cd "C:\Users\Manisk\AppData\Roaming"}
+function local { cd "C:\Users\Manisk\AppData\Local\" }
+function test1 { cd "G:\" }
+function roam { cd "C:\Users\Manisk\AppData\Roaming" }
 # Quick File Creation
 function nf { param($name) New-Item -ItemType "file" -Path . -Name $name }
 
@@ -229,18 +311,18 @@ function mkcd { param($dir) mkdir $dir -Force; Set-Location $dir }
 Set-Alias -Name ':q' -Value exit
 #function lab {cd "c:\new"}
 Set-PSReadLineOption -EditMode Vi
-function edit {cd "C:\Users\Manisk\AppData\Local\nvim"}
+function edit { cd "C:\Users\Manisk\AppData\Local\nvim" }
 Set-Alias -Name gna -Value Get-NetAdapter
-function spshell {cd "C:\Users\Manisk\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup"}
-function cod {cd "C:\Users\Manisk\Coding\"}
-function cods {cd "C:\Users\Manisk\Coding\"}
+function spshell { cd "C:\Users\Manisk\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup" }
+function cod { cd "C:\Users\Manisk\Coding\" }
+function cods { cd "C:\Users\Manisk\Coding\" }
 # Reload the PowerShell profile
 function reload-profile {
-	& $PROFILE
-	Write-Host "Success!"
+    & $PROFILE
+    Write-Host "Success!"
 }
-function rel{. $profile}
-function rel{& $profile}
+function rel { . $profile }
+function rel { & $profile }
 Set-Alias e explorer.exe
 Set-Alias c vscode.exe
 Set-Alias -Name cpy -Value Set-Clipboard
@@ -254,7 +336,7 @@ function cpyfile {
     Get-Content $filePath | Set-Clipboard
 }
 
-function env { Get-ChildItem Env:}
+function env { Get-ChildItem Env: }
 
 
 
@@ -338,13 +420,13 @@ function fs {
     Select-Object -ExpandProperty Name
 }
 #file manager for console 
-function fm {vifm }
+function fm { vifm }
 Set-Alias recon reload-profile
 
 # Set UNIX-like aliases for the admin command, so sudo <command> will run the command with elevated rights.
 Set-Alias -Name su -Value admin
 
-function npedit {notepad++.exe $PROFILE}
+function npedit { notepad++.exe $PROFILE }
 
 
 function pkill($name) {
@@ -354,7 +436,8 @@ function pkill($name) {
         # Stop the process if found
         Stop-Process -Name $name -Force
         Write-Host "Process '$name' has been terminated."
-    } else {
+    }
+    else {
         # Handle the case when the process is not found
         Write-Host "Process '$name' not found."
     }
@@ -367,9 +450,10 @@ function trash($path) {
         $item = Get-Item $fullPath
 
         if ($item.PSIsContainer) {
-          # Handle directory
+            # Handle directory
             $parentPath = $item.Parent.FullName
-        } else {
+        }
+        else {
             # Handle file
             $parentPath = $item.DirectoryName
         }
@@ -380,26 +464,28 @@ function trash($path) {
         if ($item) {
             $shellItem.InvokeVerb('delete')
             Write-Host "Item '$fullPath' has been moved to the Recycle Bin."
-        } else {
+        }
+        else {
             Write-Host "Error: Could not find the item '$fullPath' to trash."
         }
-    } else {
+    }
+    else {
         Write-Host "Error: Item '$fullPath' does not exist."
     }
 }
-function home {cd "C:\Users\Manisk"}
+function home { cd "C:\Users\Manisk" }
 # Navigation Shortcuts
 function docs { Set-Location -Path $HOME\Documents }
 function doc { Set-Location -Path $HOME\Documents }
-function local {Set-Location -Path $HOME\AppData\Local\}
-function roam{ Set-Location -path $home\appdata\Roaming\}
+function local { Set-Location -Path $HOME\AppData\Local\ }
+function roam { Set-Location -path $home\appdata\Roaming\ }
 function des { Set-Location -Path $HOME\Desktop }
-function dot {Set-Location -Path $Home\.local\share\chezmoi\}
+function dot { Set-Location -Path $Home\.local\share\chezmoi\ }
 
 # Quick Access to Editing the Profile
 function ep { nvim $PROFILE }
-function dotf { cd "G:\dotfiles"}
-function eueli {nvim "C:\Users\Manisk\AppData\Roaming\ueli\config.json"}
+function dotf { cd "G:\dotfiles" }
+function eueli { nvim "C:\Users\Manisk\AppData\Roaming\ueli\config.json" }
 # Simplified Process Management
 function k9 { Stop-Process -Name $args[0] }
 
@@ -420,13 +506,13 @@ function grep($regex, $dir) {
     $input | select-string $regex
 }
 function head {
-  param($Path, $n = 10)
-  Get-Content $Path -Head $n
+    param($Path, $n = 10)
+    Get-Content $Path -Head $n
 }
 
 function tail {
-  param($Path, $n = 10, [switch]$f = $false)
-  Get-Content $Path -Tail $n -Wait:$f
+    param($Path, $n = 10, [switch]$f = $false)
+    Get-Content $Path -Tail $n -Wait:$f
 }
 #Kills process by name
 function pkill($name) {
@@ -434,26 +520,26 @@ function pkill($name) {
 }
 # find process by name 
 # function pgrep($name) {
-    # $process = Get-Process -Name $name -ErrorAction SilentlyContinue
+# $process = Get-Process -Name $name -ErrorAction SilentlyContinue
     
-    # if ($process) {
-        #Display the main process
-        # $processInfo = $process | Select-Object CPU, @{Name="Memory(MB)"; Expression={[math]::round($_.WorkingSet / 1MB, 2)}}, Id, SI, ProcessName
-        # Write-Host "Main Process:"
-        # $processInfo
+# if ($process) {
+#Display the main process
+# $processInfo = $process | Select-Object CPU, @{Name="Memory(MB)"; Expression={[math]::round($_.WorkingSet / 1MB, 2)}}, Id, SI, ProcessName
+# Write-Host "Main Process:"
+# $processInfo
         
-        #Display subprocesses
-        # $subProcesses = Get-CimInstance Win32_Process | Where-Object { $_.ParentProcessId -eq $process.Id }
+#Display subprocesses
+# $subProcesses = Get-CimInstance Win32_Process | Where-Object { $_.ParentProcessId -eq $process.Id }
         
-        # if ($subProcesses) {
-            # Write-Host "`nSubprocesses:"
-            # $subProcesses | Select-Object @{Name="CPU"; Expression={0}}, @{Name="Memory(MB)"; Expression={[math]::round($_.WorkingSetSize / 1MB, 2)}}, ProcessId, @{Name="ParentId"; Expression={$process.Id}}, Name
-        # } else {
-            # Write-Host "No subprocesses found for process '$name'."
-        # }
-    # } else {
-        # Write-Host "Process '$name' not found."
-    # }
+# if ($subProcesses) {
+# Write-Host "`nSubprocesses:"
+# $subProcesses | Select-Object @{Name="CPU"; Expression={0}}, @{Name="Memory(MB)"; Expression={[math]::round($_.WorkingSetSize / 1MB, 2)}}, ProcessId, @{Name="ParentId"; Expression={$process.Id}}, Name
+# } else {
+# Write-Host "No subprocesses found for process '$name'."
+# }
+# } else {
+# Write-Host "Process '$name' not found."
+# }
 # }
 
 
@@ -489,7 +575,8 @@ function pgrep($name) {
             Write-Host " $([math]::Round($totalRam, 2)) MB" -ForegroundColor Green -NoNewline
             Write-Host ", Foreground Processes: $foregroundCount, Background Processes: $backgroundCount"
         }
-    } else {
+    }
+    else {
         Write-Host "Process '$name' not found." -ForegroundColor Yellow
     }
 }
@@ -546,13 +633,15 @@ Set-Alias -Name bright -Value Set-Brightness
 
 if (Get-Command zoxide -ErrorAction SilentlyContinue) {
     Invoke-Expression (& { (zoxide init --cmd cd powershell | Out-String) })
-} else {
+}
+else {
     Write-Host "zoxide command not found. Attempting to install via winget..."
     try {
         winget install -e --id ajeetdsouza.zoxide
         Write-Host "zoxide installed successfully. Initializing..."
         Invoke-Expression (& { (zoxide init powershell | Out-String) })
-    } catch {
+    }
+    catch {
         Write-Error "Failed to install zoxide. Error: $_"
     }
 }
