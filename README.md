@@ -4,9 +4,9 @@ This repository contains my dotfiles, managed using [chezmoi](https://www.chezmo
 
 ## 🚀 Quick Setup
 
-### Install Dotfiles
+## Prerequisites
 
-Run the following Install in New Machine:
+Need to install dependency(scoop and git):
 
 ### For Normal User
 ```bash
@@ -16,8 +16,17 @@ Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
 ### For Admin
 ```bash
 iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
+scoop install main/gh
+scoop install main/git
+```
+### Configure Git
+```bash
+git config --global user.name "kmanisk" 
+git config --global user.email "youremail@example.com"
+gh auth login
 ```
 ### Finally run this command
 ```bash
 chezmoi init --apply kmanisk
 ```
+
