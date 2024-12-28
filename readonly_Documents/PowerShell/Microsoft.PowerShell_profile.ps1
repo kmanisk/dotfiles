@@ -88,7 +88,7 @@ function dall {
 
     madd
     Write-Host ""  # Add an empty line for new line
-    Write-Host "Pushing Everything"
+    Write-Host "Pushing Everything" -ForegroundColor Green
     dp
     Write-Host ""  # Add an empty line for new line
 }
@@ -118,6 +118,8 @@ function dallm {
     dpush
     Write-Host ""  # Add an empty line for new line
 }
+Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
+Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
 Set-PSReadLineOption -PredictionSource HistoryAndPlugin
 Set-PSReadLineOption -MaximumHistoryCount 10000
 # Custom completion for common commands
@@ -147,13 +149,25 @@ $scriptblock = {
 }
 Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock $scriptblock
 
-Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
+#Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
 function kvim {
     nvim -u "C:\Users\Manisk\AppData\Local\kvim\init.lua"
 }
 function kvimc {
     cd "C:\Users\Manisk\AppData\Local\kvim"
 }
+
+# Custom functions for PSReadLine
+Set-PSReadLineOption -AddToHistoryHandler {
+    param($line)
+    $sensitive = @('password', 'secret', 'token', 'apikey', 'connectionstring')
+    $hasSensitive = $sensitive | Where-Object { $line -match $_ }
+    return ($null -eq $hasSensitive)
+}
+
+# Improved prediction settings
+Set-PSReadLineOption -PredictionSource HistoryAndPlugin
+Set-PSReadLineOption -MaximumHistoryCount 10000
 # Network Utilities
 function Get-PubIP { (Invoke-WebRequest http://ifconfig.me/ip).Content }
 # Set UNIX-like aliases for the admin command, so sudo <command> will run the command with elevated rights.
@@ -474,3 +488,21 @@ Set-Alias -Name zi -Value __zoxide_zi -Option AllScope -Scope Global -Force
 Set-Alias lvim 'C:\Users\Manisk\.local\bin\lvim.ps1'
 Invoke-Expression (&starship init powershell)
 
+#oh-my-posh init pwsh --config ~/jandedobbeleer.omp.json | Invoke-Expression
+#
+## Get theme from profile.ps1 or use a default theme
+#function Get-Theme {
+#    if (Test-Path -Path $PROFILE.CurrentUserAllHosts -PathType leaf) {
+#        $existingTheme = Select-String -Raw -Path $PROFILE.CurrentUserAllHosts -Pattern "oh-my-posh init pwsh --config"
+#        if ($null -ne $existingTheme) {
+#            Invoke-Expression $existingTheme
+#            return
+#        }
+#        oh-my-posh init pwsh --config https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/cobalt2.omp.json | Invoke-Expression
+#    } else {
+#        oh-my-posh init pwsh --config https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/cobalt2.omp.json | Invoke-Expression
+#    }
+#} 
+#
+# Final Line to set prompt
+#Get-Theme

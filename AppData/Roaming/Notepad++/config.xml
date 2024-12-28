@@ -2,29 +2,28 @@
 <NotepadPlus>
     <FindHistory nbMaxFindHistoryPath="10" nbMaxFindHistoryFilter="10" nbMaxFindHistoryFind="10" nbMaxFindHistoryReplace="10" matchWord="no" matchCase="no" wrap="yes" directionDown="yes" fifRecuisive="yes" fifInHiddenFolder="no" fifProjectPanel1="no" fifProjectPanel2="no" fifProjectPanel3="no" fifFilterFollowsDoc="no" fifFolderFollowsDoc="no" searchMode="0" transparencyMode="1" transparency="150" dotMatchesNewline="no" isSearch2ButtonsMode="no" regexBackward4PowerUser="no" bookmarkLine="no" purge="no">
         <Filter name="" />
+        <Find name="font" />
+        <Find name="CommandExists" />
+        <Find name="vim" />
+        <Find name="ep" />
+        <Find name="dot" />
         <Find name="explorer" />
         <Find name="space&gt;e" />
         <Find name="&gt;oc" />
         <Find name="fold" />
         <Find name="q" />
-        <Find name="mapping" />
-        <Find name="create" />
-        <Find name="live" />
-        <Find name="vertical" />
-        <Find name="alt" />
         <Replace name="maniskpr" />
     </FindHistory>
     <History nbMaxFile="10" inSubMenu="no" customLength="-1">
-        <File filename="C:\Users\Manisk\AppData\Roaming\Notepad++\stylers.xml" />
-        <File filename="C:\Users\Manisk\.config\yazi\yazi.toml" />
-        <File filename="E:\Downloads\blob (3).txt" />
-        <File filename="E:\Downloads\blob (2).txt" />
-        <File filename="E:\Downloads\blob (1).txt" />
-        <File filename="E:\Downloads\blob.txt" />
-        <File filename="C:\Users\Manisk\AppData\Roaming\VSCodium\User\globalStorage\state.vscdb" />
-        <File filename="C:\Users\Manisk\.config\starship.toml" />
-        <File filename="C:\Users\Manisk\.dotfiles\defaults.yaml" />
-        <File filename="C:\Users\Manisk\Documents\Battlefield 1\settings\meta.xml" />
+        <File filename="C:\Users\Manisk\ActiveVariables.ps1" />
+        <File filename="C:\Users\Manisk\ActiveAliases.ps1" />
+        <File filename="C:\Users\Manisk\RecoveredProfile.ps1" />
+        <File filename="C:\Users\Manisk\AppData\Roaming\yazi\config\yazi.toml" />
+        <File filename="C:\Users\Manisk\AppData\Roaming\yazi\config\keymap.toml" />
+        <File filename="E:\Downloads\windows-terminal-themes.json" />
+        <File filename="C:\Users\Manisk\Desktop\backup.txt" />
+        <File filename="C:\Users\Manisk\Desktop\profile.txt" />
+        <File filename="C:\Users\Manisk\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1" />
     </History>
     <ProjectPanels>
         <ProjectPanel id="0" workSpaceFile="" />
@@ -42,7 +41,7 @@
         <GUIConfig name="ScintillaViewsSplitter">vertical</GUIConfig>
         <GUIConfig name="UserDefineDlg" position="undocked">hide</GUIConfig>
         <GUIConfig name="TabSetting" replaceBySpace="no" size="4" backspaceUnindent="no" />
-        <GUIConfig name="AppPosition" x="379" y="169" width="1356" height="823" isMaximized="no" />
+        <GUIConfig name="AppPosition" x="529" y="144" width="1356" height="823" isMaximized="yes" />
         <GUIConfig name="FindWindowPosition" left="1129" top="622" right="1732" bottom="981" isLessModeOn="no" />
         <GUIConfig name="FinderConfig" wrappedLines="no" purgeBeforeEverySearch="no" showOnlyOneEntryPerFoundLine="yes" />
         <GUIConfig name="noUpdate" intervalDays="15" nextUpdateDate="20241229">no</GUIConfig>
