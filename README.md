@@ -17,6 +17,7 @@ bash -c "$(curl -fsLS chezmoi.io/get)"
 
 one line command:
 
+```bash
 chezmoi init --apply kmanisk
 
 ```
