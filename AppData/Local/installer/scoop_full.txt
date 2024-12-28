@@ -1,5 +1,4 @@
 winaero-tweaker
 jetbrainsmono-nf-mono
-vifm 
 gh
 git

@@ -57,6 +57,9 @@ function Install-Chocolatey {
 	choco feature enable -n checksumFiles
 }
 
+# Pre-install NuGet provider to avoid prompt
+Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force -Scope CurrentUser
+
 # Function to install Winget
 function Install-Winget {
 	if (!(Get-Command winget -ErrorAction SilentlyContinue)) {
@@ -91,6 +94,7 @@ function Install-ScoopPackages {
 	Get-Content $packageListFile | ForEach-Object {
 		scoop install $_
 	}
+	scoop install extras/winaero-tweaker
 }
 
 # Install all package managers
