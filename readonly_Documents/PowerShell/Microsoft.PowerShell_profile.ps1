@@ -95,7 +95,7 @@ function dall {
 
 function gall {
     git add .
-    git commit -m "readme changed"
+    git commit -m "changes Lazyily"
     git push -u origin master
 }
 function dallm {
