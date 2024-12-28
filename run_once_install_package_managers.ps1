@@ -12,7 +12,7 @@ function Install-Scoop {
 	}
 
 	# Scoop setup
-	scoop bucket add main https://github.com/ScoopInstaller/Main.git
+	# scoop bucket add main https://github.com/ScoopInstaller/Main.git
 	scoop bucket add extras https://github.com/ScoopInstaller/Extras
 	scoop bucket add versions https://github.com/ScoopInstaller/Versions
 	scoop bucket add nerd-fonts https://github.com/matthewjberger/scoop-nerd-fonts
