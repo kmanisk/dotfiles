@@ -1,0 +1,3 @@
+winaero-tweaker
+jetbrainsmono-nf-mono
+vifm 
