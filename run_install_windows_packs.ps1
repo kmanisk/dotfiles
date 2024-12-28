@@ -27,20 +27,8 @@ function osd-layout {
     Write-Host "Files copied successfully to the target locations."
 }
 # osd-layout
+## Path to the installer file
+$installerPath = "C:\Users\Manisk\AppData\Local\installer\MLWapp2.6.x64.exe"
 
-
-function startup () {
-    $startupFolder = Join-Path $env:APPDATA "Microsoft\Windows\Start Menu\Programs\Startup"
-    
-    Write-Host "Starting the startup function..."
-    Write-Host "Determining the Startup folder path: $startupFolder"
-    
-    # Call the function to copy AutoHotkey scripts
-    Write-Host "Copying AutoHotkey scripts to the Startup folder..."
-    copy-autohotkey-scripts
-    
-    Write-Host "Startup function completed."
-}
-startup
-
-Write-Host "run_install_windows_packs.ps1 ran" -ForegroundColor Green
+# Run the installer
+Start-Process -FilePath $installerPath -ArgumentList "/S" -NoNewWindow -Wait

@@ -1,16 +1,17 @@
 Write-Host "Starting package manager installation..."
 
-# Check if Scoop is installed, if not install it
-if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
-	Write-Host "Scoop is not installed. Installing Scoop..."
-	Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
-	iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
-}
-else {
-	Write-Host "Scoop is already installed."
-}
+# Function to install Scoop
+function Install-Scoop {
+	if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
+		Write-Host "Scoop is not installed. Installing Scoop..."
+		Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
+		iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
+	}
+ else {
+		Write-Host "Scoop is already installed."
+	}
 
-function scoopsetup() {
+	# Scoop setup
 	scoop bucket add main https://github.com/ScoopInstaller/Main.git
 	scoop bucket add extras https://github.com/ScoopInstaller/Extras
 	scoop bucket add versions https://github.com/ScoopInstaller/Versions
@@ -18,43 +19,27 @@ function scoopsetup() {
 	scoop bucket add shemnei https://github.com/Shemnei/scoop-bucket
 	scoop bucket add volllly https://github.com/volllly/scoop-bucket
 }
-scoopsetup
 
-# Install tools via Scoop
-# Write-Host "Installing tools via Scoop..."
-# scoop install cmake 7zip vifm gcc jetbrainsmono-nf-mono innounp winaero-tweaker chezmoi
-# scoop install versions/zed-nightly
-
-# Check if Chocolatey is installed, if not install it
-if (-not (Get-Command choco -ErrorAction SilentlyContinue)) {
-	Write-Host "Chocolatey is not installed. Installing Chocolatey..."
-	Set-ExecutionPolicy Bypass -Scope Process -Force
-	Invoke-WebRequest https://community.chocolatey.org/install.ps1 -OutFile install.ps1
-	.\install.ps1
-	Remove-Item -Force install.ps1
-}
-else {
-	Write-Host "Chocolatey is already installed."
-}
-
-# Configure Chocolatey settings
-Write-Host "Configuring Chocolatey settings..." -ForegroundColor Yellow
-choco feature enable -n allowGlobalConfirmation
-choco feature enable -n checksumFiles
-
-# Function to install packages via Chocolatey based on a package list file
-function Install-ChocoPackages {
-	param (
-		[string]$packageListFile
-	)
-
-	Write-Host "Installing tools via Chocolatey from $packageListFile..."
-	Get-Content $packageListFile | ForEach-Object {
-		choco install $_ -y
+# Function to install Chocolatey
+function Install-Chocolatey {
+	if (-not (Get-Command choco -ErrorAction SilentlyContinue)) {
+		Write-Host "Chocolatey is not installed. Installing Chocolatey..."
+		Set-ExecutionPolicy Bypass -Scope Process -Force
+		Invoke-WebRequest https://community.chocolatey.org/install.ps1 -OutFile install.ps1
+		.\install.ps1
+		Remove-Item -Force install.ps1
 	}
+ else {
+		Write-Host "Chocolatey is already installed."
+	}
+
+	# Configure Chocolatey settings
+	Write-Host "Configuring Chocolatey settings..." -ForegroundColor Yellow
+	choco feature enable -n allowGlobalConfirmation
+	choco feature enable -n checksumFiles
 }
 
-# Check if winget is installed
+# Function to install Winget
 function Install-Winget {
 	if (!(Get-Command winget -ErrorAction SilentlyContinue)) {
 		Write-Output "winget not found. Installing winget..."
@@ -71,6 +56,21 @@ function Install-Winget {
 	}
 }
 
+# Function to install packages via Chocolatey based on a package list file
+function Install-ChocoPackages {
+	param (
+		[string]$packageListFile
+	)
+
+	Write-Host "Installing tools via Chocolatey from $packageListFile..."
+	Get-Content $packageListFile | ForEach-Object {
+		choco install $_ -y
+	}
+}
+
+# Install all package managers
+Install-Scoop
+Install-Chocolatey
 Install-Winget
 
 # Prompt the user to choose the installation type
