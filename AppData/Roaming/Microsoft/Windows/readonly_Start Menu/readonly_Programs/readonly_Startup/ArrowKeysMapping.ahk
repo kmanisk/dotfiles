@@ -9,29 +9,11 @@ return
 ; Remap Caps Lock + N to Enter
 CapsLock & n::Send, {Enter}
 
-; Map Caps Lock + Right Alt to Enter
-;CapsLock & RAlt::Send {Enter}
-
-; Map CapsLock + IJKL to Arrow Keys
-;CapsLock & i::
-;    Send {Up}
-;return
-;
-;CapsLock & k::
-;    Send {Down}
-;return
-;
-;CapsLock & j::
-;    Send {Left}
-;return
-;
-;CapsLock & h::
-;    Send {Left}
-;return
-;
-;CapsLock & l::
-;    Send {Right}
-;return
+; Map CapsLock + ; to send End and Enter
+CapsLock & `;::
+Send, {End}  ; Send the End key
+Send, {Enter}  ; Send the Enter key
+Return
 
 CapsLock & i::
 Send, ^a  ; Send Ctrl + A
@@ -95,14 +77,12 @@ CapsLock & d::Send d
 CapsLock & e::Send e
 CapsLock & f::Send f
 CapsLock & g::Send g
-;CapsLock & h::Send h
 CapsLock & q::Send q
 CapsLock & s::Send s
 CapsLock & t::Send t
 CapsLock & v::Send v
 CapsLock & w::Send w
 CapsLock & x::Send x
-;CapsLock & y::Send y
 CapsLock & z::Send z
 
 ; Map CapsLock + , (Comma) to Ctrl + C (Copy)
@@ -140,4 +120,29 @@ CapsLock & '::
 
 
 ScrollLock::CapsLock
+
+
+; Map Caps Lock + Right Alt to Enter
+;CapsLock & RAlt::Send {Enter}
+
+; Map CapsLock + IJKL to Arrow Keys
+;CapsLock & i::
+;    Send {Up}
+;return
+;
+;CapsLock & k::
+;    Send {Down}
+;return
+;
+;CapsLock & j::
+;    Send {Left}
+;return
+;
+;CapsLock & h::
+;    Send {Left}
+;return
+;
+;CapsLock & l::
+;    Send {Right}
+;return
 
