@@ -29,11 +29,11 @@ function Install-Scoop {
 
 	# Scoop setup with checks
 	Add-ScoopBucket -bucketName "main" -bucketUrl "https://github.com/ScoopInstaller/Main.git"
-	Add-ScoopBucket -bucketName "extras" -bucketUrl "https://github.com/ScoopInstaller/Extras"
-	Add-ScoopBucket -bucketName "versions" -bucketUrl "https://github.com/ScoopInstaller/Versions"
-	Add-ScoopBucket -bucketName "nerd-fonts" -bucketUrl "https://github.com/matthewjberger/scoop-nerd-fonts"
-	Add-ScoopBucket -bucketName "shemnei" -bucketUrl "https://github.com/Shemnei/scoop-bucket"
-	Add-ScoopBucket -bucketName "volllly" -bucketUrl "https://github.com/volllly/scoop-bucket"
+	Add-ScoopBucket -bucketName "extras" -bucketUrl "https://github.com/ScoopInstaller/Extras.git"
+	Add-ScoopBucket -bucketName "versions" -bucketUrl "https://github.com/ScoopInstaller/Versions.git"
+	Add-ScoopBucket -bucketName "nerd-fonts" -bucketUrl "https://github.com/matthewjberger/scoop-nerd-fonts.git"
+	Add-ScoopBucket -bucketName "shemnei" -bucketUrl "https://github.com/Shemnei/scoop-bucket.git"
+	Add-ScoopBucket -bucketName "volllly" -bucketUrl "https://github.com/volllly/scoop-bucket.git"
 }
 
 # Function to install Chocolatey
@@ -44,6 +44,8 @@ function Install-Chocolatey {
 		Invoke-WebRequest https://community.chocolatey.org/install.ps1 -OutFile install.ps1
 		.\install.ps1
 		Remove-Item -Force install.ps1
+		[System.Environment]::SetEnvironmentVariable('Path', $env:Path + ';C:\ProgramData\chocolatey\bin', 'Machine')
+		$env:Path = [System.Environment]::GetEnvironmentVariable('Path', 'Machine')
 	}
  else {
 		Write-Host "Chocolatey is already installed."
