@@ -1,4 +1,6 @@
 # Ensure Terminal-Icons module is installed before importing
+# now Everything is fixed as per my need for god sake don't chagne or break
+# after this
 if (-not (Get-Module -ListAvailable -Name Terminal-Icons)) {
     Install-Module -Name Terminal-Icons -Scope CurrentUser -Force -SkipPublisherCheck
 }
