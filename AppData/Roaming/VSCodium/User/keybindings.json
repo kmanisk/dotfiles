@@ -476,5 +476,9 @@
 		"key": "alt+x",
 		"command": "-cody.fixup.undoNearest",
 		"when": "cody.activated && cody.hasActionableEdit && !editorReadonly"
+	},
+	{
+		"key": "alt+t",
+		"command": "PowerShell.RunSelection"
 	}
 ]

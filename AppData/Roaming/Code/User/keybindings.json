@@ -1,12 +1,17 @@
 // Place your key bindings in this file to override the defaults
 [
 	{
-		"key": "alt+n",
+		"key": "alt+x",
+		"command": "workbench.view.extensions",
+		"when": "editorTextFocus"
+	},
+	{
+		"key": "alt+m",
 		"command": "workbench.action.nextEditor",
 		"when": "editorTextFocus || !editorHasSelection"
 	},
 	{
-		"key": "alt+m",
+		"key": "alt+n",
 		"command": "workbench.action.previousEditor",
 		"when": "editorTextFocus || !editorHasSelection"
 	},
@@ -325,11 +330,6 @@
 		"command": "periscope.search"
 	},
 	{
-		"key": "alt+;",
-		"command": "PowerShell.RunSelection",
-		"when": "editorTextFocus && editorLangId == 'powershell'"
-	},
-	{
 		"key": "f8",
 		"command": "-PowerShell.RunSelection",
 		"when": "editorTextFocus && editorLangId == 'powershell'"
@@ -389,26 +389,96 @@
 	//   "command": "editor.action.marker.prev",
 	//   "when": "editorTextFocus"
 	// },
-	//
-	// test
+	// {
+	// 	"key": "ctrl+alt+right",
+	// 	"command": "workbench.action.moveEditorToNextGroup",
+	// 	"when": "editorTextFocus"
+	// },
+	// {
+	// 	"key": "ctrl+alt+left",
+	// 	"command": "workbench.action.moveEditorToPreviousGroup",
+	// 	"when": "editorTextFocus"
+	// },
+	// {
+	// 	"key": "ctrl+alt+down",
+	// 	"command": "workbench.action.moveEditorToBelowGroup",
+	// 	"when": "editorTextFocus"
+	// },
+	// {
+	// 	"key": "ctrl+alt+up",
+	// 	"command": "workbench.action.moveEditorToAboveGroup",
+	// 	"when": "editorTextFocus"
+	// },
 	{
-		"key": "ctrl+alt+right",
-		"command": "workbench.action.moveEditorToNextGroup",
-		"when": "editorTextFocus"
+		"key": "ctrl+alt+k",
+		"command": "-code-runner.runCustomCommand"
 	},
 	{
-		"key": "ctrl+alt+left",
+		"key": "ctrl+alt+j",
+		"command": "-editor.action.insertSnippet",
+		"when": "editorTextFocus && !editorReadonly && editorLangId == 'powershell'"
+	},
+	{
+		"key": "ctrl+alt+h",
 		"command": "workbench.action.moveEditorToPreviousGroup",
 		"when": "editorTextFocus"
 	},
 	{
-		"key": "ctrl+alt+down",
+		"key": "ctrl+alt+j",
 		"command": "workbench.action.moveEditorToBelowGroup",
 		"when": "editorTextFocus"
 	},
 	{
-		"key": "ctrl+alt+up",
+		"key": "ctrl+alt+k",
 		"command": "workbench.action.moveEditorToAboveGroup",
 		"when": "editorTextFocus"
+	},
+	{
+		"key": "ctrl+alt+l",
+		"command": "workbench.action.moveEditorToNextGroup",
+		"when": "editorTextFocus"
+	},
+	{
+		"key": "alt+;",
+		"command": "editor.action.insertLineAfter",
+		"when": "editorTextFocus"
+	},
+	//test
+	{
+		"key": "shift+alt+[",
+		"command": "workbench.action.increaseViewSize"
+	},
+	{
+		"key": "shift+alt+]",
+		"command": "workbench.action.decreaseViewSize"
+	},
+	// {
+	// 	"key": "shift+alt+[",
+	// 	"command": "workbench.action.terminal.resizePaneLeft",
+	// 	"when": "panelFocus"
+	// },
+	// {
+	// 	"key": "shift+alt+]",
+	// 	"command": "workbench.action.terminal.resizePaneRight",
+	// 	"when": "panelFocus"
+	// }
+	{
+		"key": "ctrl+alt+f",
+		"command": "editor.fold",
+		"when": "editorTextFocus"
+	},
+	{
+		"key": "ctrl+alt+u",
+		"command": "editor.unfold",
+		"when": "editorTextFocus"
+	},
+	{
+		"key": "alt+x",
+		"command": "-cody.fixup.undoNearest",
+		"when": "cody.activated && cody.hasActionableEdit && !editorReadonly"
+	},
+	{
+		"key": "alt+t",
+		"command": "PowerShell.RunSelection"
 	}
 ]

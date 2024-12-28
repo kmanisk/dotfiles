@@ -221,7 +221,7 @@
 		"editor.defaultFormatter": "redhat.java"
 	},
 	"security.workspace.trust.untrustedFiles": "open",
-	"workbench.colorTheme": "Jetbrains Fleet",
+	"workbench.colorTheme": "GitHub Dark Dimmed",
 	"cody.commandHints.enabled": false,
 	"git.openRepositoryInParentFolders": "never",
 	"git.autofetch": false,
@@ -229,5 +229,6 @@
 	"editor.lineDecorationsWidth": 10,
 	"editor.folding": false,
 	"editor.glyphMargin": false,
+	"tabnine.experimentalAutoImports": true,
 	//added a commnet
 }

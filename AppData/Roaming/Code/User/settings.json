@@ -1,4 +1,5 @@
 {
+	//test extension multi command
 	"vscode-neovim.highlightGroups.highlights": {
 		"HoverWidgetBackground": "ThemeColor"
 	},
@@ -16,10 +17,10 @@
 	"editor.showFoldingControls": "always",
 	"editor.tabSize": 4,
 	"workbench.sideBar.location": "right",
-	"editor.fontSize": 19,
+	"editor.fontSize": 19, //a---00000lll
 	"editor.lineHeight": 27,
 	"breadcrumbs.enabled": false,
-	"editor.fontFamily": "'JetBrainsMono Nerd Font Mono','JetBrainsMono Nerd Font', monospace",
+	"editor.fontFamily": "'JetBrainsMonoNL Nerd Font Mono','JetBrainsMono Nerd Font Mono','JetBrainsMono Nerd Font', monospace",
 	"screencastMode.fontSize": 36,
 	"screencastMode.verticalOffset": 1,
 	"editor.fontLigatures": true,
@@ -215,11 +216,12 @@
 	"prettier.trailingComma": "all",
 	"cody.commandCodeLenses": true,
 	"workbench.productIconTheme": "jetbrains-idea-product-icon-theme",
+	"window.menuBarVisibility": "compact",
 	"[java]": {
 		"editor.defaultFormatter": "redhat.java"
 	},
 	"security.workspace.trust.untrustedFiles": "open",
-	"workbench.colorTheme": "Github Catppuccin Dark Mix",
+	"workbench.colorTheme": "GitHub Dark Dimmed",
 	"cody.commandHints.enabled": false,
 	"git.openRepositoryInParentFolders": "never",
 	"git.autofetch": false,
@@ -227,5 +229,6 @@
 	"editor.lineDecorationsWidth": 10,
 	"editor.folding": false,
 	"editor.glyphMargin": false,
-	"window.menuBarVisibility": "compact",
+	"tabnine.experimentalAutoImports": true,
+	//added a commnet
 }
