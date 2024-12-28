@@ -68,6 +68,12 @@ function dall {
     dp
     Write-Host ""  # Add an empty line for new line
 }
+
+function gall {
+    git add .
+    git commit -m "readme changed"
+    git push -u origin master
+}
 function dallm {
     Write-Host "Changes Done..."
     st
