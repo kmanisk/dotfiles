@@ -221,7 +221,7 @@
 		"editor.defaultFormatter": "redhat.java"
 	},
 	"security.workspace.trust.untrustedFiles": "open",
-	"workbench.colorTheme": "GitHub Dark Dimmed",
+	"workbench.colorTheme": "Jetbrains Fleet",
 	"cody.commandHints.enabled": false,
 	"git.openRepositoryInParentFolders": "never",
 	"git.autofetch": false,
