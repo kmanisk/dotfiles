@@ -9,15 +9,8 @@ This repository contains my dotfiles, managed using [chezmoi](https://www.chezmo
 Run the following command to install chezmoi:
 
 ```bash
-bash -c "$(curl -fsLS chezmoi.io/get)"
-```
-
-```
-### Windows One Script Install 
-
-one line command:
-
-```bash
+"bash -c "$(curl -fsLS chezmoi.io/get)"
 chezmoi init --apply kmanisk
 
 ```
+
