@@ -40,17 +40,16 @@ function Install-Chocolatey {
 	}
  else {
 		Write-Host "Chocolatey is already installed."
+		Write-Host "Attempting to upgrade Chocolatey..."
+		choco upgrade chocolatey -y
 	}
 }
-
-# Pre-install NuGet provider to avoid prompt
-Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force -Scope CurrentUser
 
 # Function to install Winget
 function Install-Winget {
 	if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
 		Write-Host "Installing Winget..."
-		Install-Script -Name winget-install -Force
+		Install-Script winget-install -Force
 		winget-install -Force
 	}
  else {
@@ -58,22 +57,29 @@ function Install-Winget {
 	}
 }
 
-# Function to install Chocolatey packages
-function Install-ChocoPackages {
+# Function to merge Scoop package lists
+function Merge-ScoopFiles {
 	param (
-		[string]$packageListFile
+		[string]$minimalFile,
+		[string]$fullFile,
+		[string]$mergedFile
 	)
 
-	if (-not (Test-Path $packageListFile)) {
-		Write-Host "Package list file $packageListFile does not exist."
-		return
+	# Check if files exist before merging
+	if ((Test-Path $minimalFile) -and (Test-Path $fullFile)) {
+		Get-Content $minimalFile, $fullFile | Sort-Object -Unique | Set-Content $mergedFile
+		Write-Host "Merged $minimalFile and $fullFile into $mergedFile."
 	}
-
-	Write-Host "Installing tools via Chocolatey from $packageListFile..."
-	Get-Content $packageListFile | ForEach-Object {
-		if ($_ -match '\S') {
-			choco install $_ -y
-		}
+ elseif (Test-Path $minimalFile) {
+		Copy-Item $minimalFile $mergedFile
+		Write-Host "Only $minimalFile found. Copied to $mergedFile."
+	}
+ elseif (Test-Path $fullFile) {
+		Copy-Item $fullFile $mergedFile
+		Write-Host "Only $fullFile found. Copied to $mergedFile."
+	}
+ else {
+		Write-Host "Neither $minimalFile nor $fullFile exists."
 	}
 }
 
@@ -96,28 +102,15 @@ function Install-ScoopPackages {
 	}
 }
 
-# Function to merge Scoop package lists
-function Merge-ScoopFiles {
+# Function to install Chocolatey packages
+function Install-ChocoPackages {
 	param (
-		[string]$minimalFile,
-		[string]$fullFile,
-		[string]$mergedFile
+		[string]$packageListFile
 	)
 
-	if (Test-Path $minimalFile -and Test-Path $fullFile) {
-		Get-Content $minimalFile, $fullFile | Sort-Object -Unique | Set-Content $mergedFile
-		Write-Host "Merged $minimalFile and $fullFile into $mergedFile."
-	}
- elseif (Test-Path $minimalFile) {
-		Copy-Item $minimalFile $mergedFile
-		Write-Host "Only $minimalFile found. Copied to $mergedFile."
-	}
- elseif (Test-Path $fullFile) {
-		Copy-Item $fullFile $mergedFile
-		Write-Host "Only $fullFile found. Copied to $mergedFile."
-	}
- else {
-		Write-Host "Neither $minimalFile nor $fullFile exists."
+	Write-Host "Installing tools via Chocolatey from $packageListFile..."
+	Get-Content $packageListFile | ForEach-Object {
+		choco install $_ -y
 	}
 }
 
@@ -126,8 +119,10 @@ $installerPath = "$HOME\.local\share\chezmoi\AppData\Local\installer"
 $minimalScoopFile = "$installerPath\scoop.txt"
 $fullScoopFile = "$installerPath\scoop_full.txt"
 $mergedScoopFile = "$installerPath\scoop_merged.txt"
+$chocoMinimalFile = "$installerPath\choco_minimal.txt"
+$chocoFullFile = "$installerPath\choco_full.txt"
 
-# Merge files for full installation
+# Merge Scoop files for full installation
 Merge-ScoopFiles -minimalFile $minimalScoopFile -fullFile $fullScoopFile -mergedFile $mergedScoopFile
 
 # Install package managers
@@ -139,21 +134,41 @@ Install-Winget
 $choice = Read-Host "Choose installation type (minimal/full)"
 switch ($choice.ToLower()) {
 	"minimal" {
+		# Install minimal Scoop packages
 		if (Test-Path $minimalScoopFile) {
 			Write-Host "Installing minimal packages via Scoop..."
 			Install-ScoopPackages -packageListFile $minimalScoopFile
 		}
 		else {
-			Write-Host "Minimal package list not found."
+			Write-Host "Minimal Scoop package list not found."
+		}
+
+		# Install minimal Chocolatey packages
+		if (Test-Path $chocoMinimalFile) {
+			Write-Host "Installing minimal packages via Chocolatey..."
+			Install-ChocoPackages -packageListFile $chocoMinimalFile
+		}
+		else {
+			Write-Host "Minimal Chocolatey package list not found."
 		}
 	}
 	"full" {
+		# Install full Scoop packages
 		if (Test-Path $mergedScoopFile) {
 			Write-Host "Installing full packages via Scoop..."
 			Install-ScoopPackages -packageListFile $mergedScoopFile
 		}
 		else {
-			Write-Host "Full package list not found."
+			Write-Host "Full Scoop package list not found."
+		}
+
+		# Install full Chocolatey packages
+		if (Test-Path $chocoFullFile) {
+			Write-Host "Installing full packages via Chocolatey..."
+			Install-ChocoPackages -packageListFile $chocoFullFile
+		}
+		else {
+			Write-Host "Full Chocolatey package list not found."
 		}
 	}
 	default {
