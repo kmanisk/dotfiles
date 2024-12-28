@@ -28,8 +28,8 @@ function Install-Scoop {
 	}
 
 	# Scoop setup with checks
-	Add-ScoopBucket -bucketName "main" -bucketUrl "https://github.com/ScoopInstaller/Main.git"
-	Add-ScoopBucket -bucketName "extras" -bucketUrl "https://github.com/ScoopInstaller/Extras.git"
+	# Add-ScoopBucket -bucketName "main" -bucketUrl "https://github.com/ScoopInstaller/Main.git"
+	# Add-ScoopBucket -bucketName "extras" -bucketUrl "https://github.com/ScoopInstaller/Extras.git"
 	Add-ScoopBucket -bucketName "versions" -bucketUrl "https://github.com/ScoopInstaller/Versions.git"
 	Add-ScoopBucket -bucketName "nerd-fonts" -bucketUrl "https://github.com/matthewjberger/scoop-nerd-fonts.git"
 	Add-ScoopBucket -bucketName "shemnei" -bucketUrl "https://github.com/Shemnei/scoop-bucket.git"
