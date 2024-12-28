@@ -94,6 +94,7 @@ function dall {
 }
 
 function gall {
+    Set-Location -Path "$HOME\.local\share\chezmoi"
     git add .
     git commit -m "for readme file"
     git push -u origin master
