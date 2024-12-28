@@ -5,19 +5,35 @@ function Install-Scoop {
 	if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
 		Write-Host "Scoop is not installed. Installing Scoop..."
 		Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
-		Invoke-Expression (new-object net.webclient).downloadstring('https://get.scoop.sh')
+		iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
 	}
  else {
 		Write-Host "Scoop is already installed."
 	}
 
-	# Scoop setup
-	# scoop bucket add main https://github.com/ScoopInstaller/Main.git
-	scoop bucket add extras https://github.com/ScoopInstaller/Extras
-	scoop bucket add versions https://github.com/ScoopInstaller/Versions
-	scoop bucket add nerd-fonts https://github.com/matthewjberger/scoop-nerd-fonts
-	scoop bucket add shemnei https://github.com/Shemnei/scoop-bucket
-	scoop bucket add volllly https://github.com/volllly/scoop-bucket
+	# Function to add a Scoop bucket if it does not exist
+	function Add-ScoopBucket {
+		param (
+			[string]$bucketName,
+			[string]$bucketUrl
+		)
+
+		if (-not (scoop bucket list | Select-String -Pattern $bucketName)) {
+			Write-Host "Adding Scoop bucket: $bucketName"
+			scoop bucket add $bucketName $bucketUrl
+		}
+		else {
+			Write-Host "The '$bucketName' bucket already exists."
+		}
+	}
+
+	# Scoop setup with checks
+	Add-ScoopBucket -bucketName "main" -bucketUrl "https://github.com/ScoopInstaller/Main.git"
+	Add-ScoopBucket -bucketName "extras" -bucketUrl "https://github.com/ScoopInstaller/Extras"
+	Add-ScoopBucket -bucketName "versions" -bucketUrl "https://github.com/ScoopInstaller/Versions"
+	Add-ScoopBucket -bucketName "nerd-fonts" -bucketUrl "https://github.com/matthewjberger/scoop-nerd-fonts"
+	Add-ScoopBucket -bucketName "shemnei" -bucketUrl "https://github.com/Shemnei/scoop-bucket"
+	Add-ScoopBucket -bucketName "volllly" -bucketUrl "https://github.com/volllly/scoop-bucket"
 }
 
 # Function to install Chocolatey
@@ -68,11 +84,6 @@ function Install-ChocoPackages {
 	}
 }
 
-# Install all package managers
-Install-Scoop
-Install-Chocolatey
-Install-Winget
-
 # Function to install packages via Scoop based on a package list file
 function Install-ScoopPackages {
 	param (
@@ -85,17 +96,10 @@ function Install-ScoopPackages {
 	}
 }
 
-# Function to install packages via Chocolatey based on a package list file
-function Install-ChocoPackages {
-	param (
-		[string]$packageListFile
-	)
-
-	Write-Host "Installing tools via Chocolatey from $packageListFile..."
-	Get-Content $packageListFile | ForEach-Object {
-		choco install $_ -y
-	}
-}
+# Install all package managers
+Install-Scoop
+Install-Chocolatey
+Install-Winget
 
 # Example usage
 $installerPath = "$HOME\.local\share\chezmoi\AppData\Local\installer"
