@@ -76,6 +76,9 @@ function dall {
     st
     Write-Host ""  # Add an empty line for new line
     Write-Host "Adding all the changes to dot repo"
+    Write-Host "Deleting any file removed from the Home Directory if any:"
+    dfor
+    Write-Host ""  # Add an empty line for new line
     madd
     Write-Host ""  # Add an empty line for new line
     Write-Host "Pushing Everything"
@@ -94,6 +97,8 @@ function dallm {
     Write-Host ""  # Add an empty line for new line
     Write-Host "Adding all the changes to dot repo"
     madd
+    Write-Host "Deleting any file removed from the Home Directory if any:"
+    dfor
     Write-Host ""  # Add an empty line for new line
     Write-Host "Pushing Everything"
     dpush
