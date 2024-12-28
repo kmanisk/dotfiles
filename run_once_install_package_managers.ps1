@@ -28,8 +28,8 @@ function Install-Scoop {
 	}
 
 	# Scoop setup with checks
-	# Add-ScoopBucket -bucketName "main" -bucketUrl "https://github.com/ScoopInstaller/Main.git"
-	# Add-ScoopBucket -bucketName "extras" -bucketUrl "https://github.com/ScoopInstaller/Extras.git"
+	Add-ScoopBucket -bucketName "main" -bucketUrl "https://github.com/ScoopInstaller/Main.git"
+	Add-ScoopBucket -bucketName "extras" -bucketUrl "https://github.com/ScoopInstaller/Extras.git"
 	Add-ScoopBucket -bucketName "versions" -bucketUrl "https://github.com/ScoopInstaller/Versions.git"
 	Add-ScoopBucket -bucketName "nerd-fonts" -bucketUrl "https://github.com/matthewjberger/scoop-nerd-fonts.git"
 	Add-ScoopBucket -bucketName "shemnei" -bucketUrl "https://github.com/Shemnei/scoop-bucket.git"
@@ -61,13 +61,8 @@ function Install-Chocolatey {
 function Install-Winget {
 	if (!(Get-Command winget -ErrorAction SilentlyContinue)) {
 		Write-Output "winget not found. Installing winget..."
-		if ([System.Environment]::OSVersion.Version -ge [Version]"10.0.19041") {
-			Start-Process "ms-windows-store://pdp/?productid=9NBLGGH4NNS1" -NoNewWindow
-			Write-Output "The Microsoft Store is opening. Please install the 'App Installer' package to get winget."
-		}
-		else {
-			Write-Output "Your Windows version does not support winget. Please upgrade to Windows 10 2004 or later."
-		}
+		Install-Script winget-install -Force
+		winget-install -Force
 	}
  else {
 		Write-Output "winget is already installed."
