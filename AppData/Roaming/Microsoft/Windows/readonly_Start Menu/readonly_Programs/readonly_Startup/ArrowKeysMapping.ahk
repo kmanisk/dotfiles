@@ -6,6 +6,9 @@ CapsLock::
     Send, {Esc}
 return
 
+; windows and d to do the minimize all
+; CapsLock & Space::Send #d
+
 ; Remap Caps Lock + N to Enter
 CapsLock & n::Send, {Enter}
 
