@@ -71,14 +71,21 @@ function dp {
     git push -u origin master
     #Set-Location -path "$HOME"
 }
+
 function dall {
     Write-Host "Changes Done..."
     st
     Write-Host ""  # Add an empty line for new line
     Write-Host "Adding all the changes to dot repo"
-    Write-Host "Deleting any file removed from the Home Directory if any:"
-    dfor
-    Write-Host ""  # Add an empty line for new line
+
+    # Check for 'DA' elements and call dfor if there are any
+    $deletedFiles = chezmoi status | Where-Object { $_ -match '^DA' }
+    if ($deletedFiles.Count -gt 0) {
+      Write-Host "Deleting any file removed from the Home Directory if any:"
+        dfor
+        Write-Host ""  # Add an empty line for new line
+    }
+
     madd
     Write-Host ""  # Add an empty line for new line
     Write-Host "Pushing Everything"
@@ -96,9 +103,15 @@ function dallm {
     st
     Write-Host ""  # Add an empty line for new line
     Write-Host "Adding all the changes to dot repo"
+
+    # Check for 'DA' elements and call dfor if there are any
+    $deletedFiles = chezmoi status | Where-Object { $_ -match '^DA' }
+    if ($deletedFiles.Count -gt 0) {
+      Write-Host "Deleting any file removed from the Home Directory if any:"
+        dfor
+        Write-Host ""  # Add an empty line for new line
+    }
     madd
-    Write-Host "Deleting any file removed from the Home Directory if any:"
-    dfor
     Write-Host ""  # Add an empty line for new line
     Write-Host "Pushing Everything"
     dpush
