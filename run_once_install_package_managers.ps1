@@ -5,7 +5,7 @@ function Install-Scoop {
 	if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
 		Write-Host "Scoop is not installed. Installing Scoop..."
 		Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
-		iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
+		Invoke-Expression (new-object net.webclient).downloadstring('https://get.scoop.sh')
 	}
  else {
 		Write-Host "Scoop is already installed."

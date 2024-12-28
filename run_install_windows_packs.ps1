@@ -26,7 +26,7 @@ function osd-layout {
 
     Write-Host "Files copied successfully to the target locations."
 }
-# osd-layout
+osd-layout
 ## Path to the installer file
 $installerPath = "C:\Users\Manisk\AppData\Local\installer\MLWapp2.6.x64.exe"
 
