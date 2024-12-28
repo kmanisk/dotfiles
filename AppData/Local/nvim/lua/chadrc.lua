@@ -7,7 +7,7 @@ local M = {}
 M.mappings = require "custom.mappings"
 
 M.base46 = {
-	theme = "dark_horizon",
+	theme = "ashes",
 
 	-- hl_override = {
 	-- 	Comment = { italic = true },

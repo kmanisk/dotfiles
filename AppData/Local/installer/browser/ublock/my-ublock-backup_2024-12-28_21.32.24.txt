@@ -1,0 +1,52 @@
+{
+  "timeStamp": 1735401744793,
+  "version": "1.61.2",
+  "userSettings": {
+    "advancedUserEnabled": true,
+    "importedLists": [],
+    "popupPanelSections": 31
+  },
+  "selectedFilterLists": [
+    "user-filters",
+    "ublock-filters",
+    "ublock-badware",
+    "ublock-privacy",
+    "ublock-unbreak",
+    "easylist",
+    "easyprivacy",
+    "urlhaus-1",
+    "plowe-0"
+  ],
+  "hiddenSettings": {},
+  "whitelist": [
+    "annas-archive.org",
+    "chrome-extension-scheme",
+    "dev.miuiflash.com",
+    "djxmaza.in",
+    "hsnclms.studentscenter.in",
+    "hsncsis.studentscenter.in",
+    "hsncu.instafeez.in",
+    "hsncuauth.studentscenter.in",
+    "infinityskull.com",
+    "jytechs.in",
+    "kccollege.edu.in",
+    "moz-extension-scheme",
+    "rentry.org",
+    "rewardz.sbi",
+    "savegame.pro",
+    "skillheadlines.in",
+    "slideshare.downloader.is",
+    "sparsh.defencepension.gov.in",
+    "thecubexguide.com",
+    "vibrancegui.com",
+    "vim-adventures.com",
+    "www.blackbox.ai",
+    "www.goindigo.in",
+    "www.irctc.co.in",
+    "www.reddit.com"
+  ],
+  "dynamicFilteringString": "behind-the-scene * * noop\nbehind-the-scene * inline-script noop\nbehind-the-scene * 1p-script noop\nbehind-the-scene * 3p-script noop\nbehind-the-scene * 3p-frame noop\nbehind-the-scene * image noop\nbehind-the-scene * 3p noop",
+  "urlFilteringString": "",
+  "hostnameSwitchesString": "no-large-media: behind-the-scene false",
+  "userFilters": "! Sep 23, 2024 https://www.youtube.com\nwww.youtube.com###yt-extender-feature-bar"
+}

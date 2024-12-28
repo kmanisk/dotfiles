@@ -18,6 +18,14 @@ function q{exit}
 function st{chezmoi status}
 function chm{ chezmoi managed}
 
+function cadd {
+    param (
+        [Parameter(Mandatory=$true)]
+        [string]$Path
+    )
+    chezmoi add $Path
+}
+
 function dfor {
     $deletedFiles = chezmoi status | Where-Object { $_ -match '^DA' }
     foreach ($file in $deletedFiles) {
