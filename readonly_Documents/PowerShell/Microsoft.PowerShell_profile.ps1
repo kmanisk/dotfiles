@@ -254,6 +254,41 @@ function cpyfile {
     Get-Content $filePath | Set-Clipboard
 }
 
+function env { Get-ChildItem Env:}
+
+
+
+
+Set-Alias ps Get-Process
+Set-Alias rm Remove-Item
+Set-Alias cpy Copy-Item
+Set-Alias cls Clear-Host
+Set-Alias mv Move-Item
+
+
+function cpycmd {
+    param (
+        [string]$command
+    )
+
+    # Execute the command and capture the output
+    $output = Invoke-Expression $command
+
+    # Copy the output to the clipboard
+    $output | Set-Clipboard
+}
+function cpytree {
+    param (
+        [string]$dirPath
+    )
+
+    # Generate the tree output with /f /a options
+    $treeOutput = & cmd.exe /c "tree $dirPath /f /a"
+
+    # Copy the tree output to the clipboard
+    $treeOutput | Set-Clipboard
+}
+
 function cpypath {
     param (
         [string]$path
