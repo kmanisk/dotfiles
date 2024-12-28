@@ -10,3 +10,5 @@ Run the following command to install chezmoi:
 
 ```bash
 bash -c "$(curl -fsLS chezmoi.io/get)"
+
+### Windows One Script Install 
