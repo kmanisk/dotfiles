@@ -58,3 +58,38 @@ function Install-Spotify {
 }
 
 Install-Spotify
+function Move-ConfigFolder {
+    $sourcePath = Join-Path -Path $env:USERPROFILE -ChildPath ".config\es"
+    $destinationPath = "C:\es"
+
+    # Check if the source folder exists
+    if (Test-Path $sourcePath) {
+        # Create the destination directory if it doesn't exist
+        if (-not (Test-Path $destinationPath)) {
+            New-Item -Path $destinationPath -ItemType Directory
+            Write-Host "Created destination directory at $destinationPath"
+        }
+
+        # Move the folder
+        Move-Item -Path $sourcePath -Destination $destinationPath -Force
+        Write-Host "Moved folder from $sourcePath to $destinationPath"
+    }
+    else {
+        Write-Host "Source folder $sourcePath does not exist."
+    }
+}
+
+# Call the function to move the config folder
+Move-ConfigFolder
+function Move-ScriptToDesktop {
+    $scriptPath = $MyInvocation.MyCommand.Path
+    $desktopPath = Join-Path -Path $env:USERPROFILE -ChildPath "Desktop"
+    $destinationPath = Join-Path -Path $desktopPath -ChildPath "run_install_windows_packs.ps1"
+
+    # Move the script to the Desktop
+    Move-Item -Path $scriptPath -Destination $destinationPath -Force
+    Write-Host "Moved script to $destinationPath"
+}
+
+# Call the function to move the script to the Desktop
+Move-ScriptToDesktop
