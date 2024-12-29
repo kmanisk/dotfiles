@@ -59,7 +59,7 @@ function Install-Chocolatey {
 
 	# Ensure Chocolatey is up to date
 	Write-Host "Upgrading Chocolatey to the latest version..."
-	choco upgrade chocolatey -y
+	# choco upgrade chocolatey -y
 }
 
 
