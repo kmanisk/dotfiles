@@ -13,7 +13,16 @@ function ff($name) {
         Write-Output "$($_.FullName)"
     }
 }
+function uall{
+    scoop update *
+    choco upgrade all
+}
 
+function pcheck{
+    scoop status
+    winget upgrade
+    choco outdated
+}
 
 
 #only cd to the dir
