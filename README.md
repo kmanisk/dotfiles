@@ -16,6 +16,8 @@ Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
 ### For Admin
 ```bash
 winget install twpayne.chezmoi
+winget install Git.Git
+winget install -e --id GitHub.cli
 ```
 ### Configure Git
 ```bash
