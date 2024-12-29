@@ -18,6 +18,7 @@ sharex
 openjdk
 python
 rust
+everything
 starship
 steam
 vlc

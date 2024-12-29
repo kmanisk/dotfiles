@@ -30,8 +30,16 @@ Install-OSDLayout
 ## Path to the installer file
 $installerPath = "C:\Users\Manisk\AppData\Local\installer\MLWapp2.6.x64.exe"
 
-# Run the installer
-Start-Process -FilePath $installerPath -ArgumentList "/S" -NoNewWindow -Wait
+# Check if MLWapp is already installed
+$mlwappInstalled = Get-Command "C:\Program Files\MLWapp\MLWapp.exe" -ErrorAction SilentlyContinue
+
+if (-not $mlwappInstalled) {
+    # Run the installer if MLWapp is not installed
+    Start-Process -FilePath $installerPath -ArgumentList "/S" -NoNewWindow -Wait
+}
+else {
+    Write-Host "MLWapp is already installed."
+}
 
 
 function Install-Spotify {
