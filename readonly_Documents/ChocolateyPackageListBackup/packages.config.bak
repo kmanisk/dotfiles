@@ -6,6 +6,7 @@
    <package id="autohotkey.install" />
    <package id="autohotkey.portable" />
    <package id="bat" />
+   <package id="bulk-crap-uninstaller" />
    <package id="chocolatey" />
    <package id="chocolatey-compatibility.extension" />
    <package id="chocolatey-core.extension" />
@@ -29,6 +30,7 @@
    <package id="git.install" />
    <package id="greenshot" />
    <package id="grep" />
+   <package id="instchoco" />
    <package id="internet-download-manager" />
    <package id="irfanview" />
    <package id="KB2919355" />
