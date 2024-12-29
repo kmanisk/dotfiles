@@ -81,15 +81,13 @@ function Move-ConfigFolder {
 
 # Call the function to move the config folder
 Move-ConfigFolder
-function Move-ScriptToDesktop {
-    $scriptPath = $MyInvocation.MyCommand.Path
-    $desktopPath = Join-Path -Path $env:USERPROFILE -ChildPath "Desktop"
-    $destinationPath = Join-Path -Path $desktopPath -ChildPath "run_install_windows_packs.ps1"
 
-    # Move the script to the Desktop
-    Move-Item -Path $scriptPath -Destination $destinationPath -Force
-    Write-Host "Moved script to $destinationPath"
+# Define the installer directory using the $HOME environment variable
+$installerDir = Join-Path -Path $HOME -ChildPath ".local\share\chezmoi\AppData\Local\installer"
+# Example of listing files in the installer directory
+if (Test-Path $installerDir) {
+    Get-ChildItem -Path $installerDir
 }
-
-# Call the function to move the script to the Desktop
-Move-ScriptToDesktop
+else {
+    Write-Host "Installer directory does not exist: $installerDir"
+}
