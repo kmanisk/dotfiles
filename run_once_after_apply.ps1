@@ -1,2 +1,2 @@
 # run_once_after_apply.ps1
-Write-Host "Done applying all configurations with chezmoi! chaneged here check _____---____" -ForegroundColor Green
+Write-Host "run_once after apply script what to add here" -ForegroundColor Green
