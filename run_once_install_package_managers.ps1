@@ -1,5 +1,6 @@
 # Function to install Scoop
 function Install-Scoop {
+	# Check if Scoop is installed
 	if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
 		Write-Host "Installing Scoop..."
 		Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
@@ -9,29 +10,43 @@ function Install-Scoop {
 		Write-Host "Scoop is already installed."
 	}
 
-	# Add Scoop buckets
-	$scoopBuckets = @{
-		"main"       = "https://github.com/ScoopInstaller/Main.git"
-		"extras"     = "https://github.com/ScoopInstaller/Extras.git"
-		"versions"   = "https://github.com/ScoopInstaller/Versions.git"
-		"nerd-fonts" = "https://github.com/matthewjberger/scoop-nerd-fonts.git"
-		"shemnei"    = "https://github.com/Shemnei/scoop-bucket.git"
-		"volllly"    = "https://github.com/volllly/scoop-bucket.git"
-	}
-	foreach ($bucket in $scoopBuckets.Keys) {
-		if (-not (scoop bucket list | Select-String -Pattern $bucket)) {
-			Write-Host "Adding Scoop bucket: $bucket"
-			scoop bucket add $bucket $scoopBuckets[$bucket]
+	# Define Scoop buckets (excluding main and extras)
+	$scoopBuckets = @(
+		@{ Name = "versions"; URL = "https://github.com/ScoopInstaller/Versions.git" },
+		@{ Name = "nerd-fonts"; URL = "https://github.com/matthewjberger/scoop-nerd-fonts.git" },
+		@{ Name = "shemnei"; URL = "https://github.com/Shemnei/scoop-bucket.git" },
+		@{ Name = "volllly"; URL = "https://github.com/volllly/scoop-bucket.git" }
+	)
+
+	# Check and add buckets
+	foreach ($bucket in $scoopBuckets) {
+		$bucketInfo = scoop bucket list | Where-Object { $_ -match $bucket.Name }
+
+		if (-not $bucketInfo) {
+			# If bucket is not listed, add it
+			Write-Host "Adding Scoop bucket: $($bucket.Name)"
+			scoop bucket add $($bucket.Name) $($bucket.URL)
 		}
 		else {
-			Write-Host "The '$bucket' bucket already exists."
+			# Extract manifest count
+			$manifestCount = ($bucketInfo -split '\s+')[-1]
+			if ([int]$manifestCount -eq 0) {
+				# If manifest count is 0, re-add the bucket
+				Write-Host "The '$($bucket.Name)' bucket has 0 manifests. Re-adding..."
+				scoop bucket rm $($bucket.Name)
+				scoop bucket add $($bucket.Name) $($bucket.URL)
+			}
+			else {
+				Write-Host "The '$($bucket.Name)' bucket already exists with $manifestCount manifests."
+			}
 		}
 	}
 }
 
-# Function to install Chocolatey
+
 function Install-Chocolatey {
-	if (-not (Get-Command choco -ErrorAction SilentlyContinue)) {
+	# Check if Chocolatey is installed
+	if (-not (Get-Command -Name choco.exe -ErrorAction SilentlyContinue)) {
 		Write-Host "Installing Chocolatey..."
 		Set-ExecutionPolicy Bypass -Scope Process -Force
 		Invoke-WebRequest https://community.chocolatey.org/install.ps1 -OutFile install.ps1
@@ -40,10 +55,13 @@ function Install-Chocolatey {
 	}
  else {
 		Write-Host "Chocolatey is already installed."
-		Write-Host "Attempting to upgrade Chocolatey..."
-		choco upgrade chocolatey -y
 	}
+
+	# Ensure Chocolatey is up to date
+	Write-Host "Upgrading Chocolatey to the latest version..."
+	choco upgrade chocolatey -y
 }
+
 
 # Function to install Winget
 function Install-Winget {
