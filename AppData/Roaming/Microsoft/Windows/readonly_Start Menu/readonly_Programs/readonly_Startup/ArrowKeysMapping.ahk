@@ -47,6 +47,15 @@ return
     Run, "wt.exe"
 return
 
+CapsLock & g::
+{
+    Send, ^a  ; Send Ctrl + A (Select All)
+    Send, ^c  ; Send Ctrl + C (Copy)
+    Send, {Right}  ; Send Right Arrow key
+    Return
+}
+
+
 ; Vim-Like Navigation with CapsLock + H, J, K, L
 CapsLock & h::Send {Left}    ; Move cursor left
 CapsLock & j::Send {Down}    ; Move cursor down
@@ -102,7 +111,7 @@ CapsLock & c::Send c
 CapsLock & d::Send d
 CapsLock & e::Send e
 CapsLock & f::Send f
-CapsLock & g::Send g
+;CapsLock & g::Send g
 CapsLock & q::Send q
 CapsLock & s::Send s
 CapsLock & t::Send t
