@@ -82,12 +82,19 @@ function Move-ConfigFolder {
 # Call the function to move the config folder
 Move-ConfigFolder
 
-# Define the installer directory using the $HOME environment variable
-$installerDir = Join-Path -Path $HOME -ChildPath ".local\share\chezmoi\AppData\Local\installer"
-# Example of listing files in the installer directory
-if (Test-Path $installerDir) {
-    Get-ChildItem -Path $installerDir
+function Move-FirstTimeRunToDesktop {
+    $scriptName = "firsttimerun.ps1"
+    $sourcePath = Join-Path -Path $env:USERPROFILE -ChildPath ".local\share\chezmoi\AppData\Local\installer\$scriptName"
+    $desktopPath = Join-Path -Path $env:USERPROFILE -ChildPath "Desktop\$scriptName"
+
+    # Check if the source file exists
+    if (Test-Path $sourcePath) {
+        # Move the script to the Desktop
+        Move-Item -Path $sourcePath -Destination $desktopPath -Force
+        Write-Host "Moved $scriptName to $desktopPath"
+    }
+    else {
+        Write-Host "Source file $sourcePath does not exist."
+    }
 }
-else {
-    Write-Host "Installer directory does not exist: $installerDir"
-}
+Move-FirstTimeRunToDesktop
