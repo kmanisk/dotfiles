@@ -10,6 +10,16 @@ local opts = { noremap = true, silent = true }
 
 -- System Integration
 vim.g.clipboard = vim.g.vscode_clipboard
+-- Smarter Search
+-- Ignore case during search unless uppercase is used
+vim.o.ignorecase = true -- Case insensitive search
+vim.o.smartcase = true -- Override ignorecase if search pattern contains uppercase
+
+-- Highlight search matches
+vim.o.hlsearch = true
+
+-- Incremental search (shows matches as you type)
+vim.o.incsearch = true
 
 --[[
 =============================================================================

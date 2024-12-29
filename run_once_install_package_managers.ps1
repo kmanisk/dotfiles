@@ -75,50 +75,6 @@ function Install-Winget {
 	}
 }
 
-# Function to merge Scoop package lists
-function Merge-ScoopFiles {
-	param (
-		[string]$minimalFile,
-		[string]$fullFile,
-		[string]$mergedFile
-	)
-
-	# Check if files exist before merging
-	if ((Test-Path $minimalFile) -and (Test-Path $fullFile)) {
-		Get-Content $minimalFile, $fullFile | Sort-Object -Unique | Set-Content $mergedFile
-		Write-Host "Merged $minimalFile and $fullFile into $mergedFile."
-	}
- elseif (Test-Path $minimalFile) {
-		Copy-Item $minimalFile $mergedFile
-		Write-Host "Only $minimalFile found. Copied to $mergedFile."
-	}
- elseif (Test-Path $fullFile) {
-		Copy-Item $fullFile $mergedFile
-		Write-Host "Only $fullFile found. Copied to $mergedFile."
-	}
- else {
-		Write-Host "Neither $minimalFile nor $fullFile exists."
-	}
-}
-
-# Function to install Scoop packages
-function Install-ScoopPackages {
-	param (
-		[string]$packageListFile
-	)
-
-	if (-not (Test-Path $packageListFile)) {
-		Write-Host "Package list file $packageListFile does not exist."
-		return
-	}
-
-	Write-Host "Installing tools via Scoop from $packageListFile..."
-	Get-Content $packageListFile | ForEach-Object {
-		if ($_ -match '\S') {
-			scoop install $_
-		}
-	}
-}
 
 # Function to install Chocolatey packages
 function Install-ChocoPackages {
@@ -134,9 +90,6 @@ function Install-ChocoPackages {
 
 # Paths
 $installerPath = "$HOME\.local\share\chezmoi\AppData\Local\installer"
-$minimalScoopFile = "$installerPath\scoop.txt"
-$fullScoopFile = "$installerPath\scoop_full.txt"
-$mergedScoopFile = "$installerPath\scoop_merged.txt"
 $chocoMinimalFile = "$installerPath\choco_minimal.txt"
 $chocoFullFile = "$installerPath\choco_full.txt"
 
@@ -152,14 +105,6 @@ Install-Winget
 $choice = Read-Host "Choose installation type (minimal/full)"
 switch ($choice.ToLower()) {
 	"minimal" {
-		# Install minimal Scoop packages
-		if (Test-Path $minimalScoopFile) {
-			Write-Host "Installing minimal packages via Scoop..."
-			Install-ScoopPackages -packageListFile $minimalScoopFile
-		}
-		else {
-			Write-Host "Minimal Scoop package list not found."
-		}
 
 		# Install minimal Chocolatey packages
 		if (Test-Path $chocoMinimalFile) {
@@ -171,15 +116,6 @@ switch ($choice.ToLower()) {
 		}
 	}
 	"full" {
-		# Install full Scoop packages
-		if (Test-Path $mergedScoopFile) {
-			Write-Host "Installing full packages via Scoop..."
-			Install-ScoopPackages -packageListFile $mergedScoopFile
-		}
-		else {
-			Write-Host "Full Scoop package list not found."
-		}
-
 		# Install full Chocolatey packages
 		if (Test-Path $chocoFullFile) {
 			Write-Host "Installing full packages via Chocolatey..."

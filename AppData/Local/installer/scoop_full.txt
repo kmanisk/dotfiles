@@ -1,4 +1,2 @@
 winaero-tweaker
 jetbrainsmono-nf-mono
-gh
-git
