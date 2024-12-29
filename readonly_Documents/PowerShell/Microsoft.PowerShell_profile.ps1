@@ -18,6 +18,8 @@ function uall{
     choco upgrade all
 }
 
+function g. { Set-Location .. }
+function .. { Set-Location ..\.. }
 function pcheck{
     scoop status
     winget upgrade

@@ -23,6 +23,29 @@ Send, ^a  ; Send Ctrl + A
 Send, {Backspace}  ; Send Backspace to delete all characters
 Return
 
+^+`;::  ; Ctrl + Shift + ;
+    ; Set the full path to the program
+    progToRun := "C:\Program Files\ueli\ueli.exe"
+    progName := "ueli.exe"  ; Use just the executable name to identify the process
+
+    ; Check if the program is already running by process name
+    Process, Exist, %progName%
+    if (ErrorLevel)
+    {
+        ; If the process is running, close it
+        Process, Close, %ErrorLevel%
+    }
+    else
+    {
+        ; If the process is not running, start it
+        Run, %progToRun%
+    }
+return
+
+; This triggers on Ctrl+Shift+[
+^+[::
+    Run, "wt.exe"
+return
 
 ; Vim-Like Navigation with CapsLock + H, J, K, L
 CapsLock & h::Send {Left}    ; Move cursor left
