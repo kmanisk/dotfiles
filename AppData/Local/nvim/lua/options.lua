@@ -1,44 +1,66 @@
 require "nvchad.options"
 
 -- add yours here!
-vim.opt.relativenumber = true
--- Set clipboard to use the system clipboard
 
-vim.opt.clipboard = ""
--- Automatically set filetype to vim for vifmrc file
-vim.cmd([[
-  augroup VifmrcFiletype
-    autocmd!
-    autocmd BufRead,BufNewFile $HOME/.vifm/vifmrc setlocal filetype=vim
-  augroup END
-]])
+-- local o = vim.o
+-- o.cursorlineopt ='both' -- to enable cursorline!
+--
+-- Load default NvChad options first
+require "nvchad.options"
 
+-- Basic settings
+local o = vim.o
+local wo = vim.wo
+local bo = vim.bo
 
-local M = {}
+-- Enable line numbers and relative line numbers
+o.number = true
+o.relativenumber = true
 
-M.mappings = {
-  -- Normal mode clipboard mappings
-  n = {
-    ["yy"] = { '"+yy', "Yank line to system clipboard" },
-    ["gp"] = { '"+p', "Paste from system clipboard" },
-    ["gP"] = { '"+P', "Paste before cursor from system clipboard" },
-  },
+-- Enable smart case for search (case-insensitive unless you use uppercase letters)
+o.smartcase = true
+o.ignorecase = true
 
-  -- Visual mode clipboard mappings
-  v = {
-    ["y"] = { '"+y', "Yank to system clipboard" },
-    ["<leader>y"] = { '"+y', "Yank to system clipboard (leader)" },
-    ["p"] = { '"+p', "Paste from system clipboard" },
-    ["J"] = { ":m .+1<CR>==", "Move line down" },
-    ["K"] = { ":m .-2<CR>==", "Move line up" },
-  },
+-- Enable cursorline (highlight the line where the cursor is)
+wo.cursorline = true
 
-  -- Visual block mode text movement
-  x = {
-    ["J"] = { ":move '>+1<CR>gv-gv", "Move block down" },
-    ["K"] = { ":move '<-2<CR>gv-gv", "Move block up" },
-  },
-}
+-- Show line numbers, but relative line numbers are more helpful for movement
+o.number = true
+o.relativenumber = true
 
-return M
+-- Enable search highlighting
+o.hlsearch = true
 
+-- Enable line wrapping for long lines
+o.wrap = false  -- Set to false for no wrap, true for wrapping
+
+-- Enable smart indentation (for auto indent)
+o.smartindent = true
+o.tabstop = 4
+o.shiftwidth = 4
+o.expandtab = true  -- Converts tabs to spaces
+o.autoindent = true
+
+-- Enable line break at word boundary
+o.linebreak = true
+
+-- Enable smart case search
+o.smartcase = true
+
+-- Set the cursor type (e.g., block, vertical bar, underline)
+o.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50"
+
+-- Set the encoding for the file
+o.fileencoding = "utf-8"
+
+-- Set clipboard to use the system clipboard (only if supported)
+o.clipboard = "unnamedplus"  -- Allows use of system clipboard for copy-paste
+
+-- Set background (dark or light)
+o.background = "dark"  -- or "light"
+
+-- Enable line numbers
+wo.number = true
+
+-- Enable highlight search results
+o.hlsearch = true

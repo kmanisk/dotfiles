@@ -15,6 +15,7 @@ function ff($name) {
 }
 
 
+
 #only cd to the dir
 #function fcd {
 #    $dir = Get-ChildItem -Directory | Select-Object -ExpandProperty FullName | fzf --preview 'ls -a {1}' --height 40% --border
@@ -607,26 +608,26 @@ function sed($file, $find, $replace) {
 }
 
 # Define the function to set brightness based on a scale of 1 to 10
-function Set-Brightness {
-    param (
-        [int]$Level
-    )
-
-    # Ensure the level is between 1 and 10
-    if ($Level -lt 1 -or $Level -gt 10) {
-        Write-Output "Please enter a level between 1 and 10."
-        return
-    }
-
-    # Calculate brightness on a 0-100 scale
-    $brightnessLevel = ($Level - 1) * 10
-
-    # Get the brightness method and set brightness
-    $brightnessMethod = Get-WmiObject -Namespace root/wmi -Class WmiMonitorBrightnessMethods
-    $brightnessMethod.WmiSetBrightness(1, $brightnessLevel)
-
-    Write-Output "Brightness set to $brightnessLevel%"
-}
+#function Set-Brightness {
+#    param (
+#        [int]$Level
+#    )
+#
+#    # Ensure the level is between 1 and 10
+#    if ($Level -lt 1 -or $Level -gt 10) {
+#        Write-Output "Please enter a level between 1 and 10."
+#        return
+#    }
+#
+#    # Calculate brightness on a 0-100 scale
+#    $brightnessLevel = ($Level - 1) * 10
+#
+#    # Get the brightness method and set brightness
+#    $brightnessMethod = Get-WmiObject -Namespace root/wmi -Class WmiMonitorBrightnessMethods
+#    $brightnessMethod.WmiSetBrightness(1, $brightnessLevel)
+#
+#    Write-Output "Brightness set to $brightnessLevel%"
+#}
 
 # Create an alias for the function
 Set-Alias -Name bright -Value Set-Brightness

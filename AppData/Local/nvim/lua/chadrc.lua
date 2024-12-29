@@ -1,18 +1,24 @@
--- This file needs to have same structure as nvconfig.lua 
--- https://github.com/NvChad/ui/blob/v3.0/lua/nvconfig.lua
--- Please read that file to know all available options :( 
-
----@type ChadrcConfig
 local M = {}
-M.mappings = require "custom.mappings"
+
+-- UI Configuration
+M.ui = {
+	theme = "vscode_dark", -- Set the theme for Neovim
+	-- transparency = true, -- Enable transparency
+	-- statusline = {
+	-- 	theme = "vscode_colored", -- Statusline theme
+	-- 	separator_style = "round", -- Separator style for the statusline
+	-- },
+	statusline = {
+		theme = "vscode_colored", -- Choose a statusline theme (can be 'vscode', 'gruvbox', etc.)
+		separator_style = "round", -- Choose a style for the separators in the statusline
+	},
+}
 
 M.base46 = {
-	theme = "ashes",
-
-	-- hl_override = {
-	-- 	Comment = { italic = true },
-	-- 	["@comment"] = { italic = true },
-	-- },
+	theme = "vscode_dark", -- Change to your preferred base46 theme (e.g., 'tokyonight', 'gruvbox', etc.)
 }
+-- Add custom mappings here
+-- print("Loading chadrc.lua")
+M.mappings = require("custom.maps")
 
 return M
