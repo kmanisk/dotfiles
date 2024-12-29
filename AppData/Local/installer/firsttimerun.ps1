@@ -17,3 +17,5 @@ Write-Host "Installing first Core Packages" -ForegroundColor Yellow
 winget install twpayne.chezmoi
 winget install Git.Git
 winget install -e --id GitHub.cli
+winget install --id=Guru3D.Afterburner  -e
+winget install --id=Guru3D.RTSS  -e
