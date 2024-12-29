@@ -190,6 +190,7 @@ function dall {
     Write-Host "Pushing Everything" -ForegroundColor Green
     dp
     Write-Host ""  # Add an empty line for new line
+    Set-Location -Path $HOME
 }
 
 function gall {
