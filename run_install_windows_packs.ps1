@@ -32,3 +32,21 @@ $installerPath = "C:\Users\Manisk\AppData\Local\installer\MLWapp2.6.x64.exe"
 
 # Run the installer
 Start-Process -FilePath $installerPath -ArgumentList "/S" -NoNewWindow -Wait
+
+
+function Install-Spotify {
+    $userInput = Read-Host "Do you want to install Spotify? (y/n)"
+    
+    if ($userInput -eq 'y') {
+        Write-Host "Installing Spotify..."
+        Invoke-Expression "& { $(Invoke-WebRequest -useb 'https://raw.githubusercontent.com/SpotX-Official/spotx-official.github.io/main/run.ps1') } -new_theme"
+    }
+    elseif ($userInput -eq 'n') {
+        Write-Host "Spotify installation skipped."
+    }
+    else {
+        Write-Host "Invalid input. Please enter 'y' or 'n'."
+    }
+}
+
+Install-Spotify
