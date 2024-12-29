@@ -61,7 +61,7 @@ Install-Spotify
 
 function Move-ConfigFolder {
     $sourcePath = Join-Path -Path $env:USERPROFILE -ChildPath ".config\es"
-    $destinationPath = "C:\es"  # Set the destination to C:\es
+    $destinationPath = "C:\"  # Set the destination to C:\es
 
     # Check if the source folder exists
     if (Test-Path $sourcePath) {
