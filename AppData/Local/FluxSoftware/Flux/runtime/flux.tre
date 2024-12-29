@@ -1,0 +1,217 @@
+#define buttonfont
+Property fontname Calibri
+Property fontsize 28
+Property typecolor DD000000 DD000000 DD000000
+
+#define smallfont
+Property fontname Calibri
+Property fontsize 22
+
+#define subfont
+Property fontname Calibri
+Property fontsize 36
+Property fonttrack -4
+
+#define megafont
+Property fontname Calibri
+Property fontsize 44
+Property fonttrack -2
+
+#define labelfont
+Property fontname Calibri
+Property fontsize 28
+Property fontweight 700
+
+#define labeltop
+Property fontname Calibri
+Property fontsize 28
+Property fontweight 700
+
+#define labelstatus
+Property fontname Calibri
+Property fontsize 28
+
+#define linelabel
+Property fontname Calibri
+Property fontsize 20
+XConstraint 0, 1, 28
+YConstraint 0.5, 0.5, 0
+
+#define leftlabel
+Property fontname Calibri
+Property fontsize 24
+XConstraint 1, 0, -24
+YConstraint 0.5, 0.5, 0
+
+#define knoblabel2
+Property fontname Calibri
+Property fontsize 20
+
+#define bcenter
+XConstraint 0.5, 0.5, 2
+YConstraint 0.5, 0.5, -6
+
+#define font
+Property fontname Calibri
+Property fontsize 28
+
+flux/hours: root
+labelstatus
+Property textalign center
+
+flux/hamburger: root
+Property normalcursor
+Property mousedown 1
+
+flux/haiku: flux/presetback
+labelstatus
+Property textalign center
+
+flux/preseticon: flux/presetback
+
+flux/presetlabel: flux/presetback
+smallfont
+
+flux/presetback: root
+Property normalcursor
+Property mousedown 1
+
+flux/wrench: root
+Property showtarget flux/planetcontainer
+Property hidetarget flux/presetback
+Property hidetarget flux/mainslider
+Property hidetarget flux/mainline
+Property hidetarget flux/hamburger
+Property hidetarget flux/modetext
+Property showtarget flux/planetdone
+Property normalcursor
+Property mousedown 1
+Property setvisible 0
+
+flux/expandcolor: root
+buttonfont
+Property setvisible 0
+
+flux/cam: root
+Property setvisible 0
+Property multiply 1
+
+flux/expandcolor-label: flux/expandcolor
+bcenter
+
+flux/warm: flux/wave
+flux/wave: root
+flux/sun: flux/wave
+Property hidden 1
+flux/moon: flux/wave
+Property hidden 1
+
+flux/daylight: flux/wave
+Property XConstraint 0, 0, 12
+Property YConstraint 1, 1, -12
+smallfont
+
+flux/preview: flux/wave
+
+flux/previewtext: flux/previewlabel
+labelfont
+Property textalign center
+bcenter
+
+flux/previewlabel: flux/preview
+Property XConstraint 0.5, 0.5, 0
+Property YConstraint 0.5, 0.5, 0
+Property setvisible 0
+Property round 2
+
+flux/changeloc: flux/wave
+Property hitchildren 1
+
+flux/latitude: flux/changeloc
+smallfont
+
+flux/stepup: flux/stepback
+Property setautorepeat 1
+Property normalcursor
+
+flux/stepdown: flux/stepback
+Property setautorepeat 1
+Property normalcursor
+
+flux/stepback: flux/wake
+
+flux/wtime: flux/wake
+megafont
+Property textalign right
+MaintainOffset left
+YConstraint 0.5, 0.5, -5
+
+flux/wlabel: flux/wake
+font
+MaintainOffset left
+YConstraint 0.5, 0.5, 0
+
+flux/wake: root
+
+flux/modetext: root
+labelstatus
+#Property textalign right
+
+# mainslider
+flux/mainline: root
+
+flux/mainsliderlabel: flux/mainline
+knoblabel2
+XConstraint 0.5, 1, -4
+YConstraint 0, 0, 24
+
+flux/mainknob: flux/mainslider
+flux/mainslider: root
+Property slider 0
+
+# planetslider
+
+flux/planetdone: root
+Property pushtarget flux/wrench
+Property setvisible 0
+Property mousedown 1
+Property normalcursor
+
+flux/daysliderlabel: flux/sliderline0
+linelabel
+
+flux/nightsliderlabel: flux/sliderline1
+linelabel
+
+flux/latesliderlabel: flux/sliderline2
+linelabel
+
+flux/slider0label: flux/sliderline0
+leftlabel
+
+flux/slider1label: flux/sliderline1
+leftlabel
+
+flux/slider2label: flux/sliderline2
+leftlabel
+
+
+flux/dayknob: flux/planetslider0
+flux/nightknob: flux/planetslider1
+flux/lateknob: flux/planetslider2
+
+# hookup slider last so knobs work:
+flux/sliderline0: flux/planetcontainer
+flux/sliderline1: flux/planetcontainer
+flux/sliderline2: flux/planetcontainer
+
+flux/planetslider0: flux/planetcontainer
+Property slider 0
+flux/planetslider1: flux/planetcontainer
+Property slider 0
+flux/planetslider2: flux/planetcontainer
+Property slider 0
+
+flux/planetcontainer: root
+Property setvisible 0
+
