@@ -42,12 +42,15 @@ else {
 }
 
 
-function Install-Spotify {
+function Set-PermanentMachine {
     $userInput = Read-Host "Do you want to install Spotify? (y/n)"
     
     if ($userInput -eq 'y') {
         Write-Host "Installing Spotify..."
         Invoke-Expression "& { $(Invoke-WebRequest -useb 'https://raw.githubusercontent.com/SpotX-Official/spotx-official.github.io/main/run.ps1') } -new_theme"
+        winget install --id=Guru3D.Afterburner  -e
+        winget install --id=Guru3D.RTSS  -e
+        winget install -e --id TechPowerUp.NVCleanstall
     }
     elseif ($userInput -eq 'n') {
         Write-Host "Spotify installation skipped."
@@ -57,7 +60,7 @@ function Install-Spotify {
     }
 }
 
-Install-Spotify
+Set-PermanentMachine
 
 function Move-ConfigFolder {
     $sourcePath = Join-Path -Path $env:USERPROFILE -ChildPath ".config\es"
