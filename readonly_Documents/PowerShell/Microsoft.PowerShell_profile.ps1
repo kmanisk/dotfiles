@@ -649,6 +649,16 @@ else {
 Set-Alias -Name z -Value __zoxide_z -Option AllScope -Scope Global -Force
 Set-Alias -Name zi -Value __zoxide_zi -Option AllScope -Scope Global -Force
 
+# This is an example of a macro that you might use to execute a command.
+# This will add the command to history.
+Set-PSReadLineKeyHandler -Key Ctrl+Shift+b `
+                         -BriefDescription BuildCurrentDirectory `
+                         -LongDescription "Build the current directory" `
+                         -ScriptBlock {
+    [Microsoft.PowerShell.PSConsoleReadLine]::RevertLine()
+    [Microsoft.PowerShell.PSConsoleReadLine]::Insert("dall")
+    [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
+}
 
 
 Set-Alias lvim 'C:\Users\Manisk\.local\bin\lvim.ps1'
