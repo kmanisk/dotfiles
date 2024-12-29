@@ -1,4 +1,5 @@
 neovim
+chezmoi
 ripgrep
 grep
 bat
