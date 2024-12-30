@@ -6,6 +6,11 @@ if (-not (Get-Module -ListAvailable -Name Terminal-Icons)) {
 }
 Import-Module -Name Terminal-Icons
 
+
+function ff-logo {
+    fastfetch --logo "source=$HOME\AppData\Roaming\fastfetch\logo.txt" --logo-type file
+}
+
 # dotfiles Management
 $DotFilesPath = "G:\dotfiles"
 function ff($name) {
