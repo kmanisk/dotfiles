@@ -42,7 +42,6 @@ else
 	require("test")
 	require("cusmap")
 	require("plugins.themes.vscode")
-	require("plugins.themes.newvscode")
 	-- require("plugconfig.plugcode")
 	-- require("plugins.session")
 	-- require("plugconfig.session")
@@ -51,6 +50,15 @@ else
 	vim.schedule(function()
 		require("mappings")
 	end)
+end
+
+-- Dynamically load all Lua files from the plugconfig directory
+local plugconfig_dir = vim.fn.stdpath("config") .. "/lua/plugconfig/"
+local plugfiles = vim.fn.glob(plugconfig_dir .. "*.lua", false, true)
+
+for _, file in ipairs(plugfiles) do
+	local name = vim.fn.fnamemodify(file, ":t:r") -- Get the file name without extension
+	require("plugconfig." .. name) -- Dynamically require each Lua file
 end
 
 -- Automatically source mappings.lua when saved

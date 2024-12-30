@@ -31,4 +31,7 @@ return {
 		"nvim-java/nvim-java", -- Install nvim-java plugin
 		dependencies = { "nvim-lua/plenary.nvim" }, -- Dependency for nvim-java
 	},
+	{
+		"Mofiqul/vscode.nvim",
+	},
 }

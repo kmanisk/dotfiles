@@ -1,7 +1,7 @@
 {
   "LuaSnip": { "branch": "master", "commit": "33b06d72d220aa56a7ce80a0dd6f06c70cd82b9d" },
   "NvChad": { "branch": "v2.5", "commit": "bbc3d43db088c141b142a40cd5f717635833a54e" },
-  "auto-save.nvim": { "branch": "main", "commit": "979b6c82f60cfa80f4cf437d77446d0ded0addf0" },
+  "autosave.nvim": { "branch": "main", "commit": "348f72cf0241e3e736e3396c4834def2f8ef8d10" },
   "base46": { "branch": "v2.5", "commit": "40943fc668bf8f1caa4cc45f71c784cf0d3cc34f" },
   "better-escape.vim": { "branch": "master", "commit": "6b16a45a839727977277f6ab11bded63e9ed86bb" },
   "cmp-buffer": { "branch": "main", "commit": "3022dbc9166796b644a841a02de8dd1cc1d311fa" },
@@ -43,5 +43,6 @@
   "vifm.vim": { "branch": "master", "commit": "69fe7ec76aab14049c15e4819d358d496d4c18e9" },
   "vim-be-good": { "branch": "master", "commit": "0ae3de14eb8efc6effe7704b5e46495e91931cc5" },
   "volt": { "branch": "main", "commit": "3f9abc92d7eda77c16ef540a86764d8a499137eb" },
+  "vscode.nvim": { "branch": "main", "commit": "18097b7aa47538afa780c821309c8b992972d726" },
   "which-key.nvim": { "branch": "main", "commit": "8ab96b38a2530eacba5be717f52e04601eb59326" }
 }
