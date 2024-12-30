@@ -2,7 +2,7 @@ local M = {}
 
 -- UI Configuration
 M.ui = {
-	theme = "vscode_dark", -- Set the theme for Neovim
+	theme = "bearded-arc", -- Set the theme for Neovim
 	-- transparency = true, -- Enable transparency
 	-- statusline = {
 	-- 	theme = "vscode_colored", -- Statusline theme
@@ -15,10 +15,10 @@ M.ui = {
 }
 
 M.base46 = {
-	theme = "vscode_dark", -- Change to your preferred base46 theme (e.g., 'tokyonight', 'gruvbox', etc.)
+	theme = "bearded-arc", -- Change to your preferred base46 theme (e.g., 'tokyonight', 'gruvbox', etc.)
 }
 -- Add custom mappings here
 -- print("Loading chadrc.lua")
-M.mappings = require("custom.maps")
+-- M.mappings = require("custom.maps")
 
 return M

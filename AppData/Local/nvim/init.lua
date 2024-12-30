@@ -40,10 +40,30 @@ else
 	require("options")
 	require("nvchad.autocmds")
 	require("test")
+	require("cusmap")
 	require("plugins.themes.vscode")
-	require("plugconfig.plugcode")
-
+	-- require("plugconfig.plugcode")
+	-- require("plugins.session")
+	-- require("plugconfig.session")
+	--require("plugconfig.noiconf")
+	-- require("custom.reload")
 	vim.schedule(function()
 		require("mappings")
 	end)
 end
+
+-- Automatically source mappings.lua when saved
+vim.api.nvim_create_autocmd("BufWritePost", {
+	pattern = "lua/mappings.lua", -- Trigger only for mappings.lua in the lua directory
+	callback = function()
+		-- Construct the absolute path to mappings.lua
+		local mappings_path = vim.fn.stdpath("config") .. "\\lua\\mappings.lua"
+		if vim.fn.filereadable(mappings_path) == 1 then
+			vim.cmd("luafile " .. mappings_path) -- Source the file
+			print("Reloaded mappings.lua: " .. mappings_path)
+		else
+			print("Error: mappings.lua not found at " .. mappings_path)
+		end
+	end,
+	desc = "Automatically reload mappings.lua on save",
+})

@@ -27,4 +27,8 @@ return {
 	},
 
 	{ "CRAG666/code_runner.nvim", config = true },
+	{
+		"nvim-java/nvim-java", -- Install nvim-java plugin
+		dependencies = { "nvim-lua/plenary.nvim" }, -- Dependency for nvim-java
+	},
 }
