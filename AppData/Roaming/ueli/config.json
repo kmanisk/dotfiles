@@ -796,7 +796,7 @@
 				},
 				{
 					"description": "",
-					"executionArgument": "https://github.com/",
+					"executionArgument": "https://github.com/kmanisk/dotfiles",
 					"icon": {
 						"parameter": "",
 						"type": "URL"
