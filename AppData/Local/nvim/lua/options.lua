@@ -10,8 +10,15 @@ local bo = vim.bo
 o.number = true
 o.relativenumber = true
 
--- vim.o.shell = "pwsh"
--- vim.o.shellcmdflag = "-NoExit -Command"
+vim.o.shell = "pwsh"
+vim.opt.shellcmdflag =
+	"-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;"
+vim.cmd([[
+		let &shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+		let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+		set shellquote= shellxquote=
+  ]])
+
 -- Enable smart case for search (case-insensitive unless you use uppercase letters)
 o.smartcase = true
 o.ignorecase = true
