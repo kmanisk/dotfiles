@@ -2,16 +2,16 @@
 <NotepadPlus>
     <FindHistory nbMaxFindHistoryPath="10" nbMaxFindHistoryFilter="10" nbMaxFindHistoryFind="10" nbMaxFindHistoryReplace="10" matchWord="no" matchCase="no" wrap="yes" directionDown="yes" fifRecuisive="yes" fifInHiddenFolder="no" fifProjectPanel1="no" fifProjectPanel2="no" fifProjectPanel3="no" fifFilterFollowsDoc="no" fifFolderFollowsDoc="no" searchMode="0" transparencyMode="1" transparency="150" dotMatchesNewline="no" isSearch2ButtonsMode="no" regexBackward4PowerUser="no" bookmarkLine="no" purge="no">
         <Filter name="" />
+        <Find name="powershell" />
+        <Find name="profile" />
+        <Find name="\" />
+        <Find name="add_newline" />
         <Find name="bultin" />
         <Find name="header" />
         <Find name="color" />
         <Find name="regex" />
         <Find name="mouse" />
         <Find name="reload" />
-        <Find name="smart" />
-        <Find name="vifm" />
-        <Find name="der&gt;sn" />
-        <Find name="relative" />
         <Replace name="maniskpr" />
     </FindHistory>
     <History nbMaxFile="10" inSubMenu="no" customLength="-1">

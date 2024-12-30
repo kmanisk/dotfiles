@@ -42,6 +42,7 @@ else
 	require("test")
 	require("cusmap")
 	require("plugins.themes.vscode")
+	require("plugins.themes.newvscode")
 	-- require("plugconfig.plugcode")
 	-- require("plugins.session")
 	-- require("plugconfig.session")
