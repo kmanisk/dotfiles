@@ -2,7 +2,7 @@ local M = {}
 
 -- UI Configuration
 M.ui = {
-	theme = "catppuccin", -- Set the theme for Neovim
+	theme = "ayu_dark", -- Set the theme for Neovim
 	-- transparency = true, -- Enable transparency
 	-- statusline = {
 	-- 	theme = "vscode_colored", -- Statusline theme
@@ -15,7 +15,7 @@ M.ui = {
 }
 
 M.base46 = {
-	theme = "catppuccin", -- Change to your preferred base46 theme (e.g., 'tokyonight', 'gruvbox', etc.)
+	theme = "ayu_dark", -- Change to your preferred base46 theme (e.g., 'tokyonight', 'gruvbox', etc.)
 }
 -- Add custom mappings here
 -- print("Loading chadrc.lua")

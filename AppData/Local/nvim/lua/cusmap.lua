@@ -6,7 +6,7 @@ local map = vim.keymap.set
 ---- Normal mode
 map("n", "<Leader>w", ":write<CR>")
 map("n", "<Leader>a", ":wqa<CR>")
-map("n", "<Leader>x", ":wq<CR>")
+-- map("n", "<Leader>x", ":wq<CR>")
 
 ---- Insert mode
 map("i", ";w", "<esc>:write<CR>")
@@ -22,13 +22,9 @@ map({ "i", "n" }, "<C-k>", "<Up>", { desc = "Move up" })
 map({ "i", "n" }, "<C-j>", "<Down>", { desc = "Move down" })
 
 -- Mapping with a Lua function
-map("n", "<A-i>", function()
-	-- do something
-end, { desc = "Terminal toggle floating" })
 
 -- Force quit Neovim
 map("n", "<Leader><Tab>", ":qa!<CR>", { noremap = true, silent = true, desc = "Force quit Neovim" })
-map("n", "<Leader>q", ":q!<CR>", { desc = "Force quit Neovim" })
 
 -- Move focus between panes
 map("n", "<C-h>", "<C-w>h", { desc = "Move focus to the left pane" })
@@ -93,7 +89,6 @@ map("n", "<leader>fm", ":Vifm<CR>", { desc = "Open Vifm" })
 map("n", "<leader>e", ":NvimTreeToggle<CR>", { desc = "Toggle NvimTree" })
 map("n", "<S-j>", ":bnext<CR>", { desc = "Next Buffer" })
 map("n", "<S-k>", ":bprevious<CR>", { desc = "Previous Buffer" })
-map("n", "<leader>q", ":bdelete<CR>", { desc = "Close the buffer" })
 
 vim.keymap.set(
 	"n",

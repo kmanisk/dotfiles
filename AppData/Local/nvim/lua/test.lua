@@ -8,13 +8,11 @@ map({ "i", "n" }, "<C-j>", "<Down>", { desc = "Move down" })
 
 -- mapping with a lua function
 map("n", "<A-i>", function()
-    -- do something
+	-- do something
 end, { desc = "Terminal toggle floating" })
 
 --
 map("n", "<Leader><Tab>", ":qa!<CR>", { noremap = true, silent = true, desc = "Force quit Neovim" })
--- map("n", "<Leader>Q", ":qa!<CR>", { desc = "Force quit Neovim" })
-map("n", "<Leader>q", ":q!<CR>", { desc = "Force quit Neovim" })
 
 -- Move focus between panes
 map("n", "<C-h>", "<C-w>h", { desc = "Move focus to the left pane" })
@@ -71,8 +69,8 @@ map("n", "]}", "}zz", { noremap = true, silent = true, desc = "Jump to next bloc
 -- Map <leader>ls to run :Lazy sync
 -- map("n", "<leader>ls", ":Lazy sync<CR>", { noremap = true, silent = true, desc = "Sync lazy plugins" })
 
-vim.api.nvim_set_keymap("n", "<leader>sa", "ggVG", { noremap = true, silent = true })    -- Select all
-vim.api.nvim_set_keymap("n", "<leader>da", "ggVGd", { noremap = true, silent = true })   -- Delete all
+vim.api.nvim_set_keymap("n", "<leader>sa", "ggVG", { noremap = true, silent = true }) -- Select all
+vim.api.nvim_set_keymap("n", "<leader>da", "ggVGd", { noremap = true, silent = true }) -- Delete all
 
 vim.api.nvim_set_keymap("n", "<leader>ya", 'ggVG"+p', { noremap = true, silent = true }) -- Yank all to system clipboard
 
@@ -94,20 +92,20 @@ local builtin = require("telescope.builtin")
 
 -- Set the keymap for searching Neovim configuration files
 vim.keymap.set("n", "<leader>oc", function()
-    builtin.find_files({ cwd = vim.fn.stdpath("config") })
+	builtin.find_files({ cwd = vim.fn.stdpath("config") })
 end, { desc = "[S]earch [N]eovim files" })
 
 vim.keymap.set("n", "<leader>ss", function()
-    require("telescope.builtin").live_grep({
-        grep_open_files = true,
-        prompt_title = "Live Grep in Open Files",
-    })
+	require("telescope.builtin").live_grep({
+		grep_open_files = true,
+		prompt_title = "Live Grep in Open Files",
+	})
 end, { desc = "[S]earch [/] in Open Files" })
 
 -- Map <leader>cg to live grep within Neovim config directory
 vim.api.nvim_set_keymap(
-    "n",
-    "<leader>og",
-    ':lua require("telescope.builtin").live_grep({ cwd = vim.fn.stdpath("config") })<CR>',
-    { noremap = true, silent = true, desc = "[C]onfig [G]rep" }
+	"n",
+	"<leader>og",
+	':lua require("telescope.builtin").live_grep({ cwd = vim.fn.stdpath("config") })<CR>',
+	{ noremap = true, silent = true, desc = "[C]onfig [G]rep" }
 )
