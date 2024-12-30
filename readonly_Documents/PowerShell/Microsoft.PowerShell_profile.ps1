@@ -7,8 +7,52 @@ if (-not (Get-Module -ListAvailable -Name Terminal-Icons)) {
 Import-Module -Name Terminal-Icons
 
 
-function ff-logo {
-    fastfetch --logo "source=$HOME\AppData\Roaming\fastfetch\logo.txt" --logo-type file
+Function update-fzf {
+    Write-Host "Updating fzf cache..."
+    Get-ChildItem -Recurse -Directory $HOME | ForEach-Object { $_.FullName } > $HOME\fzf_dir_cache.txt
+    Get-ChildItem -Recurse -File $HOME | ForEach-Object { $_.FullName } > $HOME\fzf_file_cache.txt
+    Write-Host "fzf cache updated."
+}
+
+function rel{
+    & $profile
+    Write-Host "done"
+}
+Function cf {
+    $cacheFile = "$HOME\fzf_dir_cache.txt"
+    if (Test-Path $cacheFile) {
+        $selection = Get-Content $cacheFile | Where-Object { 
+            $_ -notlike "*\.vscode*" -and 
+            $_ -notlike "*\.vscode-oss*" -and
+            $_ -notlike "*\.chade*" -and
+            $_ -notlike "*\.git*" -and
+            $_ -notlike "*node_modules*"  # Add other directories you want to exclude
+        } | fzf --no-sort
+        if ($selection) {
+            Set-Location $selection
+        }
+    } else {
+        Write-Host "Directory cache not found. Generate it using 'Get-ChildItem'."
+    }
+}
+
+Function vic {
+    $cacheFile = "$HOME\fzf_file_cache.txt"
+    if (Test-Path $cacheFile) {
+        $selection = Get-Content $cacheFile | Where-Object { 
+            $_ -notlike "*\.vscode*" -and 
+            $_ -notlike "*\.vscode-oss*" -and
+            $_ -notlike "*\.chade*" -and
+            $_ -notlike "*\.git*" -and
+            $_ -notlike "*node_modules*"  # Add other files you want to exclude
+        } | fzf --no-sort
+        if ($selection) {
+            Set-Location (Split-Path $selection)
+            nvim $selection
+        }
+    } else {
+        Write-Host "File cache not found. Generate it using 'Get-ChildItem'."
+    }
 }
 
 # dotfiles Management
@@ -76,41 +120,41 @@ function pcheck{
 # }
 #
 
-function fcd {
-    # Get current location
-    $currentDir = Get-Location
-
-    # Add a "Go Home" option and "Go Up One Level" option
-    $directories = @(
-        "~"  # Go Home
-        ".." # Go Up One Level
-        "D:\" # D: drive root
-        "E:\" # E: drive root
-        "F:\" # F: drive root
-        "G:\" # G: drive root
-        (Get-ChildItem -Directory -Path $currentDir -Recurse) | Select-Object -ExpandProperty FullName
-    )
-
-    # Use fzf to let the user select a directory
-    $selectedDir = $directories | fzf --preview 'ls -a {1}' --height 40% --border
-
-    # If user selects a directory, change to that directory
-    if ($selectedDir) {
-        if ($selectedDir -eq "~") {
-            # Go to home directory
-            Set-Location $env:USERPROFILE
-        }
-        elseif ($selectedDir -eq "..") {
-            # Go up one directory
-            Set-Location (Split-Path $currentDir -Parent)
-        }
-        else {
-            # Change to the selected directory
-            Set-Location $selectedDir
-        }
-    }
-}
-
+#function fcd {
+#    # Get current location
+#    $currentDir = Get-Location
+#
+#    # Add a "Go Home" option and "Go Up One Level" option
+#    $directories = @(
+#        "~"  # Go Home
+#        ".." # Go Up One Level
+#        "D:\" # D: drive root
+#        "E:\" # E: drive root
+#        "F:\" # F: drive root
+#        "G:\" # G: drive root
+#        (Get-ChildItem -Directory -Path $currentDir -Recurse) | Select-Object -ExpandProperty FullName
+#    )
+#
+#    # Use fzf to let the user select a directory
+#    $selectedDir = $directories | fzf --preview 'ls -a {1}' --height 40% --border
+#
+#    # If user selects a directory, change to that directory
+#    if ($selectedDir) {
+#        if ($selectedDir -eq "~") {
+#            # Go to home directory
+#            Set-Location $env:USERPROFILE
+#        }
+#        elseif ($selectedDir -eq "..") {
+#            # Go up one directory
+#            Set-Location (Split-Path $currentDir -Parent)
+#        }
+#        else {
+#            # Change to the selected directory
+#            Set-Location $selectedDir
+#        }
+#    }
+#}
+#
 $env:EDITOR = "nvim"
 function q { exit }
 function st { chezmoi status }
