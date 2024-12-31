@@ -2,6 +2,9 @@
 <NotepadPlus>
     <FindHistory nbMaxFindHistoryPath="10" nbMaxFindHistoryFilter="10" nbMaxFindHistoryFind="10" nbMaxFindHistoryReplace="10" matchWord="no" matchCase="no" wrap="yes" directionDown="yes" fifRecuisive="yes" fifInHiddenFolder="no" fifProjectPanel1="no" fifProjectPanel2="no" fifProjectPanel3="no" fifFilterFollowsDoc="no" fifFolderFollowsDoc="no" searchMode="0" transparencyMode="1" transparency="150" dotMatchesNewline="no" isSearch2ButtonsMode="no" regexBackward4PowerUser="no" bookmarkLine="no" purge="no">
         <Filter name="" />
+        <Find name="default" />
+        <Find name="global" />
+        <Find name="globals" />
         <Find name="powershell" />
         <Find name="profile" />
         <Find name="\" />
@@ -9,21 +12,18 @@
         <Find name="bultin" />
         <Find name="header" />
         <Find name="color" />
-        <Find name="regex" />
-        <Find name="mouse" />
-        <Find name="reload" />
         <Replace name="maniskpr" />
     </FindHistory>
     <History nbMaxFile="10" inSubMenu="no" customLength="-1">
-        <File filename="C:\Users\Manisk\AppData\Local\Temp\7zO87861B5D\init.lua" />
-        <File filename="C:\Users\Manisk\AppData\Local\Temp\7zO8786D50D\init.lua" />
-        <File filename="C:\Users\Manisk\AppData\Local\nvim\lua\kickstart\plugins\neo-tree.lua" />
-        <File filename="C:\Users\Manisk\AppData\Local\nvim\lua\custom\plugins\init.lua" />
-        <File filename="C:\Users\Manisk\AppData\Local\nvim\lua\kickstart\health.lua" />
-        <File filename="C:\Users\Manisk\Desktop\backup nvim\lua\plugins\myplugins.lua" />
         <File filename="C:\Users\Manisk\Desktop\backup nvim\lua\mappings.lua" />
         <File filename="C:\Users\Manisk\AppData\Local\nvim\lua\configs\conform.lua" />
         <File filename="C:\Users\Manisk\AppData\Local\lvim\config.lua" />
+        <File filename="C:\Users\Manisk\Desktop\application.docx" />
+        <File filename="C:\Users\Manisk\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json" />
+        <File filename="C:\Users\Manisk\AppData\Roaming\VSCodium\User\keybindings.json" />
+        <File filename="C:\Users\Manisk\Documents\PowerShell\Microsoft.PowerShell_profile.ps1" />
+        <File filename="C:\Users\Manisk\Desktop\backup nvim\lua\user\vscode_keymaps.lua" />
+        <File filename="C:\Users\Manisk\AppData\Local\nvim\init.lua" />
     </History>
     <ProjectPanels>
         <ProjectPanel id="0" workSpaceFile="" />
@@ -41,7 +41,7 @@
         <GUIConfig name="ScintillaViewsSplitter">vertical</GUIConfig>
         <GUIConfig name="UserDefineDlg" position="undocked">hide</GUIConfig>
         <GUIConfig name="TabSetting" replaceBySpace="no" size="4" backspaceUnindent="no" />
-        <GUIConfig name="AppPosition" x="424" y="136" width="1356" height="770" isMaximized="no" />
+        <GUIConfig name="AppPosition" x="486" y="99" width="1356" height="770" isMaximized="no" />
         <GUIConfig name="FindWindowPosition" left="1129" top="622" right="1732" bottom="981" isLessModeOn="no" />
         <GUIConfig name="FinderConfig" wrappedLines="no" purgeBeforeEverySearch="no" showOnlyOneEntryPerFoundLine="yes" />
         <GUIConfig name="noUpdate" intervalDays="15" nextUpdateDate="20250113">no</GUIConfig>

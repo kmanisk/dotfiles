@@ -61,18 +61,49 @@ for _, file in ipairs(plugfiles) do
 	require("plugconfig." .. name) -- Dynamically require each Lua file
 end
 
--- Automatically source mappings.lua when saved
 vim.api.nvim_create_autocmd("BufWritePost", {
-	pattern = "lua/mappings.lua", -- Trigger only for mappings.lua in the lua directory
+	pattern = {
+		"mappings.lua", -- Trigger for mappings.lua
+		"cusmap.lua", -- Trigger for cusmap.lua
+		"test.lua", -- Trigger for test.lua
+		"options.lua", -- Trigger for options.lua
+	},
 	callback = function()
-		-- Construct the absolute path to mappings.lua
-		local mappings_path = vim.fn.stdpath("config") .. "\\lua\\mappings.lua"
-		if vim.fn.filereadable(mappings_path) == 1 then
-			vim.cmd("luafile " .. mappings_path) -- Source the file
-			print("Reloaded mappings.lua: " .. mappings_path)
-		else
-			print("Error: mappings.lua not found at " .. mappings_path)
+		-- List of files to reload
+		local files_to_reload = {
+			"mappings.lua",
+			"cusmap.lua",
+			"test.lua",
+			"options.lua",
+		}
+
+		for _, file_name in ipairs(files_to_reload) do
+			-- Construct the full path to each file
+			local file_path = vim.fn.stdpath("config") .. "\\" .. file_name
+
+			-- Check if the file is readable
+			if vim.fn.filereadable(file_path) == 1 then
+				-- Source the file to reload
+				vim.cmd("luafile " .. file_path)
+			-- print("Reloaded " .. file_name)
+			else
+				-- print("Error: " .. file_name .. " not found at " .. file_path)
+			end
 		end
 	end,
-	desc = "Automatically reload mappings.lua on save",
+	desc = "Automatically reload specific Lua files on save",
 })
+-- vim.api.nvim_create_autocmd("BufWritePost", {
+-- 	pattern = "lua/mappings.lua", -- Trigger only for mappings.lua in the lua directory
+-- 	callback = function()
+-- 		-- Construct the absolute path to mappings.lua
+-- 		local mappings_path = vim.fn.stdpath("config") .. "\\lua\\mappings.lua"
+-- 		if vim.fn.filereadable(mappings_path) == 1 then
+-- 			vim.cmd("luafile " .. mappings_path) -- Source the file
+-- 			-- print("Reloaded mappings.lua: " .. mappings_path)
+-- 		else
+-- 			-- print("Error: mappings.lua not found at " .. mappings_path)
+-- 		end
+-- 	end,
+-- 	desc = "Automatically reload mappings.lua on save",
+-- })

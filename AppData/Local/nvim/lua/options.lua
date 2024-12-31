@@ -10,6 +10,7 @@ local bo = vim.bo
 o.number = true
 o.relativenumber = true
 
+vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 vim.o.shell = "pwsh"
 vim.opt.shellcmdflag =
 	"-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;"

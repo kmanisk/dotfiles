@@ -49,31 +49,6 @@ map("n", "<C-d>", "<C-d>zz", { desc = "Scroll down and center" })
 
 -- Map Ctrl+u to scroll up with centering
 map("n", "<C-u>", "<C-u>zz", { desc = "Scroll up and center" })
-
--- Yank to system clipboard in normal and visual mode
-map("v", "y", '"+y', { noremap = true, silent = true })
-map("n", "yy", '"+yy', { noremap = true, silent = true })
-map("n", "p", '"+p', { noremap = true, silent = true })
-map("v", "<leader>y", '"+y', { noremap = true, silent = true })
-map("v", "p", '"+p', { noremap = true, silent = true })
-
--- Paste from system clipboard with specific behavior
-map("n", "gp", 'o<Esc>"+p', { noremap = true, silent = true })
-map("n", "gP", 'O<Esc>"+P', { noremap = true, silent = true })
-
--- Prevent content from being placed in clipboard when deleting (use black hole register)
-map("n", "d", '"_d', { noremap = true, silent = true })
-map("n", "dd", '"_dd', { noremap = true, silent = true })
-map("v", "d", '"_d', { noremap = true, silent = true })
-map("v", "D", '"_D', { noremap = true, silent = true })
-
--- Map <Leader>d to yank to clipboard
-map("n", "<Leader>d", '"+y', { noremap = true, silent = true })
-map("v", "<Leader>d", '"+y', { noremap = true, silent = true })
-
--- Replace paste with black hole register
-map("v", "p", '"_dP', { noremap = true, silent = true })
-
 -- Map <leader>ls to run :Lazy sync
 map("n", "<leader>Ls", ":Lazy sync<CR>", { noremap = true, silent = true, desc = "Sync lazy plugins" })
 

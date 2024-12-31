@@ -6,7 +6,10 @@ local opts = { noremap = true, silent = true }
 -- map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>")
 -- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
+--
 
+-- For nvim-cmp or other completion plugins
+vim.api.nvim_set_keymap("i", "<C-y>", "cmp.mapping.confirm({ select = true })", { noremap = true, silent = true })
 -- Map 'jk' to 'zz' in normal mode
 map("n", "j", "jzz", { noremap = true, silent = true })
 map("n", "k", "kzz", { noremap = true, silent = true })
@@ -16,7 +19,6 @@ map("n", "<leader>e", ":NvimTreeToggle<CR>", { desc = "Toggle NvimTree" })
 map("n", "<A-d>", ":NvimTreeClose<CR>", { desc = "Close NvimTree" })
 map("n", "<S-j>", ":bnext<CR>", { desc = "Next Buffer" })
 map("n", "<S-k>", ":bprevious<CR>", { desc = "Previous Buffer" })
-map("n", "<Leader>t", ":enew<CR>", { desc = "Open a new tab" })
 map("n", "<leader>j", "J")
 map("v", "<", "<gv", opts)
 map("v", ">", ">gv", opts)
@@ -27,20 +29,40 @@ map("x", "K", ":move '<-2<CR>gv-gv", opts)
 
 -- Remove default mappings
 local nomap = vim.keymap.del
+-- removed htoggleTerm
 nomap("n", "<leader>h")
+-- removed vtoggleTerm
 nomap("n", "<leader>v")
--- nomap("n", "<leader>x")
+nomap("n", "<leader>b")
+nomap("n", "<leader>x")
+nomap("n", "<C-n>")
 nomap("n", "<space>wk")
+nomap("n", "<space>n")
 nomap("n", "<space>wK")
 nomap("n", "<Tab>")
 nomap("n", "<S-Tab>")
+nomap("n", "<A-v>")
+nomap("n", "<A-i>")
+nomap("t", "<C-x>")
+nomap("n", "<leader>rn")
 -- nomap("n", "<M-i>")
 -- nomap("n", "<M-v>")
-
--- Vertiafcal split with Alt + v
 --
+vim.api.nvim_set_keymap("n", "<S-Right>", ":vertical resize +5<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<S-Left>", ":vertical resize -5<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<S-Down>", ":resize +5<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<S-Up>", ":resize -5<CR>", { noremap = true, silent = true })
 
-vim.api.nvim_set_keymap("n", "<A-V>", ":vsplit<CR>", { noremap = true, silent = true, desc = "Vertical split" })
+-- overrided keymaps by from the base nvchad
+map("n", "<leader>q", function()
+	require("nvchad.tabufline").close_buffer()
+end, { desc = "buffer close" })
+map("n", "<leader>n", "<cmd>enew<CR>", { desc = "buffer new" })
+
+vim.keymap.set({ "n", "t" }, "<A-;>", function()
+	require("nvchad.term").toggle({ pos = "sp", id = "htoggleTerm" })
+end, { desc = "Toggle terminal horizontally" })
+vim.api.nvim_set_keymap("n", "<A-v>", ":vsplit<CR>", { noremap = true, silent = true, desc = "Vertical split" })
 
 -- Horizontal split with Alt + h
 vim.api.nvim_set_keymap("n", "<A-h>", ":split<CR>", { noremap = true, silent = true, desc = "Horizontal split" })
@@ -58,4 +80,68 @@ function InputCommand()
 	local command = vim.fn.input("Shell command: ")
 	vim.cmd("!" .. command)
 end
-return {} -- Ensure this file returns a table
+
+-- map({ "n", "t" }, "<A-i>", function()
+-- 	require("nvchad.term").toggle({ pos = "float", id = "floatTerm" })
+-- end, { desc = "terminal toggle floating term" })
+
+-- Yank to system clipboard in normal and visual mode
+-- map("v", "y", '"+y', { noremap = true, silent = true })
+-- map("n", "yy", '"+yy', { noremap = true, silent = true })
+-- map("n", "p", '"+p', { noremap = true, silent = true })
+-- map("v", "<leader>y", '"+y', { noremap = true, silent = true })
+-- map("v", "p", '"+p', { noremap = true, silent = true })
+--
+-- -- Paste from system clipboard with specific behavior
+-- map("n", "gp", 'o<Esc>"+p', { noremap = true, silent = true })
+-- map("n", "gP", 'O<Esc>"+P', { noremap = true, silent = true })
+--
+-- -- Prevent content from being placed in clipboard when deleting (use black hole register)
+-- map("n", "d", '"_d', { noremap = true, silent = true })
+-- map("n", "dd", '"_dd', { noremap = true, silent = true })
+-- map("v", "d", '"_d', { noremap = true, silent = true })
+-- map("v", "D", '"_D', { noremap = true, silent = true })
+--
+-- -- Map <Leader>d to yank to clipboard
+-- map("n", "<Leader>d", '"+y', { noremap = true, silent = true })
+-- map("v", "<Leader>d", '"+y', { noremap = true, silent = true })
+--
+-- -- Replace paste with black hole register
+-- map("v", "p", '"_dP', { noremap = true, silent = true })
+--
+--
+-- Yank to system clipboard for any 'y' and '<Leader>d' mappings
+map("v", "y", '"+y', { noremap = true, silent = true }) -- Visual mode yank to clipboard
+map("n", "yy", '"+yy', { noremap = true, silent = true }) -- Normal mode double 'yy' to clipboard
+map("n", "p", '"+p', { noremap = true, silent = true }) -- Paste from system clipboard
+-- map("v", "<leader>y", '"+y', { noremap = true, silent = true }) -- Yank with <Leader> to clipboard
+map("v", "p", '"+p', { noremap = true, silent = true }) -- Paste from clipboard in visual mode
+
+-- Special handling for paste operations with specific behavior
+map("n", "gp", 'o<Esc>"+p', { noremap = true, silent = true }) -- Paste in new line after cursor
+map("n", "gP", 'O<Esc>"+P', { noremap = true, silent = true }) -- Paste in new line before cursor
+
+-- Prevent content from being placed in clipboard when deleting, use black hole register
+map("n", "d", '"_d', { noremap = true, silent = true }) -- Delete in normal mode without affecting clipboard
+map("n", "dd", '"_dd', { noremap = true, silent = true }) -- Delete whole line without clipboard
+map("v", "d", '"_d', { noremap = true, silent = true }) -- Delete in visual mode without clipboard
+map("v", "D", '"_D', { noremap = true, silent = true }) -- Delete to the end of line without clipboard
+
+-- Map <Leader>d to yank to system clipboard
+map("n", "<Leader>d", '"+y', { noremap = true, silent = true }) -- Leader+d for system clipboard
+map("v", "<Leader>d", '"+y', { noremap = true, silent = true }) -- Leader+d for system clipboard in visual mode
+
+-- Replace paste with black hole register (paste the last delete)
+map("v", "p", '"_dP', { noremap = true, silent = true }) -- Replace paste with black hole register
+
+-- Yank 'ciw' and 'ci"' in a custom register (e.g., `a`-`g` registers) instead of system clipboard
+map("n", "ciw", '"ayiw', { noremap = true, silent = true }) -- Yank inner word to register `a`
+map("n", 'ci"', '"aiy"', { noremap = true, silent = true }) -- Yank inner quotes to register `a`
+map("n", "diw", '"adiw', { noremap = true, silent = true }) -- Delete inner word to register `a`
+map("n", 'di"', '"adi"', { noremap = true, silent = true }) -- Delete inner quotes to register `a`
+
+-- Ensure the `x` key never copies to the system clipboard
+map("n", "x", '"_x', { noremap = true, silent = true }) -- `x` uses black hole register
+
+-- Ensure 'yi"' yanks inner quotes into register 'a'
+map("n", 'yi"', '"ayi"', { noremap = true, silent = true }) -- Yank inner quotes to register `a`

@@ -56,6 +56,7 @@ set norunexec
 
 " Selected color scheme
 
+"colorscheme papercolor-dark
 colorscheme papercolor-dark
 "highlight Normal guibg=none
 
@@ -286,7 +287,9 @@ nnoremap J :tabnext<cr>
 nnoremap <space>q :tabclose<cr>
 nnoremap <space>c :change<cr>
 nnoremap <space>nf :mkcd<space>
+nnoremap A :mkcd<space>
 nnoremap <space>nd :touch<space>
+nnoremap a :touch<space>
 nnoremap <space> <nop> 
 nnoremap <space>e :!explorer.exe . <cr>
 nnoremap <space>g :!powershell -Command "Start-Process wt.exe -ArgumentList '-d', (Get-Location).Path"<cr>
@@ -337,9 +340,14 @@ elseif executable('xsel')
 endif
 
 " Mappings for faster renaming
+" nvim tree like rename e rename file name no extension
+"nnoremap e cw<c-a>
+
 nnoremap I cw<c-a>
+nnoremap e cw<c-a>
 nnoremap cc cw<c-u>
 nnoremap A cw
+nnoremap r cw
 nnoremap cw cW
 nnoremap cW cw
 map <C-h> :wincmd h<CR>
@@ -349,6 +357,7 @@ nnoremap q :q<cr>
 " Open console in current directory
 "nnoremap ,t :!st &<cr>
 nnoremap ,t :!wt &<cr>
+nnoremap <space>t :!wt &<cr>
 
 " Open editor to edit vifmrc and apply settings after returning to vifm
 nnoremap ,c :write | edit $MYVIFMRC | restart<cr>

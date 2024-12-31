@@ -2,7 +2,7 @@ local M = {}
 
 -- UI Configuration
 M.ui = {
-	theme = "ayu_dark", -- Set the theme for Neovim
+	theme = "doomchad", -- Set the theme for Neovim
 	-- transparency = true, -- Enable transparency
 	-- statusline = {
 	-- 	theme = "vscode_colored", -- Statusline theme
@@ -15,8 +15,19 @@ M.ui = {
 }
 
 M.base46 = {
-	theme = "ayu_dark", -- Change to your preferred base46 theme (e.g., 'tokyonight', 'gruvbox', etc.)
+	theme = "doomchad", -- Change to your preferred base46 theme (e.g., 'tokyonight', 'gruvbox', etc.)
 }
+
+-- M.create_fullsize_win = function(buf)
+-- 	local tbline_height = #vim.o.tabline == 0 and -1 or 0
+-- 	vim.api.nvim.open_win(buf, true, {
+-- 		row = 1 + tbline_height,
+-- 		col = 0,
+-- 		width = vim.o.columns,
+-- 		height = vim.o.lines - (3 + tbline_height),
+-- 		relative = "editor",
+-- 	})
+-- end
 -- Add custom mappings here
 -- print("Loading chadrc.lua")
 -- M.mappings = require("custom.maps")

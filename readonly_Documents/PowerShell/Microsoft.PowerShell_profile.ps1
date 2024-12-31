@@ -5,8 +5,24 @@ if (-not (Get-Module -ListAvailable -Name Terminal-Icons)) {
     Install-Module -Name Terminal-Icons -Scope CurrentUser -Force -SkipPublisherCheck
 }
 Import-Module -Name Terminal-Icons
+# Map vi and vim to nvim
+# Alias z to cd
+# Remove any existing aliases to avoid conflicts
+Remove-Item Alias:z -ErrorAction SilentlyContinue
+Remove-Item Alias:zi -ErrorAction SilentlyContinue
 
+# Alias z to cd
+Set-Alias -Name z -Value cd
 
+# Alias zi to cdi
+Set-Alias -Name zi -Value cdi
+Set-Alias -Name z -Value cd
+
+# Alias zi to cdi
+Set-Alias -Name zi -Value cdi
+Set-Alias -Name vim -Value nvim
+Set-Alias -Name nivm -Value nvim
+Set-Alias -Name vi -Value nvim
 Function update-fzf {
     Write-Host "Updating fzf cache..."
     Get-ChildItem -Recurse -Directory $HOME | ForEach-Object { $_.FullName } > $HOME\fzf_dir_cache.txt
