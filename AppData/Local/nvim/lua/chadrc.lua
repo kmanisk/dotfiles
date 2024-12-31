@@ -2,7 +2,7 @@ local M = {}
 
 -- UI Configuration
 M.ui = {
-	theme = "doomchad", -- Set the theme for Neovim
+	theme = "ashes", -- Set the theme for Neovim
 	-- transparency = true, -- Enable transparency
 	-- statusline = {
 	-- 	theme = "vscode_colored", -- Statusline theme
@@ -15,7 +15,7 @@ M.ui = {
 }
 
 M.base46 = {
-	theme = "doomchad", -- Change to your preferred base46 theme (e.g., 'tokyonight', 'gruvbox', etc.)
+	theme = "ashes", -- Change to your preferred base46 theme (e.g., 'tokyonight', 'gruvbox', etc.)
 }
 
 -- M.create_fullsize_win = function(buf)

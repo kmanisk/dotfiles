@@ -227,9 +227,6 @@ vim.api.nvim_set_keymap(
 	[[:execute "normal! f".nr2char(getchar())."a"<CR>]],
 	{ noremap = true, silent = true }
 )
-vim.api.nvim_set_keymap("n", "<leader>sa", "ggVG", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>ya", 'ggVGd"+p', { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>da", "ggVGd", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>d;", ":s/;$//<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>d,", ":s/,$//<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>;", "mzA;<Esc>`z", { noremap = true, silent = true })

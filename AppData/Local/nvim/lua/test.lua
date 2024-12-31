@@ -69,11 +69,6 @@ map("n", "]}", "}zz", { noremap = true, silent = true, desc = "Jump to next bloc
 -- Map <leader>ls to run :Lazy sync
 -- map("n", "<leader>ls", ":Lazy sync<CR>", { noremap = true, silent = true, desc = "Sync lazy plugins" })
 
-vim.api.nvim_set_keymap("n", "<leader>sa", "ggVG", { noremap = true, silent = true }) -- Select all
-vim.api.nvim_set_keymap("n", "<leader>da", "ggVGd", { noremap = true, silent = true }) -- Delete all
-
-vim.api.nvim_set_keymap("n", "<leader>ya", 'ggVG"+p', { noremap = true, silent = true }) -- Yank all to system clipboard
-
 map("n", "<leader><leader>", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>")
 -- Map Ctrl+; to toggle the terminal
 ---jtest

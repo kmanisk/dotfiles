@@ -42,57 +42,48 @@ else
 	require("test")
 	require("cusmap")
 	require("plugins.themes.vscode")
-	-- require("plugconfig.plugcode")
-	-- require("plugins.session")
-	-- require("plugconfig.session")
-	--require("plugconfig.noiconf")
-	-- require("custom.reload")
 	vim.schedule(function()
 		require("mappings")
 	end)
 end
 
--- Dynamically load all Lua files from the plugconfig directory
-local plugconfig_dir = vim.fn.stdpath("config") .. "/lua/plugconfig/"
-local plugfiles = vim.fn.glob(plugconfig_dir .. "*.lua", false, true)
+-- Automatically source mappings.lua when saved
 
-for _, file in ipairs(plugfiles) do
-	local name = vim.fn.fnamemodify(file, ":t:r") -- Get the file name without extension
-	require("plugconfig." .. name) -- Dynamically require each Lua file
+-- Automatically source mappings.lua on save
+vim.api.nvim_create_autocmd("BufWritePost", {
+	pattern = "lua/mappings.lua", -- Path relative to your Neovim config directory
+	command = "source %",
+})
+-- vim.api.nvim_create_autocmd("BufWritePost", {
+-- 	pattern = "lua/mappings.lua", -- Trigger only for mappings.lua
+-- 	callback = function()
+-- 		-- Source the current file
+-- 		vim.cmd("source " .. vim.fn.expand("%:p"))
+-- 		print("Reloaded mappings.lua")
+-- 	end,
+-- 	desc = "Automatically reload mappings.lua on save",
+-- })
+-- Automatically require all Lua files in pluginconfig directory
+--
+local plugin_config_dir = vim.fn.stdpath("config") .. "/lua/plugconfig"
+for _, file in ipairs(vim.fn.readdir(plugin_config_dir)) do
+	if file:match(".+%.lua$") then
+		require("plugconfig." .. file:match("^(.*)%.lua$"))
+	end
 end
 
-vim.api.nvim_create_autocmd("BufWritePost", {
-	pattern = {
-		"mappings.lua", -- Trigger for mappings.lua
-		"cusmap.lua", -- Trigger for cusmap.lua
-		"test.lua", -- Trigger for test.lua
-		"options.lua", -- Trigger for options.lua
-	},
-	callback = function()
-		-- List of files to reload
-		local files_to_reload = {
-			"mappings.lua",
-			"cusmap.lua",
-			"test.lua",
-			"options.lua",
-		}
-
-		for _, file_name in ipairs(files_to_reload) do
-			-- Construct the full path to each file
-			local file_path = vim.fn.stdpath("config") .. "\\" .. file_name
-
-			-- Check if the file is readable
-			if vim.fn.filereadable(file_path) == 1 then
-				-- Source the file to reload
-				vim.cmd("luafile " .. file_path)
-			-- print("Reloaded " .. file_name)
-			else
-				-- print("Error: " .. file_name .. " not found at " .. file_path)
-			end
-		end
-	end,
-	desc = "Automatically reload specific Lua files on save",
-})
+-- Automatically source all Lua files in the lua directory, excluding mappings.lua
+local lua_dir = vim.fn.stdpath("config") .. "/lua"
+-- Loop through all files in the lua directory
+for _, file in ipairs(vim.fn.readdir(lua_dir)) do
+	if file:match(".+%.lua$") and file ~= "mappings.lua" then
+		-- Construct the full path to the Lua file
+		local file_path = lua_dir .. "/" .. file
+		-- Source the Lua file
+		vim.cmd("source " .. file_path)
+	end
+end
+-- -- Automatically source mappings.lua when saved
 -- vim.api.nvim_create_autocmd("BufWritePost", {
 -- 	pattern = "lua/mappings.lua", -- Trigger only for mappings.lua in the lua directory
 -- 	callback = function()
@@ -100,9 +91,9 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 -- 		local mappings_path = vim.fn.stdpath("config") .. "\\lua\\mappings.lua"
 -- 		if vim.fn.filereadable(mappings_path) == 1 then
 -- 			vim.cmd("luafile " .. mappings_path) -- Source the file
--- 			-- print("Reloaded mappings.lua: " .. mappings_path)
+-- 			print("Reloaded mappings.lua: " .. mappings_path)
 -- 		else
--- 			-- print("Error: mappings.lua not found at " .. mappings_path)
+-- 			print("Error: mappings.lua not found at " .. mappings_path)
 -- 		end
 -- 	end,
 -- 	desc = "Automatically reload mappings.lua on save",

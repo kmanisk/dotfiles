@@ -27,27 +27,54 @@ map("v", "K", ":m .-2<CR>==", opts)
 map("x", "J", ":move '>+1<CR>gv-gv", opts)
 map("x", "K", ":move '<-2<CR>gv-gv", opts)
 
--- Remove default mappings
-local nomap = vim.keymap.del
--- removed htoggleTerm
-nomap("n", "<leader>h")
--- removed vtoggleTerm
-nomap("n", "<leader>v")
-nomap("n", "<leader>b")
-nomap("n", "<leader>x")
-nomap("n", "<C-n>")
-nomap("n", "<space>wk")
-nomap("n", "<space>n")
-nomap("n", "<space>wK")
-nomap("n", "<Tab>")
-nomap("n", "<S-Tab>")
-nomap("n", "<A-v>")
-nomap("n", "<A-i>")
-nomap("t", "<C-x>")
-nomap("n", "<leader>rn")
+-- -- Remove default mappings
+-- local nomap = vim.keymap.del
+-- -- removed htoggleTerm
+-- nomap("n", "<leader>h")
+-- -- removed vtoggleTerm
+-- nomap("n", "<leader>v")
+-- nomap("n", "<leader>b")
+-- nomap("n", "<leader>x")
+-- nomap("n", "<C-n>")
+-- nomap("n", "<space>wk")
+-- nomap("n", "<space>n")
+-- nomap("n", "<space>wK")
+-- nomap("n", "<Tab>")
+-- nomap("n", "<S-Tab>")
+-- nomap("n", "<A-v>")
+-- nomap("n", "<A-i>")
+-- nomap("t", "<C-x>")
+-- nomap("n", "<leader>rn")
 -- nomap("n", "<M-i>")
 -- nomap("n", "<M-v>")
 --
+--
+local nomap = vim.keymap.del
+
+-- Function to safely remove a keymap if it exists
+local function safe_remove_keymap(mode, key)
+	if vim.fn.maparg(key, mode) ~= "" then
+		nomap(mode, key)
+	end
+end
+
+-- Remove default mappings
+safe_remove_keymap("n", "<leader>h")
+safe_remove_keymap("n", "<leader>v")
+safe_remove_keymap("n", "<leader>b")
+safe_remove_keymap("n", "<leader>x")
+safe_remove_keymap("n", "<C-n>")
+safe_remove_keymap("n", "<space>wk")
+safe_remove_keymap("n", "<space>n")
+safe_remove_keymap("n", "<space>wK")
+safe_remove_keymap("n", "<Tab>")
+safe_remove_keymap("n", "<S-Tab>")
+safe_remove_keymap("n", "<A-v>")
+safe_remove_keymap("n", "<A-i>")
+safe_remove_keymap("t", "<C-x>")
+safe_remove_keymap("n", "<leader>rn")
+-- safe_remove_keymap("n", "<M-i>")
+-- safe_remove_keymap("n", "<M-v>")
 vim.api.nvim_set_keymap("n", "<S-Right>", ":vertical resize +5<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<S-Left>", ":vertical resize -5<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<S-Down>", ":resize +5<CR>", { noremap = true, silent = true })
@@ -57,8 +84,20 @@ vim.api.nvim_set_keymap("n", "<S-Up>", ":resize -5<CR>", { noremap = true, silen
 map("n", "<leader>q", function()
 	require("nvchad.tabufline").close_buffer()
 end, { desc = "buffer close" })
-map("n", "<leader>n", "<cmd>enew<CR>", { desc = "buffer new" })
 
+vim.keymap.set(
+	"n",
+	"<leader>fh",
+	":Telescope oldfiles<CR>",
+	{ noremap = true, silent = true, desc = "Search Previous Files" }
+)
+-- Keybinding to resume the last Telescope search
+vim.keymap.set(
+	"n",
+	"<leader>fr",
+	":Telescope resume<CR>",
+	{ noremap = true, silent = true, desc = "Resume Last Telescope Search" }
+)
 vim.keymap.set({ "n", "t" }, "<A-;>", function()
 	require("nvchad.term").toggle({ pos = "sp", id = "htoggleTerm" })
 end, { desc = "Toggle terminal horizontally" })
@@ -95,7 +134,7 @@ end
 -- -- Paste from system clipboard with specific behavior
 -- map("n", "gp", 'o<Esc>"+p', { noremap = true, silent = true })
 -- map("n", "gP", 'O<Esc>"+P', { noremap = true, silent = true })
---
+-- "asdfasfy"
 -- -- Prevent content from being placed in clipboard when deleting (use black hole register)
 -- map("n", "d", '"_d', { noremap = true, silent = true })
 -- map("n", "dd", '"_dd', { noremap = true, silent = true })
@@ -134,14 +173,29 @@ map("v", "<Leader>d", '"+y', { noremap = true, silent = true }) -- Leader+d for 
 -- Replace paste with black hole register (paste the last delete)
 map("v", "p", '"_dP', { noremap = true, silent = true }) -- Replace paste with black hole register
 
--- Yank 'ciw' and 'ci"' in a custom register (e.g., `a`-`g` registers) instead of system clipboard
-map("n", "ciw", '"ayiw', { noremap = true, silent = true }) -- Yank inner word to register `a`
-map("n", 'ci"', '"aiy"', { noremap = true, silent = true }) -- Yank inner quotes to register `a`
-map("n", "diw", '"adiw', { noremap = true, silent = true }) -- Delete inner word to register `a`
-map("n", 'di"', '"adi"', { noremap = true, silent = true }) -- Delete inner quotes to register `a`
+-- Select all content in normal mode
+vim.api.nvim_set_keymap("n", "<leader>sa", "ggVG", { noremap = true, silent = true }) -- Select all
 
--- Ensure the `x` key never copies to the system clipboard
-map("n", "x", '"_x', { noremap = true, silent = true }) -- `x` uses black hole register
+-- Delete all content and store in black hole register
+vim.api.nvim_set_keymap("n", "<leader>da", 'ggVG"_d', { noremap = true, silent = true }) -- Delete all and store in black hole register
 
--- Ensure 'yi"' yanks inner quotes into register 'a'
-map("n", 'yi"', '"ayi"', { noremap = true, silent = true }) -- Yank inner quotes to register `a`
+-- Yank all content to system clipboard
+vim.api.nvim_set_keymap("n", "<leader>ya", 'ggVG"+y', { noremap = true, silent = true }) -- Yank all to system clipboard
+
+-- Source the current file using <leader>sf
+vim.api.nvim_set_keymap("n", "<leader>sf", ":source %<CR>", { noremap = true, silent = true })
+
+-- Create a new line below and return to normal mode
+vim.api.nvim_set_keymap("n", "<leader>n", "o<Esc>", { noremap = true, silent = true })
+
+-- Create a new line above and return to normal mode
+vim.api.nvim_set_keymap("n", "<leader>N", "O<Esc>", { noremap = true, silent = true })
+
+-- Map 'n' to search forward and center the result on the screen
+vim.api.nvim_set_keymap("n", "n", "nzz", { noremap = true, silent = true })
+
+-- Map 'N' to search backward and center the result on the screen
+map("n", "N", "Nzz", { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap("n", "b", "ggVG", { noremap = true, silent = true })
+map("i", "<c-i>", '"+p', { noremap = true, silent = true })
+vim.cmd("highlight Search ctermbg=235 ctermfg=214 guibg=#dcdcdc guifg=#e1c16e")
