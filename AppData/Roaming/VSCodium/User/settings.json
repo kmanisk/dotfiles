@@ -17,7 +17,7 @@
 	"editor.showFoldingControls": "always",
 	"editor.tabSize": 4,
 	"workbench.sideBar.location": "right",
-	"editor.fontSize": 19, //a---00000lll
+	"editor.fontSize": 18, //a---00000lll
 	"editor.lineHeight": 27,
 	"breadcrumbs.enabled": false,
 	"editor.fontFamily": "'JetBrainsMonoNL Nerd Font Mono','JetBrainsMono Nerd Font Mono','JetBrainsMono Nerd Font', monospace",

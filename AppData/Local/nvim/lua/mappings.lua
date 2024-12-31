@@ -85,20 +85,15 @@ map("n", "<leader>q", function()
 	require("nvchad.tabufline").close_buffer()
 end, { desc = "buffer close" })
 
-vim.keymap.set(
-	"n",
-	"<leader>fh",
-	":Telescope oldfiles<CR>",
-	{ noremap = true, silent = true, desc = "Search Previous Files" }
-)
+map("n", "<leader>fh", ":Telescope oldfiles<CR>", { noremap = true, silent = true, desc = "Search Previous Files" })
 -- Keybinding to resume the last Telescope search
-vim.keymap.set(
+map(
 	"n",
 	"<leader>fr",
 	":Telescope resume<CR>",
 	{ noremap = true, silent = true, desc = "Resume Last Telescope Search" }
 )
-vim.keymap.set({ "n", "t" }, "<A-;>", function()
+map({ "n", "t" }, "<A-;>", function()
 	require("nvchad.term").toggle({ pos = "sp", id = "htoggleTerm" })
 end, { desc = "Toggle terminal horizontally" })
 map("n", "<A-v>", ":vsplit<CR>", { noremap = true, silent = true, desc = "Vertical split" })
@@ -109,7 +104,7 @@ map("n", "<A-h>", ":split<CR>", { noremap = true, silent = true, desc = "Horizon
 -- Close current split with Alt + w
 map("n", "<A-w>", ":close<CR>", { noremap = true, silent = true, desc = "Close current split" })
 
-vim.keymap.set("n", "<leader>sk", function()
+map("n", "<leader>sk", function()
 	require("telescope.builtin").keymaps()
 end, { desc = "Telescope Keymaps" })
 
@@ -199,4 +194,57 @@ map("n", "N", "Nzz", { noremap = true, silent = true })
 -- map("n", "b", "ggVG", { noremap = true, silent = true })
 vim.cmd("highlight Search ctermbg=235 ctermfg=214 guibg=#dcdcdc guifg=#e1c16e")
 
--- Define a test mapping
+-- Harpoon
+map("n", "<leader>ha", require("harpoon.mark").add_file)
+map("n", "<leader>hh", require("harpoon.ui").toggle_quick_menu)
+map("n", "<leader>h1", function()
+	require("harpoon.ui").nav_file(1)
+end)
+map("n", "<leader>h2", function()
+	require("harpoon.ui").nav_file(2)
+end)
+map("n", "<leader>h3", function()
+	require("harpoon.ui").nav_file(3)
+end)
+map("n", "<leader>h4", function()
+	require("harpoon.ui").nav_file(4)
+end)
+map("n", "<leader>h5", function()
+	require("harpoon.ui").nav_file(5)
+end)
+map("n", "<leader>h6", function()
+	require("harpoon.ui").nav_file(6)
+end)
+map("n", "<leader>h7", function()
+	require("harpoon.ui").nav_file(7)
+end)
+map("n", "<leader>h8", function()
+	require("harpoon.ui").nav_file(8)
+end)
+map("n", "<leader>h9", function()
+	require("harpoon.ui").nav_file(9)
+end)
+map({ "n", "x" }, "<leader>sr", function()
+	require("ssr").open()
+end)
+
+-- Mapping leader tt to open a new tab
+map("n", "<leader>tt", ":tabnew<CR>", { noremap = true, silent = true })
+
+-- Mapping Ctrl+m to paste from the system clipboard in insert mode
+map("i", "<C-m>", "<C-R>+", { noremap = true, silent = true })
+-- place this in one of your configuration file(s)
+local hop = require("hop")
+local directions = require("hop.hint").HintDirection
+map("", "f", function()
+	hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true })
+end, { remap = true })
+vim.keymap.set("", "F", function()
+	hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true })
+end, { remap = true })
+vim.keymap.set("", "t", function()
+	hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })
+end, { remap = true })
+vim.keymap.set("", "T", function()
+	hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })
+end, { remap = true })

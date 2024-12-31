@@ -8,7 +8,6 @@ return {
 		{ "<leader>ws", "<cmd>SessionSave<CR>", desc = "Save session" },
 		{ "<leader>wa", "<cmd>SessionToggleAutoSave<CR>", desc = "Toggle autosave" },
 	},
-
 	---enables autocomplete for opts
 	---@module "auto-session"
 	---@type AutoSession.Config

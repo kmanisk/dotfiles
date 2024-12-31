@@ -56,8 +56,6 @@ vim.api.nvim_set_keymap("n", "<leader>da", "ggVGd", { noremap = true, silent = t
 vim.api.nvim_set_keymap("n", "<leader>ya", 'ggVG"+p', { noremap = true, silent = true }) -- Yank all to system clipboard
 
 -- Custom mappings
-map("n", "<leader>fm", ":Vifm<CR>", { desc = "Open Vifm" })
-map("n", "<leader>e", ":NvimTreeToggle<CR>", { desc = "Toggle NvimTree" })
 map("n", "<S-j>", ":bnext<CR>", { desc = "Next Buffer" })
 map("n", "<S-k>", ":bprevious<CR>", { desc = "Previous Buffer" })
 
@@ -85,5 +83,4 @@ vim.keymap.set("n", "<leader>ss", function()
 	})
 end, { desc = "[S]earch [/] in Open Files" })
 
-vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>", { desc = "Toggle NvimTree" })
 map("n", "<leader>fj", ':lua print("asdfasdfafds")<CR>', { noremap = true, silent = true })

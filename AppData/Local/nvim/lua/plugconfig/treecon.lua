@@ -11,7 +11,7 @@ require("nvim-tree").setup({
 
 	-- View settings
 	view = {
-		width = 26,
+		width = 30,
 		preserve_window_proportions = true,
 		side = "left", -- Make sure to add this if you want to position the tree on the right
 	},
