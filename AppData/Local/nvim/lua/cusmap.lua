@@ -4,7 +4,6 @@ local map = vim.keymap.set
 
 -- map for quick quit, save files using leader key
 ---- Normal mode
-map("n", "<Leader>w", ":write<CR>")
 map("n", "<Leader>a", ":wqa<CR>")
 -- map("n", "<Leader>x", ":wq<CR>")
 
@@ -34,9 +33,6 @@ map("n", "<C-l>", "<C-w>l", { desc = "Move focus to the right pane" })
 
 -- Close the current tab with Ctrl+w
 map("n", "<C-w>", ":tabclose<CR>", { desc = "Close current tab" })
-
--- Save current file with Leader+w
-map("n", "<Leader>w", ":w<CR>", { desc = "Save current file" })
 
 -- Remove trailing semicolons and commas, and append semicolons and commas at the end
 map("n", "<leader>d;", ":s/;$//<CR>", { noremap = true, silent = true, desc = "Remove trailing semicolons" })
@@ -90,3 +86,4 @@ vim.keymap.set("n", "<leader>ss", function()
 end, { desc = "[S]earch [/] in Open Files" })
 
 vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>", { desc = "Toggle NvimTree" })
+map("n", "<leader>fj", ':lua print("asdfasdfafds")<CR>', { noremap = true, silent = true })

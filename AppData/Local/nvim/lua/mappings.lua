@@ -9,7 +9,7 @@ map("i", "jk", "<ESC>")
 --
 
 -- For nvim-cmp or other completion plugins
-vim.api.nvim_set_keymap("i", "<C-y>", "cmp.mapping.confirm({ select = true })", { noremap = true, silent = true })
+map("i", "<C-y>", "cmp.mapping.confirm({ select = true })", { noremap = true, silent = true })
 -- Map 'jk' to 'zz' in normal mode
 map("n", "j", "jzz", { noremap = true, silent = true })
 map("n", "k", "kzz", { noremap = true, silent = true })
@@ -75,10 +75,10 @@ safe_remove_keymap("t", "<C-x>")
 safe_remove_keymap("n", "<leader>rn")
 -- safe_remove_keymap("n", "<M-i>")
 -- safe_remove_keymap("n", "<M-v>")
-vim.api.nvim_set_keymap("n", "<S-Right>", ":vertical resize +5<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<S-Left>", ":vertical resize -5<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<S-Down>", ":resize +5<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<S-Up>", ":resize -5<CR>", { noremap = true, silent = true })
+map("n", "<S-Right>", ":vertical resize +5<CR>", { noremap = true, silent = true })
+map("n", "<S-Left>", ":vertical resize -5<CR>", { noremap = true, silent = true })
+map("n", "<S-Down>", ":resize +5<CR>", { noremap = true, silent = true })
+map("n", "<S-Up>", ":resize -5<CR>", { noremap = true, silent = true })
 
 -- overrided keymaps by from the base nvchad
 map("n", "<leader>q", function()
@@ -101,19 +101,19 @@ vim.keymap.set(
 vim.keymap.set({ "n", "t" }, "<A-;>", function()
 	require("nvchad.term").toggle({ pos = "sp", id = "htoggleTerm" })
 end, { desc = "Toggle terminal horizontally" })
-vim.api.nvim_set_keymap("n", "<A-v>", ":vsplit<CR>", { noremap = true, silent = true, desc = "Vertical split" })
+map("n", "<A-v>", ":vsplit<CR>", { noremap = true, silent = true, desc = "Vertical split" })
 
 -- Horizontal split with Alt + h
-vim.api.nvim_set_keymap("n", "<A-h>", ":split<CR>", { noremap = true, silent = true, desc = "Horizontal split" })
+map("n", "<A-h>", ":split<CR>", { noremap = true, silent = true, desc = "Horizontal split" })
 
 -- Close current split with Alt + w
-vim.api.nvim_set_keymap("n", "<A-w>", ":close<CR>", { noremap = true, silent = true, desc = "Close current split" })
+map("n", "<A-w>", ":close<CR>", { noremap = true, silent = true, desc = "Close current split" })
 
 vim.keymap.set("n", "<leader>sk", function()
 	require("telescope.builtin").keymaps()
 end, { desc = "Telescope Keymaps" })
 
-vim.api.nvim_set_keymap("n", "<leader>bb", ":lua InputCommand()<CR>", { noremap = true, silent = true })
+map("n", "<leader>bb", ":lua InputCommand()<CR>", { noremap = true, silent = true })
 
 function InputCommand()
 	local command = vim.fn.input("Shell command: ")
@@ -174,28 +174,29 @@ map("v", "<Leader>d", '"+y', { noremap = true, silent = true }) -- Leader+d for 
 map("v", "p", '"_dP', { noremap = true, silent = true }) -- Replace paste with black hole register
 
 -- Select all content in normal mode
-vim.api.nvim_set_keymap("n", "<leader>sa", "ggVG", { noremap = true, silent = true }) -- Select all
+map("n", "<leader>sa", "ggVG", { noremap = true, silent = true }) -- Select all
 
 -- Delete all content and store in black hole register
-vim.api.nvim_set_keymap("n", "<leader>da", 'ggVG"_d', { noremap = true, silent = true }) -- Delete all and store in black hole register
+map("n", "<leader>da", 'ggVG"_d', { noremap = true, silent = true }) -- Delete all and store in black hole register
 
 -- Yank all content to system clipboard
-vim.api.nvim_set_keymap("n", "<leader>ya", 'ggVG"+y', { noremap = true, silent = true }) -- Yank all to system clipboard
+map("n", "<leader>ya", 'ggVG"+y', { noremap = true, silent = true }) -- Yank all to system clipboard
 
 -- Source the current file using <leader>sf
-vim.api.nvim_set_keymap("n", "<leader>sf", ":source %<CR>", { noremap = true, silent = true })
+map("n", "<leader>sf", ":source %<CR>", { noremap = true, silent = true })
 
 -- Create a new line below and return to normal mode
-vim.api.nvim_set_keymap("n", "<leader>n", "o<Esc>", { noremap = true, silent = true })
+map("n", "<leader>n", "o<Esc>", { noremap = true, silent = true })
 
 -- Create a new line above and return to normal mode
-vim.api.nvim_set_keymap("n", "<leader>N", "O<Esc>", { noremap = true, silent = true })
+map("n", "<leader>N", "O<Esc>", { noremap = true, silent = true })
 
 -- Map 'n' to search forward and center the result on the screen
-vim.api.nvim_set_keymap("n", "n", "nzz", { noremap = true, silent = true })
+map("n", "n", "nzz", { noremap = true, silent = true })
 
 -- Map 'N' to search backward and center the result on the screen
 map("n", "N", "Nzz", { noremap = true, silent = true })
--- vim.api.nvim_set_keymap("n", "b", "ggVG", { noremap = true, silent = true })
-map("i", "<c-i>", '"+p', { noremap = true, silent = true })
+-- map("n", "b", "ggVG", { noremap = true, silent = true })
 vim.cmd("highlight Search ctermbg=235 ctermfg=214 guibg=#dcdcdc guifg=#e1c16e")
+
+-- Define a test mapping

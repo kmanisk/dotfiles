@@ -2,6 +2,7 @@
 <NotepadPlus>
     <FindHistory nbMaxFindHistoryPath="10" nbMaxFindHistoryFilter="10" nbMaxFindHistoryFind="10" nbMaxFindHistoryReplace="10" matchWord="no" matchCase="no" wrap="yes" directionDown="yes" fifRecuisive="yes" fifInHiddenFolder="no" fifProjectPanel1="no" fifProjectPanel2="no" fifProjectPanel3="no" fifFilterFollowsDoc="no" fifFolderFollowsDoc="no" searchMode="0" transparencyMode="1" transparency="150" dotMatchesNewline="no" isSearch2ButtonsMode="no" regexBackward4PowerUser="no" bookmarkLine="no" purge="no">
         <Filter name="" />
+        <Find name="ctrl+p" />
         <Find name="default" />
         <Find name="global" />
         <Find name="globals" />
@@ -11,7 +12,6 @@
         <Find name="add_newline" />
         <Find name="bultin" />
         <Find name="header" />
-        <Find name="color" />
         <Replace name="maniskpr" />
     </FindHistory>
     <History nbMaxFile="10" inSubMenu="no" customLength="-1">
@@ -19,7 +19,6 @@
         <File filename="C:\Users\Manisk\AppData\Local\nvim\lua\configs\conform.lua" />
         <File filename="C:\Users\Manisk\AppData\Local\lvim\config.lua" />
         <File filename="C:\Users\Manisk\Desktop\application.docx" />
-        <File filename="C:\Users\Manisk\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json" />
         <File filename="C:\Users\Manisk\AppData\Roaming\VSCodium\User\keybindings.json" />
         <File filename="C:\Users\Manisk\Documents\PowerShell\Microsoft.PowerShell_profile.ps1" />
         <File filename="C:\Users\Manisk\Desktop\backup nvim\lua\user\vscode_keymaps.lua" />

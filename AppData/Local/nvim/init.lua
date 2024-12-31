@@ -50,10 +50,6 @@ end
 -- Automatically source mappings.lua when saved
 
 -- Automatically source mappings.lua on save
-vim.api.nvim_create_autocmd("BufWritePost", {
-	pattern = "lua/mappings.lua", -- Path relative to your Neovim config directory
-	command = "source %",
-})
 -- vim.api.nvim_create_autocmd("BufWritePost", {
 -- 	pattern = "lua/mappings.lua", -- Trigger only for mappings.lua
 -- 	callback = function()
@@ -98,3 +94,43 @@ end
 -- 	end,
 -- 	desc = "Automatically reload mappings.lua on save",
 -- })
+--
+--
+--worked
+vim.api.nvim_create_autocmd("BufWritePost", {
+	pattern = "lua/mappings.lua", -- Trigger only for mappings.lua in the lua directory
+	callback = function()
+		local mappings_path = vim.fn.stdpath("config") .. "/lua/mappings.lua"
+		if vim.fn.filereadable(mappings_path) == 1 then
+			vim.cmd("source " .. mappings_path)
+			print("Reloaded mappings.lua")
+		else
+			print("Error: mappings.lua not found")
+		end
+	end,
+	desc = "Automatically source mappings.lua on save",
+})
+
+-- -- Auto-source specific Lua files on save
+-- local auto_source_files = {
+-- 	"test.lua",
+-- 	"options.lua",
+-- 	"cusmap.lua",
+-- 	"mappings.lua",
+-- }
+--
+-- for _, file in ipairs(auto_source_files) do
+-- 	vim.api.nvim_create_autocmd("BufWritePost", {
+-- 		pattern = "lua/" .. file,
+-- 		callback = function()
+-- 			local file_path = vim.fn.stdpath("config") .. "/lua/" .. file
+-- 			if vim.fn.filereadable(file_path) == 1 then
+-- 				vim.cmd("luafile " .. file_path)
+-- 				print("Reloaded " .. file .. ": " .. file_path)
+-- 			else
+-- 				print("Error: " .. file .. " not found at " .. file_path)
+-- 			end
+-- 		end,
+-- 		desc = "Automatically reload " .. file .. " on save",
+-- 	})
+-- end

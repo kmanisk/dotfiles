@@ -10,6 +10,14 @@ Import-Module -Name Terminal-Icons
 # Remove any existing aliases to avoid conflicts
 Remove-Item Alias:z -ErrorAction SilentlyContinue
 Remove-Item Alias:zi -ErrorAction SilentlyContinue
+function shutit{
+    shutdown /s /t 0
+}
+
+#with logo
+#fastfetch --logo C:\Users\Manisk\.config\fastfetch\logo.txt
+#with default
+#fastfetch
 
 # Alias z to cd
 Set-Alias -Name z -Value cd
