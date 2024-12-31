@@ -31,10 +31,11 @@ dofile(vim.g.base46_cache .. "defaults")
 dofile(vim.g.base46_cache .. "statusline")
 -- disable netrw at the very start of your init.lua
 
--- Check if running in VSCode
 if vim.g.vscode then
-    -- VSCode Neovim setup
+    -- VSCode-specific setup
     require("user.vscode_keymaps")
+
+    
 else
     -- Ordinary Neovim setup
     require("options")
@@ -42,6 +43,7 @@ else
     require("cusmap")
     require("plugins.themes.vscode")
 
+    -- Load mappings after everything else
     vim.schedule(function()
         require("mappings")
     end)
@@ -83,58 +85,3 @@ else
         desc = "Automatically source mappings.lua on save",
     })
 end
-
--- Automatically source mappings.lua when saved
--- Automatically source mappings.lua on save
--- vim.api.nvim_create_autocmd("BufWritePost", {
--- 	pattern = "lua/mappings.lua", -- Trigger only for mappings.lua
--- 	callback = function()
--- 		-- Source the current file
--- 		vim.cmd("source " .. vim.fn.expand("%:p"))
--- 		print("Reloaded mappings.lua")
--- 	end,
--- 	desc = "Automatically reload mappings.lua on save",
--- })
--- Automatically source all Lua files in the lua directory, excluding mappings.lua
--- -- Automatically source mappings.lua when saved
--- vim.api.nvim_create_autocmd("BufWritePost", {
--- 	pattern = "lua/mappings.lua", -- Trigger only for mappings.lua in the lua directory
--- 	callback = function()
--- 		-- Construct the absolute path to mappings.lua
--- 		local mappings_path = vim.fn.stdpath("config") .. "\\lua\\mappings.lua"
--- 		if vim.fn.filereadable(mappings_path) == 1 then
--- 			vim.cmd("luafile " .. mappings_path) -- Source the file
--- 			print("Reloaded mappings.lua: " .. mappings_path)
--- 		else
--- 			print("Error: mappings.lua not found at " .. mappings_path)
--- 		end
--- 	end,
--- 	desc = "Automatically reload mappings.lua on save",
--- })
---
---
---worked
--- -- Auto-source specific Lua files on save
--- local auto_source_files = {
--- 	"test.lua",
--- 	"options.lua",
--- 	"cusmap.lua",
--- 	"mappings.lua",
--- }
---
--- for _, file in ipairs(auto_source_files) do
--- 	vim.api.nvim_create_autocmd("BufWritePost", {
--- 		pattern = "lua/" .. file,
--- 		callback = function()
--- 			local file_path = vim.fn.stdpath("config") .. "/lua/" .. file
--- 			if vim.fn.filereadable(file_path) == 1 then
--- 				vim.cmd("luafile " .. file_path)
--- 				print("Reloaded " .. file .. ": " .. file_path)
--- 			else
--- 				print("Error: " .. file .. " not found at " .. file_path)
--- 			end
--- 		end,
--- 		desc = "Automatically reload " .. file .. " on save",
--- 	})
--- end
-

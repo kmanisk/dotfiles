@@ -1,6 +1,9 @@
 return {
 	{
 		"max397574/better-escape.nvim",
+		cond = function()
+			return not vim.g.vscode -- Exclude this plugin in VSCode
+		end,
 		lazy = true, -- Ensures the plugin loads only when needed
 		config = function()
 			require("better_escape").setup({

@@ -1,6 +1,9 @@
 return {
 	"folke/snacks.nvim",
 	priority = 1000,
+	cond = function()
+		return not vim.g.vscode -- Exclude this plugin in VSCode
+	end,
 	lazy = false,
 	---@type snacks.Config
 	opts = {

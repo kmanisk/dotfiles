@@ -1,0 +1,31 @@
+{
+	"complete": {
+		"scoop": [
+			"git",
+			"nodejs",
+			"python",
+			"vlc"
+		],
+		"choco": [
+			"7zip",
+			"notepadplusplus",
+			"googlechrome"
+		],
+		"winget": [
+			"Microsoft.VisualStudioCode",
+			"Spotify.Spotify"
+		]
+	},
+	"minimal": {
+		"scoop": [
+			"git",
+			"nodejs"
+		],
+		"choco": [
+			"7zip"
+		],
+		"winget": [
+			"Microsoft.VisualStudioCode"
+		]
+	}
+}

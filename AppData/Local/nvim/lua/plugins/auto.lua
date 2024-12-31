@@ -2,6 +2,10 @@
 return {
 	"0x00-ketsu/autosave.nvim",
 	-- lazy-loading on events
+	--
+	cond = function()
+		return not vim.g.vscode -- Exclude this plugin in VSCode
+	end,
 	event = { "InsertLeave", "TextChanged" },
 	config = function()
 		require("autosave").setup({

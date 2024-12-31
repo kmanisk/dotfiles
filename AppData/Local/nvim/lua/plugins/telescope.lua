@@ -19,4 +19,7 @@ return {
 		-- then load the extension
 		telescope.load_extension("live_grep_args")
 	end,
+	cond = function()
+		return not vim.g.vscode -- Exclude this plugin in VSCode
+	end,
 }

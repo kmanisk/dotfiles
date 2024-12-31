@@ -13,7 +13,7 @@ vim.g.clipboard = vim.g.vscode_clipboard
 -- Smarter Search
 -- Ignore case during search unless uppercase is used
 vim.o.ignorecase = true -- Case insensitive search
-vim.o.smartcase = true -- Override ignorecase if search pattern contains uppercase
+vim.o.smartcase = true  -- Override ignorecase if search pattern contains uppercase
 
 -- Highlight search matches
 vim.o.hlsearch = true
@@ -56,6 +56,20 @@ keymap("v", "K", ":m .-2<CR>==", opts)
 keymap("x", "J", ":move '>+1<CR>gv-gv", opts)
 keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
 
+vim.api.nvim_set_keymap(
+	"n",
+	"<leader>/",
+	":call VSCodeNotify('editor.action.commentLine')<CR>",
+	{ noremap = true, silent = true }
+)
+
+vim.api.nvim_set_keymap(
+	"v",
+	"<leader>/",
+	":call VSCodeNotify('editor.action.commentLine')<CR>gv",
+	{ noremap = true, silent = true }
+)
+
 --[[
 =============================================================================
                     Window Management
@@ -82,10 +96,24 @@ keymap({ "n", "v" }, "<leader>oe", "<cmd>lua require('vscode').action('revealFil
 keymap({ "n", "v" }, "<A-j>", "<cmd>lua require('vscode').action('workbench.action.nextEditorInGroup')<CR>")
 keymap({ "n", "v" }, "<A-k>", "<cmd>lua require('vscode').action('workbench.action.previousEditorInGroup')<CR>")
 keymap("n", "<leader>sf", ':lua require("vscode").action("periscope.search")<CR>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap(
+-- 	"n",
+-- 	"<leader>rf",
+-- 	':lua require("vscode").action("filebunny.renameActiveFile")<CR>',
+-- 	{ noremap = true, silent = true }
+-- )
+--
 vim.api.nvim_set_keymap(
 	"n",
 	"<leader>rf",
-	':lua require("vscode").action("filebunny.renameActiveFile")<CR>',
+	":call VSCodeNotify('filebunny.renameActiveFile')<CR>",
+	{ noremap = true, silent = true }
+)
+
+vim.api.nvim_set_keymap(
+	"n",
+	"<leader>ff",
+	":call VSCodeNotify('filebunny.openFile')<CR>",
 	{ noremap = true, silent = true }
 )
 
@@ -132,7 +160,8 @@ vim.api.nvim_set_keymap(
 )
 
 -- File Operations
-keymap({ "n", "v" }, "<leader>ff", "<cmd>lua require('vscode').action('workbench.action.quickOpen')<CR>")
+-- keymap({ "n", "v" }, "<leader>ff", "<cmd>lua require('vscode').action('workbench.action.quickOpen')<CR>")
+-- keymap({ "n", "v" }, "<leader>ff", "<cmd>lua require('vscode').action('workbench.action.quickOpen')<CR>")
 keymap({ "n", "v" }, "<leader>fd", "<cmd>lua require('vscode').action('editor.action.formatDocument')<CR>")
 keymap({ "n", "v" }, "<leader>w", "<cmd>lua require('vscode').action('workbench.action.files.save')<CR>")
 keymap({ "n", "v" }, "<leader>of", "<cmd>lua require('vscode').action('workbench.action.files.openFile')<CR>", opts)
@@ -221,6 +250,16 @@ end, { desc = "Toggle fold" })
                     Custom Text Operations
 =============================================================================
 --]]
+--
+-- Select all content in normal mode
+vim.keymap.set("n", "<leader>sa", "ggVG", { noremap = true, silent = true }) -- Select all
+
+-- Delete all content and store in black hole register
+vim.keymap.set("n", "<leader>da", 'ggVG"_d', { noremap = true, silent = true }) -- Delete all and store in black hole register
+
+-- Yank all content to system clipboard
+vim.keymap.set("n", "<leader>ya", 'ggVG"+y', { noremap = true, silent = true }) -- Yank all to system clipboard
+
 vim.api.nvim_set_keymap(
 	"n",
 	"gft",
@@ -289,9 +328,9 @@ if vim.g.vscode then
 		},
 		{ "nvim-lua/plenary.nvim" },
 		{ "numToStr/Comment.nvim", config = true, event = "VeryLazy" },
-		{ "ThePrimeagen/harpoon", config = true, event = "VeryLazy" },
+		{ "ThePrimeagen/harpoon",  config = true, event = "VeryLazy" },
 		{ "tpope/vim-repeat" },
-		{ "wellle/targets.vim", lazy = false },
+		{ "wellle/targets.vim",    lazy = false },
 		{
 			"ggandor/leap.nvim",
 			config = function()

@@ -5,4 +5,7 @@ require("which-key").setup({
 		spacing = 3, -- Spacing between columns
 		align = "center", -- Align columns to left, center, or right
 	},
+	cond = function()
+		return not vim.g.vscode -- Exclude this plugin in VSCode
+	end,
 })

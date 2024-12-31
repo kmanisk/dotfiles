@@ -17,7 +17,7 @@
 	"editor.showFoldingControls": "always",
 	"editor.tabSize": 4,
 	"workbench.sideBar.location": "right",
-	"editor.fontSize": 19, //a---00000lll
+	"editor.fontSize": 17, //a---00000lll
 	"editor.lineHeight": 27,
 	"breadcrumbs.enabled": false,
 	"editor.fontFamily": "'JetBrainsMonoNL Nerd Font Mono','JetBrainsMono Nerd Font Mono','JetBrainsMono Nerd Font', monospace",
@@ -197,6 +197,7 @@
 		"erlang": "escript",
 		"spwn": "spwn build",
 		"pkl": "cd $dir && pkl eval -f yaml $fileName -o $fileNameWithoutExt.yaml",
+
 		"gleam": "gleam run -m $fileNameWithoutExt"
 	},
 	"files.autoSave": "afterDelay",
@@ -221,7 +222,7 @@
 		"editor.defaultFormatter": "redhat.java"
 	},
 	"security.workspace.trust.untrustedFiles": "open",
-	"workbench.colorTheme": "Jetbrains Fleet",
+	"workbench.colorTheme": "JetBrains Rider Dark Theme",
 	"cody.commandHints.enabled": false,
 	"git.openRepositoryInParentFolders": "never",
 	"git.autofetch": false,
@@ -230,5 +231,6 @@
 	"editor.folding": false,
 	"editor.glyphMargin": false,
 	"tabnine.experimentalAutoImports": true,
+	"extensions.ignoreRecommendations": true,
 	//added a commnets
 }
