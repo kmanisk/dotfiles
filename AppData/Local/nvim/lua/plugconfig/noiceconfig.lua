@@ -1,0 +1,31 @@
+-- -- Configure Noice to show only command-related messages centered
+-- require("noice").setup({
+--   -- Disable automatic popup menu (to avoid overlap with command-completion)
+--   popupmenu = {
+--     enabled = false,  -- Disable Noice popup menu
+--   },
+--
+--   -- LSP related settings (optional: disable hover, signature, and progress messages)
+--   lsp = {
+--     progress = { enabled = false },  -- Optionally disable LSP progress messages
+--     hover = { enabled = false },  -- Optionally disable hover messages
+--     signature = { enabled = false },  -- Optionally disable signature messages
+--   },
+--
+--   -- Routes to control how Noice displays messages
+--   routes = {
+--     {
+--       filter = { event = "msg_show" },  -- Show messages triggered by msg_show events
+--       view = "cmdline",  -- Display these messages in the command line view (centered)
+--     },
+--   },
+--
+--   -- Custom views (center messages in a custom "centered" view if desired)
+--   views = {
+--     cmdline = {
+--       position = "center",  -- Show messages in the center of the screen
+--       size = "auto",  -- Adjust the size automatically
+--     },
+--   },
+-- })
+--
