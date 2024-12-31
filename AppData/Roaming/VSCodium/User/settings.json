@@ -9,6 +9,7 @@
 		"**/package-lock.json",
 		"**/yarn.lock"
 	],
+
 	// "editor.matchBrackets": "never",
 	"editor.lightbulb.enabled": "off",
 	"workbench.tree.indent": 16,
@@ -17,7 +18,7 @@
 	"editor.showFoldingControls": "always",
 	"editor.tabSize": 4,
 	"workbench.sideBar.location": "right",
-	"editor.fontSize": 18, //a---00000lll
+	"editor.fontSize": 17, //a---00000lll
 	"editor.lineHeight": 27,
 	"breadcrumbs.enabled": false,
 	"editor.fontFamily": "'JetBrainsMonoNL Nerd Font Mono','JetBrainsMono Nerd Font Mono','JetBrainsMono Nerd Font', monospace",
@@ -221,7 +222,7 @@
 		"editor.defaultFormatter": "redhat.java"
 	},
 	"security.workspace.trust.untrustedFiles": "open",
-	"workbench.colorTheme": "GitHub Dark Default",
+	"workbench.colorTheme": "JetBrains Rider Dark Theme",
 	"cody.commandHints.enabled": false,
 	"git.openRepositoryInParentFolders": "never",
 	"git.autofetch": false,
