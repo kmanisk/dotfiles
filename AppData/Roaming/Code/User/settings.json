@@ -9,6 +9,7 @@
 		"**/package-lock.json",
 		"**/yarn.lock"
 	],
+
 	// "editor.matchBrackets": "never",
 	"editor.lightbulb.enabled": "off",
 	"workbench.tree.indent": 16,
@@ -197,7 +198,6 @@
 		"erlang": "escript",
 		"spwn": "spwn build",
 		"pkl": "cd $dir && pkl eval -f yaml $fileName -o $fileNameWithoutExt.yaml",
-
 		"gleam": "gleam run -m $fileNameWithoutExt"
 	},
 	"files.autoSave": "afterDelay",
@@ -231,6 +231,5 @@
 	"editor.folding": false,
 	"editor.glyphMargin": false,
 	"tabnine.experimentalAutoImports": true,
-	"extensions.ignoreRecommendations": true,
-	//added a commnets
+	//added a commnet
 }
