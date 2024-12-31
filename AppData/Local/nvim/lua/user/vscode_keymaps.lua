@@ -13,7 +13,7 @@ vim.g.clipboard = vim.g.vscode_clipboard
 -- Smarter Search
 -- Ignore case during search unless uppercase is used
 vim.o.ignorecase = true -- Case insensitive search
-vim.o.smartcase = true  -- Override ignorecase if search pattern contains uppercase
+vim.o.smartcase = true -- Override ignorecase if search pattern contains uppercase
 
 -- Highlight search matches
 vim.o.hlsearch = true
@@ -96,13 +96,6 @@ keymap({ "n", "v" }, "<leader>oe", "<cmd>lua require('vscode').action('revealFil
 keymap({ "n", "v" }, "<A-j>", "<cmd>lua require('vscode').action('workbench.action.nextEditorInGroup')<CR>")
 keymap({ "n", "v" }, "<A-k>", "<cmd>lua require('vscode').action('workbench.action.previousEditorInGroup')<CR>")
 keymap("n", "<leader>sf", ':lua require("vscode").action("periscope.search")<CR>', { noremap = true, silent = true })
--- vim.api.nvim_set_keymap(
--- 	"n",
--- 	"<leader>rf",
--- 	':lua require("vscode").action("filebunny.renameActiveFile")<CR>',
--- 	{ noremap = true, silent = true }
--- )
---
 vim.api.nvim_set_keymap(
 	"n",
 	"<leader>rf",
@@ -315,44 +308,42 @@ keymap({ "n", "v" }, "<leader>pe", "<cmd>lua require('vscode').action('projectMa
                     Plugin Configuration
 =============================================================================
 --]]
-if vim.g.vscode then
-	require("lazy").setup({
-		{
-			"kylechui/nvim-surround",
-			event = "VeryLazy",
-			config = function()
-				require("nvim-surround").setup({
-					-- Custom configuration for VS Code if needed
-				})
-			end,
-		},
-		{ "nvim-lua/plenary.nvim" },
-		{ "numToStr/Comment.nvim", config = true, event = "VeryLazy" },
-		{ "ThePrimeagen/harpoon",  config = true, event = "VeryLazy" },
-		{ "tpope/vim-repeat" },
-		{ "wellle/targets.vim",    lazy = false },
-		{
-			"ggandor/leap.nvim",
-			config = function()
-				require("leap").add_default_mappings()
-				vim.api.nvim_set_keymap(
-					"n",
-					"s",
-					'<Cmd>lua require("leap").leap({ target_windows = { vim.fn.win_getid() } })<CR>',
-					{ noremap = true, silent = true }
-				)
-			end,
-		},
-		{
-			"vscode-neovim/vscode-multi-cursor.nvim",
-			event = "VeryLazy",
-			cond = not not vim.g.vscode,
-			opts = {},
-		},
-		{
-			"chentoast/marks.nvim",
-			event = "VeryLazy",
-			opts = {},
-		},
-	})
-end
+require("lazy").setup({
+	{
+		"kylechui/nvim-surround",
+		event = "VeryLazy",
+		config = function()
+			require("nvim-surround").setup({
+				-- Custom configuration for VS Code if needed
+			})
+		end,
+	},
+	{ "nvim-lua/plenary.nvim" },
+	{ "numToStr/Comment.nvim", config = true, event = "VeryLazy" },
+	{ "ThePrimeagen/harpoon", config = true, event = "VeryLazy" },
+	{ "tpope/vim-repeat" },
+	{ "wellle/targets.vim", lazy = false },
+	{
+		"ggandor/leap.nvim",
+		config = function()
+			require("leap").add_default_mappings()
+			vim.api.nvim_set_keymap(
+				"n",
+				"s",
+				'<Cmd>lua require("leap").leap({ target_windows = { vim.fn.win_getid() } })<CR>',
+				{ noremap = true, silent = true }
+			)
+		end,
+	},
+	{
+		"vscode-neovim/vscode-multi-cursor.nvim",
+		event = "VeryLazy",
+		cond = not not vim.g.vscode,
+		opts = {},
+	},
+	{
+		"chentoast/marks.nvim",
+		event = "VeryLazy",
+		opts = {},
+	},
+})
