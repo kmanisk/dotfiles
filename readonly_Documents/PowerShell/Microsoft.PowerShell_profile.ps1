@@ -19,15 +19,11 @@ function shutit{
 #with default
 #fastfetch
 
-# Alias z to cd
-Set-Alias -Name z -Value cd
 
 # Alias zi to cdi
 Set-Alias -Name zi -Value cdi
 Set-Alias -Name z -Value cd
 
-# Alias zi to cdi
-Set-Alias -Name zi -Value cdi
 Set-Alias -Name vim -Value nvim
 Set-Alias -Name nivm -Value nvim
 Set-Alias -Name vi -Value nvim
@@ -732,8 +728,8 @@ else {
     }
 }
 
-Set-Alias -Name z -Value __zoxide_z -Option AllScope -Scope Global -Force
-Set-Alias -Name zi -Value __zoxide_zi -Option AllScope -Scope Global -Force
+#Set-Alias -Name z -Value __zoxide_z -Option AllScope -Scope Global -Force
+#Set-Alias -Name zi -Value __zoxide_zi -Option AllScope -Scope Global -Force
 
 # This is an example of a macro that you might use to execute a command.
 # This will add the command to history.
