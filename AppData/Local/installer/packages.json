@@ -1,31 +1,60 @@
 {
   "scoop": {
-    "minimal": [
-      "git",
-	  "msiafterburner"
+    "mini": [
+      "git"
     ],
     "full": [
       "git",
-      "nodejs",
-	  "msiafterburner"
+      "nodejs"
     ]
   },
   "winget": {
-    "minimal": [
-      "Microsoft.VisualStudioCode"
+    "mini": [
+      "Microsoft.VisualStudioCode",
+      "JanDeDobbeleer.OhMyPosh"
     ],
     "full": [
       "Microsoft.VisualStudioCode",
-      "Google.Chrome"
+      "Google.Chrome",
+      "JanDeDobbeleer.OhMyPosh"
     ]
   },
   "choco": {
-    "minimal": [
+    "mini": [
       "7zip"
     ],
     "full": [
       "7zip",
-      "notepadplusplus"
+      "notepadplusplus",
+      "neovim",
+      "ripgrep",
+      "grep",
+      "bat",
+      "vscode",
+      "vscodium",
+      "make",
+      "less",
+      "lazygit",
+      "ditto",
+      "f.lux",
+      "fzf",
+      "fastfetch",
+      "ueli",
+      "powershell-core",
+      "microsoft-windows-terminal",
+      "sharex",
+      "openjdk",
+      "python",
+      "rust",
+      "everything",
+      "starship",
+      "steam",
+      "vlc",
+      "tldr-plusplus",
+      "notepadplusplus",
+      "zoxide",
+      "wiztree",
+      "noevide"
     ]
   }
 }
