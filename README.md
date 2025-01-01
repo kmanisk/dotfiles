@@ -16,6 +16,7 @@ Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
 ### For Admin
 ```bash
 winget install twpayne.chezmoi
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
 ```
 ```
