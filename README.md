@@ -17,15 +17,14 @@ Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
 ```bash
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
+scoop install main/chezmoi
 ```
+
 ```
 winget install twpayne.chezmoi
 winget install Git.Git
 winget install -e --id GitHub.cli
-
 ```
-```
-scoop install main/chezmoi
 
 ```
 ### Configure Git
@@ -34,6 +33,7 @@ git config --global user.name "kmanisk"
 git config --global user.email "youremail@example.com"
 gh auth login
 ```
+
 ### Finally run this command
 ```bash
 chezmoi init --apply kmanisk
