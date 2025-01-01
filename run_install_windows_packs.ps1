@@ -203,44 +203,11 @@ function Install-OSDLayout {
     Write-Host "Files copied successfully to the target locations."
 }
 Install-OSDLayout
-## Path to the installer file
-$installerPath = "C:\Users\Manisk\AppData\Local\installer\executable_MLWapp2.6.x64.exe"
 
-# Check if MLWapp is already installed
-$mlwappInstalled = Get-Command "C:\Program Files\MLWapp\MLWapp.exe" -ErrorAction SilentlyContinue
-
-if (-not $mlwappInstalled) {
-    # Run the installer if MLWapp is not installed
-    Start-Process -FilePath $installerPath -ArgumentList "/S" -NoNewWindow -Wait
-}
-else {
-    Write-Host "MLWapp is already installed."
-}
-
-
-function Set-PermanentMachine {
-    $userInput = Read-Host "Do you want to install Spotify? (y/n)"
-    
-    if ($userInput -eq 'y') {
-        Write-Host "Installing Spotify..."
-        Invoke-Expression "& { $(Invoke-WebRequest -useb 'https://raw.githubusercontent.com/SpotX-Official/spotx-official.github.io/main/run.ps1') } -new_theme"
-        # winget install --id=Guru3D.Afterburner  -e
-        # winget install --id=Guru3D.RTSS  -e
-        # winget install -e --id TechPowerUp.NVCleanstall
-    }
-    elseif ($userInput -eq 'n') {
-        Write-Host "Spotify installation skipped."
-    }
-    else {
-        Write-Host "Invalid input. Please enter 'y' or 'n'."
-    }
-}
-
-Set-PermanentMachine
 
 function Move-ConfigFolder {
     $sourcePath = Join-Path -Path $env:USERPROFILE -ChildPath ".config\es"
-    $destinationPath = "C:\"  # Set the destination to C:\es
+    $destinationPath = "C:\es"  # Set the destination to C:\es
 
     # Check if the source folder exists
     if (Test-Path $sourcePath) {
@@ -258,6 +225,49 @@ function Move-ConfigFolder {
         Write-Host "Source folder $sourcePath does not exist."
     }
 }
+
+function Set-PermanentMachine {
+    Write-Host "Installing Spotify..."
+    try {
+        # Install Spotify using SpotX
+        Invoke-Expression "& { $(Invoke-WebRequest -UseBasicParsing -Uri 'https://raw.githubusercontent.com/SpotX-Official/spotx-official.github.io/main/run.ps1') } -new_theme"
+    }
+    catch {
+        Write-Host "Failed to install Spotify. Error: $_" -ForegroundColor Red
+        return
+    }
+        
+    # Path to the MLWapp installer
+    $installerPath = "C:\Users\Manisk\AppData\Local\installer\executable_MLWapp2.6.x64.exe"
+
+    # Check if MLWapp is already installed
+    $mlwappInstalled = Test-Path "C:\Program Files\MLWapp\MLWapp.exe"
+        
+    if (-not $mlwappInstalled) {
+        if (Test-Path $installerPath) {
+            Write-Host "Installing MLWapp..."
+            Start-Process -FilePath $installerPath -ArgumentList "/S" -NoNewWindow -Wait
+        }
+        else {
+            Write-Host "MLWapp installer not found at $installerPath." -ForegroundColor Red
+        }
+    }
+    else {
+        Write-Host "MLWapp is already installed."
+    }
+        
+    # Call the Move-ConfigFolder function
+    Move-ConfigFolder
+}
+
+
+
+$userInput = Read-Host "(y/n) => "
+    
+if ($userInput -eq 'y') {
+    Set-PermanentMachine
+}
+
 
 function ClinkSetup {
     $clinkPath = "C:\Program Files (x86)\clink"
