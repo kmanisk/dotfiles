@@ -1,27 +1,30 @@
 {
   "scoop": {
     "mini": [
-      "git"
+      
     ],
     "full": [
-      "git",
-      "nodejs"
+      
+      
     ]
   },
   "winget": {
     "mini": [
-      "Microsoft.VisualStudioCode",
+      
       "JanDeDobbeleer.OhMyPosh"
     ],
     "full": [
       "Microsoft.VisualStudioCode",
-      "Google.Chrome",
       "JanDeDobbeleer.OhMyPosh"
     ]
   },
   "choco": {
     "mini": [
-      "7zip"
+      "7zip",
+	   "neovim",
+	  "mingw",
+	  "ripgrep",
+	  "nerd-fonts-jetbrainsmono"
     ],
     "full": [
       "7zip",
