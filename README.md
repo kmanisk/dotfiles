@@ -15,14 +15,18 @@ Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
 ```
 ### For Admin
 ```bash
-winget install twpayne.chezmoi
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
 ```
 ```
-iex "&{$(irm 'https://get.chezmoi.io/ps1')}"
+winget install twpayne.chezmoi
 winget install Git.Git
 winget install -e --id GitHub.cli
+
+```
+```
+scoop install main/chezmoi
+
 ```
 ### Configure Git
 ```bash
