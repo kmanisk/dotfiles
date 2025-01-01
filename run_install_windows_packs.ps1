@@ -105,48 +105,44 @@ function Install-ChocoPackages {
         # Install the package using Chocolatey
         choco install $package -y
     }
+}
 
-    # Function to install Winget packages with source flag
-    function Install-WingetPackages {
-        param (
-            [string[]]$packages
-        )
-        foreach ($package in $packages) {
-            try {
-                # Install the package using Winget without the -y flag
-                winget install $package --source winget
-            }
-            catch {
-                Write-Host "Failed to install package: $package. Error: $_"
-            }
+# Function to install Winget packages with source flag
+function Install-WingetPackages {
+    param (
+        [string[]]$packages
+    )
+    foreach ($package in $packages) {
+        try {
+            # Install the package using Winget without the -y flag
+            Write-Host "winget install packages"
+            # winget install $package --source winget
+        }
+        catch {
+            Write-Host "Failed to install package: $package. Error: $_"
         }
     }
 }
+
 
 # Prompt the user for installation type
 $choice = Read-Host "Choose installation type (mini/full)"
 switch ($choice.ToLower()) {
     "mini" {
         # Install mini packages
-
         # Install Scoop packages
         Install-ScoopPackages -packages $config.scoop.mini
-
         # Install Winget packages
         Install-WingetPackages -packages $config.winget.mini
-
         # Install Chocolatey packages
         Install-ChocoPackages -packages $config.choco.mini
     }
     "full" {
         # Install full packages
-
         # Install Scoop packages
         Install-ScoopPackages -packages $config.scoop.full
-
         # Install Winget packages
         Install-WingetPackages -packages $config.winget.full
-
         # Install Chocolatey packages
         Install-ChocoPackages -packages $config.choco.full
     }
@@ -210,9 +206,9 @@ function Set-PermanentMachine {
     if ($userInput -eq 'y') {
         Write-Host "Installing Spotify..."
         Invoke-Expression "& { $(Invoke-WebRequest -useb 'https://raw.githubusercontent.com/SpotX-Official/spotx-official.github.io/main/run.ps1') } -new_theme"
-        winget install --id=Guru3D.Afterburner  -e
-        winget install --id=Guru3D.RTSS  -e
-        winget install -e --id TechPowerUp.NVCleanstall
+        # winget install --id=Guru3D.Afterburner  -e
+        # winget install --id=Guru3D.RTSS  -e
+        # winget install -e --id TechPowerUp.NVCleanstall
     }
     elseif ($userInput -eq 'n') {
         Write-Host "Spotify installation skipped."
