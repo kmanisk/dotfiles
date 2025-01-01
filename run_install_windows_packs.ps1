@@ -204,7 +204,7 @@ function Install-OSDLayout {
 }
 Install-OSDLayout
 ## Path to the installer file
-$installerPath = "C:\Users\Manisk\AppData\Local\installer\MLWapp2.6.x64.exe"
+$installerPath = "C:\Users\Manisk\AppData\Local\installer\executable_MLWapp2.6.x64.exe"
 
 # Check if MLWapp is already installed
 $mlwappInstalled = Get-Command "C:\Program Files\MLWapp\MLWapp.exe" -ErrorAction SilentlyContinue
