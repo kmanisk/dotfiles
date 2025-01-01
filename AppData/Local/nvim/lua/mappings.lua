@@ -262,16 +262,3 @@ map("n", "gg", "ggzz")
 map("n", "G", "Gzz")
 
 -- Remap jk to jkzz in Visual mode
-map("v", "jk", "jkzz")
-
--- Remap { to {zz in Visual mode
-map("v", "{", "{zz")
-
--- Remap } to }zz in Visual mode
-map("v", "}", "}zz")
-
--- Remap gg to ggzz in Visual mode
-map("v", "gg", "ggzz")
-
--- Remap G to Gzz in Visual mode
-map("v", "G", "Gzz")

@@ -26,6 +26,7 @@
 	  "ripgrep",
 	  "nerd-fonts-jetbrainsmono",
 	  "bat",
+	  "autohotkey"
     ],
     "full": [
       "7zip",
@@ -58,7 +59,8 @@
       "notepadplusplus",
       "zoxide",
       "wiztree",
-      "noevide"
+      "noevide",
+	  "autohotkey"
     ]
   }
 }
