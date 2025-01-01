@@ -1,0 +1,121 @@
+|CTAG_1735567807_3817078_5548_0
+|	time=1735567812
+|link
+|	time=1735567955
+|ir
+|	time=1735567856
+clink
+|	time=1735567863
+clink config
+|	time=1735567868
+clink info
+|	time=1735568023
+|ir
+|	time=1735568025
+|s
+|	time=1735568026
+|s
+|	time=1735568027
+|ir
+|	time=1735568212
+cd AppData\Local\clink\themes\
+|	time=1735568213
+|ir
+|	time=1735568257
+clink set ohmyposh.theme Tomorrow.clinktheme
+|	time=1735568263
+clink set ohmyposh.theme Dracula.clinktheme
+|	time=1735568303
+::clink set ohmyposh.theme Tomorrow.clinktheme
+|	time=1735568305
+|:
+|	time=1735568306
+|:
+|	time=1735568306
+|:
+|	time=1735568306
+::
+|	time=1735568313
+|ir
+|	time=1735568315
+|ir
+|	time=1735568316
+|s
+|	time=1735568317
+|ir
+|	time=1735568318
+|s
+|	time=1735568379
+|ir
+|	time=1735568381
+|s
+|	time=1735568425
+|ir
+|	time=1735568638
+|md
+|	time=1735568641
+|ir
+|	time=1735568656
+cd Coding\
+|	time=1735568658
+cd java
+|	time=1735568662
+|ir
+|	time=1735568663
+|s
+|	time=1735568665
+|ir
+|	time=1735568668
+|ir
+|	time=1735568670
+|d ..
+|	time=1735568671
+|ir
+|	time=1735568675
+cd python
+|	time=1735568676
+|ir
+|	time=1735568680
+nvim error.txt 
+|	time=1735568786
+pwsh
+|	time=1735568790
+|ir
+|	time=1735568792
+cmd
+|	time=1735568772
+nvim oh-my-posh.lua
+|	time=1735568797
+e .
+|	time=1735568802
+pwsh
+|	time=1735568836
+|ir
+|	time=1735568840
+|s
+|	time=1735568845
+|d ..
+|	time=1735568847
+|d $home
+|	time=1735568848
+|ir
+|	time=1735568852
+cd $home
+|	time=1735568878
+echo $home
+|	time=1735568895
+|d ..
+|	time=1735568896
+cd ..
+|	time=1735568899
+|ir
+|	time=1735568903
+cd Coding\Java\
+|	time=1735568905
+|ir
+|	time=1735568906
+|s
+|	time=1735568968
+dir
+|	time=1735568969
+ls

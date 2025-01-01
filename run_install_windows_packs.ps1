@@ -82,3 +82,7 @@ function Move-ConfigFolder {
         Write-Host "Source folder $sourcePath does not exist."
     }
 }
+
+function Clink-setup{
+    
+}
