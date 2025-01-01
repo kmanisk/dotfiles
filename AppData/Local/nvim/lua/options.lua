@@ -19,6 +19,7 @@ vim.cmd([[
 		let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
 		set shellquote= shellxquote=
   ]])
+vim.opt.swapfile = false
 
 -- Enable smart case for search (case-insensitive unless you use uppercase letters)
 o.smartcase = true

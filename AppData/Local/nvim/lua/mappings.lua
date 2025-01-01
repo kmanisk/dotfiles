@@ -7,7 +7,8 @@ local opts = { noremap = true, silent = true }
 map("i", "jk", "<ESC>")
 -- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
 --
-
+map('i', '<C-p>', '<C-r>+', { noremap = true, silent = true })
+map('i', '<C-y>', '<Esc>"+yyi', { noremap = true, silent = true })
 -- For nvim-cmp or other completion plugins
 map("i", "<C-y>", "cmp.mapping.confirm({ select = true })", { noremap = true, silent = true })
 -- Map 'jk' to 'zz' in normal mode
@@ -15,6 +16,7 @@ map("n", "j", "jzz", { noremap = true, silent = true })
 map("n", "k", "kzz", { noremap = true, silent = true })
 -- Custom mappings
 map("n", "<leader>fm", ":Vifm<CR>", { desc = "Open Vifm" })
+map("n", "<leader>ts", ":Telescope colorscheme<CR>", { desc = "Open Vifm" })
 map("n", "<leader>e", ":NvimTreeToggle<CR>", { desc = "Toggle NvimTree" })
 map("n", "<A-d>", ":NvimTreeClose<CR>", { desc = "Close NvimTree" })
 map("n", "<S-j>", ":bnext<CR>", { desc = "Next Buffer" })
@@ -248,21 +250,20 @@ map("n", "<leader>tt", ":tabnew<CR>", { noremap = true, silent = true })
 -- Mapping Ctrl+m to paste from the system clipboard in insert mode
 map("i", "<C-m>", "<C-R>+", { noremap = true, silent = true })
 -- place this in one of your configuration file(s)
-local hop = require("hop")
-local directions = require("hop.hint").HintDirection
-map("", "f", function()
-	hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true })
-end, { remap = true })
-vim.keymap.set("", "F", function()
-	hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true })
-end, { remap = true })
-vim.keymap.set("", "t", function()
-	hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })
-end, { remap = true })
-vim.keymap.set("", "T", function()
-	hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })
-end, { remap = true })
+-- local hop = require("hop")
+-- local directions = require("hop.hint").HintDirection
+-- map("", "f", function()
+-- 	hop.hint_char2({ direction = directions.AFTER_CURSOR, current_line_only = true })
+-- end, { remap = true })
+-- vim.keymap.set("", "F", function()
+-- 	hop.hint_char2({ direction = directions.BEFORE_CURSOR, current_line_only = true })
+-- end, { remap = true })
+-- vim.keymap.set("", "t", function()
+-- 	hop.hint_char2({ direction = directions.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })
+-- end, { remap = true })
+-- vim.keymap.set("", "T", function()
+-- 	hop.hint_char2({ direction = directions.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })
+-- end, { remap = true })
+
 map("n", "gg", "ggzz")
 map("n", "G", "Gzz")
-
--- Remap jk to jkzz in Visual mode

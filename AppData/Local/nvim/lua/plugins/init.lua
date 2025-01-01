@@ -9,8 +9,9 @@ return {
 	},
 	{
 		"stevearc/conform.nvim",
-		event = "BufWritePre", -- uncomment for format on save
-		opts = require("configs.conform"),
+        enabled = false,
+		-- event = "BufWritePre", -- uncomment for format on save
+		-- opts = require("configs.conform"),
 		cond = function()
 			return not vim.g.vscode -- Exclude this plugin in VSCode
 		end,
@@ -58,14 +59,16 @@ return {
 		end,
 	},
 
-	{
-		"smoka7/hop.nvim",
-		version = "*",
-		opts = {
-			keys = "etovxqpdygfblzhckisuran",
-		},
-		cond = function()
-			return not vim.g.vscode -- Exclude this plugin in VSCode
-		end,
-	},
+
+{
+  "smoka7/hop.nvim",
+  version = "*",
+  opts = {
+    keys = "etovxqpdygfblzhckisuran", -- Define the keys for hop
+    -- Initialize the hop module and directions
+  cond = function()
+    return not vim.g.vscode -- Exclude this plugin in VSCode
+  end,
+}
+},
 }

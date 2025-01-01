@@ -71,7 +71,8 @@ else
 	require("options")
 	require("test")
 	require("cusmap")
-	require("plugins.themes.vscode")
+-- require("plugins.themes.vscode")
+	-- require("plugins.themes.bambo")
 
 	-- Load mappings after everything else
 	vim.schedule(function()

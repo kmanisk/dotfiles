@@ -18,7 +18,7 @@ require("nvim-tree").setup({
 
 	-- Renderer settings
 	renderer = {
-		root_folder_label = false, -- Hide root folder label
+		root_folder_label = true, -- Hide root folder label
 		highlight_git = true,
 		indent_markers = { enable = true },
 		icons = {

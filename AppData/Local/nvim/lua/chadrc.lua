@@ -2,7 +2,7 @@ local M = {}
 
 -- UI Configuration
 M.ui = {
-	theme = "ashes", -- Set the theme for Neovim
+	theme = "vscode_dark", -- Set the theme for Neovim
 	transparency = true, -- Enable transparency
 	statusline = {
 		theme = "vscode_colored", -- Choose a statusline theme (can be 'vscode', 'gruvbox', etc.)
@@ -10,7 +10,7 @@ M.ui = {
 	},
 	cmp = {
 		lspkind_text = true,
-		style = "atom_colored", -- default/flat_light/flat_dark/atom/atom_colored
+		style = "atom", -- default/flat_light/flat_dark/atom/atom_colored
 		format_colors = {
 			tailwind = false,
 		},
@@ -25,13 +25,13 @@ M.ui = {
 }
 
 M.base46 = {
-	theme = "ashes", -- Change to your preferred base46 theme (e.g., 'tokyonight', 'gruvbox', etc.)
+	theme = "vscode_dark", -- Change to your preferred base46 theme (e.g., 'tokyonight', 'gruvbox', etc.)
 	hl_add = {},
 	hl_override = {},
 	integrations = {},
 	changed_themes = {},
 	transparency = false,
-	theme_toggle = { "onedark", "one_light" },
+	theme_toggle = { "vscode_dark", "one_light" },
 }
 
 M.nvdash = {

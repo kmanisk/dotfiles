@@ -28,15 +28,16 @@ return {
             },
             pickers = {
                 -- Adjusting layout for live_grep specifically
-                live_grep = {
-                    layout_config = {
-                        preview_width = 0.75,  -- Increase preview width (75% of the screen)
-                        height = 0.9,          -- Height remains full screen (or adjust as needed)
-                        prompt_position = "bottom",  -- Position prompt at the bottom
-                        width = 0.8,           -- Set result width to 80% of screen
-                    },
-                },
-            },
+            --     live_grep = {
+            --         layout_config = {
+            --             preview_width = 0.75,  -- Increase preview width (75% of the screen)
+            --             height = 0.9,          -- Height remains full screen (or adjust as needed)
+            --             prompt_position = "bottom",  -- Position prompt at the bottom
+            --             width = 0.8,           -- Set result width to 80% of screen
+            --         },
+            --     },
+            -- },
+            }
         })
 
         -- then load the extension
