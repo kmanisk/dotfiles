@@ -23,7 +23,8 @@
       "nerd-fonts-jetbrainsmono",
       "bat",
       "autohotkey",
-      "zoxide"
+      "zoxide",
+	  "starship"
     ],
     "full": [
       "7zip",
