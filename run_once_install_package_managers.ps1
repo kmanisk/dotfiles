@@ -130,89 +130,188 @@ function Install-Winget {
 # }
 
 # Write-Host "Installation completed!"
-# Load the JSON configuration
-$config = Get-Content -Path "$home\appdata\local\" | ConvertFrom-Json
+# ## Path to the "run once" marker
+# $runOnceMarker = Join-Path $HOME ".local\share\chezmoi\AppData\Local\installer\install_done.txt"
 
-# Function to install packages using Scoop
-function Install-ScoopPackages {
+# # Load the JSON configuration from the user's home directory
+# $configPath = Join-Path $HOME ".local\share\chezmoi\AppData\Local\installer\packages.json"
+# $config = Get-Content -Path $configPath | ConvertFrom-Json
+
+# # Function to install packages using Scoop
+# function Install-ScoopPackages {
+# 	param (
+# 		[string[]]$packages
+# 	)
+# 	foreach ($package in $packages) {
+# 		if (-not (scoop list | Select-String -Pattern $package)) {
+# 			Write-Host "Installing $package via Scoop..."
+# 			scoop install $package
+# 		}
+# 		else {
+# 			Write-Host "$package is already installed via Scoop."
+# 		}
+# 	}
+# }
+
+# # Function to install packages using Winget
+# function Install-WingetPackages {
+# 	param (
+# 		[string[]]$packages
+# 	)
+# 	foreach ($package in $packages) {
+# 		if (-not (winget list | Select-String -Pattern $package)) {
+# 			Write-Host "Installing $package via Winget..."
+# 			winget install $package
+# 		}
+# 		else {
+# 			Write-Host "$package is already installed via Winget."
+# 		}
+# 	}
+# }
+
+# # Function to install packages using Chocolatey
+# function Install-ChocoPackages {
+# 	param (
+# 		[string[]]$packages
+# 	)
+# 	foreach ($package in $packages) {
+# 		if (-not (choco list --local-only | Select-String -Pattern $package)) {
+# 			Write-Host "Installing $package via Chocolatey..."
+# 			choco install $package -y
+# 		}
+# 		else {
+# 			Write-Host "$package is already installed via Chocolatey."
+# 		}
+# 	}
+# }
+
+# # Check if installation has been run before
+# if (Test-Path $runOnceMarker) {
+# 	Write-Host "Installation has already been completed. Skipping..."
+# 	exit
+# }
+
+# # Prompt the user for installation type
+# $choice = Read-Host "Choose installation type (minimal/full)"
+# switch ($choice.ToLower()) {
+# 	"minimal" {
+# 		# Install minimal packages
+# 		Write-Host "Installing minimal packages..."
+
+# 		# Install minimal Scoop packages
+# 		Install-ScoopPackages -packages $config.scoop.minimal
+
+# 		# Install minimal Winget packages
+# 		Install-WingetPackages -packages $config.winget.minimal
+
+# 		# Install minimal Chocolatey packages
+# 		Install-ChocoPackages -packages $config.choco.minimal
+# 	}
+# 	"full" {
+# 		# Install full packages
+# 		Write-Host "Installing full packages..."
+
+# 		# Install full Scoop packages
+# 		Install-ScoopPackages -packages $config.scoop.full
+
+# 		# Install full Winget packages
+# 		Install-WingetPackages -packages $config.winget.full
+
+# 		# Install full Chocolatey packages
+# 		Install-ChocoPackages -packages $config.choco.full
+# 	}
+# 	default {
+# 		Write-Host "Invalid choice. Exiting..."
+# 		exit
+# 	}
+# }
+
+# # Create the "run once" marker to prevent future prompts
+# New-Item -Path $runOnceMarker -ItemType File -Force
+
+# Write-Host "Installation completed!"
+## Path to the "run once" marker
+$runOnceMarker = Join-Path $HOME ".local\share\chezmoi\AppData\Local\installer\install_done.txt"
+
+# Load the JSON configuration from the user's home directory
+$configPath = Join-Path $HOME ".local\share\chezmoi\AppData\Local\installer\packages.json"
+$config = Get-Content -Path $configPath | ConvertFrom-Json
+
+# Function to display Scoop packages with an identifier
+function Show-ScoopPackages {
 	param (
-		[string[]]$packages
+		[string[]]$packages,
+		[string]$identifier
 	)
+	Write-Host "Scoop [$identifier] packages:"
 	foreach ($package in $packages) {
-		if (-not (scoop list | Select-String -Pattern $package)) {
-			Write-Host "Installing $package via Scoop..."
-			scoop install $package
-		}
-		else {
-			Write-Host "$package is already installed via Scoop."
-		}
+		Write-Host " - $package"
 	}
 }
 
-# Function to install packages using Winget
-function Install-WingetPackages {
+# Function to display Winget packages with an identifier
+function Show-WingetPackages {
 	param (
-		[string[]]$packages
+		[string[]]$packages,
+		[string]$identifier
 	)
+	Write-Host "Winget [$identifier] packages:"
 	foreach ($package in $packages) {
-		if (-not (winget list | Select-String -Pattern $package)) {
-			Write-Host "Installing $package via Winget..."
-			winget install $package
-		}
-		else {
-			Write-Host "$package is already installed via Winget."
-		}
+		Write-Host " - $package"
 	}
 }
 
-# Function to install packages using Chocolatey
-function Install-ChocoPackages {
+# Function to display Chocolatey packages with an identifier
+function Show-ChocoPackages {
 	param (
-		[string[]]$packages
+		[string[]]$packages,
+		[string]$identifier
 	)
+	Write-Host "Chocolatey [$identifier] packages:"
 	foreach ($package in $packages) {
-		if (-not (choco list --local-only | Select-String -Pattern $package)) {
-			Write-Host "Installing $package via Chocolatey..."
-			choco install $package -y
-		}
-		else {
-			Write-Host "$package is already installed via Chocolatey."
-		}
+		Write-Host " - $package"
 	}
+}
+
+# Check if installation has been run before
+if (Test-Path $runOnceMarker) {
+	Write-Host "Installation has already been completed. Skipping..."
+	exit
 }
 
 # Prompt the user for installation type
 $choice = Read-Host "Choose installation type (minimal/full)"
 switch ($choice.ToLower()) {
 	"minimal" {
-		# Install minimal packages
-		Write-Host "Installing minimal packages..."
+		# Display minimal packages
+		Write-Host "Displaying minimal packages..."
 
-		# Install minimal Scoop packages
-		Install-ScoopPackages -packages $config.scoop.minimal
+		# Show minimal Scoop packages
+		Show-ScoopPackages -packages $config.scoop.minimal -identifier "minimal"
 
-		# Install minimal Winget packages
-		Install-WingetPackages -packages $config.winget.minimal
+		# Show minimal Winget packages
+		Show-WingetPackages -packages $config.winget.minimal -identifier "minimal"
 
-		# Install minimal Chocolatey packages
-		Install-ChocoPackages -packages $config.choco.minimal
+		# Show minimal Chocolatey packages
+		Show-ChocoPackages -packages $config.choco.minimal -identifier "minimal"
 	}
 	"full" {
-		# Install full packages
-		Write-Host "Installing full packages..."
+		# Display full packages
+		Write-Host "Displaying full packages..."
 
-		# Install full Scoop packages
-		Install-ScoopPackages -packages $config.scoop.full
+		# Show full Scoop packages
+		Show-ScoopPackages -packages $config.scoop.full -identifier "full"
 
-		# Install full Winget packages
-		Install-WingetPackages -packages $config.winget.full
+		# Show full Winget packages
+		Show-WingetPackages -packages $config.winget.full -identifier "full"
 
-		# Install full Chocolatey packages
-		Install-ChocoPackages -packages $config.choco.full
+		# Show full Chocolatey packages
+		Show-ChocoPackages -packages $config.choco.full -identifier "full"
 	}
 	default {
 		Write-Host "Invalid choice. Exiting..."
+		exit
 	}
 }
 
-Write-Host "Installation completed!"
+Write-Host "Test completed! Check the packages displayed."

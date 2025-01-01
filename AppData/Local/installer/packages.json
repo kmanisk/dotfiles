@@ -1,7 +1,8 @@
 {
   "scoop": {
     "minimal": [
-      "git"
+      "git",
+	  "msiafterburner"
     ],
     "full": [
       "git",
