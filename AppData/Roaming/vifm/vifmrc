@@ -292,6 +292,9 @@ nnoremap <space>nd :touch<space>
 nnoremap a :touch<space>
 nnoremap <space> <nop> 
 nnoremap <space>e :!explorer.exe . <cr>
+nnoremap <space>sa ggVG 
+nnoremap <space>da ggVGd
+nnoremap <space>ya ggVGy
 nnoremap <space>g :!powershell -Command "Start-Process wt.exe -ArgumentList '-d', (Get-Location).Path"<cr>
 " map za to show hidden files to .
 nnoremap . za

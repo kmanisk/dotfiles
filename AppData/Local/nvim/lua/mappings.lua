@@ -82,12 +82,16 @@ map("n", "<S-Left>", ":vertical resize -5<CR>", { noremap = true, silent = true 
 map("n", "<S-Down>", ":resize +5<CR>", { noremap = true, silent = true })
 map("n", "<S-Up>", ":resize -5<CR>", { noremap = true, silent = true })
 
+-- Map `cr` to invoke the LSP renamer from NvChad
+vim.keymap.set("n", "cr", function()
+	require("nvchad.lsp.renamer")() -- Assuming this is how the function is accessed
+end, { desc = "LSP Rename with NvChad Renamer" })
 -- Remove the original mapping for <Space>ra in normal mode
 --
 map("n", "<leader>th", function()
 	require("nvchad.themes").open({
 		border = true,
-		style = "compact",
+		-- style = "compact",
 	})
 end, { desc = "open theme picker" })
 

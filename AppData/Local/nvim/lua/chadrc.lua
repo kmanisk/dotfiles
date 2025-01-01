@@ -2,29 +2,92 @@ local M = {}
 
 -- UI Configuration
 M.ui = {
-	theme = "gruvbox", -- Set the theme for Neovim
+	theme = "ashes", -- Set the theme for Neovim
 	transparency = true, -- Enable transparency
 	statusline = {
 		theme = "vscode_colored", -- Choose a statusline theme (can be 'vscode', 'gruvbox', etc.)
 		separator_style = "round", -- Choose a style for the separators in the statusline
 	},
-}
-M.base46 = {
-	theme = "gruvbox", -- Change to your preferred base46 theme (e.g., 'tokyonight', 'gruvbox', etc.)
+	cmp = {
+		lspkind_text = true,
+		style = "atom_colored", -- default/flat_light/flat_dark/atom/atom_colored
+		format_colors = {
+			tailwind = false,
+		},
+	},
+	telescope = { style = "bordered" }, -- borderless / bordered
+	tabufline = {
+		enabled = true,
+		lazyload = true,
+		order = { "treeOffset", "buffers", "tabs", "btns" },
+		modules = nil,
+	},
 }
 
--- M.create_fullsize_win = function(buf)
--- 	local tbline_height = #vim.o.tabline == 0 and -1 or 0
--- 	vim.api.nvim.open_win(buf, true, {
--- 		row = 1 + tbline_height,
--- 		col = 0,
--- 		width = vim.o.columns,
--- 		height = vim.o.lines - (3 + tbline_height),
--- 		relative = "editor",
--- 	})
--- end
--- Add custom mappings here
--- print("Loading chadrc.lua")
--- M.mappings = require("custom.maps")
+M.base46 = {
+	theme = "ashes", -- Change to your preferred base46 theme (e.g., 'tokyonight', 'gruvbox', etc.)
+	hl_add = {},
+	hl_override = {},
+	integrations = {},
+	changed_themes = {},
+	transparency = false,
+	theme_toggle = { "onedark", "one_light" },
+}
+
+M.nvdash = {
+	load_on_startup = false,
+	header = {
+		"                            ",
+		"     ▄▄         ▄ ▄▄▄▄▄▄▄   ",
+		"   ▄▀███▄     ▄██ █████▀    ",
+		"   ██▄▀███▄   ███           ",
+		"   ███  ▀███▄ ███           ",
+		"   ███    ▀██ ███           ",
+		"   ███      ▀ ███           ",
+		"   ▀██ █████▄▀█▀▄██████▄    ",
+		"     ▀ ▀▀▀▀▀▀▀ ▀▀▀▀▀▀▀▀▀▀   ",
+		"                            ",
+		"     Powered By  eovim    ",
+		"                            ",
+	},
+	buttons = {
+		{ txt = "  Find File", keys = "Spc f f", cmd = "Telescope find_files" },
+		{ txt = "  Recent Files", keys = "Spc f o", cmd = "Telescope oldfiles" },
+	},
+}
+
+M.term = {
+	winopts = { number = false },
+	sizes = { sp = 0.3, vsp = 0.2, ["bo sp"] = 0.3, ["bo vsp"] = 0.2 },
+	float = {
+		relative = "editor",
+		row = 0.3,
+		col = 0.25,
+		width = 0.5,
+		height = 0.4,
+		border = "single",
+	},
+}
+
+M.lsp = {
+	signature = true,
+}
+
+M.cheatsheet = {
+	theme = "grid", -- simple/grid
+	excluded_groups = { "terminal (t)", "autopairs", "Nvim", "Opens" },
+}
+
+M.mason = {
+	pkgs = {},
+	skip = {},
+}
+
+M.colorify = {
+	enabled = true,
+	mode = "bg", -- fg, bg, virtual
+	virt_text = "󱓻 ",
+	highlight = { hex = true, lspvars = true },
+}
 
 return M
