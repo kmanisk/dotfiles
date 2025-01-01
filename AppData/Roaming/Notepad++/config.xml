@@ -22,6 +22,8 @@
         <File filename="C:\Users\Manisk\AppData\Roaming\VSCodium\User\keybindings.json" />
         <File filename="C:\Users\Manisk\Documents\PowerShell\Microsoft.PowerShell_profile.ps1" />
         <File filename="C:\Users\Manisk\AppData\Local\nvim-data\lazy\ui\lua\nvchad\lsp\renamer.lua" />
+        <File filename="C:\Users\Manisk\AppData\Local\installer\packages.json" />
+        <File filename="C:\Users\Manisk\AppData\Local\installer\packages.yaml" />
     </History>
     <ProjectPanels>
         <ProjectPanel id="0" workSpaceFile="" />
@@ -39,7 +41,7 @@
         <GUIConfig name="ScintillaViewsSplitter">vertical</GUIConfig>
         <GUIConfig name="UserDefineDlg" position="undocked">hide</GUIConfig>
         <GUIConfig name="TabSetting" replaceBySpace="no" size="4" backspaceUnindent="no" />
-        <GUIConfig name="AppPosition" x="280" y="27" width="1356" height="770" isMaximized="no" />
+        <GUIConfig name="AppPosition" x="170" y="211" width="1356" height="693" isMaximized="no" />
         <GUIConfig name="FindWindowPosition" left="1129" top="622" right="1732" bottom="981" isLessModeOn="no" />
         <GUIConfig name="FinderConfig" wrappedLines="no" purgeBeforeEverySearch="no" showOnlyOneEntryPerFoundLine="yes" />
         <GUIConfig name="noUpdate" intervalDays="15" nextUpdateDate="20250113">no</GUIConfig>
