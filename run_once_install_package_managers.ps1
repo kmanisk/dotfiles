@@ -53,6 +53,8 @@ function Install-Chocolatey {
 		Invoke-WebRequest https://community.chocolatey.org/install.ps1 -OutFile install.ps1
 		.\install.ps1
 		Remove-Item -Force install.ps1
+		. $PROFILE
+
 	}
  else {
 		Write-Host "Chocolatey is already installed."
