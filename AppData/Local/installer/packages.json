@@ -11,7 +11,7 @@
   "winget": {
     "mini": [
 		"JanDeDobbeleer.OhMyPosh",
-		"chrisant996.Clink"
+		"chrisant996.Clink",
     ],
     "full": [
       "Microsoft.VisualStudioCode",
@@ -26,7 +26,8 @@
 	  "ripgrep",
 	  "nerd-fonts-jetbrainsmono",
 	  "bat",
-	  "autohotkey"
+	  "autohotkey",
+	  "zoxide"
     ],
     "full": [
       "7zip",
