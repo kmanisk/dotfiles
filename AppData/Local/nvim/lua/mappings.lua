@@ -26,7 +26,8 @@ map("v", "J", ":m .+1<CR>==", opts)
 map("v", "K", ":m .-2<CR>==", opts)
 map("x", "J", ":move '>+1<CR>gv-gv", opts)
 map("x", "K", ":move '<-2<CR>gv-gv", opts)
-
+map("n", "<S-l>", vim.lsp.buf.hover, { desc = "Show hover information" })
+-- map("n", "<S-l>", vim.lsp.buf.signature_help, { desc = "Show hover information" })
 -- -- Remove default mappings
 -- local nomap = vim.keymap.del
 -- -- removed htoggleTerm
@@ -49,12 +50,11 @@ map("x", "K", ":move '<-2<CR>gv-gv", opts)
 -- nomap("n", "<M-v>")
 --
 --
-local nomap = vim.keymap.del
-
+--
 -- Function to safely remove a keymap if it exists
 local function safe_remove_keymap(mode, key)
 	if vim.fn.maparg(key, mode) ~= "" then
-		nomap(mode, key)
+		pcall(vim.keymap.del, mode, key) -- Use pcall to handle potential errors gracefully
 	end
 end
 
@@ -63,6 +63,7 @@ safe_remove_keymap("n", "<leader>h")
 safe_remove_keymap("n", "<leader>v")
 safe_remove_keymap("n", "<leader>b")
 safe_remove_keymap("n", "<leader>x")
+safe_remove_keymap("n", "<leader>th")
 safe_remove_keymap("n", "<C-n>")
 safe_remove_keymap("n", "<space>wk")
 safe_remove_keymap("n", "<space>n")
@@ -73,6 +74,7 @@ safe_remove_keymap("n", "<A-v>")
 safe_remove_keymap("n", "<A-i>")
 safe_remove_keymap("t", "<C-x>")
 safe_remove_keymap("n", "<leader>rn")
+safe_remove_keymap("n", "<leader>ra") -- Safely handle non-existent mappings
 -- safe_remove_keymap("n", "<M-i>")
 -- safe_remove_keymap("n", "<M-v>")
 map("n", "<S-Right>", ":vertical resize +5<CR>", { noremap = true, silent = true })
@@ -80,7 +82,15 @@ map("n", "<S-Left>", ":vertical resize -5<CR>", { noremap = true, silent = true 
 map("n", "<S-Down>", ":resize +5<CR>", { noremap = true, silent = true })
 map("n", "<S-Up>", ":resize -5<CR>", { noremap = true, silent = true })
 
--- overrided keymaps by from the base nvchad
+-- Remove the original mapping for <Space>ra in normal mode
+--
+map("n", "<leader>th", function()
+	require("nvchad.themes").open({
+		border = true,
+		style = "compact",
+	})
+end, { desc = "open theme picker" })
+
 map("n", "<leader>q", function()
 	require("nvchad.tabufline").close_buffer()
 end, { desc = "buffer close" })
@@ -248,3 +258,20 @@ end, { remap = true })
 vim.keymap.set("", "T", function()
 	hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })
 end, { remap = true })
+map("n", "gg", "ggzz")
+map("n", "G", "Gzz")
+
+-- Remap jk to jkzz in Visual mode
+map("v", "jk", "jkzz")
+
+-- Remap { to {zz in Visual mode
+map("v", "{", "{zz")
+
+-- Remap } to }zz in Visual mode
+map("v", "}", "}zz")
+
+-- Remap gg to ggzz in Visual mode
+map("v", "gg", "ggzz")
+
+-- Remap G to Gzz in Visual mode
+map("v", "G", "Gzz")

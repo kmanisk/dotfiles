@@ -9,7 +9,6 @@
 		"**/package-lock.json",
 		"**/yarn.lock"
 	],
-
 	// "editor.matchBrackets": "never",
 	"editor.lightbulb.enabled": "off",
 	"workbench.tree.indent": 16,
@@ -231,5 +230,6 @@
 	"editor.folding": false,
 	"editor.glyphMargin": false,
 	"tabnine.experimentalAutoImports": true,
+	"extensions.ignoreRecommendations": true,
 	//added a commnet
 }

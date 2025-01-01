@@ -2,20 +2,15 @@ local M = {}
 
 -- UI Configuration
 M.ui = {
-	theme = "github_dark", -- Set the theme for Neovim
-	-- transparency = true, -- Enable transparency
-	-- statusline = {
-	-- 	theme = "vscode_colored", -- Statusline theme
-	-- 	separator_style = "round", -- Separator style for the statusline
-	-- },
+	theme = "gruvbox", -- Set the theme for Neovim
+	transparency = true, -- Enable transparency
 	statusline = {
 		theme = "vscode_colored", -- Choose a statusline theme (can be 'vscode', 'gruvbox', etc.)
 		separator_style = "round", -- Choose a style for the separators in the statusline
 	},
 }
-
 M.base46 = {
-	theme = "github_dark", -- Change to your preferred base46 theme (e.g., 'tokyonight', 'gruvbox', etc.)
+	theme = "gruvbox", -- Change to your preferred base46 theme (e.g., 'tokyonight', 'gruvbox', etc.)
 }
 
 -- M.create_fullsize_win = function(buf)

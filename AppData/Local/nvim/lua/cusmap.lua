@@ -66,12 +66,6 @@ vim.keymap.set(
 	{ noremap = true, silent = true, desc = "Find files with Telescope" }
 )
 
-vim.keymap.set(
-	"n",
-	"<leader>th",
-	":Telescope colorscheme<CR>",
-	{ noremap = true, silent = true, desc = "Choose colorscheme with Telescope" }
-)
 local builtin = require("telescope.builtin")
 
 vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "[F]ind [F]iles" })

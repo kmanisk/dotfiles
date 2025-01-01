@@ -96,6 +96,13 @@ keymap({ "n", "v" }, "<leader>oe", "<cmd>lua require('vscode').action('revealFil
 keymap({ "n", "v" }, "<A-j>", "<cmd>lua require('vscode').action('workbench.action.nextEditorInGroup')<CR>")
 keymap({ "n", "v" }, "<A-k>", "<cmd>lua require('vscode').action('workbench.action.previousEditorInGroup')<CR>")
 keymap("n", "<leader>sf", ':lua require("vscode").action("periscope.search")<CR>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap(
+-- 	"n",
+-- 	"<leader>rf",
+-- 	':lua require("vscode").action("filebunny.renameActiveFile")<CR>',
+-- 	{ noremap = true, silent = true }
+-- )
+--
 vim.api.nvim_set_keymap(
 	"n",
 	"<leader>rf",
@@ -338,7 +345,6 @@ require("lazy").setup({
 	{
 		"vscode-neovim/vscode-multi-cursor.nvim",
 		event = "VeryLazy",
-		cond = not not vim.g.vscode,
 		opts = {},
 	},
 	{
