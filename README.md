@@ -19,7 +19,7 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
 scoop install main/chezmoi
 ```
-## For Winget Users
+### For Winget Users
 
 ```
 winget install twpayne.chezmoi
