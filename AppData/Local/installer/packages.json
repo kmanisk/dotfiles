@@ -10,12 +10,10 @@
   },
   "winget": {
     "mini": [
-		"JanDeDobbeleer.OhMyPosh",
-		"chrisant996.Clink",
+		
     ],
     "full": [
-      "Microsoft.VisualStudioCode",
-      "JanDeDobbeleer.OhMyPosh"
+      
     ]
   },
   "choco": {
@@ -27,7 +25,8 @@
 	  "nerd-fonts-jetbrainsmono",
 	  "bat",
 	  "autohotkey",
-	  "zoxide"
+	  "zoxide",
+	  "clink"
     ],
     "full": [
       "7zip",
