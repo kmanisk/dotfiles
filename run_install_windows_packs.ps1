@@ -80,11 +80,19 @@ function Install-Winget {
 Install-Scoop
 Install-Chocolatey
 Install-Winget
+# Define a dummy JSON string
+$jsonString = '{"name": "John", "age": 30, "city": "New York"}'
+
+# Convert the JSON string to a PowerShell object
+$convertedObject = $jsonString | ConvertFrom-Json
+
+# Output the converted object
+$convertedObject
 
 # Load the JSON configuration from the user's home directory
 $configPath = Join-Path $HOME ".local\share\chezmoi\AppData\Local\installer\packages.json"
+# Write-Host "Config Path : $configPath"
 $config = Get-Content -Path $configPath | ConvertFrom-Json
-
 # Function to install Scoop packages
 function Install-ScoopPackages {
     param (
@@ -116,7 +124,7 @@ function Install-WingetPackages {
         try {
             # Install the package using Winget without the -y flag
             Write-Host "winget install packages"
-            # winget install $package --source winget
+            winget install --id $package --source winget
         }
         catch {
             Write-Host "Failed to install package: $package. Error: $_"
