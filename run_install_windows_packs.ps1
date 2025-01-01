@@ -83,6 +83,22 @@ function Move-ConfigFolder {
     }
 }
 
-function Clink-setup{
-    
+function ClinkSetup {
+    $clinkPath = "C:\Program Files (x86)\clink"
+
+    # Check if the path is already in the PATH environment variable
+    if ($env:Path -notlike "*$clinkPath*") {
+        Write-Host "Adding Clink path to the system PATH variable..."
+        
+        # Add the Clink path to the system PATH variable
+        [System.Environment]::SetEnvironmentVariable("Path", $env:Path + ";$clinkPath", [System.EnvironmentVariableTarget]::Machine)
+
+        Write-Host "Clink path added successfully."
+    }
+    else {
+        Write-Host "Clink path is already in the system PATH variable."
+    }
 }
+
+# Call the Clink-setup function
+ClinkSetup
