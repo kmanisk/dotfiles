@@ -80,14 +80,6 @@ function Install-Winget {
 Install-Scoop
 Install-Chocolatey
 Install-Winget
-# Define a dummy JSON string
-$jsonString = '{"name": "John", "age": 30, "city": "New York"}'
-
-# Convert the JSON string to a PowerShell object
-$convertedObject = $jsonString | ConvertFrom-Json
-
-# Output the converted object
-$convertedObject
 
 # Load the JSON configuration from the user's home directory
 $configPath = Join-Path $HOME ".local\share\chezmoi\AppData\Local\installer\packages.json"
