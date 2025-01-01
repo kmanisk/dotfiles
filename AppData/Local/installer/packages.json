@@ -1,36 +1,29 @@
 {
   "scoop": {
-    "mini": [
-      
-    ],
-    "full": [
-      
-      
-    ]
+    "mini": [],
+    "full": []
   },
   "winget": {
     "mini": [
       "JanDeDobbeleer.OhMyPosh",
-	  "chrisant996.Clink"
-		
+      "chrisant996.Clink"
     ],
     "full": [
-	"Guru3D.Afterburner",
-	"Guru3D.RTSS",
-	"TechPowerUp.NVCleanstall"
-      
+      "Guru3D.Afterburner",
+      "Guru3D.RTSS",
+      "TechPowerUp.NVCleanstall"
     ]
   },
   "choco": {
     "mini": [
       "7zip",
-	   "neovim",
-	  "mingw",
-	  "ripgrep",
-	  "nerd-fonts-jetbrainsmono",
-	  "bat",
-	  "autohotkey",
-	  "zoxide",
+      "neovim",
+      "mingw",
+      "ripgrep",
+      "nerd-fonts-jetbrainsmono",
+      "bat",
+      "autohotkey",
+      "zoxide"
     ],
     "full": [
       "7zip",
@@ -64,7 +57,7 @@
       "zoxide",
       "wiztree",
       "noevide",
-	  "autohotkey"
+      "autohotkey"
     ]
   }
 }
