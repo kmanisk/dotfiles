@@ -28,7 +28,7 @@ winget install -e --id GitHub.cli
 
 ```
  Configure Git
-```bash
+
 git config --global user.name "kmanisk" 
 git config --global user.email "youremail@example.com"
 gh auth login
