@@ -26,7 +26,7 @@ winget install Git.Git
 winget install -e --id GitHub.cli
 ```
 
- ###Configure Git
+### Configure Git
 ```
 
 git config --global user.name "kmanisk" 
