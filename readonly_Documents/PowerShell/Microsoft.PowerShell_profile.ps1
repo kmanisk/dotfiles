@@ -10,6 +10,14 @@ Import-Module -Name Terminal-Icons
 # Alias z to cd
 # Remove any existing aliases to avoid conflicts
 Remove-Item Alias:z -ErrorAction SilentlyContinue
+Remove-Item Alias:ls -ErrorAction SilentlyContinue
+
+if (Get-Command lsd -ErrorAction SilentlyContinue) {
+    Set-Alias ls lsd
+} else {
+    Set-Alias ls Get-ChildItem
+}
+
 Remove-Item Alias:zi -ErrorAction SilentlyContinue
 function shutit{
     shutdown /s /t 0
