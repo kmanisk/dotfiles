@@ -10,6 +10,8 @@
   },
   "winget": {
     "mini": [
+      "JanDeDobbeleer.OhMyPosh",
+	  "chrisant996.Clink"
 		
     ],
     "full": [
@@ -29,7 +31,6 @@
 	  "bat",
 	  "autohotkey",
 	  "zoxide",
-	  "clink"
     ],
     "full": [
       "7zip",
