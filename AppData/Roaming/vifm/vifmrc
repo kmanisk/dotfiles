@@ -287,7 +287,7 @@ nnoremap J :tabnext<cr>
 nnoremap <space>q :tabclose<cr>
 nnoremap <space>c :change<cr>
 nnoremap <space>nf :mkcd<space>
-nnoremap A :mkcd<space>
+nnoremap nF :mkcd<space>
 nnoremap <space>nd :touch<space>
 nnoremap a :touch<space>
 nnoremap <space> <nop> 

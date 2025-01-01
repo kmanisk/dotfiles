@@ -572,6 +572,7 @@ function local { Set-Location -Path $HOME\AppData\Local\ }
 function roam { Set-Location -path $home\appdata\Roaming\ }
 function des { Set-Location -Path $HOME\Desktop }
 function dot { Set-Location -Path $Home\.local\share\chezmoi\ }
+function dots { Set-Location -Path $Home\.local\share\chezmoi\ }
 
 # Quick Access to Editing the Profile
 function ep { nvim $PROFILE }
