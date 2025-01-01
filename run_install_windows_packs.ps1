@@ -96,17 +96,6 @@ function Install-ScoopPackages {
     }
 }
 
-# Function to install Winget packages with source flag
-function Install-WingetPackages {
-    param (
-        [string[]]$packages
-    )
-    foreach ($package in $packages) {
-        # Install the package using Winget and specify the source
-        winget install $package --source winget -y
-    }
-}
-
 # Function to install Chocolatey packages
 function Install-ChocoPackages {
     param (
@@ -115,6 +104,22 @@ function Install-ChocoPackages {
     foreach ($package in $packages) {
         # Install the package using Chocolatey
         choco install $package -y
+    }
+
+    # Function to install Winget packages with source flag
+    function Install-WingetPackages {
+        param (
+            [string[]]$packages
+        )
+        foreach ($package in $packages) {
+            try {
+                # Install the package using Winget without the -y flag
+                winget install $package --source winget
+            }
+            catch {
+                Write-Host "Failed to install package: $package. Error: $_"
+            }
+        }
     }
 }
 
@@ -152,6 +157,7 @@ switch ($choice.ToLower()) {
 }
 
 Write-Host "Installation completed!"
+
 
 
 function Install-OSDLayout {
