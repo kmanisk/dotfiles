@@ -62,7 +62,6 @@ function Install-Chocolatey {
 	# choco upgrade chocolatey -y
 }
 
-
 # Function to install Winget
 function Install-Winget {
 	if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
@@ -74,6 +73,10 @@ function Install-Winget {
 		Write-Host "Winget is already installed."
 	}
 }
+
+Install-Scoop
+Install-Chocolatey
+Install-Winget
 
 
 # # Function to install Chocolatey packages
