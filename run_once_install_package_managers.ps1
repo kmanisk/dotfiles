@@ -45,26 +45,26 @@ function Install-Scoop {
 }
 
 
+
 function Install-Chocolatey {
-	# Check if Chocolatey is installed
-	if (-not (Get-Command -Name choco.exe -ErrorAction SilentlyContinue)) {
-		Write-Host "Installing Chocolatey..."
+	if (-not (Get-Command choco -ErrorAction SilentlyContinue)) {
+		Write-Host "Chocolatey is not installed. Installing Chocolatey..."
 		Set-ExecutionPolicy Bypass -Scope Process -Force
 		Invoke-WebRequest https://community.chocolatey.org/install.ps1 -OutFile install.ps1
 		.\install.ps1
 		Remove-Item -Force install.ps1
-		. $PROFILE
-
+		[System.Environment]::SetEnvironmentVariable('Path', $env:Path + ';C:\ProgramData\chocolatey\bin', 'Machine')
+		$env:Path = [System.Environment]::GetEnvironmentVariable('Path', 'Machine')
 	}
  else {
 		Write-Host "Chocolatey is already installed."
 	}
 
-	# Ensure Chocolatey is up to date
-	Write-Host "Upgrading Chocolatey to the latest version..."
-	# choco upgrade chocolatey -y
+	# Configure Chocolatey settings
+	Write-Host "Configuring Chocolatey settings..." -ForegroundColor Yellow
+	choco feature enable -n allowGlobalConfirmation
+	choco feature enable -n checksumFiles
 }
-
 # Function to install Winget
 function Install-Winget {
 	if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
