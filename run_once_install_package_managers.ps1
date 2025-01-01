@@ -76,54 +76,139 @@ function Install-Winget {
 }
 
 
-# Function to install Chocolatey packages
-function Install-ChocoPackages {
-	param (
-		[string]$packageListFile
-	)
+# # Function to install Chocolatey packages
+# function Install-ChocoPackages {
+# 	param (
+# 		[string]$packageListFile
+# 	)
 
-	Write-Host "Installing tools via Chocolatey from $packageListFile..."
-	Get-Content $packageListFile | ForEach-Object {
-		choco install $_ -y
+# 	Write-Host "Installing tools via Chocolatey from $packageListFile..."
+# 	Get-Content $packageListFile | ForEach-Object {
+# 		choco install $_ -y
+# 	}
+# }
+
+# # Paths
+# $installerPath = "$HOME\.local\share\chezmoi\AppData\Local\installer"
+# $chocoMinimalFile = "$installerPath\choco_minimal.txt"
+# $chocoFullFile = "$installerPath\choco_full.txt"
+
+# # Merge Scoop files for full installation
+# Merge-ScoopFiles -minimalFile $minimalScoopFile -fullFile $fullScoopFile -mergedFile $mergedScoopFile
+# # Install package managers
+# Install-Scoop
+# Install-Chocolatey
+# Install-Winget
+
+# # Prompt user for installation type
+# $choice = Read-Host "Choose installation type (minimal/full)"
+# switch ($choice.ToLower()) {
+# 	"minimal" {
+
+# 		# Install minimal Chocolatey packages
+# 		if (Test-Path $chocoMinimalFile) {
+# 			Write-Host "Installing minimal packages via Chocolatey..."
+# 			Install-ChocoPackages -packageListFile $chocoMinimalFile
+# 		}
+# 		else {
+# 			Write-Host "Minimal Chocolatey package list not found."
+# 		}
+# 	}
+# 	"full" {
+# 		# Install full Chocolatey packages
+# 		if (Test-Path $chocoFullFile) {
+# 			Write-Host "Installing full packages via Chocolatey..."
+# 			Install-ChocoPackages -packageListFile $chocoFullFile
+# 		}
+# 		else {
+# 			Write-Host "Full Chocolatey package list not found."
+# 		}
+# 	}
+# 	default {
+# 		Write-Host "Invalid choice. Exiting..."
+# 	}
+# }
+
+# Write-Host "Installation completed!"
+# Load the JSON configuration
+$config = Get-Content -Path "$home\appdata\local\" | ConvertFrom-Json
+
+# Function to install packages using Scoop
+function Install-ScoopPackages {
+	param (
+		[string[]]$packages
+	)
+	foreach ($package in $packages) {
+		if (-not (scoop list | Select-String -Pattern $package)) {
+			Write-Host "Installing $package via Scoop..."
+			scoop install $package
+		}
+		else {
+			Write-Host "$package is already installed via Scoop."
+		}
 	}
 }
 
-# Paths
-$installerPath = "$HOME\.local\share\chezmoi\AppData\Local\installer"
-$chocoMinimalFile = "$installerPath\choco_minimal.txt"
-$chocoFullFile = "$installerPath\choco_full.txt"
+# Function to install packages using Winget
+function Install-WingetPackages {
+	param (
+		[string[]]$packages
+	)
+	foreach ($package in $packages) {
+		if (-not (winget list | Select-String -Pattern $package)) {
+			Write-Host "Installing $package via Winget..."
+			winget install $package
+		}
+		else {
+			Write-Host "$package is already installed via Winget."
+		}
+	}
+}
 
-# Merge Scoop files for full installation
-Merge-ScoopFiles -minimalFile $minimalScoopFile -fullFile $fullScoopFile -mergedFile $mergedScoopFile
+# Function to install packages using Chocolatey
+function Install-ChocoPackages {
+	param (
+		[string[]]$packages
+	)
+	foreach ($package in $packages) {
+		if (-not (choco list --local-only | Select-String -Pattern $package)) {
+			Write-Host "Installing $package via Chocolatey..."
+			choco install $package -y
+		}
+		else {
+			Write-Host "$package is already installed via Chocolatey."
+		}
+	}
+}
 
-# Install package managers
-Install-Scoop
-Install-Chocolatey
-Install-Winget
-
-# Prompt user for installation type
+# Prompt the user for installation type
 $choice = Read-Host "Choose installation type (minimal/full)"
 switch ($choice.ToLower()) {
 	"minimal" {
+		# Install minimal packages
+		Write-Host "Installing minimal packages..."
+
+		# Install minimal Scoop packages
+		Install-ScoopPackages -packages $config.scoop.minimal
+
+		# Install minimal Winget packages
+		Install-WingetPackages -packages $config.winget.minimal
 
 		# Install minimal Chocolatey packages
-		if (Test-Path $chocoMinimalFile) {
-			Write-Host "Installing minimal packages via Chocolatey..."
-			Install-ChocoPackages -packageListFile $chocoMinimalFile
-		}
-		else {
-			Write-Host "Minimal Chocolatey package list not found."
-		}
+		Install-ChocoPackages -packages $config.choco.minimal
 	}
 	"full" {
+		# Install full packages
+		Write-Host "Installing full packages..."
+
+		# Install full Scoop packages
+		Install-ScoopPackages -packages $config.scoop.full
+
+		# Install full Winget packages
+		Install-WingetPackages -packages $config.winget.full
+
 		# Install full Chocolatey packages
-		if (Test-Path $chocoFullFile) {
-			Write-Host "Installing full packages via Chocolatey..."
-			Install-ChocoPackages -packageListFile $chocoFullFile
-		}
-		else {
-			Write-Host "Full Chocolatey package list not found."
-		}
+		Install-ChocoPackages -packages $config.choco.full
 	}
 	default {
 		Write-Host "Invalid choice. Exiting..."

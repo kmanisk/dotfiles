@@ -1,0 +1,29 @@
+{
+  "scoop": {
+    "minimal": [
+      "git"
+    ],
+    "full": [
+      "git",
+      "nodejs"
+    ]
+  },
+  "winget": {
+    "minimal": [
+      "Microsoft.VisualStudioCode"
+    ],
+    "full": [
+      "Microsoft.VisualStudioCode",
+      "Google.Chrome"
+    ]
+  },
+  "choco": {
+    "minimal": [
+      "7zip"
+    ],
+    "full": [
+      "7zip",
+      "notepadplusplus"
+    ]
+  }
+}
