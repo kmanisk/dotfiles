@@ -230,8 +230,9 @@ function Install-Winget {
 # New-Item -Path $runOnceMarker -ItemType File -Force
 
 # Write-Host "Installation completed!"
+#
 ## Path to the "run once" marker
-$runOnceMarker = Join-Path $HOME ".local\share\chezmoi\AppData\Local\installer\install_done.txt"
+$runOnceMarker = Join-Path $HOME ".local\share\chezmoi\AppData\Local\installer\Is_install.txt"
 
 # Load the JSON configuration from the user's home directory
 $configPath = Join-Path $HOME ".local\share\chezmoi\AppData\Local\installer\packages.json"
