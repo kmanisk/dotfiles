@@ -205,19 +205,17 @@ function Install-OSDLayout {
 Install-OSDLayout
 
 
+
 function Move-ConfigFolder {
     $sourcePath = Join-Path -Path $env:USERPROFILE -ChildPath ".config\es"
     $destinationPath = "C:\es"  # Set the destination to C:\es
 
-    # Check if the source folder exists
     if (Test-Path $sourcePath) {
-        # Create the destination directory if it doesn't exist
         if (-not (Test-Path $destinationPath)) {
             New-Item -Path $destinationPath -ItemType Directory
             Write-Host "Created destination directory at $destinationPath"
         }
 
-        # Move the folder
         Move-Item -Path $sourcePath -Destination $destinationPath -Force
         Write-Host "Moved folder from $sourcePath to $destinationPath"
     }
@@ -229,7 +227,6 @@ function Move-ConfigFolder {
 function Set-PermanentMachine {
     Write-Host "Installing Spotify..."
     try {
-        # Install Spotify using SpotX
         Invoke-Expression "& { $(Invoke-WebRequest -UseBasicParsing -Uri 'https://raw.githubusercontent.com/SpotX-Official/spotx-official.github.io/main/run.ps1') } -new_theme"
     }
     catch {
@@ -237,12 +234,9 @@ function Set-PermanentMachine {
         return
     }
         
-    # Path to the MLWapp installer
     $installerPath = "C:\Users\Manisk\AppData\Local\installer\executable_MLWapp2.6.x64.exe"
-
-    # Check if MLWapp is already installed
     $mlwappInstalled = Test-Path "C:\Program Files\MLWapp\MLWapp.exe"
-        
+
     if (-not $mlwappInstalled) {
         if (Test-Path $installerPath) {
             Write-Host "Installing MLWapp..."
@@ -255,17 +249,17 @@ function Set-PermanentMachine {
     else {
         Write-Host "MLWapp is already installed."
     }
-        
-    # Call the Move-ConfigFolder function
+
     Move-ConfigFolder
 }
 
+$userInput = Read-Host "Do you want to install Spotify? (y/n)"
 
-
-$userInput = Read-Host "(y/n) => "
-    
 if ($userInput -eq 'y') {
     Set-PermanentMachine
+}
+else {
+    Write-Host "Operation skipped."
 }
 
 
