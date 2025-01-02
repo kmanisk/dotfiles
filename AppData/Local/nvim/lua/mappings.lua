@@ -208,42 +208,25 @@ map("n", "n", "nzz", { noremap = true, silent = true })
 -- Map 'N' to search backward and center the result on the screen
 map("n", "N", "Nzz", { noremap = true, silent = true })
 -- map("n", "b", "ggVG", { noremap = true, silent = true })
-vim.cmd("highlight Search ctermbg=235 ctermfg=214 guibg=#dcdcdc guifg=#e1c16e")
+-- vim.cmd("highlight Search ctermbg=235 ctermfg=214 guibg=#dcdcdc guifg=#e1c16e")
 
 -- Harpoon
-map("n", "<leader>ha", require("harpoon.mark").add_file)
-map("n", "<leader>hh", require("harpoon.ui").toggle_quick_menu)
-map("n", "<leader>h1", function()
-	require("harpoon.ui").nav_file(1)
-end)
-map("n", "<leader>h2", function()
-	require("harpoon.ui").nav_file(2)
-end)
-map("n", "<leader>h3", function()
-	require("harpoon.ui").nav_file(3)
-end)
-map("n", "<leader>h4", function()
-	require("harpoon.ui").nav_file(4)
-end)
-map("n", "<leader>h5", function()
-	require("harpoon.ui").nav_file(5)
-end)
-map("n", "<leader>h6", function()
-	require("harpoon.ui").nav_file(6)
-end)
-map("n", "<leader>h7", function()
-	require("harpoon.ui").nav_file(7)
-end)
-map("n", "<leader>h8", function()
-	require("harpoon.ui").nav_file(8)
-end)
-map("n", "<leader>h9", function()
-	require("harpoon.ui").nav_file(9)
-end)
-map({ "n", "x" }, "<leader>sr", function()
-	require("ssr").open()
-end)
-
+---- Add the current file to Harpoon
+-- map("n", "<leader>ha", require("harpoon.mark").add_file, { desc = "Add file to Harpoon" })
+--
+-- -- Toggle the Harpoon quick menu
+-- map("n", "<leader>hh", require("harpoon.ui").toggle_quick_menu, { desc = "Toggle Harpoon menu" })
+-- local harpoon_ui = require("harpoon.ui")
+--
+-- for i = 1, 9 do
+--   map("n", "<leader>h" .. i, function()
+--     harpoon_ui.nav_file(i)
+--   end, { desc = "Navigate to Harpoon file " .. i })
+-- end
+-- map({ "n", "x" }, "<leader>sr", function()
+-- 	require("ssr").open()
+-- end)
+--
 -- Mapping leader tt to open a new tab
 map("n", "<leader>tt", ":tabnew<CR>", { noremap = true, silent = true })
 
@@ -267,3 +250,38 @@ map("i", "<C-m>", "<C-R>+", { noremap = true, silent = true })
 
 map("n", "gg", "ggzz")
 map("n", "G", "Gzz")
+
+-- vim.opts.preset("")
+local cmp = require("cmp")
+cmp.setup({
+  snippet = {
+    expand = function(args)
+      require("luasnip").lsp_expand(args.body) -- For LuaSnip
+    end,
+  },
+  mapping = cmp.mapping.preset.insert({
+    ["<C-Space>"] = cmp.mapping.complete(), -- Trigger completion manually with Ctrl-Space
+    ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Confirm selection with Enter key
+    ["<Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()  -- Move to the next completion item
+      else
+        fallback()  -- Fall back to default behavior (e.g., insert a tab)
+      end
+    end, { "i", "s" }),
+
+    ["<S-Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()  -- Move to the previous completion item
+      else
+        fallback()  -- Fall back to default behavior (e.g., insert a tab)
+      end
+    end, { "i", "s" }),
+  }),
+  sources = cmp.config.sources({
+    { name = "nvim_lsp" }, -- LSP completion
+    { name = "luasnip" },  -- Snippet completions
+  }, {
+    { name = "buffer" },    -- Buffer completion
+  }),
+})

@@ -4,7 +4,7 @@ local map = vim.keymap.set
 
 -- map for quick quit, save files using leader key
 ---- Normal mode
-map("n", "<Leader>a", ":wqa<CR>")
+-- map("n", "<Leader>a", ":wqa<CR>")
 -- map("n", "<Leader>x", ":wq<CR>")
 
 ---- Insert mode

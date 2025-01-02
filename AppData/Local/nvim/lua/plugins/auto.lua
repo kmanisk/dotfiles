@@ -12,7 +12,7 @@ return {
 			-- your configuration comes here
 			-- or leave it empty to use the default settings
 			-- refer to the configuration section below
-			--enable = true,
+			enable = true,
 			prompt = {
 				enable = false,
 				style = "stdout",
@@ -28,7 +28,7 @@ return {
 				filetype_is_not = {},
 			},
 			write_all_buffers = false,
-			debounce_delay = 500,
+			debounce_delay = 5000,
 		})
 	end,
 }

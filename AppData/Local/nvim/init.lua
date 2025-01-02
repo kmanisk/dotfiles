@@ -28,28 +28,28 @@ if not vim.g.vscode then
 		{ import = "plugins" },
 
 		-- Additional Neovim plugins
-		{
-			"nvim-treesitter/nvim-treesitter",
-			lazy = false,
-			config = function()
-				require("nvim-treesitter.configs").setup({
-					ensure_installed = { "lua", "python", "javascript", "html", "css" },
-					highlight = { enable = true },
-				})
-			end,
-		},
+		-- {
+		-- 	"nvim-treesitter/nvim-treesitter",
+		-- 	lazy = false,
+		-- 	config = function()
+		-- 		require("nvim-treesitter.configs").setup({
+		-- 			ensure_installed = { "lua", "python", "javascript", "html", "css" },
+		-- 			highlight = { enable = true },
+		-- 		})
+		-- 	end,
+		-- },
 		{
 			"nvim-lua/plenary.nvim",
 			lazy = false,
 		},
-		{
-			"hrsh7th/nvim-cmp",
-			config = function()
-				require("cmp").setup({
-					-- Configuration for nvim-cmp
-				})
-			end,
-		},
+		-- {
+		-- 	"hrsh7th/nvim-cmp",
+		-- 	config = function()
+		-- 		require("cmp").setup({
+		-- 			-- Configuration for nvim-cmp
+		-- 		})
+		-- 	end,
+		-- },
 		{
 			"L3MON4D3/LuaSnip",
 			lazy = false,
