@@ -29,6 +29,14 @@ function shutit{
 #fastfetch
 
 
+if ($Host.Name -notmatch 'ConsoleHost') {
+    # Disable predictive suggestions for non-interactive shells
+    Set-PSReadLineOption -PredictionSource None
+} else {
+    # Enable predictive suggestions for interactive shells
+    Set-PSReadLineOption -PredictionSource HistoryAndPlugin
+}
+
 # Alias zi to cdi
 Set-Alias -Name zi -Value cdi
 Set-Alias -Name z -Value cd

@@ -10,47 +10,45 @@ local bo = vim.bo
 o.number = true
 o.relativenumber = true
 -- Function to check if a command exists
-local function is_command_available(cmd)
-  return vim.fn.executable(cmd) == 1
-end
-
--- Set the shell based on availability
-if is_command_available("pwsh") then
-  vim.o.shell = "pwsh"
-  vim.o.shellcmdflag = "-NoLogo -ExecutionPolicy RemoteSigned -Command $PSStyle.OutputRendering = 'PlainText';"
-else
-  vim.o.shell = "powershell"
-  vim.o.shellcmdflag = "-NoLogo -ExecutionPolicy RemoteSigned -Command"
-end
-
--- Common shell settings
-vim.o.shellredir = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode"
-vim.o.shellpipe = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode"
-vim.o.shellquote = ""
-vim.o.shellxquote = ""
--- Common shell settings
-vim.o.shellredir = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode"
-vim.o.shellpipe = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode"
-vim.o.shellquote = ""
-vim.o.shellxquote = ""
--- vim.o.shell = "pwsh.exe"
--- vim.o.shellcmdflag = "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command $PSStyle.OutputRendering = 'PlainText';"
+-- local function is_command_available(cmd)
+--   return vim.fn.executable(cmd) == 1
+-- end
+--
+-- -- Set the shell based on availability
+-- if is_command_available("pwsh") then
+--   vim.o.shell = "pwsh"
+--   vim.o.shellcmdflag = "-NoLogo -ExecutionPolicy RemoteSigned -Command $PSStyle.OutputRendering = 'PlainText';"
+-- else
+--   vim.o.shell = "powershell"
+--   vim.o.shellcmdflag = "-NoLogo -ExecutionPolicy RemoteSigned -Command"
+-- end
+--
+-- -- Common shell settings
 -- vim.o.shellredir = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode"
 -- vim.o.shellpipe = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode"
 -- vim.o.shellquote = ""
 -- vim.o.shellxquote = ""
--- vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
--- vim.o.shell = "pwsh"
--- vim.opt.shellcmdflag =
--- 	"-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;"
--- vim.cmd([[
--- 		let &shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
--- 		let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
--- 		set shellquote= shellxquote=
---   ]])
---
+-- -- Common shell settings
+-- vim.o.shellredir = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode"
+-- vim.o.shellpipe = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode"
+-- vim.o.shellquote = ""
+-- vim.o.shellxquote = ""
 vim.opt.swapfile = false
 
+-- Set shell to pwsh or fallback to powershell
+if vim.fn.executable("pwsh") == 1 then
+    vim.o.shell = "pwsh"
+    vim.o.shellcmdflag = "-NoLogo -ExecutionPolicy RemoteSigned -Command $PSStyle.OutputRendering = 'PlainText';"
+else
+    vim.o.shell = "powershell"
+    vim.o.shellcmdflag = "-NoLogo -ExecutionPolicy RemoteSigned -Command"
+end
+
+-- Configure shell output redirection
+vim.o.shellredir = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode"
+vim.o.shellpipe = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode"
+vim.o.shellquote = ""
+vim.o.shellxquote = ""
 -- Enable smart case for search (case-insensitive unless you use uppercase letters)
 o.smartcase = true
 o.ignorecase = true
