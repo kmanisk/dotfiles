@@ -252,36 +252,36 @@ map("n", "gg", "ggzz")
 map("n", "G", "Gzz")
 
 -- vim.opts.preset("")
-local cmp = require("cmp")
-cmp.setup({
-  snippet = {
-    expand = function(args)
-      require("luasnip").lsp_expand(args.body) -- For LuaSnip
-    end,
-  },
-  mapping = cmp.mapping.preset.insert({
-    ["<C-Space>"] = cmp.mapping.complete(), -- Trigger completion manually with Ctrl-Space
-    ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Confirm selection with Enter key
-    ["<Tab>"] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()  -- Move to the next completion item
-      else
-        fallback()  -- Fall back to default behavior (e.g., insert a tab)
-      end
-    end, { "i", "s" }),
-
-    ["<S-Tab>"] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()  -- Move to the previous completion item
-      else
-        fallback()  -- Fall back to default behavior (e.g., insert a tab)
-      end
-    end, { "i", "s" }),
-  }),
-  sources = cmp.config.sources({
-    { name = "nvim_lsp" }, -- LSP completion
-    { name = "luasnip" },  -- Snippet completions
-  }, {
-    { name = "buffer" },    -- Buffer completion
-  }),
-})
+-- local cmp = require("cmp")
+-- cmp.setup({
+--   snippet = {
+--     expand = function(args)
+--       require("luasnip").lsp_expand(args.body) -- For LuaSnip
+--     end,
+--   },
+--   mapping = cmp.mapping.preset.insert({
+--     ["<C-Space>"] = cmp.mapping.complete(), -- Trigger completion manually with Ctrl-Space
+--     ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Confirm selection with Enter key
+--     ["<Tab>"] = cmp.mapping(function(fallback)
+--       if cmp.visible() then
+--         cmp.select_next_item()  -- Move to the next completion item
+--       else
+--         fallback()  -- Fall back to default behavior (e.g., insert a tab)
+--       end
+--     end, { "i", "s" }),
+--
+--     ["<S-Tab>"] = cmp.mapping(function(fallback)
+--       if cmp.visible() then
+--         cmp.select_prev_item()  -- Move to the previous completion item
+--       else
+--         fallback()  -- Fall back to default behavior (e.g., insert a tab)
+--       end
+--     end, { "i", "s" }),
+--   }),
+--   sources = cmp.config.sources({
+--     { name = "nvim_lsp" }, -- LSP completion
+--     { name = "luasnip" },  -- Snippet completions
+--   }, {
+--     { name = "buffer" },    -- Buffer completion
+--   }),
+-- })

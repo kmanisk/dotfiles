@@ -2,7 +2,7 @@ local M = {}
 
 -- UI Configuration
 M.ui = {
-	theme = "bearded-arc", -- Set the theme for Neovim
+	theme = "catppuccin", -- Set the theme for Neovim
 	transparency = true, -- Enable transparency
 	statusline = {
 		theme = "vscode_colored", -- Choose a statusline theme (can be 'vscode', 'gruvbox', etc.)
@@ -25,13 +25,13 @@ M.ui = {
 }
 
 M.base46 = {
-	theme = "bearded-arc", -- Change to your preferred base46 theme (e.g., 'tokyonight', 'gruvbox', etc.)
+	theme = "catppuccin", -- Change to your preferred base46 theme (e.g., 'tokyonight', 'gruvbox', etc.)
 	hl_add = {},
 	hl_override = {},
 	integrations = {},
 	changed_themes = {},
 	transparency = false,
-	theme_toggle = { "bearded-arc", "one_light" },
+	theme_toggle = { "catppuccin", "one_light" },
 }
 
 M.nvdash = {
