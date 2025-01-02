@@ -1,22 +1,15 @@
-
-
--- Ensure Mason installs jdtls
-require('mason').setup()
 --
--- require('mason-lspconfig').setup({
---   ensure_installed = { 'jdtls' },  -- Automatically install jdtls via Mason
+--
+-- -- After loading the Java-specific configuration
+-- local lspconfig = require("lspconfig")
+--
+-- -- Configure jdtls (Java LSP)
+-- lspconfig.jdtls.setup({
+--   -- Java LSP options
+--   on_attach = function(client, bufnr)
+--     -- You can set up keymaps or other actions when the LSP attaches to the Java file
+--     local opts = { noremap = true, silent = true }
+--     -- Example: Organize imports
+--     vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>ji", "<cmd>lua require('jc.jdtls').organize_imports(true)<CR>", opts)
+--   end,
 -- })
-
--- Java configuration for Neovim
-
--- Setup nvim-java first
-require('java').setup()
-
--- Now configure jdtls for Java language server
-require('lspconfig').jdtls.setup({
-  -- Any jdtls specific configurations can go here
-  -- Do not define key mappings here to avoid overriding existing ones
-})
-
--- Additional Java-specific configurations (optional)
--- You can add custom Java-specific settings below
