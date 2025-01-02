@@ -38,10 +38,10 @@ vim.opt.swapfile = false
 -- Set shell to pwsh or fallback to powershell
 if vim.fn.executable("pwsh") == 1 then
     vim.o.shell = "pwsh"
-    vim.o.shellcmdflag = "-NoLogo -ExecutionPolicy RemoteSigned -Command $PSStyle.OutputRendering = 'PlainText';"
+    vim.o.shellcmdflag = "-NoLogo -NoProfile  -ExecutionPolicy RemoteSigned -Command $PSStyle.OutputRendering = 'PlainText';"
 else
     vim.o.shell = "powershell"
-    vim.o.shellcmdflag = "-NoLogo -ExecutionPolicy RemoteSigned -Command"
+    vim.o.shellcmdflag = "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command"
 end
 
 -- Configure shell output redirection
