@@ -107,15 +107,16 @@ return {
   end,
 },
 
--- Autocompletion Configuration
+
+-- Global Autocompletion Configuration for all languages
 {
   "hrsh7th/nvim-cmp",
   dependencies = {
-    "hrsh7th/cmp-nvim-lsp", -- LSP completion source
-    "hrsh7th/cmp-buffer", -- Buffer completion source
-    "hrsh7th/cmp-path", -- Path completion source
-    "L3MON4D3/LuaSnip", -- Snippet engine
-    "saadparwaiz1/cmp_luasnip", -- Snippet completions
+    "hrsh7th/cmp-nvim-lsp",  -- LSP completion source
+    "hrsh7th/cmp-buffer",    -- Buffer completion source
+    "hrsh7th/cmp-path",      -- Path completion source
+    "L3MON4D3/LuaSnip",      -- Snippet engine
+    "saadparwaiz1/cmp_luasnip",  -- Snippet completions
   },
   config = function()
     local cmp = require("cmp")
@@ -126,51 +127,33 @@ return {
         end,
       },
       mapping = cmp.mapping.preset.insert({
-        ["<C-Space>"] = cmp.mapping.complete(), -- Trigger completion
-        ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Confirm selected completion
         ["<Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
-            cmp.select_next_item()  -- If completion menu is visible, select next item
+            cmp.select_next_item()  -- Select the first item if completion menu is visible
+            cmp.confirm({ select = true })  -- Automatically confirm the selection (like pressing Enter)
           else
-            fallback()  -- Otherwise, use Tab for other default actions
+            fallback()  -- Default behavior (insert a tab character if no completion is visible)
           end
-        end, { "i", "s" }),  -- In insert and select mode
+        end, { "i", "s" }),
+
         ["<S-Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
-            cmp.select_prev_item()  -- If completion menu is visible, select previous item
+            cmp.select_prev_item()  -- Move to the previous item if completion menu is visible
           else
-            fallback()  -- Otherwise, use Shift+Tab for other default actions
+            fallback()  -- Default behavior (insert a tab character)
           end
-        end, { "i", "s" }),  -- In insert and select mode
+        end, { "i", "s" }),
       }),
       sources = cmp.config.sources({
-        { name = "nvim_lsp" },
-        { name = "luasnip" },
+        { name = "nvim_lsp" },  -- LSP source for all languages (including Java)
+        { name = "luasnip" },    -- Snippet source
       }, {
-        { name = "buffer" },
+        { name = "buffer" },     -- Buffer source (for autocomplete from open files)
       }),
     })
   end,
 },
--- Linting and Formatting Configuration (Optional)
-{
-  "jose-elias-alvarez/null-ls.nvim",
-  config = function()
-    local null_ls = require("null-ls")
-    null_ls.setup({
-      sources = {
-        -- null_ls.builtins.formatting.black, -- Uncomment for Python formatting
-        -- null_ls.builtins.diagnostics.flake8, -- Uncomment for Python linting
-      },
-      on_attach = function(client, bufnr)
-        if client.server_capabilities.documentFormattingProvider then
-          vim.api.nvim_buf_set_option(bufnr, "formatexpr", "v:lua.vim.lsp.formatexpr()")
-          vim.keymap.set("n", "<Leader>f", function()
-            vim.lsp.buf.format({ async = true })
-          end, { buffer = bufnr })
-        end
-      end,
-    })
-  end,
-},
+
+
+{"nvim-java/nvim-java"},
 }
