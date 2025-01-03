@@ -46,6 +46,10 @@ return {
 	-- LSP Configuration
 	{
 		"neovim/nvim-lspconfig",
+
+		cond = function()
+			return not vim.g.vscode -- Exclude this plugin in VSCode
+		end,
 		config = function()
 			local lspconfig = require("lspconfig")
 			local mason = require("mason")
@@ -78,6 +82,10 @@ return {
 	-- mason-lspconfig Configuration (Optional)
 	{
 		"williamboman/mason-lspconfig.nvim",
+
+		cond = function()
+			return not vim.g.vscode -- Exclude this plugin in VSCode
+		end,
 		config = function()
 			require("mason-lspconfig").setup({
 				ensure_installed = {}, -- Add language servers here if needed
@@ -88,6 +96,10 @@ return {
 	-- Treesitter Configuration
 	{
 		"nvim-treesitter/nvim-treesitter",
+
+		cond = function()
+			return not vim.g.vscode -- Exclude this plugin in VSCode
+		end,
 		opts = {
 			ensure_installed = { "lua", "html", "css", "json" }, -- Add languages to install
 			highlight = { enable = true },
@@ -98,6 +110,9 @@ return {
 	-- Mason Configuration
 	{
 		"williamboman/mason.nvim",
+		cond = function()
+			return not vim.g.vscode -- Exclude this plugin in VSCode
+		end,
 		opts = {
 			ensure_installed = {}, -- Add tools like linters and formatters here if needed
 		},
@@ -109,6 +124,9 @@ return {
 	-- Global Autocompletion Configuration for all languages
 	{
 		"hrsh7th/nvim-cmp",
+		cond = function()
+			return not vim.g.vscode -- Exclude this plugin in VSCode
+		end,
 		dependencies = {
 			"hrsh7th/cmp-nvim-lsp", -- LSP completion source
 			"hrsh7th/cmp-buffer", -- Buffer completion source

@@ -2,6 +2,8 @@
 -- 1. Setup LSP for Python (using pyright)
 local lspconfig = require("lspconfig")
 local mason_lspconfig = require("mason-lspconfig")
+local nvlsp = require "nvchad.configs.lspconfig"
+nvlsp.defaults() -- loads nvchad's defaults
 
 -- Ensure pyright is installed
 require("mason").setup()

@@ -19,6 +19,7 @@
 		"key": "alt+f",
 		"command": "filebunny.openFile"
 	},
+
 	{
 		"key": "right",
 		"command": "filebunny.next",

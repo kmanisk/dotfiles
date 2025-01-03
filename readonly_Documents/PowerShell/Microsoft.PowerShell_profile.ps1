@@ -9,16 +9,16 @@ Import-Module -Name Terminal-Icons
 # Map vi and vim to nvim
 # Alias z to cd
 # Remove any existing aliases to avoid conflicts
-Remove-Item Alias:z -ErrorAction SilentlyContinue
-Remove-Item Alias:ls -ErrorAction SilentlyContinue
-
+#Remove-Item Alias:z -ErrorAction SilentlyContinue
+#Remove-Item Alias:ls -ErrorAction SilentlyContinue
+#
 if (Get-Command lsd -ErrorAction SilentlyContinue) {
     Set-Alias ls lsd
 } else {
     Set-Alias ls Get-ChildItem
 }
 
-Remove-Item Alias:zi -ErrorAction SilentlyContinue
+#Remove-Item Alias:zi -ErrorAction SilentlyContinue
 function shutit{
     shutdown /s /t 0
 }
@@ -38,8 +38,8 @@ if ($Host.Name -notmatch 'ConsoleHost') {
 }
 
 # Alias zi to cdi
-Set-Alias -Name zi -Value cdi
-Set-Alias -Name z -Value cd
+#Set-Alias -Name zi -Value cdi
+#Set-Alias -Name z -Value cd
 
 Set-Alias -Name vim -Value nvim
 Set-Alias -Name nivm -Value nvim
@@ -593,11 +593,6 @@ function k9 { Stop-Process -Name $args[0] }
 function la { Get-ChildItem -Path . -Force | Format-Table -AutoSize }
 function ll { Get-ChildItem -Path . -Force -Hidden | Format-Table -AutoSize }
 
-#Zoxide 
-<# Invoke-Expression (& { (zoxide init powershell | Out-String) })
-Set-Alias -Name cd -Value __zoxide_z -Option AllScope -Scope Global -Force
-Set-Alias -Name cdi -Value __zoxide_zi -Option AllScope -Scope Global -Force #>
-#Set-Alias -Name cf -Value __zoxide_zi -Option AllScope -Scope Global -Force
 function grep($regex, $dir) {
     if ( $dir ) {
         Get-ChildItem $dir | select-string $regex
@@ -618,32 +613,6 @@ function tail {
 function pkill($name) {
     Get-Process $name -ErrorAction SilentlyContinue | Stop-Process
 }
-# find process by name 
-# function pgrep($name) {
-# $process = Get-Process -Name $name -ErrorAction SilentlyContinue
-    
-# if ($process) {
-#Display the main process
-# $processInfo = $process | Select-Object CPU, @{Name="Memory(MB)"; Expression={[math]::round($_.WorkingSet / 1MB, 2)}}, Id, SI, ProcessName
-# Write-Host "Main Process:"
-# $processInfo
-        
-#Display subprocesses
-# $subProcesses = Get-CimInstance Win32_Process | Where-Object { $_.ParentProcessId -eq $process.Id }
-        
-# if ($subProcesses) {
-# Write-Host "`nSubprocesses:"
-# $subProcesses | Select-Object @{Name="CPU"; Expression={0}}, @{Name="Memory(MB)"; Expression={[math]::round($_.WorkingSetSize / 1MB, 2)}}, ProcessId, @{Name="ParentId"; Expression={$process.Id}}, Name
-# } else {
-# Write-Host "No subprocesses found for process '$name'."
-# }
-# } else {
-# Write-Host "Process '$name' not found."
-# }
-# }
-
-
-
 function pgrep($name) {
     $process = Get-Process -ErrorAction SilentlyContinue | Where-Object { $_.ProcessName -like "*$name*" }
     
@@ -682,11 +651,7 @@ function pgrep($name) {
 }
 
 
-function ReloadProfile {
-    . $PROFILE
-}
 
-Set-Alias -Name rpro -Value ReloadProfile
 # Quick Access to System Information
 function sysinfo { Get-ComputerInfo }
 
@@ -705,31 +670,6 @@ function sed($file, $find, $replace) {
     (Get-Content $file).replace("$find", $replace) | Set-Content $file
 }
 
-# Define the function to set brightness based on a scale of 1 to 10
-#function Set-Brightness {
-#    param (
-#        [int]$Level
-#    )
-#
-#    # Ensure the level is between 1 and 10
-#    if ($Level -lt 1 -or $Level -gt 10) {
-#        Write-Output "Please enter a level between 1 and 10."
-#        return
-#    }
-#
-#    # Calculate brightness on a 0-100 scale
-#    $brightnessLevel = ($Level - 1) * 10
-#
-#    # Get the brightness method and set brightness
-#    $brightnessMethod = Get-WmiObject -Namespace root/wmi -Class WmiMonitorBrightnessMethods
-#    $brightnessMethod.WmiSetBrightness(1, $brightnessLevel)
-#
-#    Write-Output "Brightness set to $brightnessLevel%"
-#}
-
-# Create an alias for the function
-Set-Alias -Name bright -Value Set-Brightness
-
 
 if (Get-Command zoxide -ErrorAction SilentlyContinue) {
     Invoke-Expression (& { (zoxide init --cmd cd powershell | Out-String) })
@@ -745,12 +685,6 @@ else {
         Write-Error "Failed to install zoxide. Error: $_"
     }
 }
-
-#Set-Alias -Name z -Value __zoxide_z -Option AllScope -Scope Global -Force
-#Set-Alias -Name zi -Value __zoxide_zi -Option AllScope -Scope Global -Force
-
-# This is an example of a macro that you might use to execute a command.
-# This will add the command to history.
 Set-PSReadLineKeyHandler -Key Ctrl+Shift+b `
                          -BriefDescription BuildCurrentDirectory `
                          -LongDescription "Build the current directory" `

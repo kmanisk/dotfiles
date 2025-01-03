@@ -5,6 +5,7 @@
 --]]
 
 -- Basic Setup
+-- print("vscode keymap loaded from neovim hello from lua")
 local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
