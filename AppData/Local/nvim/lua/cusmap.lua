@@ -54,8 +54,8 @@ map("n", "<leader>da", "ggVGd", { noremap = true, silent = true }) -- Delete all
 map("n", "<leader>ya", 'ggVG"+p', { noremap = true, silent = true }) -- Yank all to system clipboard
 
 -- Custom mappings
-map("n", "<S-j>", ":bnext<CR>", { desc = "Next Buffer" })
-map("n", "<S-k>", ":bprevious<CR>", { desc = "Previous Buffer" })
+-- map("n", "<S-j>", ":bnext<CR>", opts)
+-- map("n", "<S-k>", ":bprevious<CR>", opts)
 
 map(
 	"n",

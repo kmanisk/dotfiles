@@ -7,6 +7,8 @@ local wo = vim.wo
 local bo = vim.bo
 local fn = vim.fn
 
+-- vim.opt.laststatus = 1  -- Disable statusline
+
 -- Enable line numbers and relative line numbers
 o.number = true
 o.relativenumber = true
@@ -35,7 +37,8 @@ o.ignorecase = true
 wo.cursorline = true
 
 -- Enable search highlighting
-o.hlsearch = true
+vim.opt.hlsearch = false
+vim.opt.incsearch = true
 
 -- Enable line wrapping for long lines
 o.wrap = true -- Set to false for no wrap, true for wrapping

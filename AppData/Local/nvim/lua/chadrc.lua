@@ -2,12 +2,39 @@ local M = {}
 
 -- UI Configuration
 M.ui = {
-	theme = "aquarium", -- Set the theme for Neovim
+	theme = "wombat", -- Set the theme for Neovim
 	transparency = true, -- Enable transparency
-	statusline = {
-		theme = "vscode_colored", -- Choose a statusline theme (can be 'vscode', 'gruvbox', etc.)
-		separator_style = "round", -- Choose a style for the separators in the statusline
-	},
+
+
+
+
+-- statusline = {
+--     theme = "vscode",              -- Choose the theme (default, vscode, minimal, etc.)
+--     separator_style = "round",     -- Separator style (round, block, arrow, etc.)
+--     order = { 
+--       "mode",          -- Current mode (e.g., normal, insert)
+--       "f",             -- Full file path
+--       "git",           -- Git branch/status
+--       "%=",            -- Separator to split left and right
+--       "lsp_msg",       -- LSP messages (e.g., diagnostics)
+--       "%=",            -- Another separator
+--       "lsp",           -- LSP status
+--       "cwd",           -- Current working directory
+--     },
+--   },
+     statusline = {
+       theme = "vscode_colored", -- default/vscode/vscode_colored/minimal
+       -- default/round/block/arrow separators work only for default statusline theme
+       -- round and block will work for minimal theme only
+       separator_style = "block",
+       order = nil,
+       modules = nil,
+     },
+     -- --
+
+
+
+
 	cmp = {
 		lspkind_text = true,
 		style = "atom_colored", -- default/flat_light/flat_dark/atom/atom_colored
@@ -21,17 +48,18 @@ M.ui = {
 		lazyload = true,
 		order = { "treeOffset", "buffers", "tabs", "btns" },
 		modules = nil,
+    bufwidth = 16,
 	},
 }
 
 M.base46 = {
-	theme = "aquarium", -- Change to your preferred base46 theme (e.g., 'tokyonight', 'gruvbox', etc.)
+	theme = "wombat", -- Change to your preferred base46 theme (e.g., 'tokyonight', 'gruvbox', etc.)
 	hl_add = {},
 	hl_override = {},
 	integrations = {},
 	changed_themes = {},
 	transparency = false,
-	theme_toggle = { "aquarium", "one_light" },
+	theme_toggle = { "wombat", "one_light" },
 }
 
 M.nvdash = {

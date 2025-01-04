@@ -1,4 +1,13 @@
 return {
+	--   only diables statusline
+	{
+		"nvchad/ui",
+		lazy = false,
+		config = function()
+			require("nvchad")
+			vim.opt.statusline = ""
+		end,
+	},
 	{
 		"NvChad/nvterm",
 		enabled = false,

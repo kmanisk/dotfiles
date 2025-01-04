@@ -12,15 +12,15 @@ map("i", "jk", "<ESC>")
 -- For nvim-cmp or other completion plugins
 map("i", "<C-y>", "cmp.mapping.confirm({ select = true })", opts)
 -- Map 'jk' to 'zz' in normal mode
-map("n", "j", "jzzzn", opts)
-map("n", "k", "kzzzn", opts)
+map("n", "j", "jzz", opts)
+map("n", "k", "kzz", opts)
 -- Custom mappings
 map("n", "<leader>fm", ":Vifm<CR>", { desc = "Open Vifm" })
 map("n", "<leader>ts", ":Telescope colorscheme<CR>", { desc = "Open Vifm" })
 map("n", "<leader>e", ":NvimTreeToggle<CR>", { desc = "Toggle NvimTree" })
 map("n", "<A-d>", ":NvimTreeClose<CR>", { desc = "Close NvimTree" })
-map("n", "<S-j>", ":bnext<CR>", { desc = "Next Buffer" })
-map("n", "<S-k>", ":bprevious<CR>", { desc = "Previous Buffer" })
+map("n", "<S-j>", ":bnext<CR>", opts)
+map("n", "<S-k>", ":bprevious<CR>", opts)
 map("n", "<leader>j", "J")
 map("v", "<", "<gv", opts)
 map("v", ">", ">gv", opts)
@@ -127,6 +127,8 @@ end, { desc = "Telescope Keymaps" })
 
 map("n", "<leader>bb", ":lua InputCommand()<CR>", opts)
 
+
+map('n', '<leader>j', 'mzJ`z', { noremap = true, silent = true })
 function InputCommand()
 	local command = vim.fn.input("Shell command: ")
 	vim.cmd("!" .. command)
@@ -394,3 +396,16 @@ map(
 map("n", "<Leader>fd", function()
 	require("conform").format({ async = true })
 end, { noremap = true, silent = true })
+-- Close all buffers except the current one
+map("n", "<Leader>ct", ":lua require('nvchad.tabufline').closeAllBufs(false)<CR>", { noremap = true, silent = true })
+
+-- Close all buffers to the right
+map("n", "<Leader>cr", ":lua require('nvchad.tabufline').closeBufs_at_direction('right')<CR>", { noremap = true, silent = true })
+map("n", "<Leader>cl", ":lua require('nvchad.tabufline').closeBufs_at_direction('left')<CR>", { noremap = true, silent = true })
+-- Move the buffer to the left (using Alt + <)
+--
+-- Move buffer to the left (using Alt + Left Arrow)
+map("n", "<A-Left>", ":lua require('nvchad.tabufline').move_buf(-1)<CR>", { noremap = true, silent = true })
+
+-- Move buffer to the right (using Alt + Right Arrow)
+map("n", "<A-Right>", ":lua require('nvchad.tabufline').move_buf(1)<CR>", { noremap = true, silent = true })
