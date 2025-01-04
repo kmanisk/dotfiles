@@ -435,7 +435,7 @@ Set-Alias c vscode.exe
 Set-Alias -Name clip -Value Set-Clipboard
 Set-Alias -Name dq -Value driverquery
 
-function cpfile {
+function cf {
     param (
         [string]$filePath
     )
@@ -446,6 +446,22 @@ function cpfile {
 function env { Get-ChildItem Env: }
 
 
+
+Function cpyfile {
+    param (
+        [string]$sourcePath,
+        [string]$destinationPath
+    )
+    
+    # Check if the source file exists
+    if (Test-Path $sourcePath) {
+        # Perform the file copy
+        Copy-Item -Path $sourcePath -Destination $destinationPath
+        Write-Host "File copied from $sourcePath to $destinationPath"
+    } else {
+        Write-Host "Source file does not exist: $sourcePath"
+    }
+}
 
 
 Set-Alias ps Get-Process
@@ -662,6 +678,7 @@ function pgrep($name) {
 
 # Quick Access to System Information
 function sysinfo { Get-ComputerInfo }
+
 
 function touch($file) { "" | Out-File $file -Encoding ASCII }
 function export($name, $value) {
