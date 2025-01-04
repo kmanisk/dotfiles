@@ -58,7 +58,7 @@ vim.opt.swapfile = false
 
 
 -- Set these options in Lua config
-vim.opt.shiftwidth = 2  -- Number of spaces for each indentation level
+vim.opt.shiftwidth = 4  -- Number of spaces for each indentation level
         
 -- Highlight the current line
 vim.opt.cursorline = true

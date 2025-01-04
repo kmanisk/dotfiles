@@ -3,20 +3,22 @@ vim.g.base46_cache = vim.fn.stdpath("data") .. "/base46/"
 vim.g.mapleader = " "
 vim.g.maplocalleader = " " -- Set local leader key
 
--- Bootstrap lazy and all plugins
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+-- VSCode-specific setup
+if vim.g.vscode then
+	local vscode_plugins = require("user.vsplug")
+	require("lazy").setup(vscode_plugins)
+	require("user.vscode_keymaps")
+else
+	-- Bootstrap lazy and all plugins
+	local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+	if not vim.uv.fs_stat(lazypath) then
+		local repo = "https://github.com/folke/lazy.nvim.git"
+		vim.fn.system({ "git", "clone", "--filter=blob:none", repo, "--branch=stable", lazypath })
+	end
 
-if not vim.uv.fs_stat(lazypath) then
-	local repo = "https://github.com/folke/lazy.nvim.git"
-	vim.fn.system({ "git", "clone", "--filter=blob:none", repo, "--branch=stable", lazypath })
-end
+	vim.opt.rtp:prepend(lazypath)
 
-vim.opt.rtp:prepend(lazypath)
-
-local lazy_config = require("configs.lazy")
-
--- Load plugins only if not in VSCode
-if not vim.g.vscode then
+	local lazy_config = require("configs.lazy")
 	require("lazy").setup({
 		{
 			"NvChad/NvChad",
@@ -56,18 +58,10 @@ if not vim.g.vscode then
 		},
 		-- Other plugins for Neovim
 	})
-end
 
--- Load theme
-dofile(vim.g.base46_cache .. "defaults")
-dofile(vim.g.base46_cache .. "statusline")
-
--- VSCode-specific setup
-if vim.g.vscode then
-  local vscode_plugins = require("user.vsplug")
-  require("lazy").setup(vscode_plugins)
-	require("user.vscode_keymaps")
-else
+	-- Load theme
+	dofile(vim.g.base46_cache .. "defaults")
+	dofile(vim.g.base46_cache .. "statusline")
 	-- Ordinary Neovim setup
 	require("options")
 	--require("test")
@@ -90,17 +84,6 @@ else
 
 	-- Autocmds and further Lua files sourcing
 	require("nvchad.autocmds")
-
-	-- local lua_dir = vim.fn.stdpath("config") .. "/lua"
-	-- -- Loop through all files in the lua directory, excluding mappings.lua
-	-- for _, file in ipairs(vim.fn.readdir(lua_dir)) do
-	-- 	if file:match(".+%.lua$") and file ~= "mappings.lua" then
-	-- 		-- Construct the full path to the Lua file
-	-- 		local file_path = lua_dir .. "/" .. file
-	-- 		-- Source the Lua file
-	-- 		vim.cmd("source " .. file_path)
-	-- 	end
-	-- end
 
 	-- Automatically source mappings.lua when saved
 	vim.api.nvim_create_autocmd("BufWritePost", {
