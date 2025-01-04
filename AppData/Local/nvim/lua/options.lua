@@ -5,50 +5,28 @@ require("nvchad.options")
 local o = vim.o
 local wo = vim.wo
 local bo = vim.bo
+local fn = vim.fn
 
 -- Enable line numbers and relative line numbers
 o.number = true
 o.relativenumber = true
--- Function to check if a command exists
--- local function is_command_available(cmd)
---   return vim.fn.executable(cmd) == 1
--- end
---
--- -- Set the shell based on availability
--- if is_command_available("pwsh") then
---   vim.o.shell = "pwsh"
---   vim.o.shellcmdflag = "-NoLogo -ExecutionPolicy RemoteSigned -Command $PSStyle.OutputRendering = 'PlainText';"
--- else
---   vim.o.shell = "powershell"
---   vim.o.shellcmdflag = "-NoLogo -ExecutionPolicy RemoteSigned -Command"
--- end
---
--- -- Common shell settings
--- vim.o.shellredir = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode"
--- vim.o.shellpipe = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode"
--- vim.o.shellquote = ""
--- vim.o.shellxquote = ""
--- -- Common shell settings
--- vim.o.shellredir = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode"
--- vim.o.shellpipe = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode"
--- vim.o.shellquote = ""
--- vim.o.shellxquote = ""
-vim.opt.swapfile = false
+-- o.swapfile = false
 
 -- Set shell to pwsh or fallback to powershell
-if vim.fn.executable("pwsh") == 1 then
-    vim.o.shell = "pwsh"
-    vim.o.shellcmdflag = "-NoLogo -NoProfile  -ExecutionPolicy RemoteSigned -Command $PSStyle.OutputRendering = 'PlainText';"
+if fn.executable("pwsh") == 1 then
+	o.shell = "pwsh"
+	o.shellcmdflag =
+		"-NoLogo -NoProfile  -ExecutionPolicy RemoteSigned -Command $PSStyle.OutputRendering = 'PlainText';"
 else
-    vim.o.shell = "powershell"
-    vim.o.shellcmdflag = "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command"
+	o.shell = "powershell"
+	o.shellcmdflag = "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command"
 end
 
 -- Configure shell output redirection
-vim.o.shellredir = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode"
-vim.o.shellpipe = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode"
-vim.o.shellquote = ""
-vim.o.shellxquote = ""
+o.shellredir = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode"
+o.shellpipe = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode"
+o.shellquote = ""
+o.shellxquote = ""
 -- Enable smart case for search (case-insensitive unless you use uppercase letters)
 o.smartcase = true
 o.ignorecase = true
@@ -63,6 +41,16 @@ o.hlsearch = true
 o.wrap = true -- Set to false for no wrap, true for wrapping
 
 -- Enable smart indentation (for auto indent)
+--
+--
+-- Disable ShaDa file (session data)
+vim.o.shada = ""
+
+-- Disable swap files
+vim.opt.swapfile = false
+
+-- Disable backup files
+vim.opt.backup = false
 o.smartindent = true
 o.tabstop = 4
 o.shiftwidth = 4
@@ -82,7 +70,7 @@ o.clipboard = "unnamedplus" -- Allows use of system clipboard for copy-paste
 o.background = "dark" -- or "light"
 
 -- Ensure window options are modifiable before making changes
-if vim.bo.modifiable then
+if bo.modifiable then
 	-- Example buffer-specific options (only if the buffer is modifiable)
 	bo.textwidth = 80 -- Example option
 end

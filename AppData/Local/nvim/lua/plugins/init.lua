@@ -3,6 +3,10 @@ return {
 		"NvChad/nvterm",
 		enabled = false,
 	},
+    {
+        "folke/which-key.nvim",
+        enabled = false,
+    },
 	{
 		"lewis6991/gitsigns.nvim",
 		enabled = false,
@@ -46,7 +50,6 @@ return {
 	-- LSP Configuration
 	{
 		"neovim/nvim-lspconfig",
-
 		cond = function()
 			return not vim.g.vscode -- Exclude this plugin in VSCode
 		end,

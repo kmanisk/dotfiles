@@ -1,6 +1,7 @@
 -- Using <leader> + number (1, 2, ... 9) to switch tabmap
 -- Define map function for convenience
 local map = vim.keymap.set
+local opts = { noremap = true, silent = true }
 
 -- map for quick quit, save files using leader key
 ---- Normal mode
@@ -8,13 +9,10 @@ local map = vim.keymap.set
 -- map("n", "<Leader>x", ":wq<CR>")
 
 ---- Insert mode
-map("i", ";w", "<esc>:write<CR>")
-map("i", ";x", "<esc>:wq<CR>")
+map("i", ";w", "<esc>:write<CR>", opts)
+map("i", ";x", "<esc>:wq<CR>", opts)
 -- use U for redo :))
 map("n", "U", "<C-r>", {})
-
--- Telescope key mapping
-map("n", "<leader>ff", "<cmd>Telescope<cr>", { desc = "Open Telescope" })
 
 -- Multiple modes
 map({ "i", "n" }, "<C-k>", "<Up>", { desc = "Move up" })
@@ -49,17 +47,17 @@ map("n", "<C-u>", "<C-u>zz", { desc = "Scroll up and center" })
 map("n", "<leader>Ls", ":Lazy sync<CR>", { noremap = true, silent = true, desc = "Sync lazy plugins" })
 
 -- Select all
-vim.api.nvim_set_keymap("n", "<leader>sa", "ggVG", { noremap = true, silent = true }) -- Select all
-vim.api.nvim_set_keymap("n", "<leader>da", "ggVGd", { noremap = true, silent = true }) -- Delete all
+map("n", "<leader>sa", "ggVG", { noremap = true, silent = true }) -- Select all
+map("n", "<leader>da", "ggVGd", { noremap = true, silent = true }) -- Delete all
 
 -- Yank all to system clipboard
-vim.api.nvim_set_keymap("n", "<leader>ya", 'ggVG"+p', { noremap = true, silent = true }) -- Yank all to system clipboard
+map("n", "<leader>ya", 'ggVG"+p', { noremap = true, silent = true }) -- Yank all to system clipboard
 
 -- Custom mappings
 map("n", "<S-j>", ":bnext<CR>", { desc = "Next Buffer" })
 map("n", "<S-k>", ":bprevious<CR>", { desc = "Previous Buffer" })
 
-vim.keymap.set(
+map(
 	"n",
 	"<leader>ff",
 	":Telescope find_files<CR>",
@@ -68,13 +66,13 @@ vim.keymap.set(
 
 local builtin = require("telescope.builtin")
 
-vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "[F]ind [F]iles" })
+map("n", "<leader>ff", builtin.find_files, { desc = "[F]ind [F]iles" })
 
-vim.keymap.set("n", "<leader>ss", function()
+map("n", "<leader>ss", function()
 	require("telescope.builtin").live_grep({
 		grep_open_files = true,
 		prompt_title = "Live Grep in Open Files",
 	})
 end, { desc = "[S]earch [/] in Open Files" })
 
-map("n", "<leader>fj", ':lua print("asdfasdfafds")<CR>', { noremap = true, silent = true })
+-- map("n", "<leader>fj", ':lua print("masnis")<CR>', { noremap = true, silent = true })

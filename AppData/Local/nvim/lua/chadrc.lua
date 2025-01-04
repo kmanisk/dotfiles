@@ -2,7 +2,7 @@ local M = {}
 
 -- UI Configuration
 M.ui = {
-	theme = "doomchad", -- Set the theme for Neovim
+	theme = "vscode_dark", -- Set the theme for Neovim
 	transparency = true, -- Enable transparency
 	statusline = {
 		theme = "vscode_colored", -- Choose a statusline theme (can be 'vscode', 'gruvbox', etc.)
@@ -25,13 +25,13 @@ M.ui = {
 }
 
 M.base46 = {
-	theme = "doomchad", -- Change to your preferred base46 theme (e.g., 'tokyonight', 'gruvbox', etc.)
+	theme = "vscode_dark", -- Change to your preferred base46 theme (e.g., 'tokyonight', 'gruvbox', etc.)
 	hl_add = {},
 	hl_override = {},
 	integrations = {},
 	changed_themes = {},
 	transparency = false,
-	theme_toggle = { "doomchad", "one_light" },
+	theme_toggle = { "vscode_dark", "one_light" },
 }
 
 M.nvdash = {
@@ -55,19 +55,19 @@ M.nvdash = {
 		{ txt = "  Recent Files", keys = "Spc f o", cmd = "Telescope oldfiles" },
 	},
 }
-
-M.term = {
-	winopts = { number = false },
-	sizes = { sp = 0.3, vsp = 0.2, ["bo sp"] = 0.3, ["bo vsp"] = 0.2 },
-	float = {
-		relative = "editor",
-		row = 0.3,
-		col = 0.25,
-		width = 0.5,
-		height = 0.4,
-		border = "single",
-	},
-}
+--
+-- M.term = {
+-- 	winopts = { number = false },
+-- 	sizes = { sp = 0.3, vsp = 0.2, ["bo sp"] = 0.3, ["bo vsp"] = 0.2 },
+-- 	float = {
+-- 		relative = "editor",
+-- 		row = 0.3,
+-- 		col = 0.25,
+-- 		width = 0.5,
+-- 		height = 0.4,
+-- 		border = "single",
+-- 	},
+-- }
 
 M.lsp = {
 	signature = true,

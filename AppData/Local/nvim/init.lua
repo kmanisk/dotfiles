@@ -69,9 +69,9 @@ if vim.g.vscode then
 else
 	-- Ordinary Neovim setup
 	require("options")
-	require("test")
+	--require("test")
 	require("cusmap")
--- require("plugins.themes.vscode")
+	-- require("plugins.themes.vscode")
 	-- require("plugins.themes.bambo")
 
 	-- Load mappings after everything else
@@ -90,16 +90,16 @@ else
 	-- Autocmds and further Lua files sourcing
 	require("nvchad.autocmds")
 
-	local lua_dir = vim.fn.stdpath("config") .. "/lua"
-	-- Loop through all files in the lua directory, excluding mappings.lua
-	for _, file in ipairs(vim.fn.readdir(lua_dir)) do
-		if file:match(".+%.lua$") and file ~= "mappings.lua" then
-			-- Construct the full path to the Lua file
-			local file_path = lua_dir .. "/" .. file
-			-- Source the Lua file
-			vim.cmd("source " .. file_path)
-		end
-	end
+	-- local lua_dir = vim.fn.stdpath("config") .. "/lua"
+	-- -- Loop through all files in the lua directory, excluding mappings.lua
+	-- for _, file in ipairs(vim.fn.readdir(lua_dir)) do
+	-- 	if file:match(".+%.lua$") and file ~= "mappings.lua" then
+	-- 		-- Construct the full path to the Lua file
+	-- 		local file_path = lua_dir .. "/" .. file
+	-- 		-- Source the Lua file
+	-- 		vim.cmd("source " .. file_path)
+	-- 	end
+	-- end
 
 	-- Automatically source mappings.lua when saved
 	vim.api.nvim_create_autocmd("BufWritePost", {
@@ -108,9 +108,9 @@ else
 			local mappings_path = vim.fn.stdpath("config") .. "/lua/mappings.lua"
 			if vim.fn.filereadable(mappings_path) == 1 then
 				vim.cmd("source " .. mappings_path)
-				print("Reloaded mappings.lua")
+				-- print("Reloaded mappings.lua")
 			else
-				print("Error: mappings.lua not found")
+				-- print("Error: mappings.lua not found")
 			end
 		end,
 		desc = "Automatically source mappings.lua on save",

@@ -17,7 +17,6 @@ if (Get-Command lsd -ErrorAction SilentlyContinue) {
 } else {
     Set-Alias ls Get-ChildItem
 }
-
 #Remove-Item Alias:zi -ErrorAction SilentlyContinue
 function shutit{
     shutdown /s /t 0

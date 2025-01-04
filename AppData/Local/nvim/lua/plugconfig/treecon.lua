@@ -46,18 +46,18 @@ require("nvim-tree").setup({
 		-- Load default mappings
 		api.config.mappings.default_on_attach(bufnr)
 
-		vim.keymap.set("n", "h", function()
-			local node = api.tree.get_node_under_cursor()
-			if node.parent then
-				-- Only change root if we're not already at the root level
-				if node.parent.parent then
-					api.tree.change_root(node.parent.absolute_path)
-				else
-					-- Navigate up without changing root
-					api.tree.change_root_to_parent()
-				end
-			end
-		end, opts("Go Up to Parent Directory of Current File"))
+		-- vim.keymap.set("n", "h", function()
+		-- 	local node = api.tree.get_node_under_cursor()
+		-- 	if node.parent then
+		-- 		-- Only change root if we're not already at the root level
+		-- 		if node.parent.parent then
+		-- 			api.tree.change_root(node.parent.absolute_path)
+		-- 		else
+		-- 			-- Navigate up without changing root
+		-- 			api.tree.change_root_to_parent()
+		-- 		end
+		-- 	end
+		-- end, opts("Go Up to Parent Directory of Current File"))
 		-- Custom mappings
 		vim.keymap.set("n", "l", api.node.open.edit, opts("Open File/Folder"))
 		-- vim.keymap.set('n', 'h', api.tree.change_root_to_parent, opts('Go Up'))

@@ -40,6 +40,9 @@ return {
         "optwin",
         "compiler",
         "bugreport",
+        -- uncomment this line to make the after/pluins to work 
+        -- add langname.lua to make lang specifc option to work
+        -- like for ex : python.lua or java.lua
         "ftplugin",
       },
     },

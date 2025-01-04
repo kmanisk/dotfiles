@@ -1,0 +1,31 @@
+--
+-- local nvlsp = require "nvchad.configs.lspconfig"
+-- local lspconfig = require "lspconfig"
+--
+-- nvlsp.defaults() -- Load NvChad's default LSP configurations
+--
+
+-- lspconfig.lua_ls.setup {
+--   on_attach = nvlsp.on_attach,
+--   on_init = nvlsp.on_init,
+--   capabilities = nvlsp.capabilities,
+--   settings = {
+--     Lua = {
+--       runtime = {
+--         version = 'LuaJIT', -- Specify LuaJIT for Neovim
+--         path = vim.split(package.path, ';'),
+--       },
+--       diagnostics = {
+--         globals = {'vim'}, -- Recognize the `vim` global
+--       },
+--       workspace = {
+--         library = vim.api.nvim_get_runtime_file("", true), -- Make the server aware of Neovim runtime files
+--         checkThirdParty = false, -- Disable third-party library check
+--       },
+--       telemetry = {
+--         enable = false, -- Disable telemetry data
+--       },
+--     },
+--   },
+-- }
+--
