@@ -432,10 +432,10 @@ function rel { . $profile }
 function rel { & $profile }
 Set-Alias e explorer.exe
 Set-Alias c vscode.exe
-Set-Alias -Name cpy -Value Set-Clipboard
+Set-Alias -Name clip -Value Set-Clipboard
 Set-Alias -Name dq -Value driverquery
 
-function cpyfile {
+function cpfile {
     param (
         [string]$filePath
     )
@@ -705,22 +705,41 @@ Set-PSReadLineKeyHandler -Key Ctrl+Shift+b `
 
 Set-Alias lvim 'C:\Users\Manisk\.local\bin\lvim.ps1'
 Invoke-Expression (&starship init powershell)
+function Get-Theme {
+    if (Test-Path -Path $PROFILE.CurrentUserAllHosts -PathType leaf) {
+        # Check if the theme configuration exists in the profile
+        $existingTheme = Select-String -Raw -Path $PROFILE.CurrentUserAllHosts -Pattern "oh-my-posh init pwsh --config"
+        if ($null -ne $existingTheme) {
+            # If an existing theme is found, use it
+            Invoke-Expression $existingTheme
+            return
+        }
 
-#oh-my-posh init pwsh --config ~/jandedobbeleer.omp.json | Invoke-Expression
-#
-## Get theme from profile.ps1 or use a default theme
-#function Get-Theme {
-#    if (Test-Path -Path $PROFILE.CurrentUserAllHosts -PathType leaf) {
-#        $existingTheme = Select-String -Raw -Path $PROFILE.CurrentUserAllHosts -Pattern "oh-my-posh init pwsh --config"
-#        if ($null -ne $existingTheme) {
-#            Invoke-Expression $existingTheme
-#            return
-#        }
-#        oh-my-posh init pwsh --config https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/cobalt2.omp.json | Invoke-Expression
-#    } else {
-#        oh-my-posh init pwsh --config https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/cobalt2.omp.json | Invoke-Expression
-#    }
-#} 
-#
-# Final Line to set prompt
+        # First priority: Try the 1_shell theme
+        try {
+            oh-my-posh init pwsh --config https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/refs/heads/main/themes/1_shell.omp.json | Invoke-Expression
+        } catch {
+            # Second priority: If 1_shell fails, try the cobalt2 theme
+            try {
+                oh-my-posh init pwsh --config https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/cobalt2.omp.json | Invoke-Expression
+            } catch {
+                # Third priority: If both themes fail, use the default theme
+                oh-my-posh init pwsh --config https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/default.omp.json | Invoke-Expression
+            }
+        }
+    } else {
+        # If profile doesn't exist, set the themes with fallback
+        try {
+            oh-my-posh init pwsh --config https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/refs/heads/main/themes/1_shell.omp.json | Invoke-Expression
+        } catch {
+            # Second priority: If 1_shell fails, try the cobalt2 theme
+            try {
+                oh-my-posh init pwsh --config https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/cobalt2.omp.json | Invoke-Expression
+            } catch {
+                # Third priority: Use the default theme
+                oh-my-posh init pwsh --config https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/default.omp.json | Invoke-Expression
+            }
+        }
+    }
+}
 #Get-Theme
