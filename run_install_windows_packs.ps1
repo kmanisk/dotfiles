@@ -314,7 +314,7 @@ else {
 
 
 function ClinkSetup {
-      $clinkPath = "C:\Program Files (x86)\clink"
+    $clinkPath = "C:\Program Files (x86)\clink"
 
     # Check if the path is already in the PATH environment variable
     if ($env:Path -notlike "*$clinkPath*") {

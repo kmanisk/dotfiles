@@ -64,7 +64,8 @@ dofile(vim.g.base46_cache .. "statusline")
 
 -- VSCode-specific setup
 if vim.g.vscode then
-	-- VSCode keymaps and setup
+  local vscode_plugins = require("user.vsplug")
+  require("lazy").setup(vscode_plugins)
 	require("user.vscode_keymaps")
 else
 	-- Ordinary Neovim setup

@@ -15,13 +15,16 @@
         <Replace name="maniskpr" />
     </FindHistory>
     <History nbMaxFile="10" inSubMenu="no" customLength="-1">
-        <File filename="C:\Users\Manisk\AppData\Local\nvim\lua\core\snippets.lua" />
-        <File filename="C:\Users\Manisk\Desktop\nvim\lua\plugins\surround.lua" />
-        <File filename="C:\Users\Manisk\Desktop\nvim\lua\plugins\session.lua" />
-        <File filename="C:\Users\Manisk\Desktop\nvim\lua\plugins\misc.lua" />
-        <File filename="C:\Users\Manisk\Desktop\nvim\lua\plugins\leap.lua" />
-        <File filename="C:\Users\Manisk\AppData\Local\nvim\lua\plugins\misc.lua" />
-        <File filename="C:\Users\Manisk\AppData\Local\nvim\lua\plugins\neotree.lua" />
+        <File filename="E:\Dark Souls 3\Game\config_darksouls3.toml" />
+        <File filename="C:\Users\Manisk\AppData\Local\nvim\lua\options.lua" />
+        <File filename="C:\Users\Manisk\AppData\Local\nvim\lua\cusmap.lua" />
+        <File filename="C:\Users\Manisk\Desktop\some youtube guy config\nvim\lua\plugins\misc.lua" />
+        <File filename="C:\Users\Manisk\Desktop\nvim\lua\plugins\telescope.lua" />
+        <File filename="C:\Users\Manisk\AppData\Local\nvim\lua\plugins\telescope.lua" />
+        <File filename="C:\Users\Manisk\Desktop\nvim\lua\plugins\autocom.lua" />
+        <File filename="C:\Users\Manisk\Desktop\nvim\lua\plugins\coderunner.lua" />
+        <File filename="C:\Users\Manisk\AppData\Local\nvim\init.lua" />
+        <File filename="C:\Users\Manisk\AppData\Local\nvim\lua\plugins\session.lua" />
     </History>
     <ProjectPanels>
         <ProjectPanel id="0" workSpaceFile="" />
