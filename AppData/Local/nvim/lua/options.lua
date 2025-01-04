@@ -13,6 +13,7 @@ local fn = vim.fn
 o.number = true
 o.relativenumber = true
 -- o.swapfile = false
+-- vim.opt.showtabline = 0
 
 -- Set shell to pwsh or fallback to powershell
 if fn.executable("pwsh") == 1 then

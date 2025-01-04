@@ -4,7 +4,9 @@ return {
 		"nvchad/ui",
 		lazy = false,
 		config = function()
+      -- if commneted remove tab bar and statusline too both of them
 			require("nvchad")
+      -- the below only diables statusline
 			vim.opt.statusline = ""
 		end,
 	},
@@ -18,7 +20,7 @@ return {
 	},
 	{
 		"lewis6991/gitsigns.nvim",
-		enabled = false,
+		enabled = true,
 	},
 	{
 		"stevearc/conform.nvim",

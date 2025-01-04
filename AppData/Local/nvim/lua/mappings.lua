@@ -15,10 +15,10 @@ map("i", "<C-y>", "cmp.mapping.confirm({ select = true })", opts)
 map("n", "j", "jzz", opts)
 map("n", "k", "kzz", opts)
 -- Custom mappings
-map("n", "<leader>fm", ":Vifm<CR>", { desc = "Open Vifm" })
-map("n", "<leader>ts", ":Telescope colorscheme<CR>", { desc = "Open Vifm" })
-map("n", "<leader>e", ":NvimTreeToggle<CR>", { desc = "Toggle NvimTree" })
-map("n", "<A-d>", ":NvimTreeClose<CR>", { desc = "Close NvimTree" })
+map("n", "<leader>fm", ":Vifm<CR>", opts)
+map("n", "<leader>ts", ":Telescope colorscheme<CR>", opts)
+map("n", "<leader>e", ":NvimTreeToggle<CR>", opts)
+map("n", "<A-d>", ":NvimTreeClose<CR>", opts)
 map("n", "<S-j>", ":bnext<CR>", opts)
 map("n", "<S-k>", ":bprevious<CR>", opts)
 map("n", "<leader>j", "J")
@@ -87,7 +87,7 @@ map("n", "<S-Up>", ":resize -5<CR>", opts)
 -- Map `cr` to invoke the LSP renamer from NvChad
 map("n", "cr", function()
 	require("nvchad.lsp.renamer")() -- Assuming this is how the function is accessed
-end, { desc = "LSP Rename with NvChad Renamer" })
+end, opts)
 -- Remove the original mapping for <Space>ra in normal mode
 --
 map("n", "<leader>th", function()
@@ -95,11 +95,11 @@ map("n", "<leader>th", function()
 		border = true,
 		-- style = "compact",
 	})
-end, { desc = "open theme picker" })
+end, opts)
 
 map("n", "<leader>q", function()
 	require("nvchad.tabufline").close_buffer()
-end, { desc = "buffer close" })
+end, opts)
 
 map("n", "<leader>fh", ":Telescope oldfiles<CR>", { noremap = true, silent = true, desc = "Search Previous Files" })
 -- Keybinding to resume the last Telescope search
@@ -251,8 +251,8 @@ map("i", "<C-m>", "<C-R>+", opts)
 -- 	hop.hint_char2({ direction = directions.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })
 -- end, { remap = true })
 
-map("n", "gg", "ggzz")
-map("n", "G", "Gzz")
+map("n", "gg", "ggzz",opts)
+map("n", "G", "Gzz",opts)
 
 -- vim.opts.preset("")
 -- local cmp = require("cmp")
