@@ -223,6 +223,56 @@ function Move-ConfigFolder {
     }
 }
 
+
+function Install-VSCodeExtensions {
+    # Check if VSCode and VSCodium are installed
+    $vscodeInstalled = Get-Command code -ErrorAction SilentlyContinue
+    $vscodiumInstalled = Get-Command codium -ErrorAction SilentlyContinue
+
+    if (-not $vscodeInstalled) {
+        Write-Host "VSCode is not installed. Installing via Chocolatey..."
+        choco install vscode -y
+    }
+    else {
+        Write-Host "VSCode is already installed."
+    }
+
+    if (-not $vscodiumInstalled) {
+        Write-Host "VSCodium is not installed. Installing via Chocolatey..."
+        choco install vscodium -y
+    }
+    else {
+        Write-Host "VSCodium is already installed."
+    }
+
+    # Proceed to install extensions only if at least one of them is installed
+    if ($vscodeInstalled -or $vscodiumInstalled) {
+        $extensionsFilePath = Join-Path $HOME ".local\share\chezmoi\AppData\Local\installer\vscode.txt"
+
+        if (Test-Path $extensionsFilePath) {
+            $extensions = Get-Content -Path $extensionsFilePath
+            foreach ($extension in $extensions) {
+                # Install the extension for VSCode
+                if ($vscodeInstalled) {
+                    Write-Host "Installing VSCode extension: $extension"
+                    & code --install-extension $extension
+                }
+
+                # Install the extension for VSCodium
+                if ($vscodiumInstalled) {
+                    Write-Host "Installing VSCodium extension: $extension"
+                    & codium --install-extension $extension
+                }
+            }
+        }
+        else {
+            Write-Host "Extensions file not found at $extensionsFilePath."
+        }
+    }
+    else {
+        Write-Host "Neither VSCode nor VSCodium is installed. Cannot install extensions."
+    }
+}
 function Set-PermanentMachine {
     Write-Host "Installing Spotify..."
     try {
@@ -250,6 +300,7 @@ function Set-PermanentMachine {
     }
 
     Move-ConfigFolder
+    Install-VSCodeExtensions
 }
 
 $userInput = Read-Host "Do you want to install Spotify? (y/n)"
@@ -263,7 +314,7 @@ else {
 
 
 function ClinkSetup {
-    $clinkPath = "C:\Program Files (x86)\clink"
+      $linkPath ="C:\Program Files (x86)\clink"
 
     # Check if the path is already in the PATH environment variable
     if ($env:Path -notlike "*$clinkPath*") {

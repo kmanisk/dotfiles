@@ -60,7 +60,7 @@ map("n", "-", "<C-x>", { noremap = true, silent = true })
 map("x", "K", ":move '<-2<CR>gv-gv", opts)
 
 map(
-	"n",
+    "n",
 	"<leader>/",
 	":call VSCodeNotify('editor.action.commentLine')<CR>",
 	opts
