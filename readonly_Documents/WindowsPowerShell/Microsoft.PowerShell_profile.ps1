@@ -6,6 +6,8 @@
 # }
 # Import-Module -Name Terminal-Icons
 
+# manisk
+# manisk1234
 # # dotfiles Management
 # $DotFilesPath = "G:\dotfiles"
 # function ff($name) {

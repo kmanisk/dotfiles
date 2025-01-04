@@ -98,7 +98,8 @@ map({ "n", "v" }, "<leader>oe", "<cmd>lua require('vscode').action('revealFileIn
 --
 map({ "n", "v" }, "<A-j>", "<cmd>lua require('vscode').action('workbench.action.nextEditorInGroup')<CR>")
 map({ "n", "v" }, "<A-k>", "<cmd>lua require('vscode').action('workbench.action.previousEditorInGroup')<CR>")
-map("n", "<leader>sf", ':lua require("vscode").action("periscope.search")<CR>', opts)
+-- map("n", "<leader>sf", ':lua require("vscode").action("periscope.search")<CR>', opts)
+map("n", "<leader>fg", ':lua require("vscode").action("periscope.search")<CR>', opts)
 -- map(
 -- 	"n",
 -- 	"<leader>rf",

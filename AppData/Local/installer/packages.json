@@ -1,15 +1,7 @@
 {
   "scoop": {
-    "mini": [
-      "make",
-      "grep",
-      "ripgrep",
-      "bat",
-      "lsd"
-    ],
-    "full": [
-      "java/openjdk23"
-    ]
+    "mini": [],
+    "full": []
   },
   "winget": {
     "mini": [
@@ -26,9 +18,12 @@
     "mini": [
       "7zip",
       "neovim",
+      "mingw",
+      "ripgrep",
+      "bat",
       "autohotkey",
       "zoxide",
-      "starship"
+	  "starship"
     ],
     "full": [
       "7zip",
@@ -39,6 +34,7 @@
       "bat",
       "vscode",
       "vscodium",
+      "make",
       "less",
       "lazygit",
       "ditto",
@@ -49,6 +45,8 @@
       "powershell-core",
       "microsoft-windows-terminal",
       "sharex",
+      "openjdk",
+      "python",
       "rust",
       "everything",
       "starship",
