@@ -3,10 +3,10 @@ return {
 		"NvChad/nvterm",
 		enabled = false,
 	},
-    {
-        "folke/which-key.nvim",
-        enabled = false,
-    },
+	{
+		"folke/which-key.nvim",
+		enabled = false,
+	},
 	{
 		"lewis6991/gitsigns.nvim",
 		enabled = false,
@@ -47,7 +47,36 @@ return {
 		end,
 	},
 
-	-- LSP Configuration
+	-- Initialize required plugins and configurations
+
+	-- Mason Configuration
+	{
+		"williamboman/mason.nvim",
+		cond = function()
+			return not vim.g.vscode -- Exclude this plugin in VSCode
+		end,
+		opts = {
+			ensure_installed = {}, -- Add tools like linters and formatters here if needed
+		},
+		config = function()
+			require("mason").setup()
+		end,
+	},
+
+	-- Mason LSP Configuration
+	{
+		"williamboman/mason-lspconfig.nvim",
+		cond = function()
+			return not vim.g.vscode -- Exclude this plugin in VSCode
+		end,
+		config = function()
+			require("mason-lspconfig").setup({
+				ensure_installed = {}, -- Add language servers here if needed
+			})
+		end,
+	},
+
+	-- LSP Config
 	{
 		"neovim/nvim-lspconfig",
 		cond = function()
@@ -55,18 +84,23 @@ return {
 		end,
 		config = function()
 			local lspconfig = require("lspconfig")
-			local mason = require("mason")
 			local mason_lspconfig = require("mason-lspconfig")
-			mason.setup()
-			mason_lspconfig.setup({
-				ensure_installed = {}, -- Add language servers here if needed
-			})
 
+			-- Set up Mason and Mason LSP config
 			mason_lspconfig.setup_handlers({
 				function(server_name)
 					lspconfig[server_name].setup({
-						on_attach = function(_, bufnr)
+						on_attach = function(client, bufnr)
+							-- Prevent LSP from attaching to certain filetypes
+							local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
+							if filetype == "markdown" or filetype == "plaintext" then
+								client.stop() -- Detach LSP if filetype matches
+								return
+							end
+
+							-- Set up key mappings for LSP functions
 							local bufopts = { noremap = true, silent = true, buffer = bufnr }
+
 							vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
 							vim.keymap.set("n", "L", vim.lsp.buf.hover, bufopts)
 							vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
@@ -82,24 +116,9 @@ return {
 		end,
 	},
 
-	-- mason-lspconfig Configuration (Optional)
-	{
-		"williamboman/mason-lspconfig.nvim",
-
-		cond = function()
-			return not vim.g.vscode -- Exclude this plugin in VSCode
-		end,
-		config = function()
-			require("mason-lspconfig").setup({
-				ensure_installed = {}, -- Add language servers here if needed
-			})
-		end,
-	},
-
 	-- Treesitter Configuration
 	{
 		"nvim-treesitter/nvim-treesitter",
-
 		cond = function()
 			return not vim.g.vscode -- Exclude this plugin in VSCode
 		end,
@@ -108,20 +127,6 @@ return {
 			highlight = { enable = true },
 			indent = { enable = true },
 		},
-	},
-
-	-- Mason Configuration
-	{
-		"williamboman/mason.nvim",
-		cond = function()
-			return not vim.g.vscode -- Exclude this plugin in VSCode
-		end,
-		opts = {
-			ensure_installed = {}, -- Add tools like linters and formatters here if needed
-		},
-		config = function()
-			require("mason").setup()
-		end,
 	},
 
 	-- Global Autocompletion Configuration for all languages
@@ -173,5 +178,43 @@ return {
 		end,
 	},
 
-	-- {"nvim-java/nvim-java"},
+	-- Mason and LSP Setup for specific languages
+	{
+		"williamboman/mason.nvim",
+		cond = function()
+			return not vim.g.vscode -- Exclude this plugin in VSCode
+		end,
+		opts = {
+			ensure_installed = {}, -- Add tools like linters and formatters here if needed
+		},
+		config = function()
+			require("mason").setup()
+		end,
+	},
+
+	-- Example LSP configuration for a specific language (e.g., Lua)
+	{
+		"neovim/nvim-lspconfig",
+		config = function()
+			require("lspconfig").lua_ls.setup({
+				on_attach = function(client, bufnr)
+					local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
+					-- Disable LSP for Lua if filetype is 'lua'
+					if filetype == "lua" then
+						client.stop()
+						return
+					end
+
+					-- Set up key mappings for Lua LSP
+					local bufopts = { noremap = true, silent = true, buffer = bufnr }
+					vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
+					vim.keymap.set("n", "L", vim.lsp.buf.hover, bufopts)
+					vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
+					vim.keymap.set("n", "<Leader>rn", vim.lsp.buf.rename, bufopts)
+					vim.keymap.set("n", "<Leader>ca", vim.lsp.buf.code_action, bufopts)
+				end,
+				capabilities = require("cmp_nvim_lsp").default_capabilities(),
+			})
+		end,
+	},
 }

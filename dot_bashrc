@@ -10,6 +10,7 @@
 # System-wide bashrc file
 # export editor = nvim
 alias vi='nvim'
+alias vim='nvim'
 # Check that we haven't already been sourced.
 ([[ -z ${CYG_SYS_BASHRC} ]] && CYG_SYS_BASHRC="1") || return
 

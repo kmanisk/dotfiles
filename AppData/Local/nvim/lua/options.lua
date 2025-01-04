@@ -50,13 +50,15 @@ vim.o.shada = ""
 vim.opt.swapfile = false
 
 -- Disable backup files
-vim.opt.backup = false
-o.smartindent = true
-o.tabstop = 4
-o.shiftwidth = 4
-o.expandtab = true -- Converts tabs to spaces
-o.autoindent = true
 
+
+-- Set these options in Lua config
+vim.opt.shiftwidth = 2   -- Number of spaces for each indentation level
+vim.opt.tabstop = 2      -- Number of spaces a tab represents
+vim.opt.expandtab = true -- Convert tabs to spaces
+
+vim.opt.smartindent = true -- Enable automatic indentation
+vim.opt.autoindent = true -- Auto-indent new lines
 -- Enable line break at word boundary
 o.linebreak = true
 

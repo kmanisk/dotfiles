@@ -2,7 +2,7 @@ local M = {}
 
 -- UI Configuration
 M.ui = {
-	theme = "vscode_dark", -- Set the theme for Neovim
+	theme = "aquarium", -- Set the theme for Neovim
 	transparency = true, -- Enable transparency
 	statusline = {
 		theme = "vscode_colored", -- Choose a statusline theme (can be 'vscode', 'gruvbox', etc.)
@@ -25,13 +25,13 @@ M.ui = {
 }
 
 M.base46 = {
-	theme = "vscode_dark", -- Change to your preferred base46 theme (e.g., 'tokyonight', 'gruvbox', etc.)
+	theme = "aquarium", -- Change to your preferred base46 theme (e.g., 'tokyonight', 'gruvbox', etc.)
 	hl_add = {},
 	hl_override = {},
 	integrations = {},
 	changed_themes = {},
 	transparency = false,
-	theme_toggle = { "vscode_dark", "one_light" },
+	theme_toggle = { "aquarium", "one_light" },
 }
 
 M.nvdash = {

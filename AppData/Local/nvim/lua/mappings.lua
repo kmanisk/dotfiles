@@ -3,7 +3,6 @@ require("nvchad.mappings")
 local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
-
 -- map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>")
 -- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
@@ -110,9 +109,9 @@ map(
 	":Telescope resume<CR>",
 	{ noremap = true, silent = true, desc = "Resume Last Telescope Search" }
 )
--- map({ "n", "t" }, "<A-;>", function()
--- 	require("nvchad.term").toggle({ pos = "sp", id = "htoggleTerm" })
--- end, { desc = "Toggle terminal horizontally" })
+map({ "n", "t" }, "<A-;>", function()
+	require("nvchad.term").toggle({ pos = "sp", id = "htoggleTerm" })
+end, { desc = "Toggle terminal horizontally" })
 
 map("n", "<A-v>", ":vsplit<CR>", { noremap = true, silent = true, desc = "Vertical split" })
 
@@ -391,3 +390,7 @@ map(
 	':lua require("telescope.builtin").live_grep({ cwd = vim.fn.stdpath("config") })<CR>',
 	{ noremap = true, silent = true, desc = "[C]onfig [G]rep" }
 )
+
+map("n", "<Leader>fd", function()
+	require("conform").format({ async = true })
+end, { noremap = true, silent = true })
