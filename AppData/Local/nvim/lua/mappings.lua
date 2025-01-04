@@ -21,7 +21,7 @@ map("n", "<leader>e", ":NvimTreeToggle<CR>", opts)
 map("n", "<A-d>", ":NvimTreeClose<CR>", opts)
 map("n", "<S-j>", ":bnext<CR>", opts)
 map("n", "<S-k>", ":bprevious<CR>", opts)
-map("n", "<leader>j", "J")
+-- map("n", "<leader>j", "J")
 map("v", "<", "<gv", opts)
 map("v", ">", ">gv", opts)
 map("v", "J", ":m .+1<CR>==", opts)
@@ -409,3 +409,9 @@ map("n", "<A-Left>", ":lua require('nvchad.tabufline').move_buf(-1)<CR>", { nore
 
 -- Move buffer to the right (using Alt + Right Arrow)
 map("n", "<A-Right>", ":lua require('nvchad.tabufline').move_buf(1)<CR>", { noremap = true, silent = true })
+
+-- Map '+' to increment number (Ctrl+A)
+map("n", "+", "<C-a>", { noremap = true, silent = true })
+
+-- Map '-' to decrement number (Ctrl+X)
+map("n", "-", "<C-x>", { noremap = true, silent = true })

@@ -12,6 +12,15 @@ Import-Module -Name Terminal-Icons
 #Remove-Item Alias:z -ErrorAction SilentlyContinue
 #Remove-Item Alias:ls -ErrorAction SilentlyContinue
 #
+#
+Function flist {
+    param (
+        [string]$SearchTerm = "*"
+    )
+    Get-ChildItem -Path "C:\Windows\Fonts" | 
+        Where-Object { $_.Name -like "*$SearchTerm*" } | 
+        Select-Object Name
+}
 if (Get-Command lsd -ErrorAction SilentlyContinue) {
     Set-Alias ls lsd
 } else {

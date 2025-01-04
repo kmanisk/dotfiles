@@ -2,7 +2,7 @@ local M = {}
 
 -- UI Configuration
 M.ui = {
-	theme = "chadracula-evondev", -- Set the theme for Neovim
+	theme = "chadracula", -- Set the theme for Neovim
 	transparency = true, -- Enable transparency
 
 
@@ -53,13 +53,13 @@ M.ui = {
 }
 
 M.base46 = {
-	theme = "chadracula-evondev", -- Change to your preferred base46 theme (e.g., 'tokyonight', 'gruvbox', etc.)
+	theme = "chadracula", -- Change to your preferred base46 theme (e.g., 'tokyonight', 'gruvbox', etc.)
 	hl_add = {},
 	hl_override = {},
 	integrations = {},
 	changed_themes = {},
 	transparency = false,
-	theme_toggle = { "chadracula-evondev", "one_light" },
+	theme_toggle = { "chadracula", "one_light" },
 }
 
 M.nvdash = {

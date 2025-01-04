@@ -199,7 +199,6 @@ function Install-OSDLayout {
     # Copy all files and subdirectories from the source directories to the target directories
     Copy-Item -Path "$msiSource\*" -Destination $msiTarget -Recurse -Force
     Copy-Item -Path "$rivaSource\*" -Destination $rivaTarget -Recurse -Force
-
     Write-Host "Files copied successfully to the target locations."
 }
 Install-OSDLayout

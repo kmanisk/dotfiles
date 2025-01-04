@@ -20,7 +20,7 @@ return {
 	},
 	{
 		"lewis6991/gitsigns.nvim",
-		enabled = true,
+		enabled = false,
 	},
 	{
 		"stevearc/conform.nvim",
