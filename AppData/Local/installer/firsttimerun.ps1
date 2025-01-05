@@ -48,6 +48,10 @@ function Install-Chocolatey {
 	}
  else {
 		Write-Host "Chocolatey is already installed."
+
+		Write-Host "Configuring Chocolatey settings..." -ForegroundColor Yellow
+		choco feature enable -n allowGlobalConfirmation
+		choco feature enable -n checksumFiles
 	}
 }
 
