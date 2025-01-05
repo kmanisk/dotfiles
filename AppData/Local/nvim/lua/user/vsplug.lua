@@ -2,29 +2,31 @@
 local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
--- Only load these plugins if in VSCode
 if vim.g.vscode then
-	local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+	-- Define custom paths for VSCode-specific setup
+	local vscode_data_path = vim.fn.stdpath("data"):gsub("nvim%-data", "nvim-data/vscode")
+	local vscode_state_path = vim.fn.stdpath("state"):gsub("nvim%-data", "nvim-data/vscode")
+	local vscode_cache_path = vim.fn.stdpath("cache"):gsub("nvim%-data", "nvim-data/vscode")
 
-	-- Bootstrap LazyVim if not already installed
+	-- Path to lazy.nvim in the VSCode-specific data folder
+	local lazypath = vscode_data_path .. "/lazy/lazy.nvim"
+
+	-- Bootstrap Lazy.nvim if not already installed
 	if not vim.uv.fs_stat(lazypath) then
 		local repo = "https://github.com/folke/lazy.nvim.git"
 		vim.fn.system({ "git", "clone", "--filter=blob:none", repo, "--branch=stable", lazypath })
 	end
 
+	-- Prepend Lazy.nvim to runtime path
 	vim.opt.rtp:prepend(lazypath)
 
-	local lazy_config = require("configs.lazy")
-
-	-- Load plugins for VSCode environment
+	-- Configure Lazy.nvim plugins for VSCode environment
 	require("lazy").setup({
 		{
 			"kylechui/nvim-surround",
 			event = "VeryLazy",
 			config = function()
-				require("nvim-surround").setup({
-					-- Custom configuration for VSCode if needed
-				})
+				require("nvim-surround").setup({})
 			end,
 		},
 		{ "nvim-lua/plenary.nvim" },
@@ -36,7 +38,12 @@ if vim.g.vscode then
 			"ggandor/leap.nvim",
 			config = function()
 				require("leap").add_default_mappings()
-				map("n", "s", '<Cmd>lua require("leap").leap({ target_windows = { vim.fn.win_getid() } })<CR>', opts)
+				vim.keymap.set(
+					"n",
+					"s",
+					'<Cmd>lua require("leap").leap({ target_windows = { vim.fn.win_getid() } })<CR>',
+					{ noremap = true, silent = true }
+				)
 			end,
 		},
 		{
@@ -49,5 +56,11 @@ if vim.g.vscode then
 			event = "VeryLazy",
 			opts = {},
 		},
+	}, {
+		-- Explicitly set paths for Lazy.nvim to use VSCode-specific directories
+		root = vscode_data_path .. "/lazy",
+		lockfile = vscode_state_path .. "/lazy-lock.json",
+		state = vscode_state_path .. "/lazy/state.json",
+		cache = vscode_cache_path,
 	})
 end

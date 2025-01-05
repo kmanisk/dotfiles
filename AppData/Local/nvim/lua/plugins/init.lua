@@ -4,10 +4,10 @@ return {
 		"nvchad/ui",
 		lazy = false,
 		config = function()
-      -- if commneted remove tab bar and statusline too both of them
+			-- if commneted remove tab bar and statusline too both of them
 			require("nvchad")
-      -- the below only diables statusline
-			vim.opt.statusline = ""
+			-- the below only diables statusline
+			-- vim.opt.statusline = ""
 		end,
 	},
 	{
