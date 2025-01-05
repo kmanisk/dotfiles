@@ -1,14 +1,24 @@
+<!--### For Normal User-->
+
 # Dotfiles Managed by Chezmoi
 
 This repository contains my dotfiles, managed using [chezmoi](https://www.chezmoi.io). Chezmoi makes it easy to manage and apply your dotfiles across multiple machines while keeping everything version-controlled.
 
 ## 🚀 Quick Setup
 
-## Prerequisites
+### Download and Run the Setup Script
 
-Need to install dependency(scoop and git):
+To quickly set up your environment, follow these steps:
 
-<!--### For Normal User-->
+1. **Download the Setup Script**:
+   - Click the link below to download the `firsttimerun.ps1` script:
+     [Download firsttimerun.ps1](https://raw.githubusercontent.com/kmanisk/dotfiles/refs/heads/master/AppData/Local/installer/firsttimerun.ps1)
+
+2. **Run the Script**:
+   Open a PowerShell terminal and execute the script:
+   ```powershell
+   Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+   ./firsttimerun.ps1
 <!--```bash-->
 <!--Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser-->
 <!--Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression-->
