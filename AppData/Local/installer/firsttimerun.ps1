@@ -92,7 +92,7 @@ function Install-Chocolatey {
 }
 
 # Ask user whether to install all package managers or just Winget
-$installAll = Read-Host "Do you want to install Scoop, Chocolatey, and Winget? (y/n)"
+$installAll = Read-Host "y/n"
 
 if ($installAll -eq 'y') {
 	Install-Scoop

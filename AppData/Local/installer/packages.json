@@ -33,7 +33,8 @@
       "chrisant996.Clink",
 	  "Microsoft.PowerShell",
 	  "Microsoft.WindowsTerminal",
-	  "VMware.WorkstationPro"
+	  "VMware.WorkstationPro",
+	  "DEVCOM.JetBrainsMonoNerdFont"
     ]
   },
   "choco": {
