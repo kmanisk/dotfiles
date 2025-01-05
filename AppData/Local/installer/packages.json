@@ -5,7 +5,7 @@
 	"gcc",
 	"less",
 	"bat",
-	"ripgrep",
+	"ripgrep"
 	],
     "full": [
 	"fzf",
