@@ -86,6 +86,7 @@ function Install-Chocolatey {
 		Write-Host "Configuring Chocolatey settings..." -ForegroundColor Yellow
 		choco feature enable -n allowGlobalConfirmation
 		choco feature enable -n checksumFiles
+		choco install git gh chezmoi -y
 	}
 }
 
@@ -101,6 +102,6 @@ if ($installAll -eq 'y') {
 Install-Winget
 
 Write-Host "Installing first Core Packages" -ForegroundColor Yellow
-winget install twpayne.chezmoi
-winget install Git.Git
-winget install -e --id GitHub.cli
+# winget install twpayne.chezmoi
+# winget install Git.Git
+# winget install -e --id GitHub.cli
