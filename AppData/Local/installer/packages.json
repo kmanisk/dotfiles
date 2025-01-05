@@ -1,7 +1,24 @@
 {
   "scoop": {
-    "mini": [],
-    "full": []
+    "mini": [
+	"extras/vifm",
+	"gcc",
+	"less",
+	"bat",
+	"ripgrep",
+	],
+    "full": [
+	"fzf",
+	"psfzf",
+	"less",
+	"bat",
+	"extras/vifm",
+	"gcc",
+	"extras/neovide",
+	"grep",
+	"ripgrep",
+	"java/openjdk"
+	]
   },
   "winget": {
     "mini": [
@@ -11,43 +28,32 @@
     "full": [
       "Guru3D.Afterburner",
       "Guru3D.RTSS",
-      "TechPowerUp.NVCleanstall"
+      "TechPowerUp.NVCleanstall",
+	  "JanDeDobbeleer.OhMyPosh",
+      "chrisant996.Clink"
     ]
   },
   "choco": {
     "mini": [
       "7zip",
       "neovim",
-      "mingw",
-      "ripgrep",
-      "bat",
       "autohotkey",
       "zoxide",
-      "starship"
+	  "starship"
     ],
     "full": [
       "7zip",
       "notepadplusplus",
       "neovim",
-      "ripgrep",
-      "grep",
-      "bat",
       "vscode",
       "vscodium",
-      "make",
-      "less",
       "lazygit",
-      "ditto",
       "f.lux",
-      "fzf",
       "fastfetch",
       "ueli",
       "powershell-core",
       "microsoft-windows-terminal",
       "sharex",
-      "openjdk",
-      "python",
-      "rust",
       "everything",
       "starship",
       "steam",
@@ -56,7 +62,6 @@
       "notepadplusplus",
       "zoxide",
       "wiztree",
-      "noevide",
       "autohotkey"
     ]
   }
