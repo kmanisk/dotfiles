@@ -12,7 +12,7 @@ To quickly set up your environment, follow these steps:
 
 1. **Download the Setup Script**:
    - Click the link below to download the `firsttimerun.ps1` script:
-     [Download firsttimerun.ps1](https://github.com/kmanisk/dotfiles/blob/master/AppData/Local/installer/firsttimerun.ps1)
+     [Download](https://github.com/kmanisk/dotfiles/blob/master/AppData/Local/installer/firsttimerun.ps1)
 
 2. **Run the Script**:
    Open a PowerShell terminal and execute the script:
