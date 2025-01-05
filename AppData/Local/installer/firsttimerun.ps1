@@ -106,3 +106,4 @@ Write-Host "Installing first Core Packages" -ForegroundColor Yellow
 winget install twpayne.chezmoi
 winget install Git.Git
 winget install -e --id GitHub.cli
+# winget install --id=DEVCOM.JetBrainsMonoNerdFont  -e
