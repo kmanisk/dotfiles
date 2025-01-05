@@ -31,6 +31,7 @@ function Install-Scoop {
 
 # Define Scoop buckets (excluding main and extras)
 $scoopBuckets = @(
+    # @{ Name = "extras"; URL = "https://github.com/ScoopInstaller/Extras.git" },
     @{ Name = "versions"; URL = "https://github.com/ScoopInstaller/Versions.git" },
     @{ Name = "nerd-fonts"; URL = "https://github.com/matthewjberger/scoop-nerd-fonts.git" },
     @{ Name = "shemnei"; URL = "https://github.com/Shemnei/scoop-bucket.git" },
@@ -60,6 +61,7 @@ foreach ($bucket in $scoopBuckets) {
         }
     }
 }
+scoop bucket add extras
 
 
 
