@@ -30,7 +30,10 @@
       "Guru3D.RTSS",
       "TechPowerUp.NVCleanstall",
 	  "JanDeDobbeleer.OhMyPosh",
-      "chrisant996.Clink"
+      "chrisant996.Clink",
+	  "Microsoft.PowerShell",
+	  "Microsoft.WindowsTerminal",
+	  "VMware.WorkstationPro"
     ]
   },
   "choco": {
@@ -51,8 +54,6 @@
       "f.lux",
       "fastfetch",
       "ueli",
-      "powershell-core",
-      "microsoft-windows-terminal",
       "sharex",
       "everything",
       "starship",
