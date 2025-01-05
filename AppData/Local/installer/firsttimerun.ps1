@@ -22,12 +22,13 @@ function Install-Scoop {
 	if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
 		Write-Host "Installing Scoop..."
 		if (-not (Is-Admin)) {
-			Write-Host "Installation under the administrator console has been disabled by default for security considerations."
-			Write-Host "If you know what you are doing and want to install Scoop as administrator, please download the installer and manually execute it with the -RunAsAdmin parameter."
-			Write-Host "Example:"
-			Write-Host "irm get.scoop.sh -outfile 'install.ps1'"
-			Write-Host ".\install.ps1 -RunAsAdmin"
-			Write-Host "Or use the one-liner command:"
+			# Write-Host "Installation under the administrator console has been disabled by default for security considerations."
+			# Write-Host "If you know what you are doing and want to install Scoop as administrator, please download the installer and manually execute it with the -RunAsAdmin parameter."
+			# Write-Host "Example:"
+			# Write-Host "irm get.scoop.sh -outfile 'install.ps1'"
+			# Write-Host ".\install.ps1 -RunAsAdmin"
+			# Write-Host "Or use the one-liner command:"
+			Write-Host "Installing Scoop"
 			Write-Host "iex ""& {$(Invoke-RestMethod get.scoop.sh)} -RunAsAdmin"""
 		}
 		else {

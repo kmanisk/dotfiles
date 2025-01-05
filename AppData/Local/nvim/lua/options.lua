@@ -35,7 +35,11 @@ o.smartcase = true
 o.ignorecase = true
 
 -- Enable cursorline (highlight the line where the cursor is)
-wo.cursorline = true
+--
+vim.opt.cursorline = true -- Highlight the current line
+
+-- vim.api.nvim_set_hl(0, "CursorLine", { bg = "#2c2c2c", underline = false })
+-- wo.cursorline = true
 
 -- Enable search highlighting
 vim.opt.hlsearch = false
