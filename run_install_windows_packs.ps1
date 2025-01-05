@@ -110,7 +110,7 @@ function Install-ScoopPackages {
     )
     foreach ($package in $packages) {
         # Install the package using Scoop
-        scoop install $package -y
+        scoop install $package 
     }
 }
 
