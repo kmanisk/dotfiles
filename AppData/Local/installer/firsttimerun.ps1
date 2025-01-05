@@ -1,5 +1,6 @@
+
 # Function to check if the script is running as Administrator
-function Test-Admin {
+function Is-Admin {
 	$identity = [Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()
 	return $identity.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
 }
@@ -20,12 +21,18 @@ function Install-Winget {
 function Install-Scoop {
 	if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
 		Write-Host "Installing Scoop..."
-		if (-not (Test-Admin)) {
-			Write-Host "Running Scoop installation with elevated permissions..."
-			Invoke-Expression "& {$(Invoke-RestMethod get.scoop.sh)} -RunAsAdmin"
+		if (-not (Is-Admin)) {
+			Write-Host "Installation under the administrator console has been disabled by default for security considerations."
+			Write-Host "If you know what you are doing and want to install Scoop as administrator, please download the installer and manually execute it with the -RunAsAdmin parameter."
+			Write-Host "Example:"
+			Write-Host "irm get.scoop.sh -outfile 'install.ps1'"
+			Write-Host ".\install.ps1 -RunAsAdmin"
+			Write-Host "Or use the one-liner command:"
+			Write-Host "iex ""& {$(irm get.scoop.sh)} -RunAsAdmin"""
 		}
 		else {
-			Invoke-Expression "& {$(Invoke-RestMethod get.scoop.sh)}"
+			Write-Host "Running Scoop installation with elevated permissions..."
+			iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
 		}
 	}
  else {
@@ -37,7 +44,7 @@ function Install-Scoop {
 function Install-Chocolatey {
 	if (-not (Get-Command choco -ErrorAction SilentlyContinue)) {
 		Write-Host "Installing Chocolatey..."
-		Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+		Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 	}
  else {
 		Write-Host "Chocolatey is already installed."
