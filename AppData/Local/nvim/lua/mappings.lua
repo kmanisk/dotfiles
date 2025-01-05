@@ -14,6 +14,8 @@ map("i", "<C-y>", "cmp.mapping.confirm({ select = true })", opts)
 -- Map 'jk' to 'zz' in normal mode
 map("n", "j", "jzz", opts)
 map("n", "k", "kzz", opts)
+-- map("n", "j", "j", opts)
+-- map("n", "k", "k", opts)
 -- Custom mappings
 map("n", "<leader>fm", ":Vifm<CR>", opts)
 map("n", "<leader>ts", ":Telescope colorscheme<CR>", opts)
@@ -127,8 +129,7 @@ end, { desc = "Telescope Keymaps" })
 
 map("n", "<leader>bb", ":lua InputCommand()<CR>", opts)
 
-
-map('n', '<leader>j', 'mzJ`z', { noremap = true, silent = true })
+map("n", "<leader>j", "mzJ`z", { noremap = true, silent = true })
 function InputCommand()
 	local command = vim.fn.input("Shell command: ")
 	vim.cmd("!" .. command)
@@ -251,8 +252,8 @@ map("i", "<C-m>", "<C-R>+", opts)
 -- 	hop.hint_char2({ direction = directions.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })
 -- end, { remap = true })
 
-map("n", "gg", "ggzz",opts)
-map("n", "G", "Gzz",opts)
+map("n", "gg", "ggzz", opts)
+map("n", "G", "Gzz", opts)
 
 -- vim.opts.preset("")
 -- local cmp = require("cmp")
@@ -400,8 +401,18 @@ end, { noremap = true, silent = true })
 map("n", "<Leader>ct", ":lua require('nvchad.tabufline').closeAllBufs(false)<CR>", { noremap = true, silent = true })
 
 -- Close all buffers to the right
-map("n", "<Leader>cr", ":lua require('nvchad.tabufline').closeBufs_at_direction('right')<CR>", { noremap = true, silent = true })
-map("n", "<Leader>cl", ":lua require('nvchad.tabufline').closeBufs_at_direction('left')<CR>", { noremap = true, silent = true })
+map(
+	"n",
+	"<Leader>cr",
+	":lua require('nvchad.tabufline').closeBufs_at_direction('right')<CR>",
+	{ noremap = true, silent = true }
+)
+map(
+	"n",
+	"<Leader>cl",
+	":lua require('nvchad.tabufline').closeBufs_at_direction('left')<CR>",
+	{ noremap = true, silent = true }
+)
 -- Move the buffer to the left (using Alt + <)
 --
 -- Move buffer to the left (using Alt + Left Arrow)
@@ -415,3 +426,4 @@ map("n", "+", "<C-a>", { noremap = true, silent = true })
 
 -- Map '-' to decrement number (Ctrl+X)
 map("n", "-", "<C-x>", { noremap = true, silent = true })
+map("n", "<leader>sh", ":lua print(vim.api.nvim_buf_get_name(0))<CR>", { noremap = true, silent = true })

@@ -7,7 +7,6 @@ local wo = vim.wo
 local bo = vim.bo
 local fn = vim.fn
 
-
 -- vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#FFD700", bold = true, font = "Bigger" })
 -- vim.opt.laststatus = 1  -- Disable statusline
 -- Enable line numbers and relative line numbers
@@ -56,14 +55,13 @@ vim.opt.swapfile = false
 
 -- Disable backup files
 
-
 -- Set these options in Lua config
-vim.opt.shiftwidth = 4  -- Number of spaces for each indentation level
-        
+vim.opt.shiftwidth = 4 -- Number of spaces for each indentation level
+
 -- Highlight the current line
 vim.opt.cursorline = true
 -- vim.api.nvim_set_hl(0, "CursorLine", { bg = "#333333" })
-vim.opt.tabstop = 2      -- Number of spaces a tab represents
+vim.opt.tabstop = 2 -- Number of spaces a tab represents
 vim.opt.expandtab = true -- Convert tabs to spaces
 
 vim.opt.smartindent = true -- Enable automatic indentation
