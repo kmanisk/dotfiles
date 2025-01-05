@@ -17,7 +17,7 @@ To quickly set up your environment, follow these steps:
 2. **Run the Script**:
    Open a PowerShell terminal and execute the script:
    ```powershell
-   Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force; ./firsttimerun.ps1
+   cd $env:USERPROFILE\Downloads; Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force; ./firsttimerun.ps1
 
 ### Finally run this command
 ```bash
