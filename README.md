@@ -17,8 +17,13 @@ To quickly set up your environment, follow these steps:
 2. **Run the Script**:
    Open a PowerShell terminal and execute the script:
    ```powershell
-   Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-   ./firsttimerun.ps1
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force; ./firsttimerun.ps1
+### Finally run this command
+```bash
+chezmoi init --apply kmanisk
+```
+
+
 <!--```bash-->
 <!--Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser-->
 <!--Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression-->
@@ -44,10 +49,4 @@ To quickly set up your environment, follow these steps:
 <!--git config --global user.email "youremail@example.com"-->
 <!--gh auth login-->
 <!--```-->
-
-### Finally run this command
-```bash
-chezmoi init --apply kmanisk
-```
-
 
