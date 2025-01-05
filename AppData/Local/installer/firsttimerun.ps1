@@ -28,11 +28,11 @@ function Install-Scoop {
 			Write-Host "irm get.scoop.sh -outfile 'install.ps1'"
 			Write-Host ".\install.ps1 -RunAsAdmin"
 			Write-Host "Or use the one-liner command:"
-			Write-Host "iex ""& {$(irm get.scoop.sh)} -RunAsAdmin"""
+			Write-Host "iex ""& {$(Invoke-RestMethod get.scoop.sh)} -RunAsAdmin"""
 		}
 		else {
 			Write-Host "Running Scoop installation with elevated permissions..."
-			iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
+			Invoke-Expression "& {$(Invoke-RestMethod get.scoop.sh)} -RunAsAdmin"
 		}
 	}
  else {
@@ -78,7 +78,7 @@ function Install-Scoop {
 function Install-Chocolatey {
 	if (-not (Get-Command choco -ErrorAction SilentlyContinue)) {
 		Write-Host "Installing Chocolatey..."
-		Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+		Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 	}
  else {
 		Write-Host "Chocolatey is already installed."
