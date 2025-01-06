@@ -15,8 +15,6 @@
         <Replace name="maniskpr" />
     </FindHistory>
     <History nbMaxFile="10" inSubMenu="no" customLength="-1">
-        <File filename="C:\Users\Manisk\AppData\Local\nvim\lua\cusmap.lua" />
-        <File filename="C:\Users\Manisk\Desktop\some youtube guy config\nvim\lua\plugins\misc.lua" />
         <File filename="C:\Users\Manisk\Desktop\nvim\lua\plugins\telescope.lua" />
         <File filename="C:\Users\Manisk\AppData\Local\nvim\lua\plugins\telescope.lua" />
         <File filename="C:\Users\Manisk\Desktop\nvim\lua\plugins\autocom.lua" />
@@ -25,6 +23,8 @@
         <File filename="C:\Users\Manisk\AppData\Local\nvim\lua\plugins\session.lua" />
         <File filename="C:\Users\Manisk\AppData\Local\nvim\lua\user\vscode_keymaps.lua" />
         <File filename="C:\Users\Manisk\AppData\Local\nvim\lua\user\vsplug.lua" />
+        <File filename="C:\Users\Manisk\AppData\Roaming\VMware\preferences.ini" />
+        <File filename="C:\Users\Manisk\AppData\Roaming\VMware\inventory.vmls" />
     </History>
     <ProjectPanels>
         <ProjectPanel id="0" workSpaceFile="" />
@@ -42,7 +42,7 @@
         <GUIConfig name="ScintillaViewsSplitter">vertical</GUIConfig>
         <GUIConfig name="UserDefineDlg" position="undocked">hide</GUIConfig>
         <GUIConfig name="TabSetting" replaceBySpace="no" size="4" backspaceUnindent="no" />
-        <GUIConfig name="AppPosition" x="82" y="16" width="1343" height="792" isMaximized="yes" />
+        <GUIConfig name="AppPosition" x="754" y="248" width="1343" height="792" isMaximized="yes" />
         <GUIConfig name="FindWindowPosition" left="1129" top="622" right="1732" bottom="981" isLessModeOn="no" />
         <GUIConfig name="FinderConfig" wrappedLines="no" purgeBeforeEverySearch="no" showOnlyOneEntryPerFoundLine="yes" />
         <GUIConfig name="noUpdate" intervalDays="15" nextUpdateDate="20250113">no</GUIConfig>

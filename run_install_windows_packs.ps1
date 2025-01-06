@@ -1,6 +1,8 @@
 
 # Import Modules
 Import-Module Microsoft.PowerShell.Utility
+# Install-Module z -AllowClobber
+# its different than the zoxide command 
 
 # Function to install Scoop
 function Install-Scoop {

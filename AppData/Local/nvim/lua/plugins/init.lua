@@ -57,7 +57,7 @@ return {
 			return not vim.g.vscode -- Exclude this plugin in VSCode
 		end,
 	},
-
+	{ "wellle/targets.vim" },
 	-- Initialize required plugins and configurations
 
 	-- Mason Configuration

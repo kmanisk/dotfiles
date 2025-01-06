@@ -23,7 +23,9 @@
   "winget": {
     "mini": [
       "JanDeDobbeleer.OhMyPosh",
-      "chrisant996.Clink"
+      "chrisant996.Clink",
+      "AntibodySoftware.WizTree",
+      "ajeetdsouza.zoxide"
     ],
     "full": [
       "Guru3D.Afterburner",
@@ -34,7 +36,9 @@
       "Microsoft.PowerShell",
       "Microsoft.WindowsTerminal",
       "VMware.WorkstationPro",
-      "DEVCOM.JetBrainsMonoNerdFont"
+      "DEVCOM.JetBrainsMonoNerdFont",
+      "AntibodySoftware.WizTree",
+      "ajeetdsouza.zoxide"
     ]
   },
   "choco": {
@@ -42,7 +46,6 @@
       "7zip",
       "neovim",
       "autohotkey",
-      "zoxide",
       "starship"
     ],
     "full": [
@@ -62,8 +65,6 @@
       "vlc",
       "tldr-plusplus",
       "notepadplusplus",
-      "zoxide",
-      "wiztree",
       "autohotkey"
     ]
   }

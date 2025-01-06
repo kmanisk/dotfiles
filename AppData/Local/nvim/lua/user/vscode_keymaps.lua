@@ -59,19 +59,9 @@ map("n", "+", "<C-a>", { noremap = true, silent = true })
 map("n", "-", "<C-x>", { noremap = true, silent = true })
 map("x", "K", ":move '<-2<CR>gv-gv", opts)
 
-map(
-    "n",
-	"<leader>/",
-	":call VSCodeNotify('editor.action.commentLine')<CR>",
-	opts
-)
+map("n", "<leader>/", ":call VSCodeNotify('editor.action.commentLine')<CR>", opts)
 
-map(
-	"v",
-	"<leader>/",
-	":call VSCodeNotify('editor.action.commentLine')<CR>gv",
-	opts
-)
+map("v", "<leader>/", ":call VSCodeNotify('editor.action.commentLine')<CR>gv", opts)
 
 --[[
 =============================================================================
@@ -107,19 +97,9 @@ map("n", "<leader>fg", ':lua require("vscode").action("periscope.search")<CR>', 
 -- 	opts
 -- )
 --
-map(
-	"n",
-	"<leader>rf",
-	":call VSCodeNotify('filebunny.renameActiveFile')<CR>",
-	opts
-)
+map("n", "<leader>rf", ":call VSCodeNotify('filebunny.renameActiveFile')<CR>", opts)
 
-map(
-	"n",
-	"<leader>ff",
-	":call VSCodeNotify('filebunny.openFile')<CR>",
-	opts
-)
+map("n", "<leader>ff", ":call VSCodeNotify('filebunny.openFile')<CR>", opts)
 
 map("n", "<S-j>", function()
 	require("vscode").call("workbench.action.nextEditorInGroup")
@@ -144,24 +124,9 @@ map({ "n" }, "<leader>ct", "<cmd>lua require('vscode').action('workbench.action.
 map({ "n", "v" }, "<leader>a", "<cmd>lua require('vscode').action('editor.action.quickFix')<CR>")
 map({ "n", "v" }, "<leader>vp", "<cmd>lua require('vscode').action('workbench.actions.view.problems')<CR>")
 map({ "n", "v" }, "<leader>cn", "<cmd>lua require('vscode').action('notifications.clearAll')<CR>")
-map(
-	"n",
-	"<leader>nf",
-	':lua require("vscode").action("filebunny.createFile")<CR>',
-	opts
-)
-map(
-	"n",
-	"<leader>nF",
-	':lua require("vscode").action("filebunny.createFolder")<CR>',
-	opts
-)
-map(
-	"n",
-	"<leader>lp",
-	':lua require("vscode").action("livePreview.start.preview.atFile")<CR>',
-	opts
-)
+map("n", "<leader>nf", ':lua require("vscode").action("filebunny.createFile")<CR>', opts)
+map("n", "<leader>nF", ':lua require("vscode").action("filebunny.createFolder")<CR>', opts)
+map("n", "<leader>lp", ':lua require("vscode").action("livePreview.start.preview.atFile")<CR>', opts)
 
 -- File Operations
 -- map({ "n", "v" }, "<leader>ff", "<cmd>lua require('vscode').action('workbench.action.quickOpen')<CR>")
@@ -197,12 +162,7 @@ map(
 	{ desc = "Toggle Sidebar" }
 )
 
-map(
-	"n",
-	"<leader>ow",
-	'<Cmd>lua require("vscode").action("workbench.action.output.toggleOutput")<CR>',
-	opts
-)
+map("n", "<leader>ow", '<Cmd>lua require("vscode").action("workbench.action.output.toggleOutput")<CR>', opts)
 
 --[[
 =============================================================================
@@ -215,12 +175,9 @@ map("n", "<leader>cs", "<cmd>lua require('vscode').action('workbench.action.goto
 map({ "n", "v" }, "<S-l>", "<cmd>lua require('vscode').action('editor.action.showHover')<CR>")
 map("n", "[d", "<cmd>lua require('vscode').action('editor.action.marker.next')<CR>", opts)
 map("n", "]d", "<cmd>lua require('vscode').action('editor.action.marker.prev')<CR>", opts)
-map(
-	"n",
-	"<leader>oc",
-	":e $HOME/AppData/Local/nvim/lua/user/vscode_maps.lua<CR>",
-	opts
-)
+-- map("n", "<leader>oc", ":enew $HOME/AppData/Local/nvim/lua/user/vscode_maps.lua<CR>", opts)
+-- map("n", "<leader>oc", ":e " .. vim.fn.expand("$HOME") .. "/AppData/Local/nvim/lua/user/vscode_maps.lua<CR>", opts)
+---- Mapping to open a specific file using VSCode command
 
 map("n", "<leader>vp", function()
 	vim.fn.VSCodeNotify("workbench.actions.view.problems")
@@ -264,33 +221,23 @@ map("n", "<leader>da", 'ggVG"_d', opts) -- Delete all and store in black hole re
 -- Yank all content to system clipboard
 map("n", "<leader>ya", 'ggVG"+y', opts) -- Yank all to system clipboard
 
-map(
-	"n",
-	"gft",
-	[[:execute "normal! f".nr2char(getchar())."a"<CR>]],
-	opts
-)
+map("n", "gft", [[:execute "normal! f".nr2char(getchar())."a"<CR>]], opts)
 map("n", "<leader>d;", ":s/;$//<CR>", opts)
 map("n", "<leader>d,", ":s/,$//<CR>", opts)
 map("n", "<leader>;", "mzA;<Esc>`z", opts)
 map("n", "<leader>,", "mzA,<Esc>`z", opts)
 map("n", "<leader>pr", [[mzOprintln!("{}", );<Esc>hi]], opts)
 map("n", "<leader>pr", [[mzOprintln!("{}", );<Esc>hi]], opts)
-map(
-	"n",
-	"<leader>bs",
-	[[:%s/\([^\\]\)\\\([^\\]\)/\1\\\\\2/g<CR>]],
-	opts
-)
+map("n", "<leader>bs", [[:%s/\([^\\]\)\\\([^\\]\)/\1\\\\\2/g<CR>]], opts)
 map("n", "x", '"qx', opts) -- Fixed closing parenthesis
-map('n', '<leader>j', 'mzJ`z', opts)
-map('n', '<leader>k', 'kmzJ`z', opts)
+map("n", "<leader>j", "mzJ`z", opts)
+map("n", "<leader>k", "kmzJ`z", opts)
 map("n", "<leader>n", "o<Esc>", opts)
 map("n", "<leader>N", "O<Esc>", opts)
 map({ "n", "x", "i" }, "<C-d>", function()
-  vscode.with_insert(function()
-    vscode.action("editor.action.addSelectionToNextFindMatch")
-  end)
+	vscode.with_insert(function()
+		vscode.action("editor.action.addSelectionToNextFindMatch")
+	end)
 end)
 
 --[[
