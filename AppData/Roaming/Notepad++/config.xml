@@ -15,9 +15,6 @@
         <Replace name="maniskpr" />
     </FindHistory>
     <History nbMaxFile="10" inSubMenu="no" customLength="-1">
-        <File filename="C:\Users\Manisk\Desktop\nvim\lua\plugins\telescope.lua" />
-        <File filename="C:\Users\Manisk\AppData\Local\nvim\lua\plugins\telescope.lua" />
-        <File filename="C:\Users\Manisk\Desktop\nvim\lua\plugins\autocom.lua" />
         <File filename="C:\Users\Manisk\Desktop\nvim\lua\plugins\coderunner.lua" />
         <File filename="C:\Users\Manisk\AppData\Local\nvim\init.lua" />
         <File filename="C:\Users\Manisk\AppData\Local\nvim\lua\plugins\session.lua" />
@@ -25,6 +22,9 @@
         <File filename="C:\Users\Manisk\AppData\Local\nvim\lua\user\vsplug.lua" />
         <File filename="C:\Users\Manisk\AppData\Roaming\VMware\preferences.ini" />
         <File filename="C:\Users\Manisk\AppData\Roaming\VMware\inventory.vmls" />
+        <File filename="C:\Users\Manisk\Documents\Powershell\Microsoft.VSCode_profile.ps1" />
+        <File filename="C:\Users\Manisk\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1" />
+        <File filename="C:\Users\Manisk\Documents\Powershell\Microsoft.PowerShell_profile.ps1" />
     </History>
     <ProjectPanels>
         <ProjectPanel id="0" workSpaceFile="" />
