@@ -8,7 +8,10 @@ code:
 	code --list-extensions --user-data-dir "$Home\AppData\Roaming\VSCodium\User\profiles\-1eab5c7f"
 
 codium:
-	code --list-extensions --user-data-dir "$Home\AppData\Roaming\VSCodium\User\profiles\-1eab5c7f"
+	codium --list-extensions --user-data-dir "$Home\AppData\Roaming\VSCodium\User\profiles\-1eab5c7f"
 
 profile:
 	profile\{ProfileName}
+	
+install:
+	codium --list-extensions --user-data-dir "$Home\AppData\Roaming\VSCodium\User\profiles\-1eab5c7f" | ForEach-Object { codium --install-extension $_ }

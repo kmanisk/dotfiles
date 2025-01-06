@@ -18,16 +18,17 @@ Function flist {
         [string]$SearchTerm = "*"
     )
     Get-ChildItem -Path "C:\Windows\Fonts" | 
-        Where-Object { $_.Name -like "*$SearchTerm*" } | 
-        Select-Object Name
+    Where-Object { $_.Name -like "*$SearchTerm*" } | 
+    Select-Object Name
 }
 if (Get-Command lsd -ErrorAction SilentlyContinue) {
     Set-Alias ls lsd
-} else {
+}
+else {
     Set-Alias ls Get-ChildItem
 }
 #Remove-Item Alias:zi -ErrorAction SilentlyContinue
-function shutit{
+function shutit {
     shutdown /s /t 0
 }
 
@@ -40,7 +41,8 @@ function shutit{
 if ($Host.Name -notmatch 'ConsoleHost') {
     # Disable predictive suggestions for non-interactive shells
     Set-PSReadLineOption -PredictionSource None
-} else {
+}
+else {
     # Enable predictive suggestions for interactive shells
     Set-PSReadLineOption -PredictionSource HistoryAndPlugin
 }
@@ -59,7 +61,7 @@ Function update-fzf {
     Write-Host "fzf cache updated."
 }
 
-function rel{
+function rel {
     & $profile
     Write-Host "done"
 }
@@ -76,7 +78,8 @@ Function cf {
         if ($selection) {
             Set-Location $selection
         }
-    } else {
+    }
+    else {
         Write-Host "Directory cache not found. Generate it using 'Get-ChildItem'."
     }
 }
@@ -95,7 +98,8 @@ Function vic {
             Set-Location (Split-Path $selection)
             nvim $selection
         }
-    } else {
+    }
+    else {
         Write-Host "File cache not found. Generate it using 'Get-ChildItem'."
     }
 }
@@ -107,14 +111,14 @@ function ff($name) {
         Write-Output "$($_.FullName)"
     }
 }
-function uall{
+function uall {
     scoop update *
     choco upgrade all
 }
 
 function g. { Set-Location .. }
 function .. { Set-Location ..\.. }
-function pcheck{
+function pcheck {
     scoop status
     winget upgrade
     choco outdated
@@ -458,7 +462,8 @@ Function cpyfile {
         # Perform the file copy
         Copy-Item -Path $sourcePath -Destination $destinationPath
         Write-Host "File copied from $sourcePath to $destinationPath"
-    } else {
+    }
+    else {
         Write-Host "Source file does not exist: $sourcePath"
     }
 }
@@ -697,9 +702,9 @@ function sed($file, $find, $replace) {
 
 
 Set-PSReadLineKeyHandler -Key Ctrl+Shift+b `
-                         -BriefDescription BuildCurrentDirectory `
-                         -LongDescription "Build the current directory" `
-                         -ScriptBlock {
+    -BriefDescription BuildCurrentDirectory `
+    -LongDescription "Build the current directory" `
+    -ScriptBlock {
     [Microsoft.PowerShell.PSConsoleReadLine]::RevertLine()
     [Microsoft.PowerShell.PSConsoleReadLine]::Insert("dall")
     [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
@@ -727,10 +732,12 @@ function Get-Theme {
         }
         try {
             oh-my-posh init pwsh --config https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/refs/heads/main/themes/1_shell.omp.json | Invoke-Expression
-        } catch {
+        }
+        catch {
             try {
                 oh-my-posh init pwsh --config https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/cobalt2.omp.json | Invoke-Expression
-            } catch {
+            }
+            catch {
                 oh-my-posh init pwsh --config https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/default.omp.json | Invoke-Expression
             }
         }
@@ -738,10 +745,12 @@ function Get-Theme {
     else {
         try {
             oh-my-posh init pwsh --config https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/refs/heads/main/themes/1_shell.omp.json | Invoke-Expression
-        } catch {
+        }
+        catch {
             try {
                 oh-my-posh init pwsh --config https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/cobalt2.omp.json | Invoke-Expression
-            } catch {
+            }
+            catch {
                 oh-my-posh init pwsh --config https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/default.omp.json | Invoke-Expression
             }
         }
@@ -753,17 +762,18 @@ function Get-Theme {
 # Zoxide Initialization
 if (Get-Command zoxide -ErrorAction SilentlyContinue) {
     Invoke-Expression (& { (zoxide init --cmd cd powershell | Out-String) })
-} else {
+}
+else {
     Write-Warning "zoxide is not installed. Install it using Scoop or manually from https://github.com/ajeetdsouza/zoxide."
-#winget install -e --id ajeetdsouza.zoxide
-        #Write-Host "zoxide installed successfully. Initializing..."
-        #Write-Host "zoxide not installed"
-        #Invoke-Expression (& { (zoxide init powershell | Out-String) })
-try {
-        #winget install -e --id ajeetdsouza.zoxide
-        #Write-Host "zoxide installed successfully. Initializing..."
-        #Write-Host "zoxide not installed"
-        #Invoke-Expression (& { (zoxide init powershell | Out-String) })
+    #winget install -e --id ajeetdsouza.zoxide
+    #Write-Host "zoxide installed successfully. Initializing..."
+    #Write-Host "zoxide not installed"
+    #Invoke-Expression (& { (zoxide init powershell | Out-String) })
+    try {
+        winget install -e --id ajeetdsouza.zoxide
+        Write-Host "zoxide installed successfully. Initializing..." -ForegroundColor Cyan
+        # Write-Host "zoxide not installed"
+        # Invoke-Expression (& { (zoxide init powershell | Out-String) })
     }
     catch {
         Write-Error "Failed to install zoxide. Error: $_"
