@@ -2,7 +2,6 @@
   "scoop": {
     "mini": [
       "extras/vifm",
-      "gcc",
       "less",
       "bat",
       "ripgrep"
