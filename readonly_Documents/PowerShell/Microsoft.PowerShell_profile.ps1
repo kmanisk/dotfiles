@@ -696,21 +696,6 @@ function sed($file, $find, $replace) {
 }
 
 
-if (Get-Command zoxide -ErrorAction SilentlyContinue) {
-    Invoke-Expression (& { (zoxide init --cmd cd powershell | Out-String) })
-}
-else {
-    #Write-Host "zoxide command not found. Attempting to install via winget..."
-    try {
-        #winget install -e --id ajeetdsouza.zoxide
-        #Write-Host "zoxide installed successfully. Initializing..."
-        Write-Host "zoxide not installed"
-        #Invoke-Expression (& { (zoxide init powershell | Out-String) })
-    }
-    catch {
-        Write-Error "Failed to install zoxide. Error: $_"
-    }
-}
 Set-PSReadLineKeyHandler -Key Ctrl+Shift+b `
                          -BriefDescription BuildCurrentDirectory `
                          -LongDescription "Build the current directory" `
@@ -722,42 +707,65 @@ Set-PSReadLineKeyHandler -Key Ctrl+Shift+b `
 
 
 Set-Alias lvim 'C:\Users\Manisk\.local\bin\lvim.ps1'
+
+# Prompt Configuration
+# Uncomment only one of the following blocks to enable the desired prompt.
+
+# Enable Starship Prompt
+# To disable Starship, comment this line and uncomment the Oh-My-Posh section.
 Invoke-Expression (&starship init powershell)
+
+# Enable Oh-My-Posh Prompt
+# Uncomment this section to enable Oh-My-Posh and disable Starship.
+ 
 function Get-Theme {
     if (Test-Path -Path $PROFILE.CurrentUserAllHosts -PathType leaf) {
-        # Check if the theme configuration exists in the profile
         $existingTheme = Select-String -Raw -Path $PROFILE.CurrentUserAllHosts -Pattern "oh-my-posh init pwsh --config"
         if ($null -ne $existingTheme) {
-            # If an existing theme is found, use it
             Invoke-Expression $existingTheme
             return
         }
-
-        # First priority: Try the 1_shell theme
         try {
             oh-my-posh init pwsh --config https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/refs/heads/main/themes/1_shell.omp.json | Invoke-Expression
         } catch {
-            # Second priority: If 1_shell fails, try the cobalt2 theme
             try {
                 oh-my-posh init pwsh --config https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/cobalt2.omp.json | Invoke-Expression
             } catch {
-                # Third priority: If both themes fail, use the default theme
                 oh-my-posh init pwsh --config https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/default.omp.json | Invoke-Expression
             }
         }
-    } else {
-        # If profile doesn't exist, set the themes with fallback
+    }
+    else {
         try {
             oh-my-posh init pwsh --config https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/refs/heads/main/themes/1_shell.omp.json | Invoke-Expression
         } catch {
-            # Second priority: If 1_shell fails, try the cobalt2 theme
             try {
                 oh-my-posh init pwsh --config https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/cobalt2.omp.json | Invoke-Expression
             } catch {
-                # Third priority: Use the default theme
                 oh-my-posh init pwsh --config https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/default.omp.json | Invoke-Expression
             }
         }
     }
 }
 #Get-Theme
+
+
+# Zoxide Initialization
+if (Get-Command zoxide -ErrorAction SilentlyContinue) {
+    Invoke-Expression (& { (zoxide init --cmd cd powershell | Out-String) })
+} else {
+    Write-Warning "zoxide is not installed. Install it using Scoop or manually from https://github.com/ajeetdsouza/zoxide."
+#winget install -e --id ajeetdsouza.zoxide
+        #Write-Host "zoxide installed successfully. Initializing..."
+        #Write-Host "zoxide not installed"
+        #Invoke-Expression (& { (zoxide init powershell | Out-String) })
+try {
+        #winget install -e --id ajeetdsouza.zoxide
+        #Write-Host "zoxide installed successfully. Initializing..."
+        #Write-Host "zoxide not installed"
+        #Invoke-Expression (& { (zoxide init powershell | Out-String) })
+    }
+    catch {
+        Write-Error "Failed to install zoxide. Error: $_"
+    }
+}
