@@ -89,6 +89,9 @@ function Install-Chocolatey {
 		choco feature enable -n checksumFiles
 		# choco install git gh chezmoi -y
 	}
+	Write-Host "Configuring Chocolatey settings..." -ForegroundColor Yellow
+	choco feature enable -n allowGlobalConfirmation
+	choco feature enable -n checksumFiles
 }
 # Install all package managers by default
 
@@ -109,3 +112,4 @@ winget install twpayne.chezmoi --accept-package-agreements --accept-source-agree
 winget install Git.Git --accept-package-agreements --accept-source-agreements
 winget install -e --id GitHub.cli --accept-package-agreements --accept-source-agreements
 winget install --id=DEVCOM.JetBrainsMonoNerdFont -e --accept-package-agreements --accept-source-agreements
+choco install starship -y

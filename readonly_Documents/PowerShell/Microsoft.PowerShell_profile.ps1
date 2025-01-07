@@ -780,7 +780,7 @@ else {
     #Write-Host "zoxide not installed"
     #Invoke-Expression (& { (zoxide init powershell | Out-String) })
     try {
-        choco install zoxide --version=0.9.0
+        choco install zoxide --version=0.9.0 -y
         #winget install -e --id ajeetdsouza.zoxide
         #Write-Host "zoxide installed successfully. Initializing..." -ForegroundColor Cyan
         # Write-Host "zoxide not installed"
