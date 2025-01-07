@@ -345,7 +345,7 @@ function ClinkSetup {
 ClinkSetup
 
 # Function to pin a Chocolatey package if it is installed
-function Pin-ChocoPackage {
+function PinChocoPackage {
     param (
         [string]$packageName
     )
@@ -364,4 +364,4 @@ function Pin-ChocoPackage {
 }
 
 # Call the function to pin zoxide
-Pin-ChocoPackage -packageName "zoxide"
+PinChocoPackage -packageName "zoxide"
