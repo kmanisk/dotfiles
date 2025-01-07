@@ -1,4 +1,3 @@
-
 # Ensure Terminal-Icons module is installed before importing
 # now Everything is fixed as per my need for god sake don't chagne or break
 # after this
@@ -116,8 +115,14 @@ function uall {
     choco upgrade all
 }
 
+function .. {
+    Set-Location ..
+}
+
+function ... {
+    Set-Location ..\..
+}
 function g. { Set-Location .. }
-function .. { Set-Location ..\.. }
 function pcheck {
     scoop status
     winget upgrade
@@ -690,19 +695,9 @@ function export($name, $value) {
     set-item -force -path "env:$name" -value $value;
 }
 #shows path of the commands
-
-
-function which ($name) { 
-    $command = Get-Command $name -ErrorAction SilentlyContinue
-    if ($command) {
-        $command.Definition
-    } else {
-        Write-Host "Command '$name' not found." -ForegroundColor Red
-    }
+function which($name) {
+    Get-Command $name | Select-Object -ExpandProperty Definition
 }
-#function which($name) {
-#    Get-Command $name | Select-Object -ExpandProperty Definition
-#}
 
 Set-Alias -Name np -Value Notepad++.exe
 
@@ -774,12 +769,14 @@ if (Get-Command zoxide -ErrorAction SilentlyContinue) {
     Invoke-Expression (& { (zoxide init --cmd cd powershell | Out-String) })
 }
 else {
-    Write-Warning "zoxide is not installed. Install it using Scoop or manually from https://github.com/ajeetdsouza/zoxide."
+    #Write-Warning "zoxide is not installed. Install it using Scoop or manually from https://github.com/ajeetdsouza/zoxide."
+    Write-Host "Zoxide not installed"
     #winget install -e --id ajeetdsouza.zoxide
     #Write-Host "zoxide installed successfully. Initializing..."
     #Write-Host "zoxide not installed"
     #Invoke-Expression (& { (zoxide init powershell | Out-String) })
     try {
+        choco install zoxide --version=0.9.0
         #winget install -e --id ajeetdsouza.zoxide
         #Write-Host "zoxide installed successfully. Initializing..." -ForegroundColor Cyan
         # Write-Host "zoxide not installed"

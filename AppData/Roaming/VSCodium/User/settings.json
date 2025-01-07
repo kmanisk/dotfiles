@@ -9,7 +9,6 @@
 		"**/package-lock.json",
 		"**/yarn.lock"
 	],
-
 	// "editor.matchBrackets": "never",
 	"editor.lightbulb.enabled": "off",
 	"workbench.tree.indent": 16,
@@ -222,7 +221,6 @@
 		"editor.defaultFormatter": "redhat.java"
 	},
 	"security.workspace.trust.untrustedFiles": "open",
-	"workbench.colorTheme": "Webstorm Darcula",
 	"cody.commandHints.enabled": false,
 	"git.openRepositoryInParentFolders": "never",
 	"git.autofetch": false,

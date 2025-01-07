@@ -38,6 +38,7 @@
    <package id="KB2999226" />
    <package id="KB3033929" />
    <package id="KB3035131" />
+   <package id="KB3118401" />
    <package id="lazygit" />
    <package id="less" />
    <package id="lsd" />
@@ -55,6 +56,7 @@
    <package id="python" />
    <package id="python3" />
    <package id="python312" />
+   <package id="python313" />
    <package id="revo-uninstaller" />
    <package id="ripgrep" />
    <package id="rust" />
@@ -68,6 +70,7 @@
    <package id="vcredist2015" />
    <package id="vlc" />
    <package id="vlc.install" />
+   <package id="vmwareworkstation" />
    <package id="vscode" />
    <package id="vscode.install" />
    <package id="vscodium" />
