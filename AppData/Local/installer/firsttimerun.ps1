@@ -90,39 +90,22 @@ function Install-Chocolatey {
 		# choco install git gh chezmoi -y
 	}
 }
+# Install all package managers by default
 
-# Prompt user with timeout
-$installAll = Read-Host -Prompt "y/n"
-
-# Wait for input with timeout
-Start-Sleep -Seconds 10
-
-if (-not $installAll) {
-	$installAll = "n"
-}
-
-# Process user input
-if ($installAll -eq 'y') {
-
-	Write-Output "Installing all package managers" -ForegroundColor "Green"
-	Install-Scoop
-	Install-Chocolatey
-}
-else {
-	Write-Output "Installing Winget" -ForegroundColor "Green"
-}
-
-# Call the function to ensure Winget is installed
+# Prompt user for installation of Winget
+# $userInput = Read-Host -Prompt "Do you want to install Winget? (y/n) [Default: n]"
+# # Process user input
+# if ($userInput -eq 'y') {
+#     Write-Output "Installing Winget..." -ForegroundColor "Green"
+#     Install-Winget
+# } else {
+#     Write-Output "Skipping Winget installation." -ForegroundColor "Yellow"
+# }
+Install-Scoop
+Install-Chocolatey
 Install-Winget
-
-Write-Host "Installing first Core Packages" -ForegroundColor Yellow
-# winget install twpayne.chezmoi
-# winget install Git.Git
-# winget install -e --id GitHub.cli
-# winget install --id=DEVCOM.JetBrainsMonoNerdFont  -e
-
+Write-Host "Installing first Core Packages..." -ForegroundColor Yellow
 winget install twpayne.chezmoi --accept-package-agreements --accept-source-agreements
 winget install Git.Git --accept-package-agreements --accept-source-agreements
 winget install -e --id GitHub.cli --accept-package-agreements --accept-source-agreements
 winget install --id=DEVCOM.JetBrainsMonoNerdFont -e --accept-package-agreements --accept-source-agreements
-winget install -e --id Microsoft.PowerShell
