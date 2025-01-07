@@ -118,7 +118,9 @@ function Install-ScoopPackages {
     )
     foreach ($package in $packages) {
         # Install the package using Scoop
+        Write-Host "Scoop installing" $package
         scoop install $package 
+        Write-Host ""
     }
 }
 # Function to install Chocolatey packages
