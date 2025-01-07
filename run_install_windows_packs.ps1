@@ -66,6 +66,9 @@ function Install-Scoop {
                 }
             }
         }
+        scoop update
+        scoop bucket update *
+
 
     }
 }

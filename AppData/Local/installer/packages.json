@@ -1,7 +1,7 @@
 {
   "scoop": {
     "mini": [
-      "extras/vifm",
+      "vifm",
       "less",
       "bat",
       "ripgrep"
