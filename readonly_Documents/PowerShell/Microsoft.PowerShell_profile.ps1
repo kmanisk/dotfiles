@@ -115,9 +115,13 @@ function uall {
     choco upgrade all
 }
 
-function .. {
+
+function up {
     Set-Location ..
 }
+#function .. {
+#    Set-Location ..
+#}
 
 function ... {
     Set-Location ..\..
