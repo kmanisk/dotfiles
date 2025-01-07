@@ -112,3 +112,4 @@ winget install twpayne.chezmoi --accept-package-agreements --accept-source-agree
 winget install Git.Git --accept-package-agreements --accept-source-agreements
 winget install -e --id GitHub.cli --accept-package-agreements --accept-source-agreements
 winget install --id=DEVCOM.JetBrainsMonoNerdFont -e --accept-package-agreements --accept-source-agreements
+winget install -e --id Microsoft.PowerShell
