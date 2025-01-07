@@ -91,12 +91,25 @@ function Install-Chocolatey {
 	}
 }
 
-# Ask user whether to install all package managers or just Winget
-$installAll = Read-Host "y/n"
+# Prompt user with timeout
+$installAll = Read-Host -Prompt "y/n"
 
+# Wait for input with timeout
+Start-Sleep -Seconds 10
+
+if (-not $installAll) {
+	$installAll = "n"
+}
+
+# Process user input
 if ($installAll -eq 'y') {
+
+	Write-Output "Installing all package managers" -ForegroundColor "Green"
 	Install-Scoop
 	Install-Chocolatey
+}
+else {
+	Write-Output "Installing Winget" -ForegroundColor "Green"
 }
 
 # Call the function to ensure Winget is installed
