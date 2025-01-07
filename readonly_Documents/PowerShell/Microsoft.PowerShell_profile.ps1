@@ -690,9 +690,19 @@ function export($name, $value) {
     set-item -force -path "env:$name" -value $value;
 }
 #shows path of the commands
-function which($name) {
-    Get-Command $name | Select-Object -ExpandProperty Definition
+
+
+function which ($name) { 
+    $command = Get-Command $name -ErrorAction SilentlyContinue
+    if ($command) {
+        $command.Definition
+    } else {
+        Write-Host "Command '$name' not found." -ForegroundColor Red
+    }
 }
+#function which($name) {
+#    Get-Command $name | Select-Object -ExpandProperty Definition
+#}
 
 Set-Alias -Name np -Value Notepad++.exe
 
