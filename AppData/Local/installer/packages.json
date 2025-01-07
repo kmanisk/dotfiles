@@ -16,7 +16,9 @@
       "extras/neovide",
       "grep",
       "ripgrep",
-      "java/openjdk"
+      "java/openjdk",
+	  "Valve.Steam",
+	  
     ]
   },
   "winget": {
@@ -24,7 +26,6 @@
       "JanDeDobbeleer.OhMyPosh",
       "chrisant996.Clink",
       "AntibodySoftware.WizTree",
-      "ajeetdsouza.zoxide"
     ],
     "full": [
       "Guru3D.Afterburner",
@@ -37,7 +38,6 @@
       "VMware.WorkstationPro",
       "DEVCOM.JetBrainsMonoNerdFont",
       "AntibodySoftware.WizTree",
-      "ajeetdsouza.zoxide"
     ]
   },
   "choco": {

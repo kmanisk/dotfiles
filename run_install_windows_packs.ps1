@@ -117,18 +117,25 @@ function Install-ScoopPackages {
         scoop install $package 
     }
 }
-
 # Function to install Chocolatey packages
 function Install-ChocoPackages {
     param (
         [string[]]$packages
     )
     foreach ($package in $packages) {
-        # Install the package using Chocolatey
-        choco install $package -y
+        # Check if the package has a version specified
+        if ($package -match "^(.*) --version=(.*)$") {
+            $packageName = $matches[1]
+            $version = $matches[2]
+            Write-Host "Installing Chocolatey package: $packageName with version $version"
+            choco install $packageName --version=$version -y
+        }
+        else {
+            Write-Host "Installing Chocolatey package: $package"
+            choco install $package -y
+        }
     }
 }
-
 # Function to install Winget packages with source flag
 function Install-WingetPackages {
     param (
@@ -336,3 +343,25 @@ function ClinkSetup {
 
 # Call the Clink-setup function
 ClinkSetup
+
+# Function to pin a Chocolatey package if it is installed
+function Pin-ChocoPackage {
+    param (
+        [string]$packageName
+    )
+
+    # Check if the package is installed
+    $isInstalled = Get-Package -Name $packageName -ErrorAction SilentlyContinue
+
+    if ($isInstalled) {
+        Write-Host "$packageName is installed. Pinning the package..."
+        choco pin add -n $packageName
+        Write-Host "$packageName has been pinned."
+    }
+    else {
+        Write-Host "$packageName is not installed. Skipping pinning."
+    }
+}
+
+# Call the function to pin zoxide
+Pin-ChocoPackage -packageName "zoxide"
