@@ -17,15 +17,14 @@
       "grep",
       "ripgrep",
       "java/openjdk",
-	  "Valve.Steam",
-	  
+	  "Valve.Steam"
     ]
   },
   "winget": {
     "mini": [
       "JanDeDobbeleer.OhMyPosh",
       "chrisant996.Clink",
-      "AntibodySoftware.WizTree",
+      "AntibodySoftware.WizTree"
     ],
     "full": [
       "Guru3D.Afterburner",
@@ -37,7 +36,7 @@
       "Microsoft.WindowsTerminal",
       "VMware.WorkstationPro",
       "DEVCOM.JetBrainsMonoNerdFont",
-      "AntibodySoftware.WizTree",
+      "AntibodySoftware.WizTree"
     ]
   },
   "choco": {
@@ -45,7 +44,8 @@
       "7zip",
       "neovim",
       "autohotkey",
-      "starship"
+      "starship",
+	  "
     ],
     "full": [
       "7zip",
