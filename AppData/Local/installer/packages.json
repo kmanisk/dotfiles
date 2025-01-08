@@ -42,7 +42,8 @@
     "mini": [
       "7zip",
       "neovim",
-      "autohotkey"
+      "autohotkey",
+	  "starship"
     ],
     "full": [
       "7zip",
@@ -60,7 +61,8 @@
       "tldr-plusplus",
       "notepadplusplus",
       "autohotkey",
-	  "zoxide --version=0.9.0"
+	  "zoxide --version=0.9.0",
+	  "starship"
     ]
   }
 }
