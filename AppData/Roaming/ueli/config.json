@@ -1017,7 +1017,7 @@
 					},
 					"isFallback": false,
 					"name": "MyLiveWallpaper",
-					"prefix": "live/",
+					"prefix": "l/",
 					"priority": 0,
 					"url": "https://mylivewallpapers.com/?s={{query}}"
 				},
