@@ -102,8 +102,8 @@ function Install-ScoopPackages {
     foreach ($package in $packages) {
         # Install the package using Scoop
         # Write-Host "Scoop installing" $package
-        Write-Host "scoop install "$package
-        # scoop install $package 
+        # Write-Host "scoop install "$package
+        scoop install $package 
         Write-Host ""
     }
 }

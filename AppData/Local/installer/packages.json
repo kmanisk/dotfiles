@@ -59,7 +59,8 @@
       "vlc",
       "tldr-plusplus",
       "notepadplusplus",
-      "autohotkey"
+      "autohotkey",
+	  "zoxide --version=0.9.0"
     ]
   }
 }
