@@ -11,7 +11,7 @@
       "psfzf",
       "less",
       "bat",
-      "extras/vifm",
+      "vifm",
       "gcc",
       "extras/neovide",
       "grep",

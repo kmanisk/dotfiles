@@ -5,6 +5,11 @@ if (-not (Get-Module -ListAvailable -Name Terminal-Icons)) {
     Install-Module -Name Terminal-Icons -Scope CurrentUser -Force -SkipPublisherCheck
 }
 Import-Module -Name Terminal-Icons
+# Check if PSReadLine is installed, if not, install it
+if (!(Get-Module -ListAvailable -Name PSReadLine)) {
+    Install-Module -Name PSReadLine -Scope CurrentUser -Force -SkipPublisherCheck
+}
+Import-Module -Name PSReadLine
 # Map vi and vim to nvim
 # Alias z to cd
 # Remove any existing aliases to avoid conflicts
@@ -43,7 +48,11 @@ if ($Host.Name -notmatch 'ConsoleHost') {
 }
 else {
     # Enable predictive suggestions for interactive shells
+    #Set-PSReadLineOption -PredictionSource HistoryAndPlugin
     Set-PSReadLineOption -PredictionSource HistoryAndPlugin
+    #Set-PSReadLineOption -PredictionViewStyle ListView
+    #Set-PSReadLineOption -EditMode Windows
+    
 }
 
 # Alias zi to cdi
