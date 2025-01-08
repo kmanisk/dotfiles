@@ -17,7 +17,7 @@
       "grep",
       "ripgrep",
       "java/openjdk",
-	  "Valve.Steam"
+      "Valve.Steam"
     ]
   },
   "winget": {
@@ -36,7 +36,7 @@
       "VMware.WorkstationPro",
       "DEVCOM.JetBrainsMonoNerdFont",
       "AntibodySoftware.WizTree",
-	  "GitHub.cli"
+      "GitHub.cli"
     ]
   },
   "choco": {
@@ -44,7 +44,7 @@
       "7zip",
       "neovim",
       "autohotkey",
-	  "starship"
+      "starship"
     ],
     "full": [
       "7zip",
@@ -62,8 +62,8 @@
       "tldr-plusplus",
       "notepadplusplus",
       "autohotkey",
-	  "zoxide --version=0.9.0",
-	  "starship"
+      "zoxide --version=0.9.0",
+      "starship"
     ]
   }
 }
