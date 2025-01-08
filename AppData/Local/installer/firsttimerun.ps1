@@ -38,39 +38,43 @@ function Install-Scoop {
 	}
  else {
 		Write-Host "Scoop is already installed."
+		scoop bucket add extras
+		scoop bucket add java
+		scoop bucket add versions
+		scoop bucket add nerd-fonts
 
 
 		# Define Scoop buckets (excluding main and extras)
-		$scoopBuckets = @(
-			@{ Name = "versions"; URL = "https://github.com/ScoopInstaller/Versions.git" },
-			@{ Name = "nerd-fonts"; URL = "https://github.com/matthewjberger/scoop-nerd-fonts.git" },
-			@{ Name = "shemnei"; URL = "https://github.com/Shemnei/scoop-bucket.git" },
-			@{ Name = "volllly"; URL = "https://github.com/volllly/scoop-bucket.git" }
-		)
-
-		# Check and add buckets
-		foreach ($bucket in $scoopBuckets) {
-			$bucketInfo = scoop bucket list | Where-Object { $_ -match $bucket.Name }
-
-			if (-not $bucketInfo) {
-				# If bucket is not listed, add it
-				Write-Host "Adding Scoop bucket: $($bucket.Name)"
-				scoop bucket add $($bucket.Name) $($bucket.URL)
-			}
-			else {
-				# Extract manifest count
-				$manifestCount = ($bucketInfo -split '\s+')[-1]
-				if ([int]$manifestCount -eq 0) {
-					# If manifest count is 0, re-add the bucket
-					Write-Host "The '$($bucket.Name)' bucket has 0 manifests. Re-adding..."
-					scoop bucket rm $($bucket.Name)
-					scoop bucket add $($bucket.Name) $($bucket.URL)
-				}
-				else {
-					Write-Host "The '$($bucket.Name)' bucket already exists with $manifestCount manifests."
-				}
-			}
-		}
+		# $scoopBuckets = @(
+		# 	@{ Name = "versions"; URL = "https://github.com/ScoopInstaller/Versions.git" },
+		# 	@{ Name = "nerd-fonts"; URL = "https://github.com/matthewjberger/scoop-nerd-fonts.git" },
+		# 	@{ Name = "shemnei"; URL = "https://github.com/Shemnei/scoop-bucket.git" },
+		# 	@{ Name = "volllly"; URL = "https://github.com/volllly/scoop-bucket.git" }
+		# )
+		#
+		# # Check and add buckets
+		# foreach ($bucket in $scoopBuckets) {
+		# 	$bucketInfo = scoop bucket list | Where-Object { $_ -match $bucket.Name }
+		#
+		# 	if (-not $bucketInfo) {
+		# 		# If bucket is not listed, add it
+		# 		Write-Host "Adding Scoop bucket: $($bucket.Name)"
+		# 		scoop bucket add $($bucket.Name) $($bucket.URL)
+		# 	}
+		# 	else {
+		# 		# Extract manifest count
+		# 		$manifestCount = ($bucketInfo -split '\s+')[-1]
+		# 		if ([int]$manifestCount -eq 0) {
+		# 			# If manifest count is 0, re-add the bucket
+		# 			Write-Host "The '$($bucket.Name)' bucket has 0 manifests. Re-adding..."
+		# 			scoop bucket rm $($bucket.Name)
+		# 			scoop bucket add $($bucket.Name) $($bucket.URL)
+		# 		}
+		# 		else {
+		# 			Write-Host "The '$($bucket.Name)' bucket already exists with $manifestCount manifests."
+		# 		}
+		# 	}
+		# }
 
 	}
 }
