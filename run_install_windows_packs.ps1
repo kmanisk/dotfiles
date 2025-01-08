@@ -75,6 +75,7 @@ function Install-Chocolatey {
     # Configure Chocolatey settings
     Write-Host "Configuring Chocolatey settings..." -ForegroundColor Yellow
     choco feature enable -n allowGlobalConfirmation
+    choco feature enable -n allowemptychecksums
     choco feature enable -n checksumFiles
 }
 # Function to install Winget
