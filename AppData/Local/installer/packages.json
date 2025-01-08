@@ -35,7 +35,8 @@
       "Microsoft.WindowsTerminal",
       "VMware.WorkstationPro",
       "DEVCOM.JetBrainsMonoNerdFont",
-      "AntibodySoftware.WizTree"
+      "AntibodySoftware.WizTree",
+	  "GitHub.cli"
     ]
   },
   "choco": {

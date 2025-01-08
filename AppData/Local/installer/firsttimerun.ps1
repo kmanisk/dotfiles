@@ -160,5 +160,5 @@ Install-Winget
 Write-Host "Installing first Core Packages..." -ForegroundColor Yellow
 winget install twpayne.chezmoi --accept-package-agreements --accept-source-agreements
 winget install Git.Git --accept-package-agreements --accept-source-agreements
-winget install -e --id GitHub.cli --accept-package-agreements --accept-source-agreements
+# winget install -e --id GitHub.cli --accept-package-agreements --accept-source-agreements
 winget install --id=DEVCOM.JetBrainsMonoNerdFont -e --accept-package-agreements --accept-source-agreements
