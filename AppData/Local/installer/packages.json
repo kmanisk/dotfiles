@@ -11,20 +11,19 @@
       "psfzf",
       "less",
       "bat",
-      "vifm",
+      "extras/vifm",
       "gcc",
       "extras/neovide",
       "grep",
       "ripgrep",
       "java/openjdk",
-      "Valve.Steam"
+	  "Valve.Steam"
     ]
   },
   "winget": {
     "mini": [
       "JanDeDobbeleer.OhMyPosh",
-      "chrisant996.Clink",
-      "AntibodySoftware.WizTree"
+      "chrisant996.Clink"
     ],
     "full": [
       "Guru3D.Afterburner",
@@ -43,8 +42,7 @@
     "mini": [
       "7zip",
       "neovim",
-      "autohotkey",
-      "starship"
+      "autohotkey"
     ],
     "full": [
       "7zip",
@@ -58,8 +56,6 @@
       "ueli",
       "sharex",
       "everything",
-      "starship",
-      "steam",
       "vlc",
       "tldr-plusplus",
       "notepadplusplus",
