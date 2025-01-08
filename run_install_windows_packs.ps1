@@ -12,17 +12,30 @@ Import-Module Microsoft.PowerShell.Utility
 # its different than the zoxide command 
 
 
+#  Function to check if a Scoop bucket exists
+function Check-And-AddBucket {
+    param (
+        [string]$bucketName,
+        [string]$bucketUrl
+    )
+
+    # Get the list of existing buckets
+    $existingBuckets = scoop bucket list
+
+    # Check if the bucket is already in the list
+    if ($existingBuckets -notcontains $bucketName) {
+        Write-Host "Adding Scoop bucket: $bucketName"
+        scoop bucket add $bucketName $bucketUrl
+    }
+    else {
+        Write-Host "Scoop bucket '$bucketName' already exists."
+    }
+}
 # Function to install Scoop
 function Install-Scoop {
     if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
         Write-Host "Installing Scoop..."
         if (-not (Is-Admin)) {
-            # Write-Host "Installation under the administrator console has been disabled by default for security considerations."
-            # Write-Host "If you know what you are doing and want to install Scoop as administrator, please download the installer and manually execute it with the -RunAsAdmin parameter."
-            # Write-Host "Example:"
-            # Write-Host "irm get.scoop.sh -outfile 'install.ps1'"
-            # Write-Host ".\install.ps1 -RunAsAdmin"
-            # Write-Host "Or use the one-liner command:"
             Write-Host "Installing Scoop"
             Write-Host "iex ""& {$(Invoke-RestMethod get.scoop.sh)} -RunAsAdmin"""
         }
@@ -33,48 +46,16 @@ function Install-Scoop {
     }
     else {
         Write-Host "Scoop is already installed."
-
-
-        # # Define Scoop buckets (excluding main and extras)
-        # $scoopBuckets = @(
-        #     @{ Name = "versions"; URL = "https://github.com/ScoopInstaller/Versions.git" },
-        #     @{ Name = "nerd-fonts"; URL = "https://github.com/matthewjberger/scoop-nerd-fonts.git" },
-        #     @{ Name = "shemnei"; URL = "https://github.com/Shemnei/scoop-bucket.git" },
-        #     @{ Name = "volllly"; URL = "https://github.com/volllly/scoop-bucket.git" }
-        # )
-
-        # # Check and add buckets
-        # foreach ($bucket in $scoopBuckets) {
-        #     $bucketInfo = scoop bucket list | Where-Object { $_ -match $bucket.Name }
-
-        #     if (-not $bucketInfo) {
-        #         # If bucket is not listed, add it
-        #         Write-Host "Adding Scoop bucket: $($bucket.Name)"
-        #         scoop bucket add $($bucket.Name) $($bucket.URL)
-        #     }
-        #     else {
-        #         # Extract manifest count
-        #         $manifestCount = ($bucketInfo -split '\s+')[-1]
-        #         if ([int]$manifestCount -eq 0) {
-        #             # If manifest count is 0, re-add the bucket
-        #             Write-Host "The '$($bucket.Name)' bucket has 0 manifests. Re-adding..."
-        #             scoop bucket rm $($bucket.Name)
-        #             scoop bucket add $($bucket.Name) $($bucket.URL)
-        #         }
-        #         else {
-        #             Write-Host "The '$($bucket.Name)' bucket already exists with $manifestCount manifests."
-        #         }
-        #     }
-        # }
-        #
         scoop update
         scoop bucket update *
-        scoop bucket add extras
-        scoop bucket add java
-        scoop bucket add versions
-        scoop bucket add nerd-fonts
 
-
+        # Check and add buckets
+        Check-And-AddBucket -bucketName "extras" -bucketUrl ""
+        Check-And-AddBucket -bucketName "java" -bucketUrl ""
+        Check-And-AddBucket -bucketName "versions" -bucketUrl ""
+        Check-And-AddBucket -bucketName "nerd-fonts" -bucketUrl ""
+        Check-And-AddBucket -bucketName "volllly" -bucketUrl "https://github.com/volllly/scoop-bucket.git"
+        Check-And-AddBucket -bucketName "shemnei" -bucketUrl "https://github.com/Shemnei/scoop-bucket.git"
     }
 }
 function Install-Chocolatey {
@@ -118,13 +99,11 @@ $configPath = Join-Path $HOME ".local\share\chezmoi\AppData\Local\installer\pack
 $config = Get-Content -Path $configPath | ConvertFrom-Json
 # Function to install Scoop packages
 function Install-ScoopPackages {
-    param (
-        [string[]]$packages
-    )
     foreach ($package in $packages) {
         # Install the package using Scoop
-        Write-Host "Scoop installing" $package
-        scoop install $package 
+        # Write-Host "Scoop installing" $package
+        Write-Host "scoop install "$package
+        # scoop install $package 
         Write-Host ""
     }
 }
