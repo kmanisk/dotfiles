@@ -46,9 +46,6 @@ function Install-Scoop {
     }
     else {
         Write-Host "Scoop is already installed."
-        # scoop update
-        # scoop bucket update *
-
         # Check and add buckets
         Check-And-AddBucket -bucketName "extras" -bucketUrl ""
         Check-And-AddBucket -bucketName "java" -bucketUrl ""
