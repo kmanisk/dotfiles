@@ -136,12 +136,14 @@ function Install-Chocolatey {
 
 		Write-Host "Configuring Chocolatey settings..." -ForegroundColor Yellow
 		choco feature enable -n allowGlobalConfirmation
+		choco feature enable -n allowemptychecksums
 		choco feature enable -n checksumFiles
 		# choco install git gh chezmoi -y
 	}
 	Write-Host "Configuring Chocolatey settings..." -ForegroundColor Yellow
 	choco feature enable -n allowGlobalConfirmation
 	choco feature enable -n checksumFiles
+	choco feature enable -n allowemptychecksums
 }
 # Install all package managers by default
 

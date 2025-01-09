@@ -36,7 +36,8 @@
       "VMware.WorkstationPro",
       "DEVCOM.JetBrainsMonoNerdFont",
       "AntibodySoftware.WizTree",
-      "GitHub.cli"
+      "GitHub.cli",
+	  "Notepad++.Notepad++"
     ]
   },
   "choco": {
@@ -48,7 +49,6 @@
     ],
     "full": [
       "7zip",
-      "notepadplusplus",
       "neovim",
       "vscode",
       "vscodium",
@@ -60,7 +60,6 @@
       "everything",
       "vlc",
       "tldr-plusplus",
-      "notepadplusplus",
       "autohotkey",
       "zoxide --version=0.9.0",
       "starship"
