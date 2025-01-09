@@ -347,7 +347,6 @@ function Pin-ChocoPackage {
     if ($isInstalled) {
         Write-Host "$packageName is installed. Pinning the package..."
         choco pin add -n $packageName
-        choco pin add -n zoxide
         Write-Host "$packageName has been pinned."
     }
     else {
@@ -355,5 +354,6 @@ function Pin-ChocoPackage {
     }
 }
 
+choco pin add -n zoxide
 # Call the function to pin zoxide
 Pin-ChocoPackage -packageName "zoxide"
