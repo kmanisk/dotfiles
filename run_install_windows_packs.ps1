@@ -99,7 +99,6 @@ $configPath = Join-Path $HOME ".local\share\chezmoi\AppData\Local\installer\pack
 # Write-Host "Config Path : $configPath"
 $config = Get-Content -Path $configPath | ConvertFrom-Json
 # Function to install Scoop packages
-# Function to install Scoop packages
 function Install-ScoopPackages {
     param (
         [string[]]$packages  # Accept an array of package names

@@ -45,7 +45,8 @@
       "7zip",
       "neovim",
       "autohotkey",
-      "starship"
+      "starship",
+	  "zoxide --version=0.9.0"
     ],
     "full": [
       "7zip",
