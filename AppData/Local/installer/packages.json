@@ -4,7 +4,8 @@
       "vifm",
       "less",
       "bat",
-      "ripgrep"
+      "ripgrep",
+	  "extras/neovide"
     ],
     "full": [
       "fzf",

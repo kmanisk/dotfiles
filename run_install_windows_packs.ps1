@@ -314,7 +314,7 @@ function Set-PermanentMachine {
     Install-VSCodeExtensions
 }
 
-$userInput = Read-Host "y/n set per Machine"
+$userInput = Read-Host "Set per machine (Y/N)?"
 
 if ($userInput -eq 'y') {
     Set-PermanentMachine
