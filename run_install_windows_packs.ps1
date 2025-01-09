@@ -341,10 +341,10 @@ function Pin-ChocoPackage {
         [string]$packageName
     )
 
-    # Check if the package is installed
-    $isInstalled = Get-Package -Name $packageName -ErrorAction SilentlyContinue
+    # Check if the package is installed using choco list
+    $installedPackages = choco list | Select-String -Pattern $packageName
 
-    if ($isInstalled) {
+    if ($installedPackages) {
         Write-Host "$packageName is installed. Pinning the package..."
         choco pin add -n $packageName
         Write-Host "$packageName has been pinned."
@@ -354,6 +354,6 @@ function Pin-ChocoPackage {
     }
 }
 
-choco pin add -n zoxide
+# choco pin add -n zoxide
 # Call the function to pin zoxide
 Pin-ChocoPackage -packageName "zoxide"
