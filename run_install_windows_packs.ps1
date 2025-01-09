@@ -365,3 +365,4 @@ function Pin-ChocoPackage {
 
 # Call the function to pin zoxide
 Pin-ChocoPackage -packageName "zoxide"
+Pin-ChocoPackage -packageName "autohotkey"

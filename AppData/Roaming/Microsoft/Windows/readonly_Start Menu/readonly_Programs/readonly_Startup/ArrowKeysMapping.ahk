@@ -90,6 +90,11 @@ CapsLock & u::
     Send ^{Backspace}  ; Delete previous word
 return
 
+;CapsLock & v::
+;    MsgBox, Current AutoHotkey version: %A_AhkVersion%
+;Return
+
+
 ; Map CapsLock + Number Row to Function Keys (F1 - F10)
 CapsLock & 1::Send {F1}
 CapsLock & 2::Send {F2}
