@@ -284,6 +284,9 @@ function Install-VSCodeExtensions {
         Write-Host "Neither VSCode nor VSCodium is installed. Cannot install extensions."
     }
 }
+
+
+
 function Set-Wsl {
     # Step 1: Check Windows version
     $osVersion = [System.Environment]::OSVersion.Version
@@ -293,24 +296,25 @@ function Set-Wsl {
     }
     Write-Host "Windows version is compatible with WSL."
 
-    # Step 2: Install WSL
-    Write-Host "Installing WSL and setting Debian as the default distribution..."
-    wsl --install -d Debian
+    # Step 2: Enable WSL and Virtual Machine Platform
+    Write-Host "Enabling Windows Subsystem for Linux and Virtual Machine Platform..."
+    dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+    dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
 
-    # Step 3: Restart the machine to complete the WSL install
+    # Step 3: Restart the machine to complete the WSL installation
     Write-Host "Please restart your machine to complete the installation of WSL."
 
-    # Note: The following steps are optional and can be included if needed
-    # Step 4: Set WSL 2 as your default version
+    # Step 4: Set WSL 2 as the default version
     Write-Host "Setting WSL 2 as the default version..."
     wsl --set-default-version 2
 
-    # Step 5: List available distributions
+    # Step 5: Install Debian
+    Write-Host "Installing Debian as the default Linux distribution..."
+    wsl --install -d Debian
+
+    # Step 6: List available distributions
     Write-Host "Available Linux distributions:"
     wsl --list --online
-
-    # Step 6: Instructions for installing additional distributions
-    Write-Host "To install additional distributions, use: wsl --install -d <Distribution Name>."
 }
 
 function Set-PermanentMachine {
