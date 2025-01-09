@@ -20,7 +20,14 @@ function Check-And-AddBucket {
     )
 
     # Get the list of existing buckets and extract just the names
-    $existingBuckets = scoop bucket list | ForEach-Object { $_.Split(' ')[0] }
+    $existingBuckets = scoop bucket list | ForEach-Object { 
+        if ($_ -match '^\s*(\S+)') {
+            $matches[1]  # Capture the first non-whitespace sequence
+        }
+    } | Where-Object { $_ -ne $null }  # Filter out any null values
+
+    # Debugging output to check existing buckets
+    Write-Host "Existing Buckets: $existingBuckets"
 
     # Check if the bucket is already in the list
     if ($existingBuckets -notcontains $bucketName) {
@@ -31,6 +38,7 @@ function Check-And-AddBucket {
         Write-Host "Scoop bucket '$bucketName' already exists."
     }
 }
+
 
 # Function to install Scoop
 function Install-Scoop {
