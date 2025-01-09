@@ -284,9 +284,35 @@ function Install-VSCodeExtensions {
         Write-Host "Neither VSCode nor VSCodium is installed. Cannot install extensions."
     }
 }
-function setwsl2{
-    
+function Set-Wsl {
+    # Step 1: Check Windows version
+    $osVersion = [System.Environment]::OSVersion.Version
+    if ($osVersion.Major -lt 10 -or ($osVersion.Major -eq 10 -and $osVersion.Build -lt 19041)) {
+        Write-Host "You must be running Windows 10 version 2004 (Build 19041) or higher, or Windows 11 to use WSL."
+        return
+    }
+    Write-Host "Windows version is compatible with WSL."
+
+    # Step 2: Install WSL
+    Write-Host "Installing WSL and setting Debian as the default distribution..."
+    wsl --install -d Debian
+
+    # Step 3: Restart the machine to complete the WSL install
+    Write-Host "Please restart your machine to complete the installation of WSL."
+
+    # Note: The following steps are optional and can be included if needed
+    # Step 4: Set WSL 2 as your default version
+    Write-Host "Setting WSL 2 as the default version..."
+    wsl --set-default-version 2
+
+    # Step 5: List available distributions
+    Write-Host "Available Linux distributions:"
+    wsl --list --online
+
+    # Step 6: Instructions for installing additional distributions
+    Write-Host "To install additional distributions, use: wsl --install -d <Distribution Name>."
 }
+
 function Set-PermanentMachine {
     Write-Host "Installing Spotify..."
     try {
@@ -313,8 +339,10 @@ function Set-PermanentMachine {
         Write-Host "MLWapp is already installed."
     }
 
+    #function calls
     Move-ConfigFolder
     Install-VSCodeExtensions
+    Set-Wsl
 }
 
 $userInput = Read-Host "Set per machine (Y/N)?"
