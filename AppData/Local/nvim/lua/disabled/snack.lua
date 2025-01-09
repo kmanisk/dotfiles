@@ -1,3 +1,4 @@
+-- this is a comment
 return {
 	"folke/snacks.nvim",
 	priority = 1000,

@@ -363,6 +363,5 @@ function Pin-ChocoPackage {
     }
 }
 
-# choco pin add -n zoxide
 # Call the function to pin zoxide
 Pin-ChocoPackage -packageName "zoxide"

@@ -1,9 +1,8 @@
--- print("hello in python file")
 -- -- Python-related configurations in after/ftplugin/python.lua
 -- -- 1. Setup LSP for Python (using pyright)
 local lspconfig = require("lspconfig")
 local mason_lspconfig = require("mason-lspconfig")
-local nvlsp = require "nvchad.configs.lspconfig"
+local nvlsp = require("nvchad.configs.lspconfig")
 nvlsp.defaults() -- loads nvchad's defaults
 --
 -- -- Ensure pyright is installed
@@ -15,16 +14,16 @@ nvlsp.defaults() -- loads nvchad's defaults
 --
 --python lspconfig example
 lspconfig.pyright.setup({
-  on_attach = function(client, bufnr)
-    local bufopts = { noremap = true, silent = true, buffer = bufnr }
-    -- Key mappings for LSP functions
-    vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
-    vim.keymap.set("n", "L", vim.lsp.buf.hover, bufopts)
-    vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
-    vim.keymap.set("n", "<Leader>rn", vim.lsp.buf.rename, bufopts)
-    vim.keymap.set("n", "<Leader>ca", vim.lsp.buf.code_action, bufopts)
-  end,
-  capabilities = require("cmp_nvim_lsp").default_capabilities(),
+	on_attach = function(client, bufnr)
+		local bufopts = { noremap = true, silent = true, buffer = bufnr }
+		-- Key mappings for LSP functions
+		vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
+		vim.keymap.set("n", "L", vim.lsp.buf.hover, bufopts)
+		vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
+		vim.keymap.set("n", "<Leader>rn", vim.lsp.buf.rename, bufopts)
+		vim.keymap.set("n", "<Leader>ca", vim.lsp.buf.code_action, bufopts)
+	end,
+	capabilities = require("cmp_nvim_lsp").default_capabilities(),
 })
 -- -- Setup LSP for pyright
 -- -- lspconfig.pyright.setup({
