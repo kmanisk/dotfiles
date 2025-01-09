@@ -305,7 +305,7 @@ function Set-PermanentMachine {
     Install-VSCodeExtensions
 }
 
-$userInput = Read-Host "Do you want to install Spotify? (y/n)"
+$userInput = Read-Host "y/n set per Machine"
 
 if ($userInput -eq 'y') {
     Set-PermanentMachine
@@ -347,6 +347,7 @@ function Pin-ChocoPackage {
     if ($isInstalled) {
         Write-Host "$packageName is installed. Pinning the package..."
         choco pin add -n $packageName
+        choco pin add -n zoxide
         Write-Host "$packageName has been pinned."
     }
     else {
