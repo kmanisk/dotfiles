@@ -2,6 +2,7 @@
 <NotepadPlus>
     <FindHistory nbMaxFindHistoryPath="10" nbMaxFindHistoryFilter="10" nbMaxFindHistoryFind="10" nbMaxFindHistoryReplace="10" matchWord="no" matchCase="no" wrap="yes" directionDown="yes" fifRecuisive="yes" fifInHiddenFolder="no" fifProjectPanel1="no" fifProjectPanel2="no" fifProjectPanel3="no" fifFilterFollowsDoc="no" fifFolderFollowsDoc="no" searchMode="0" transparencyMode="1" transparency="150" dotMatchesNewline="no" isSearch2ButtonsMode="no" regexBackward4PowerUser="no" bookmarkLine="no" purge="no">
         <Filter name="" />
+        <Find name="autohot" />
         <Find name="notepad" />
         <Find name="starship" />
         <Find name="steam" />
@@ -11,11 +12,9 @@
         <Find name="zoxide" />
         <Find name="font" />
         <Find name="vmware" />
-        <Find name="neovim" />
         <Replace name="maniskpr" />
     </FindHistory>
     <History nbMaxFile="10" inSubMenu="no" customLength="-1">
-        <File filename="C:\Users\Manisk\AppData\Local\nvim\init.lua" />
         <File filename="C:\Users\Manisk\AppData\Local\nvim\lua\plugins\session.lua" />
         <File filename="C:\Users\Manisk\AppData\Local\nvim\lua\user\vscode_keymaps.lua" />
         <File filename="C:\Users\Manisk\AppData\Local\nvim\lua\user\vsplug.lua" />
@@ -25,6 +24,7 @@
         <File filename="C:\Users\Manisk\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1" />
         <File filename="C:\Users\Manisk\Documents\Powershell\Microsoft.PowerShell_profile.ps1" />
         <File filename="C:\Users\Public\Documents\Steam\CODEX\374320\achievements.ini" />
+        <File filename="E:\Dark Souls 3\Game\honestMerchant.ini" />
     </History>
     <ProjectPanels>
         <ProjectPanel id="0" workSpaceFile="" />

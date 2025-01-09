@@ -284,6 +284,9 @@ function Install-VSCodeExtensions {
         Write-Host "Neither VSCode nor VSCodium is installed. Cannot install extensions."
     }
 }
+function setwsl2{
+    
+}
 function Set-PermanentMachine {
     Write-Host "Installing Spotify..."
     try {
