@@ -1,0 +1,13 @@
+7zip            
+chezmoi         
+gcc             
+go              
+innounp         
+lua             
+luarocks        
+neovide         
+nexusfont       
+ripgrep         
+vifm            
+winaero-tweaker 
+zed-nightly     
