@@ -50,8 +50,8 @@ else {
     # Enable predictive suggestions for interactive shells
     #Set-PSReadLineOption -PredictionSource HistoryAndPlugin
     Set-PSReadLineOption -PredictionSource HistoryAndPlugin
-    #Set-PSReadLineOption -PredictionViewStyle ListView
-    #Set-PSReadLineOption -EditMode Windows
+    Set-PSReadLineOption -PredictionViewStyle ListView
+    Set-PSReadLineOption -EditMode Windows
     
 }
 

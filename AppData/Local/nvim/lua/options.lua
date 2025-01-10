@@ -42,7 +42,7 @@ vim.opt.cursorline = true -- Highlight the current line
 -- wo.cursorline = true
 
 -- Enable search highlighting
-vim.opt.hlsearch = false
+-- vim.opt.hlsearch = false
 vim.opt.incsearch = true
 
 -- Enable line wrapping for long lines
