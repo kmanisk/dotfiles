@@ -2,29 +2,29 @@
 <NotepadPlus>
     <FindHistory nbMaxFindHistoryPath="10" nbMaxFindHistoryFilter="10" nbMaxFindHistoryFind="10" nbMaxFindHistoryReplace="10" matchWord="no" matchCase="no" wrap="yes" directionDown="yes" fifRecuisive="yes" fifInHiddenFolder="no" fifProjectPanel1="no" fifProjectPanel2="no" fifProjectPanel3="no" fifFilterFollowsDoc="no" fifFolderFollowsDoc="no" searchMode="0" transparencyMode="1" transparency="150" dotMatchesNewline="no" isSearch2ButtonsMode="no" regexBackward4PowerUser="no" bookmarkLine="no" purge="no">
         <Filter name="" />
-        <Find name="autohot" />
-        <Find name="notepad" />
-        <Find name="starship" />
+        <Find name="tracer" />
         <Find name="steam" />
-        <Find name="fzf" />
-        <Find name="offline" />
-        <Find name="less" />
-        <Find name="zoxide" />
-        <Find name="font" />
-        <Find name="vmware" />
+        <Find name="eveything" />
+        <Find name="sharex" />
+        <Find name="irfan" />
+        <Find name="irfna" />
+        <Find name="ntop" />
+        <Find name="ntoop" />
+        <Find name="lsd" />
+        <Find name="autohot" />
         <Replace name="maniskpr" />
     </FindHistory>
     <History nbMaxFile="10" inSubMenu="no" customLength="-1">
-        <File filename="C:\Users\Manisk\AppData\Local\nvim\lua\plugins\session.lua" />
-        <File filename="C:\Users\Manisk\AppData\Local\nvim\lua\user\vscode_keymaps.lua" />
-        <File filename="C:\Users\Manisk\AppData\Local\nvim\lua\user\vsplug.lua" />
-        <File filename="C:\Users\Manisk\AppData\Roaming\VMware\preferences.ini" />
-        <File filename="C:\Users\Manisk\AppData\Roaming\VMware\inventory.vmls" />
-        <File filename="C:\Users\Manisk\Documents\Powershell\Microsoft.VSCode_profile.ps1" />
-        <File filename="C:\Users\Manisk\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1" />
-        <File filename="C:\Users\Manisk\Documents\Powershell\Microsoft.PowerShell_profile.ps1" />
-        <File filename="C:\Users\Public\Documents\Steam\CODEX\374320\achievements.ini" />
-        <File filename="E:\Dark Souls 3\Game\honestMerchant.ini" />
+        <File filename="E:\Dark Souls 3\Game\steam_emu.ini" />
+        <File filename="C:\Users\Public\Documents\Steam\CODEX\374320\leaderboards.ini" />
+        <File filename="E:\Dark Souls 3\Game\lazyLoad.ini" />
+        <File filename="E:\Dark Souls 3\Game\launchmod_darksouls3.bat" />
+        <File filename="E:\Dark Souls 3\Game\config_darksouls3.toml" />
+        <File filename="C:\Users\Manisk\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\ArrowKeysMapping.ahk" />
+        <File filename="C:\Users\Manisk\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\AutoCorrect.ahk" />
+        <File filename="C:\Users\Manisk\AppData\Local\installer\backup.txt" />
+        <File filename="E:\tools\SaveMerge 1.0\readme.txt" />
+        <File filename="C:\Users\Manisk\AppData\Roaming\DarkSoulsIII\GraphicsConfig.xml" />
     </History>
     <ProjectPanels>
         <ProjectPanel id="0" workSpaceFile="" />
@@ -42,8 +42,8 @@
         <GUIConfig name="ScintillaViewsSplitter">vertical</GUIConfig>
         <GUIConfig name="UserDefineDlg" position="undocked">hide</GUIConfig>
         <GUIConfig name="TabSetting" replaceBySpace="no" size="4" backspaceUnindent="no" />
-        <GUIConfig name="AppPosition" x="754" y="248" width="1343" height="792" isMaximized="yes" />
-        <GUIConfig name="FindWindowPosition" left="1129" top="622" right="1732" bottom="981" isLessModeOn="no" />
+        <GUIConfig name="AppPosition" x="-30" y="275" width="1343" height="792" isMaximized="no" />
+        <GUIConfig name="FindWindowPosition" left="659" top="367" right="1262" bottom="726" isLessModeOn="no" />
         <GUIConfig name="FinderConfig" wrappedLines="no" purgeBeforeEverySearch="no" showOnlyOneEntryPerFoundLine="yes" />
         <GUIConfig name="noUpdate" intervalDays="15" nextUpdateDate="20250113">no</GUIConfig>
         <GUIConfig name="Auto-detection">yes</GUIConfig>
