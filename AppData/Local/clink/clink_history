@@ -78,7 +78,7 @@ cd python
 |	time=1735568680
 nvim error.txt 
 |	time=1735568786
-pwsh
+|wsh
 |	time=1735568790
 |ir
 |	time=1735568792
@@ -88,7 +88,7 @@ nvim oh-my-posh.lua
 |	time=1735568797
 e .
 |	time=1735568802
-pwsh
+|wsh
 |	time=1735568836
 |ir
 |	time=1735568840
@@ -140,7 +140,7 @@ howe
 |	time=1735725346
 |sd
 |	time=1735725348
-lsd
+|sd
 |	time=1735803801
 |ir
 |	time=1735812024
@@ -150,6 +150,34 @@ lsd
 |	time=1736002704
 |s
 |	time=1736002705
-dir
+|ir
 |	time=1736002706
+|s
+|	time=1736520170
+mklink -hy
+|	time=1736520172
+mklink -h
+|	time=1736520271
+|oxide
+|	time=1736520274
+cdi
+|	time=1736520277
+zi
+|	time=1736520285
+zoxide_zi
+|	time=1736520287
+zoxide
+|	time=1736520298
+docs
+|	time=1736520300
+dir
+|	time=1736520301
 ls
+|	time=1736520301
+lsd
+|	time=1736520305
+pwsh
+|	time=1736520455
+|klink /D "C:\Users\Manisk\AppData\Local\installer\osd\msi" "C:\Program Files (x86)\MSI Afterburner\Profiles"
+|	time=1736520508
+mklink /D "C:\Users\Manisk\AppData\Local\installer\osd\msi" "C:\Program Files (x86)\MSI Afterburner\Profiles"

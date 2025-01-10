@@ -280,6 +280,12 @@ function madd {
         chezmoi add $absolutePath
     }
 }
+function lgall {
+    git add .
+    git commit -m "something"
+    git push -u origin master
+    
+}
 function dpush {
     Write-Host "Starting automation"
     Set-Location -Path "$HOME\.local\share\chezmoi"
