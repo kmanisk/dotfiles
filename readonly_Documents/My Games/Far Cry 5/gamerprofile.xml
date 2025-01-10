@@ -1,0 +1,35 @@
+<GamerProfile>
+	<SoundProfile MusicEnabled="1" MasterVolume="100" Language="0" VoiceChatPlaybackVolume="100" VoiceChatCaptureThreshold="0" />
+	<ProfileSpecificGameProfile Sensitivity="1" ZoomSensitivity="1" Invert_x="0" Invert_y="0" Invert_y_Plane="1" Invert_y_Helicopter="0" Invert_y_Wingsuit="1" Swap_Throttle="0" Swap_Triggers="0" InvertSticks="0" DefaultFlickFireDirection_y="0" ControllerLayout="1" UseMouseSmooth="0" Smoothness="1" Smoothness_Ironsight="1" HelpCrosshair="1" Gamepad_vibration="1" UseRoadSignHilight="1" SubtitlesLanguage="65535" SubtitlesBgVisibility="0" LastUPlayLanguage="65535" ColorblindnessModeOption="0" TaggingEnabled="1" FriendlyFireEnabled="0" TutorialUpdatedEnabled="1" DetectionIndicatorEnabled="1" ExplosiveIndicatorEnabled="1" CompassEnabled="1" HealthIndicatorEnabled="1" CrouchIndicatorEnabled="1" AmmoIndicatorEnabled="1" LootReadoutEnabled="1" CoopPartnerIndicatorEnabled="1" ObjectiveStayOnScreen="1" InteractionPromptsEnabled="1" Autosave="1" Machete="0" UseAimingHelpers="1" DrivingAssistEnabled="1" DifficultyLevel="1" ReticlePosition="0" CrouchType="0" WeaponAimType="0" ShowPVPTips="1" ShowPVPTimer="1" ShowPVPScorebar="1" ShowPVPPlayerTags="1" ShowPVPObituaryMessages="1" ShowPVPNotifications="1" ShowPVPMasterVoiceToggle="1" ShowPVPFactionPowerUpIcons="1" ShowPVPPlayerNames="1" PlayPVPIntroVideo="1" HasVisitedCoopMenu="0" UILanguage="0" DrivingAutoAimEnabled="1" TouchPadEnabled="0" SpeakerPadEnabled="1" InterfacePresetOption="0" ShowDamageFeedback="1" ShowResistanceUpdates="1" ShowPerkUpdates="1" ShowBuffTimers="1" WorldIconsEnabled="1" EnemyTagIconsEnabled="1" GFHIconsEnabled="1" ChallengeMessagesEnabled="1" DiscoveryMessagesEnabled="1" OtherMessagesEnabled="1" ShowVehicleRepairGauge="1" ShowVehicleIndicators="1" ShowGFHControlsWidget="1" ShowOnScreenControls="1" RegionDiscoveryMessageEnabled="1" GPSFeedback="1" HudInteractionsMode="0" NetworkMessages="1" IntelAcquiredMessage="1" WarningMessage="1" CultUpdateMessagesEnabled="1" MuteAllVoiceChats="0" HasSeenNewGameOptions="0" VoiceChatMode="0" OpenParty="0" OpenPartyProposalStage="0" FinishedCampaignIntro="0" FinishedDLCVietnamIntro="1" FinishedDLCMarsIntro="1" FinishedFatherModeIntro="1" HasShownNGPlusMessage="0" MouseAcceleration="1.16" MouseAccelerationOn="0" MouseInvert_y="0" MouseLookSensitivity="3.23" MouseZoomLookSensitivity="2.435" BufferedInputSensitivity="0.95" RunToggle="0" CrouchToggle="1" TooltipsEnabled="1" BenchmarkStarted="0" HDTexturesOptionSeen="0" Mouse_Invert_y_Plane="1" Mouse_Invert_y_Helicopter="0" Mouse_Invert_y_Wingsuit="1" UseAlternativePlaneControl="0" WeaponWheelType="0" EyeTrackingSupportAllowed="1" EyeTrackingEnabled="1" EyeTrackingExtendedViewEnabled="1" EyeTrackingExtendedViewResponsiveness="0.5" EyeTrackingExtendedViewGazeContribution="0.5" EyeTrackingExtendedViewHeadContribution="0.5" EyeTrackingExtendedViewInIronsightEnabled="1" EyeTrackingAimAtGazeEnabled="1" EyeTrackingBinocularsAtGazeEnabled="1" EyeTrackingEnemyTaggingEnabled="1" EyeTrackingAlliedCommandingEnabled="1" EyeTrackingDynamicLightAdaptationEnabled="1" DriveAndShootAssistKbAndMouseEnabled="0" MortarZoomLookSensitivity="1.615" BomberZoomLookSensitivity="1.615" BinocularZoomLookSensitivity="1.2175" CorsairRGBLightingSupportAllowed="1" CorsairRGBLighting="1" AudioChatInput="" AudioChatOutput="" PlaneMouseControlSensitivity="4.08" AlternativePlaneControlSetted="0">
+		<FireConfig QualitySetting="VeryHigh" />
+		<Statistics>
+			<Stat Value="0" />
+			<Stat Value="0" />
+			<Stat Value="0" />
+			<Stat Value="0" />
+			<Stat Value="0" />
+			<Stat Value="0" />
+			<Stat Value="0" />
+			<Stat Value="0" />
+			<Stat Value="0" />
+		</Statistics>
+		<IgeSettings ShowCollections="1" ShowFog="1" ShowShadow="1" ShowWater="1" ShowMapLimits="0" ShowIcons="1" ShowScripts="1" ShowHelpers="1" SoundEnabled="1" ShowGrid="0" GridResolution="64" ShowBudgetGrid="0" ShowClimbLedges="0" ShowGrappleZones="0" ShowNavmesh="0" ShowNavmeshLayer="0" ShowCovers="0" ShowBoundingBoxes="1" Invincible="0" Invisible="0" SnapObjectsToTerrain="1" AutoSnapObjects="1" AutoSnapObjectsRotation="1" AutoSnapObjectsTerrain="1" ConfirmDeleteObject="1" CameraAutoScroll="1" KillDistanceOverride="0" ShowContextualStrategies="1" ShowTriggers="1" ShowDamageVolumes="1" ShowAudioManagementVolumes="1" ShowLightingManagementVolumes="1" ShowReflectionManagementVolumes="1" />
+	</ProfileSpecificGameProfile>
+	<RenderProfile GPU="0" VideoModeProfile="1" MainMonitor="0" WindowPosition="0,0" MultimonitorMode="2" AntiAliasingMode="2" MotionBlur="0" Quality="custom" QualityEditor="editor" VSyncPreset="off" FOV="120" FrameRateLockEnabled="0" FrameRateLock="60" ResolutionScale="1" DynamicResolutionEnabled="0" DynamicResolutionFrameRateLimit="0" CameraViewCenterOffsetX="0" CameraViewCenterOffsetY="0" HDTexturesEnabled="1" DisableLoadingMip0="0" GPUMaxBufferedFrames="0" ShowFPS="0" Brightness="1" Contrast="1" CalibrationScreensShown="0" HDRCalibrationScreensShown="0" GammaRamp="1" HDRReferenceWhiteNits="300" AllowAsynchShaderLoading="1">
+		<VideoModeProfileFullscreen adapterIndex="0" displayIndex="0" windowMode="0" width="1280" height="800" hdr="0" refreshRateNumerator="59910" refreshRateDenominator="1000" />
+		<VideoModeProfileWindow adapterIndex="0" displayIndex="0" windowMode="3" width="1280" height="800" hdr="0" refreshRateNumerator="0" refreshRateDenominator="1" />
+		<CustomQuality>
+			<quality EnvironmentQuality="ultrahigh" PostFxQuality="high" TextureQuality="ultrahigh" VolumetricFogQuality="medium" WaterQuality="high" VegetationQuality="high" TerrainQuality="high" GeometryQuality="ultrahigh" AmbientQuality="high" ShadowQuality="ultrahigh" ShadowCinematicQuality="cinematic_pc" ResolutionQuality="" VSyncQuality="" id="custom" />
+		</CustomQuality>
+	</RenderProfile>
+	<NetworkProfile VoiceChatEnabled="1" CustomMapMaxUploadRateInBitsOnline="10240000" SessionProvider="" MaxUploadInbpsOnline="10240000">
+		<Accounts />
+	</NetworkProfile>
+	<GameProfile />
+	<EngineProfile>
+		<PhysicConfig QualitySetting="VeryHigh" />
+		<QcConfig GatherFPS="1" GatherAICnt="1" GatherDialogs="0" IsQcTester="0" />
+		<InputConfig />
+		<ZoneConfig />
+	</EngineProfile>
+</GamerProfile>

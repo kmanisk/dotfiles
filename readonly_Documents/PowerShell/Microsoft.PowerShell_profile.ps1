@@ -62,58 +62,57 @@ else {
 Set-Alias -Name vim -Value nvim
 Set-Alias -Name nivm -Value nvim
 Set-Alias -Name vi -Value nvim
-Function update-fzf {
-    Write-Host "Updating fzf cache..."
-    Get-ChildItem -Recurse -Directory $HOME | ForEach-Object { $_.FullName } > $HOME\fzf_dir_cache.txt
-    Get-ChildItem -Recurse -File $HOME | ForEach-Object { $_.FullName } > $HOME\fzf_file_cache.txt
-    Write-Host "fzf cache updated."
-}
-
+#Function update-fzf {
+#    Write-Host "Updating fzf cache..."
+#    Get-ChildItem -Recurse -Directory $HOME | ForEach-Object { $_.FullName } > $HOME\fzf_dir_cache.txt
+#    Get-ChildItem -Recurse -File $HOME | ForEach-Object { $_.FullName } > $HOME\fzf_file_cache.txt
+#    Write-Host "fzf cache updated."
+#}
+#
 function rel {
     & $profile
     Write-Host "done"
 }
-Function cf {
-    $cacheFile = "$HOME\fzf_dir_cache.txt"
-    if (Test-Path $cacheFile) {
-        $selection = Get-Content $cacheFile | Where-Object { 
-            $_ -notlike "*\.vscode*" -and 
-            $_ -notlike "*\.vscode-oss*" -and
-            $_ -notlike "*\.chade*" -and
-            $_ -notlike "*\.git*" -and
-            $_ -notlike "*node_modules*"  # Add other directories you want to exclude
-        } | fzf --no-sort
-        if ($selection) {
-            Set-Location $selection
-        }
-    }
-    else {
-        Write-Host "Directory cache not found. Generate it using 'Get-ChildItem'."
-    }
-}
-
-Function vic {
-    $cacheFile = "$HOME\fzf_file_cache.txt"
-    if (Test-Path $cacheFile) {
-        $selection = Get-Content $cacheFile | Where-Object { 
-            $_ -notlike "*\.vscode*" -and 
-            $_ -notlike "*\.vscode-oss*" -and
-            $_ -notlike "*\.chade*" -and
-            $_ -notlike "*\.git*" -and
-            $_ -notlike "*node_modules*"  # Add other files you want to exclude
-        } | fzf --no-sort
-        if ($selection) {
-            Set-Location (Split-Path $selection)
-            nvim $selection
-        }
-    }
-    else {
-        Write-Host "File cache not found. Generate it using 'Get-ChildItem'."
-    }
-}
+#Function cf {
+#    $cacheFile = "$HOME\fzf_dir_cache.txt"
+#    if (Test-Path $cacheFile) {
+#        $selection = Get-Content $cacheFile | Where-Object { 
+#            $_ -notlike "*\.vscode*" -and 
+#            $_ -notlike "*\.vscode-oss*" -and
+#            $_ -notlike "*\.chade*" -and
+#            $_ -notlike "*\.git*" -and
+#            $_ -notlike "*node_modules*"  # Add other directories you want to exclude
+#        } | fzf --no-sort
+#        if ($selection) {
+#            Set-Location $selection
+#        }
+#    }
+#    else {
+#        Write-Host "Directory cache not found. Generate it using 'Get-ChildItem'."
+#    }
+#}
+#
+#Function vic {
+#    $cacheFile = "$HOME\fzf_file_cache.txt"
+#    if (Test-Path $cacheFile) {
+#        $selection = Get-Content $cacheFile | Where-Object { 
+#            $_ -notlike "*\.vscode*" -and 
+#            $_ -notlike "*\.vscode-oss*" -and
+#            $_ -notlike "*\.chade*" -and
+#            $_ -notlike "*\.git*" -and
+#            $_ -notlike "*node_modules*"  # Add other files you want to exclude
+#        } | fzf --no-sort
+#        if ($selection) {
+#            Set-Location (Split-Path $selection)
+#            nvim $selection
+#        }
+#    }
+#    else {
+#        Write-Host "File cache not found. Generate it using 'Get-ChildItem'."
+#    }
+#}
 
 # dotfiles Management
-$DotFilesPath = "G:\dotfiles"
 function ff($name) {
     Get-ChildItem -recurse -filter "*${name}*" -ErrorAction SilentlyContinue | ForEach-Object {
         Write-Output "$($_.FullName)"
@@ -631,7 +630,6 @@ function dots { Set-Location -Path $Home\.local\share\chezmoi\ }
 
 # Quick Access to Editing the Profile
 function ep { nvim $PROFILE }
-function dotf { cd "G:\dotfiles" }
 function eueli { nvim "C:\Users\Manisk\AppData\Roaming\ueli\config.json" }
 # Simplified Process Management
 function k9 { Stop-Process -Name $args[0] }
