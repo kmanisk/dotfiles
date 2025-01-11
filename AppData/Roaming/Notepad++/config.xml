@@ -15,7 +15,6 @@
         <Replace name="maniskpr" />
     </FindHistory>
     <History nbMaxFile="10" inSubMenu="no" customLength="-1">
-        <File filename="E:\Dark Souls 3\Game\steam_emu.ini" />
         <File filename="C:\Users\Public\Documents\Steam\CODEX\374320\leaderboards.ini" />
         <File filename="E:\Dark Souls 3\Game\lazyLoad.ini" />
         <File filename="E:\Dark Souls 3\Game\launchmod_darksouls3.bat" />
