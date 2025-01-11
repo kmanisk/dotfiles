@@ -18,7 +18,9 @@
       "grep",
       "ripgrep",
       "java/openjdk",
-      "Valve.Steam"
+	  "extras/nexusfont",
+	  "extras/crystaldiskinfo",
+	  "extras/winaero-tweaker"
     ]
   },
   "winget": {
@@ -37,7 +39,8 @@
       "VMware.WorkstationPro",
       "AntibodySoftware.WizTree",
       "GitHub.cli",
-	  "Notepad++.Notepad++"
+	  "Notepad++.Notepad++",
+	  "Valve.Steam"
     ]
   },
   "choco": {
