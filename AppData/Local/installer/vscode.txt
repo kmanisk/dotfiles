@@ -1,6 +1,7 @@
 asvetliakov.vscode-neovim
 bungcip.better-toml
 formulahendry.code-runner
+devgauravjatt.github-catppuccin-dark
 github.github-vscode-theme
 joshmu.periscope
 mhkb.vscode-theme-darcula-stormy
