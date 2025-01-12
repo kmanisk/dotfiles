@@ -173,8 +173,6 @@ function Install-ChocoPackages {
         choco install $pkg.Name --version=$($pkg.Version) -y
     }
 }
-
-# Function to install Winget packages with source flag
 function Install-WingetPackages {
     param (
         [string[]]$packages
@@ -184,8 +182,11 @@ function Install-WingetPackages {
     $installedPackages = winget list
 
     foreach ($package in $packages) {
+        # Escape special characters in package name for regex pattern
+        $escapedPackage = [regex]::Escape($package)
+        
         # Check if package is already installed
-        if ($installedPackages | Select-String -Pattern $package) {
+        if ($installedPackages | Select-String -Pattern $escapedPackage) {
             Write-Host "$package is already installed. Skipping..."
             continue
         }
@@ -199,6 +200,33 @@ function Install-WingetPackages {
         }
     }
 }
+
+
+# Function to install Winget packages with source flag
+# function Install-WingetPackages {
+#     param (
+#         [string[]]$packages
+#     )
+#
+#     # Get list of installed packages
+#     $installedPackages = winget list
+#
+#     foreach ($package in $packages) {
+#         # Check if package is already installed
+#         if ($installedPackages | Select-String -Pattern $package) {
+#             Write-Host "$package is already installed. Skipping..."
+#             continue
+#         }
+#
+#         try {
+#             Write-Host "Installing package: $package"
+#             winget install --id $package --source winget
+#         }
+#         catch {
+#             Write-Host "Failed to install package: $package. Error: $_"
+#         }
+#     }
+# }
 
 # Prompt the user for installation type
 $choice = Read-Host "Choose installation type (mini/full)"
@@ -261,25 +289,55 @@ function Install-OSDLayout {
 Install-OSDLayout
 
 
-
 function Move-ConfigFolder {
     $sourcePath = Join-Path -Path $env:USERPROFILE -ChildPath ".config\es"
-    $destinationPath = "C:\es"  # Set the destination to C:\es
+    $destinationPath = "C:\es"
 
     if (Test-Path $sourcePath) {
-        if (-not (Test-Path $destinationPath)) {
-            New-Item -Path $destinationPath -ItemType Directory
-            Write-Host "Created destination directory at $destinationPath"
+        if (Test-Path $destinationPath) {
+            Write-Host "Destination folder already exists at $destinationPath. Merging contents..."
+            Get-ChildItem -Path $sourcePath | ForEach-Object {
+                $destItem = Join-Path $destinationPath $_.Name
+                if (Test-Path $destItem) {
+                    Write-Host "Updating existing item: $($_.Name)"
+                }
+                else {
+                    Write-Host "Adding new item: $($_.Name)"
+                }
+                Copy-Item -Path $_.FullName -Destination $destinationPath -Force -Recurse
+            }
+            Remove-Item -Path $sourcePath -Recurse -Force
         }
-
-        Move-Item -Path $sourcePath -Destination $destinationPath -Force
-        Write-Host "Moved folder from $sourcePath to $destinationPath"
+        else {
+            New-Item -Path $destinationPath -ItemType Directory
+            Move-Item -Path $sourcePath -Destination $destinationPath -Force
+        }
+        Write-Host "Config folder setup completed successfully"
     }
     else {
-        Write-Host "Source folder $sourcePath does not exist."
+        Write-Host "Source folder not found at $sourcePath"
     }
 }
 
+
+# function Move-ConfigFolder {
+#     $sourcePath = Join-Path -Path $env:USERPROFILE -ChildPath ".config\es"
+#     $destinationPath = "C:\es"  # Set the destination to C:\es
+#
+#     if (Test-Path $sourcePath) {
+#         if (-not (Test-Path $destinationPath)) {
+#             New-Item -Path $destinationPath -ItemType Directory
+#             Write-Host "Created destination directory at $destinationPath"
+#         }
+#
+#         Move-Item -Path $sourcePath -Destination $destinationPath -Force
+#         Write-Host "Moved folder from $sourcePath to $destinationPath"
+#     }
+#     else {
+#         Write-Host "Source folder $sourcePath does not exist."
+#     }
+# }
+#
 
 # function Install-VSCodeExtensions {
 #     # Check if VSCode and VSCodium are installed
