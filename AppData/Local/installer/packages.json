@@ -6,7 +6,7 @@
       "bat",
       "ripgrep",
 	  "extras/neovide",
-        "neovim"
+      "neovim"
     ],
     "full": [
       "fzf",
@@ -35,6 +35,7 @@
       "TechPowerUp.NVCleanstall",
       "JanDeDobbeleer.OhMyPosh",
       "chrisant996.Clink",
+      "Microsoft.PowerShell",
       "Microsoft.PowerShell",
       "AntibodySoftware.WizTree",
       "GitHub.cli",

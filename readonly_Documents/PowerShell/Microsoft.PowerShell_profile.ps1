@@ -17,6 +17,8 @@ Import-Module -Name PSReadLine
 #Remove-Item Alias:ls -ErrorAction SilentlyContinue
 #
 #
+Set-Alias -Name rn -Value Rename-Item
+#
 Function flist {
     param (
         [string]$SearchTerm = "*"
