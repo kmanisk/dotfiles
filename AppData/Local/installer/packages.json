@@ -5,7 +5,8 @@
       "less",
       "bat",
       "ripgrep",
-	  "extras/neovide"
+	  "extras/neovide",
+        "neovim"
     ],
     "full": [
       "fzf",
@@ -35,7 +36,6 @@
       "JanDeDobbeleer.OhMyPosh",
       "chrisant996.Clink",
       "Microsoft.PowerShell",
-      "Microsoft.WindowsTerminal",
       "VMware.WorkstationPro",
       "AntibodySoftware.WizTree",
       "GitHub.cli",
@@ -46,14 +46,12 @@
   "choco": {
     "mini": [
       "7zip",
-      "neovim",
       "autohotkey",
       "starship",
 	  "zoxide --version=0.9.0"
     ],
     "full": [
       "7zip",
-      "neovim",
       "vscode",
       "vscodium",
       "lazygit",
@@ -62,6 +60,7 @@
       "ueli",
       "sharex",
       "everything",
+    "microsoft-windows-terminal",
       "vlc",
       "tldr-plusplus",
       "autohotkey",
