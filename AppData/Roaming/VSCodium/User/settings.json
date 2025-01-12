@@ -25,7 +25,6 @@
 	// Terminal
 	"terminal.integrated.fontFamily": "'JetBrainsMonoNL Nerd Font Mono', 'JetBrainsMono Nerd Font', 'monospace', monospace",
 	"terminal.integrated.fontSize": 15,
-	// "editor.fontFamily": "FiraMono Nerd Font Regular",
 	"screencastMode.fontSize": 36,
 	"screencastMode.verticalOffset": 1,
 	"editor.fontLigatures": true,
