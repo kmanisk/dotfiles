@@ -420,14 +420,8 @@ function disable-Clipboard {
 function Set-PermanentMachine {
     disable-Clipboard
     Write-Host "Installing Spotify..."
-    #try {
-    #    Invoke-Expression "& { $(Invoke-WebRequest -UseBasicParsing -Uri 'https://raw.githubusercontent.com/SpotX-Official/spotx-official.github.io/main/run.ps1') } -new_theme"
-    #}
-    #catch {
-    #    Write-Host "Failed to install Spotify. Error: $_" -ForegroundColor Red
-    #    return
-    #}
         
+    Write-Host "========================================"
     $installerDir = Join-Path $HOME "AppData\Local\installer"
     $mlwappInstaller = Get-ChildItem -Path $installerDir -Filter "MLWapp*.exe" | Select-Object -First 1
     $mlwappInstalled = Test-Path "C:\Program Files\MLWapp\MLWapp.exe"
@@ -445,11 +439,15 @@ function Set-PermanentMachine {
         Write-Host "MLWapp is already installed."
     }
 
+    Write-Host "========================================"
 
     #function calls
     Move-ConfigFolder
+    Write-Host "========================================"
     Install-VSCodeExtensions
+    Write-Host "========================================"
     Set-Wsl
+    Write-Host "========================================"
 }
 
 $userInput = Read-Host "Set per machine (Y/N)?"
