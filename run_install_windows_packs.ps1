@@ -438,7 +438,7 @@ function spot {
     #
 
     if ($confirmation -eq 'y') {
-        iex "& { $(iwr -useb 'https://raw.githubusercontent.com/SpotX-Official/spotx-official.github.io/main/run.ps1') } -new_theme"
+        Invoke-Expression "& { $(Invoke-WebRequest -useb 'https://raw.githubusercontent.com/SpotX-Official/spotx-official.github.io/main/run.ps1') } -new_theme"
     }
     else {
         Write-Host "Operation Skipped" -ForegroundColor DarkMagenta
