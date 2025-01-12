@@ -3,7 +3,6 @@ bungcip.better-toml
 devgauravjatt.github-catppuccin-dark
 formulahendry.code-runner
 github.github-vscode-theme
-imekachi.webstorm-darcula
 joshmu.periscope
 mhkb.vscode-theme-darcula-stormy
 michaelzhou.fleet-theme
