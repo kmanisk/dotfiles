@@ -268,5 +268,4 @@
 			"param": "-g '*.$1'"
 		}
 	],
-	"workbench.colorTheme": "JetBrains New Dark",
 }

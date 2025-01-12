@@ -118,24 +118,62 @@ function Install-ScoopPackages {
 }
 
 # Function to install Chocolatey packages
+# function Install-ChocoPackages {
+#     param (
+#         [string[]]$packages
+#     )
+#     foreach ($package in $packages) {
+#         # Check if the package has a version specified
+#         if ($package -match "^(.*) --version=(.*)$") {
+#             $packageName = $matches[1]
+#             $version = $matches[2]
+#             Write-Host "Installing Chocolatey package: $packageName with version $version"
+#             choco install $packageName --version=$version -y
+#         }
+#         else {
+#             Write-Host "Installing Chocolatey package: $package"
+#             choco install $package -y
+#         }
+#     }
+# }
 function Install-ChocoPackages {
     param (
         [string[]]$packages
     )
+    
+    # Get list of installed packages
+    $installedPackages = choco list | ForEach-Object { ($_ -split '\|')[0] }
+    
+    # Separate packages into versioned and non-versioned
+    $packagesToInstall = @()
+    $versionedPackages = @()
+    
     foreach ($package in $packages) {
-        # Check if the package has a version specified
         if ($package -match "^(.*) --version=(.*)$") {
             $packageName = $matches[1]
             $version = $matches[2]
-            Write-Host "Installing Chocolatey package: $packageName with version $version"
-            choco install $packageName --version=$version -y
+            if ($installedPackages -notcontains $packageName) {
+                $versionedPackages += @{Name = $packageName; Version = $version }
+            }
         }
-        else {
-            Write-Host "Installing Chocolatey package: $package"
-            choco install $package -y
+        elseif ($installedPackages -notcontains $package) {
+            $packagesToInstall += $package
         }
     }
+    
+    # Batch install non-versioned packages
+    if ($packagesToInstall.Count -gt 0) {
+        Write-Host "Installing packages: $($packagesToInstall -join ', ')"
+        choco install $packagesToInstall -y
+    }
+    
+    # Install versioned packages individually
+    foreach ($pkg in $versionedPackages) {
+        Write-Host "Installing $($pkg.Name) version $($pkg.Version)"
+        choco install $pkg.Name --version=$($pkg.Version) -y
+    }
 }
+
 # Function to install Winget packages with source flag
 function Install-WingetPackages {
     param (
@@ -316,8 +354,29 @@ function Set-Wsl {
     Write-Host "Available Linux distributions:"
     wsl --list --online
 }
+function disable-Clipboard {
+    
+    # PowerShell script to disable the Clipboard User Service (cbdhsvc)
+
+    # Define the registry path and value name
+    $registryPath = "HKLM:\SYSTEM\CurrentControlSet\Services\cbdhsvc"
+    $valueName = "Start"
+    $disabledValue = 4
+
+    # Check if the registry path exists
+    if (Test-Path $registryPath) {
+        # Set the Start value to 4 (disabled)
+        Set-ItemProperty -Path $registryPath -Name $valueName -Value $disabledValue -Force
+        Write-Host "The cbdhsvc service has been disabled successfully."
+    }
+    else {
+        Write-Host "The registry path does not exist. The service might not be available on this system."
+    }
+
+}
 
 function Set-PermanentMachine {
+    disable-Clipboard
     Write-Host "Installing Spotify..."
     #try {
     #    Invoke-Expression "& { $(Invoke-WebRequest -UseBasicParsing -Uri 'https://raw.githubusercontent.com/SpotX-Official/spotx-official.github.io/main/run.ps1') } -new_theme"
