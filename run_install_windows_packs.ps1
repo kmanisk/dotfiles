@@ -459,6 +459,25 @@ function Pin-ChocoPackage {
     }
 }
 
+function Pin-WingetPackage {
+    param (
+        [string]$packageId
+    )
+    
+    # Check if package is installed using winget list
+    $installedPackages = winget list | Select-String -Pattern $packageId
+    
+    if ($installedPackages) {
+        Write-Host "$packageId is installed. Pinning the package..."
+        winget pin add --id $packageId
+        Write-Host "$packageId has been pinned."
+    }
+    else {
+        Write-Host "$packageId is not installed. Skipping pinning."
+    }
+}
+
 # Call the function to pin zoxide
 Pin-ChocoPackage -packageName "zoxide"
 Pin-ChocoPackage -packageName "autohotkey"
+Pin-WingetPackage -packageId "AutoHotkey.AutoHotkey"
