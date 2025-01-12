@@ -319,26 +319,6 @@ function Move-ConfigFolder {
     }
 }
 
-
-# function Move-ConfigFolder {
-#     $sourcePath = Join-Path -Path $env:USERPROFILE -ChildPath ".config\es"
-#     $destinationPath = "C:\es"  # Set the destination to C:\es
-#
-#     if (Test-Path $sourcePath) {
-#         if (-not (Test-Path $destinationPath)) {
-#             New-Item -Path $destinationPath -ItemType Directory
-#             Write-Host "Created destination directory at $destinationPath"
-#         }
-#
-#         Move-Item -Path $sourcePath -Destination $destinationPath -Force
-#         Write-Host "Moved folder from $sourcePath to $destinationPath"
-#     }
-#     else {
-#         Write-Host "Source folder $sourcePath does not exist."
-#     }
-# }
-#
-
 # function Install-VSCodeExtensions {
 #     # Check if VSCode and VSCodium are installed
 #     $vscodeInstalled = Get-Command code -ErrorAction SilentlyContinue
@@ -366,17 +346,35 @@ function Move-ConfigFolder {
 #
 #         if (Test-Path $extensionsFilePath) {
 #             $extensions = Get-Content -Path $extensionsFilePath
+#             
+#             # Get currently installed extensions
+#             $vscodeExtensions = @()
+#             $vscodiumExtensions = @()
+#             
+#             if ($vscodeInstalled) {
+#                 $vscodeExtensions = & code --list-extensions
+#             }
+#             if ($vscodiumInstalled) {
+#                 $vscodiumExtensions = & codium --list-extensions
+#             }
+#
 #             foreach ($extension in $extensions) {
-#                 # Install the extension for VSCode
-#                 if ($vscodeInstalled) {
+#                 # Install for VSCode if not already installed
+#                 if ($vscodeInstalled -and $vscodeExtensions -notcontains $extension) {
 #                     Write-Host "Installing VSCode extension: $extension"
 #                     & code --install-extension $extension
 #                 }
+#                 elseif ($vscodeInstalled) {
+#                     Write-Host "VSCode extension already installed: $extension"
+#                 }
 #
-#                 # Install the extension for VSCodium
-#                 if ($vscodiumInstalled) {
+#                 # Install for VSCodium if not already installed
+#                 if ($vscodiumInstalled -and $vscodiumExtensions -notcontains $extension) {
 #                     Write-Host "Installing VSCodium extension: $extension"
 #                     & codium --install-extension $extension
+#                 }
+#                 elseif ($vscodiumInstalled) {
+#                     Write-Host "VSCodium extension already installed: $extension"
 #                 }
 #             }
 #         }
@@ -388,7 +386,7 @@ function Move-ConfigFolder {
 #         Write-Host "Neither VSCode nor VSCodium is installed. Cannot install extensions."
 #     }
 # }
-#
+
 function Install-VSCodeExtensions {
     # Check if VSCode and VSCodium are installed
     $vscodeInstalled = Get-Command code -ErrorAction SilentlyContinue
@@ -410,13 +408,14 @@ function Install-VSCodeExtensions {
         Write-Host "VSCodium is already installed."
     }
 
-    # Proceed to install extensions only if at least one of them is installed
+    # Proceed to manage extensions only if at least one editor is installed
     if ($vscodeInstalled -or $vscodiumInstalled) {
         $extensionsFilePath = Join-Path $HOME ".local\share\chezmoi\AppData\Local\installer\vscode.txt"
 
         if (Test-Path $extensionsFilePath) {
-            $extensions = Get-Content -Path $extensionsFilePath
-            
+            # Read desired extensions from file
+            $desiredExtensions = Get-Content -Path $extensionsFilePath
+
             # Get currently installed extensions
             $vscodeExtensions = @()
             $vscodiumExtensions = @()
@@ -428,35 +427,54 @@ function Install-VSCodeExtensions {
                 $vscodiumExtensions = & codium --list-extensions
             }
 
-            foreach ($extension in $extensions) {
-                # Install for VSCode if not already installed
-                if ($vscodeInstalled -and $vscodeExtensions -notcontains $extension) {
-                    Write-Host "Installing VSCode extension: $extension"
-                    & code --install-extension $extension
+            # Handle VSCode Extensions
+            if ($vscodeInstalled) {
+                # Install missing extensions
+                foreach ($extension in $desiredExtensions) {
+                    if ($vscodeExtensions -notcontains $extension) {
+                        Write-Host "Installing VSCode extension: $extension"
+                        & code --install-extension $extension
+                    }
                 }
-                elseif ($vscodeInstalled) {
-                    Write-Host "VSCode extension already installed: $extension"
-                }
-
-                # Install for VSCodium if not already installed
-                if ($vscodiumInstalled -and $vscodiumExtensions -notcontains $extension) {
-                    Write-Host "Installing VSCodium extension: $extension"
-                    & codium --install-extension $extension
-                }
-                elseif ($vscodiumInstalled) {
-                    Write-Host "VSCodium extension already installed: $extension"
+                
+                # Remove undesired extensions
+                foreach ($installed in $vscodeExtensions) {
+                    if ($desiredExtensions -notcontains $installed) {
+                        Write-Host "Removing VSCode extension: $installed"
+                        & code --uninstall-extension $installed
+                    }
                 }
             }
+
+            # Handle VSCodium Extensions
+            if ($vscodiumInstalled) {
+                # Install missing extensions
+                foreach ($extension in $desiredExtensions) {
+                    if ($vscodiumExtensions -notcontains $extension) {
+                        Write-Host "Installing VSCodium extension: $extension"
+                        & codium --install-extension $extension
+                    }
+                }
+                
+                # Remove undesired extensions
+                foreach ($installed in $vscodiumExtensions) {
+                    if ($desiredExtensions -notcontains $installed) {
+                        Write-Host "Removing VSCodium extension: $installed"
+                        & codium --uninstall-extension $installed
+                    }
+                }
+            }
+
+            Write-Host "Extensions synchronization completed successfully."
         }
         else {
             Write-Host "Extensions file not found at $extensionsFilePath."
         }
     }
     else {
-        Write-Host "Neither VSCode nor VSCodium is installed. Cannot install extensions."
+        Write-Host "Neither VSCode nor VSCodium is installed. Cannot manage extensions."
     }
 }
-
 
 
 function Set-Wsl {
