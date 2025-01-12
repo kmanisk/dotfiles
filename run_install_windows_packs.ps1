@@ -431,6 +431,15 @@ function MLWapp {
     }
 }
 
+function spot {
+    # 
+    # $spotifyScript = Join-Path $HOME "AppData\Local\installer\spotfily.ps1"
+    # Write-Host "Installing Spotify..."
+    #
+
+    iex "& { $(iwr -useb 'https://raw.githubusercontent.com/SpotX-Official/spotx-official.github.io/main/run.ps1') } -new_theme"
+    # Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$spotifyScript`"" -Wait
+}
 
 function Set-PermanentMachine {
     Write-Host "========================================"
@@ -441,11 +450,7 @@ function Set-PermanentMachine {
     Install-OSDLayout
     Write-Host "========================================"
     Write-Host "Installing Spotify..."
-        
-    $spotifyScript = Join-Path $HOME "AppData\Local\installer\spotfily.ps1"
-    Write-Host "Installing Spotify..."
-    Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$spotifyScript`"" -Wait
-
+    spot
     Write-Host "========================================"
     Write-Host "Mlwapp install"
     MLWapp
