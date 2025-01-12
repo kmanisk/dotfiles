@@ -498,7 +498,7 @@ switch ($choice.ToLower()) {
     }
 }
 
-Write-Host "Installation completed!" --ForegroundColor Green
+Write-Host "Installation completed!" -ForegroundColor Green
 
 
 
