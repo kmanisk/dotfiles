@@ -437,8 +437,13 @@ function spot {
     # Write-Host "Installing Spotify..."
     #
 
-    iex "& { $(iwr -useb 'https://raw.githubusercontent.com/SpotX-Official/spotx-official.github.io/main/run.ps1') } -new_theme"
-    # Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$spotifyScript`"" -Wait
+    if ($confirmation -eq 'y') {
+        iex "& { $(iwr -useb 'https://raw.githubusercontent.com/SpotX-Official/spotx-official.github.io/main/run.ps1') } -new_theme"
+    }
+    else {
+        Write-Host "Operation Skipped" -ForegroundColor DarkMagenta
+    } # Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$spotifyScript`"" -Wait
+    #
 }
 
 function Set-PermanentMachine {
