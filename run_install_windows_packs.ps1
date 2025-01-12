@@ -454,31 +454,6 @@ function Set-PermanentMachine {
     ClinkSetup
 }
 
-$userInput = Read-Host "Set per machine (Y/N)?"
-
-if ($userInput -eq 'y') {
-    Set-PermanentMachine
-}
-else {
-    Write-Host "Operation skipped."
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 # Prompt the user for installation type
 $choice = Read-Host "Choose installation type (mini/full)"
