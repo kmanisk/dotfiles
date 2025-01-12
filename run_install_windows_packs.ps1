@@ -428,21 +428,23 @@ function Set-PermanentMachine {
     #    return
     #}
         
-    $installerPath = Join-Path $HOME "AppData\Local\installer\executable_MLWapp2.6.x64.exe"
+    $installerDir = Join-Path $HOME "AppData\Local\installer"
+    $mlwappInstaller = Get-ChildItem -Path $installerDir -Filter "MLWapp*.exe" | Select-Object -First 1
     $mlwappInstalled = Test-Path "C:\Program Files\MLWapp\MLWapp.exe"
 
     if (-not $mlwappInstalled) {
-        if (Test-Path $installerPath) {
+        if ($mlwappInstaller) {
             Write-Host "Installing MLWapp..."
-            Start-Process -FilePath $installerPath -ArgumentList "/S" -NoNewWindow -Wait
+            Start-Process -FilePath $mlwappInstaller.FullName -ArgumentList "/S" -NoNewWindow -Wait
         }
         else {
-            Write-Host "MLWapp installer not found at $installerPath." -ForegroundColor Red
+            Write-Host "MLWapp installer not found in $installerDir." -ForegroundColor Red
         }
     }
     else {
         Write-Host "MLWapp is already installed."
     }
+
 
     #function calls
     Move-ConfigFolder
