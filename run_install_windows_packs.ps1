@@ -430,21 +430,18 @@ function MLWapp {
         Write-Host "MLWapp is already installed."
     }
 }
-
 function spot {
-    # 
-    # $spotifyScript = Join-Path $HOME "AppData\Local\installer\spotfily.ps1"
-    # Write-Host "Installing Spotify..."
-    #
-
+    $confirmation = Read-Host "Do you want to install Spotify? (y/n)"
+    
     if ($confirmation -eq 'y') {
+        Write-Host "Installing Spotify..."
         Invoke-Expression "& { $(Invoke-WebRequest -useb 'https://raw.githubusercontent.com/SpotX-Official/spotx-official.github.io/main/run.ps1') } -new_theme"
     }
     else {
         Write-Host "Operation Skipped" -ForegroundColor DarkMagenta
-    } # Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$spotifyScript`"" -Wait
-    #
+    }
 }
+
 
 function Set-PermanentMachine {
     Write-Host "========================================"
@@ -454,7 +451,6 @@ function Set-PermanentMachine {
     Write-Host "OSD" -ForegroundColor Green
     Install-OSDLayout
     Write-Host "========================================"
-    Write-Host "Installing Spotify..."
     spot
     Write-Host "========================================"
     Write-Host "Mlwapp install"
