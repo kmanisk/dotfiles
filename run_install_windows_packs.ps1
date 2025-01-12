@@ -179,10 +179,19 @@ function Install-WingetPackages {
     param (
         [string[]]$packages
     )
+
+    # Get list of installed packages
+    $installedPackages = winget list
+
     foreach ($package in $packages) {
+        # Check if package is already installed
+        if ($installedPackages | Select-String -Pattern $package) {
+            Write-Host "$package is already installed. Skipping..."
+            continue
+        }
+
         try {
-            # Install the package using Winget without the -y flag
-            Write-Host "winget install packages"
+            Write-Host "Installing package: $package"
             winget install --id $package --source winget
         }
         catch {
@@ -191,6 +200,22 @@ function Install-WingetPackages {
     }
 }
 
+# function Install-WingetPackages {
+#     param (
+#         [string[]]$packages
+#     )
+#     foreach ($package in $packages) {
+#         try {
+#             # Install the package using Winget without the -y flag
+#             Write-Host "winget install packages"
+#             winget install --id $package --source winget
+#         }
+#         catch {
+#             Write-Host "Failed to install package: $package. Error: $_"
+#         }
+#     }
+# }
+#
 
 # Prompt the user for installation type
 $choice = Read-Host "Choose installation type (mini/full)"
