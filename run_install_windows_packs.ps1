@@ -428,7 +428,7 @@ function Set-PermanentMachine {
     #    return
     #}
         
-    $installerPath = "C:\Users\Manisk\AppData\Local\installer\executable_MLWapp2.6.x64.exe"
+    $installerPath = Join-Path $HOME "AppData\Local\installer\executable_MLWapp2.6.x64.exe"
     $mlwappInstalled = Test-Path "C:\Program Files\MLWapp\MLWapp.exe"
 
     if (-not $mlwappInstalled) {
