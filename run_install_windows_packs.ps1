@@ -191,6 +191,35 @@ function Install-WingetPackages {
 
 
 # PermanentMachine Setup Function to call in the full setup section if chosen by the user
+# function Install-OSDLayout {
+#     # Set location to the source directory
+#     Set-Location -Path "$HOME\.local\share\chezmoi\appdata\local\OSD"
+#
+#     # Define source directories
+#     $msiSource = "msi\Profiles"
+#     $rivaSource = "riva\Profiles"
+#
+#     # Define target directories
+#     $msiTarget = "C:\Program Files (x86)\MSI Afterburner\Profiles"
+#     $rivaTarget = "C:\Program Files (x86)\RivaTuner Statistics Server\Profiles"
+#
+#     # Ensure the target directories exist, create them if they don't
+#     if (-not (Test-Path $msiTarget)) {
+#         Write-Host "Creating MSI Afterburner directory at $msiTarget"
+#         New-Item -Path $msiTarget -ItemType Directory
+#     }
+#     if (-not (Test-Path $rivaTarget)) {
+#         Write-Host "Creating RivaTuner directory at $rivaTarget"
+#         New-Item -Path $rivaTarget -ItemType Directory
+#     }
+#
+#     # Copy all files and subdirectories from the source directories to the target directories
+#     Copy-Item -Path "$msiSource\*" -Destination $msiTarget -Recurse -Force
+#     Copy-Item -Path "$rivaSource\*" -Destination $rivaTarget -Recurse -Force
+#     Write-Host "Files copied successfully to the target locations."
+#     copied every time don't check updates if profile exists
+# }
+#
 function Install-OSDLayout {
     # Set location to the source directory
     Set-Location -Path "$HOME\.local\share\chezmoi\appdata\local\OSD"
@@ -203,6 +232,16 @@ function Install-OSDLayout {
     $msiTarget = "C:\Program Files (x86)\MSI Afterburner\Profiles"
     $rivaTarget = "C:\Program Files (x86)\RivaTuner Statistics Server\Profiles"
 
+    # Check if source directories exist
+    if (-not (Test-Path $msiSource)) {
+        Write-Host "MSI Afterburner source profiles not found at $msiSource" -ForegroundColor Yellow
+        return
+    }
+    if (-not (Test-Path $rivaSource)) {
+        Write-Host "RivaTuner source profiles not found at $rivaSource" -ForegroundColor Yellow
+        return
+    }
+
     # Ensure the target directories exist, create them if they don't
     if (-not (Test-Path $msiTarget)) {
         Write-Host "Creating MSI Afterburner directory at $msiTarget"
@@ -213,10 +252,39 @@ function Install-OSDLayout {
         New-Item -Path $rivaTarget -ItemType Directory
     }
 
-    # Copy all files and subdirectories from the source directories to the target directories
-    Copy-Item -Path "$msiSource\*" -Destination $msiTarget -Recurse -Force
-    Copy-Item -Path "$rivaSource\*" -Destination $rivaTarget -Recurse -Force
-    Write-Host "Files copied successfully to the target locations."
+    # Check and copy MSI Afterburner profiles
+    if (Test-Path "$msiTarget\*") {
+        $confirmation = Read-Host "MSI Afterburner profiles already exist. Do you want to overwrite? (y/n)"
+        if ($confirmation -eq 'y') {
+            Write-Host "Overwriting MSI Afterburner profiles..."
+            Copy-Item -Path "$msiSource\*" -Destination $msiTarget -Recurse -Force
+        }
+        else {
+            Write-Host "Skipping MSI Afterburner profiles..." -ForegroundColor Yellow
+        }
+    }
+    else {
+        Copy-Item -Path "$msiSource\*" -Destination $msiTarget -Recurse -Force
+        Write-Host "MSI Afterburner profiles copied successfully"
+    }
+
+    # Check and copy RivaTuner profiles
+    if (Test-Path "$rivaTarget\*") {
+        $confirmation = Read-Host "RivaTuner profiles already exist. Do you want to overwrite? (y/n)"
+        if ($confirmation -eq 'y') {
+            Write-Host "Overwriting RivaTuner profiles..."
+            Copy-Item -Path "$rivaSource\*" -Destination $rivaTarget -Recurse -Force
+        }
+        else {
+            Write-Host "Skipping RivaTuner profiles..." -ForegroundColor Yellow
+        }
+    }
+    else {
+        Copy-Item -Path "$rivaSource\*" -Destination $rivaTarget -Recurse -Force
+        Write-Host "RivaTuner profiles copied successfully"
+    }
+
+    Write-Host "OSD Layout installation completed!" -ForegroundColor Green
 }
 
 function Move-ConfigFolder {
