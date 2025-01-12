@@ -241,7 +241,6 @@ function Install-OSDLayout {
     Copy-Item -Path "$rivaSource\*" -Destination $rivaTarget -Recurse -Force
     Write-Host "Files copied successfully to the target locations."
 }
-Install-OSDLayout
 
 function Move-ConfigFolder {
     $sourcePath = Join-Path -Path $env:USERPROFILE -ChildPath ".config\es"
@@ -418,9 +417,19 @@ function disable-Clipboard {
 }
 
 function Set-PermanentMachine {
+    Write-Host "========================================"
+    Write-Host "Disabling Clipboard"
     disable-Clipboard
+    Write-Host "========================================"
+    Write-Host "OSD" -ForegroundColor Green
+    Install-OSDLayout
+    Write-Host "========================================"
     Write-Host "Installing Spotify..."
         
+    $spotifyScript = Join-Path $HOME "AppData\Local\installer\spotfily.ps1"
+    Write-Host "Installing Spotify..."
+    Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$spotifyScript`"" -Wait
+
     Write-Host "========================================"
     $installerDir = Join-Path $HOME "AppData\Local\installer"
     $mlwappInstaller = Get-ChildItem -Path $installerDir -Filter "MLWapp*.exe" | Select-Object -First 1
