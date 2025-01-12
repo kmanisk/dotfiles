@@ -54,6 +54,7 @@ function Install-Scoop {
         }
     }
     else {
+        Write-Host "========================================"
         Write-Host "Scoop is already installed."
         # Check and add buckets
         Check-And-AddBucket -bucketName "extras" -bucketUrl ""
@@ -62,6 +63,7 @@ function Install-Scoop {
         Check-And-AddBucket -bucketName "nerd-fonts" -bucketUrl ""
         Check-And-AddBucket -bucketName "volllly" -bucketUrl "https://github.com/volllly/scoop-bucket.git"
         Check-And-AddBucket -bucketName "shemnei" -bucketUrl "https://github.com/Shemnei/scoop-bucket.git"
+        Write-Host "========================================"
     }
 }
 function Install-Chocolatey {
@@ -96,9 +98,14 @@ function Install-Winget {
     }
 }
 
+
+Write-Host "========================================"
 Install-Scoop
+Write-Host "========================================"
 Install-Chocolatey
+Write-Host "========================================"
 Install-Winget
+Write-Host "========================================"
 
 # Load the JSON configuration from the user's home directory
 $configPath = Join-Path $HOME ".local\share\chezmoi\AppData\Local\installer\packages.json"
