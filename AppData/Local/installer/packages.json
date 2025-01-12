@@ -11,6 +11,7 @@
     "full": [
       "fzf",
       "psfzf",
+	  "main/fastfetch",
       "less",
       "bat",
       "vifm",
@@ -56,7 +57,6 @@
       "vscodium",
       "lazygit",
       "f.lux",
-      "fastfetch",
       "ueli",
       "sharex",
       "everything",
