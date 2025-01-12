@@ -326,6 +326,15 @@ function Install-VSCodeExtensions {
 
 
 function Set-Wsl {
+    # Check if WSL is already installed
+    $wslCheck = wsl --status 2>&1
+    if ($wslCheck -notlike "*WSL is not installed*") {
+        Write-Host "WSL is already installed."
+        Write-Host "Current WSL Status:"
+        wsl --status
+        return
+    }
+
     # Step 1: Check Windows version
     $osVersion = [System.Environment]::OSVersion.Version
     if ($osVersion.Major -lt 10 -or ($osVersion.Major -eq 10 -and $osVersion.Build -lt 19041)) {
@@ -334,25 +343,19 @@ function Set-Wsl {
     }
     Write-Host "Windows version is compatible with WSL."
 
-    # Step 2: Enable WSL and Virtual Machine Platform
+    # Proceed with WSL installation
     Write-Host "Enabling Windows Subsystem for Linux and Virtual Machine Platform..."
     dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
     dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
 
-    # Step 3: Restart the machine to complete the WSL installation
-    Write-Host "Please restart your machine to complete the installation of WSL."
-
-    # Step 4: Set WSL 2 as the default version
     Write-Host "Setting WSL 2 as the default version..."
     wsl --set-default-version 2
 
-    # Step 5: Install Debian
-    Write-Host "Installing Debian as the default Linux distribution..."
-    wsl --install -d Debian
+    # Write-Host "Installing Debian as the default Linux distribution..."
+    # wsl --install -d Debian
 
-    # Step 6: List available distributions
-    Write-Host "Available Linux distributions:"
-    wsl --list --online
+    # Write-Host "Available Linux distributions:"
+    # wsl --list --online
 }
 function disable-Clipboard {
     
@@ -362,7 +365,6 @@ function disable-Clipboard {
     $registryPath = "HKLM:\SYSTEM\CurrentControlSet\Services\cbdhsvc"
     $valueName = "Start"
     $disabledValue = 4
-
     # Check if the registry path exists
     if (Test-Path $registryPath) {
         # Set the Start value to 4 (disabled)
