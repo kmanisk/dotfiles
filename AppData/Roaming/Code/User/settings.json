@@ -1,4 +1,6 @@
 {
+		"security.workspace.trust.enabled": false,
+
 	//test extension multi command
 	"vscode-neovim.highlightGroups.highlights": {
 		"HoverWidgetBackground": "ThemeColor"
@@ -17,10 +19,11 @@
 	"editor.showFoldingControls": "always",
 	"editor.tabSize": 4,
 	"workbench.sideBar.location": "right",
-	"editor.fontSize": 17, //a---00000lll
-	"editor.lineHeight": 27,
+	"editor.fontSize": 17,
+	"editor.lineHeight": 26,
 	"breadcrumbs.enabled": false,
 	"editor.fontFamily": "'JetBrainsMonoNL Nerd Font Mono','JetBrainsMono Nerd Font Mono','JetBrainsMono Nerd Font', monospace",
+	// "editor.fontFamily": "FiraMono Nerd Font Regular",
 	"screencastMode.fontSize": 36,
 	"screencastMode.verticalOffset": 1,
 	"editor.fontLigatures": true,
@@ -57,8 +60,8 @@
 	"workbench.startupEditor": "none",
 	"window.openFilesInNewWindow": "off",
 	// Terminal
-	"terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font Mono', 'JetBrainsMono Nerd Font', 'monospace', monospace",
-	"terminal.integrated.fontSize": 16,
+	"terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font ', 'JetBrainsMono Nerd Font', 'monospace', monospace",
+	"terminal.integrated.fontSize": 15,
 	//Explorer
 	"explorer.confirmDelete": false,
 	"explorer.compactFolders": false,
@@ -221,7 +224,6 @@
 		"editor.defaultFormatter": "redhat.java"
 	},
 	"security.workspace.trust.untrustedFiles": "open",
-	"workbench.colorTheme": "JetBrains Rider Dark Theme",
 	"cody.commandHints.enabled": false,
 	"git.openRepositoryInParentFolders": "never",
 	"git.autofetch": false,
@@ -230,6 +232,42 @@
 	"editor.folding": false,
 	"editor.glyphMargin": false,
 	"tabnine.experimentalAutoImports": true,
-	"extensions.ignoreRecommendations": true,
 	//added a commnet
+	"periscope.rgQueryParams": [
+		{
+			// filter the results to a folder
+			// Query: "redis -m module1"
+			// After: "rg 'redis' -g '**/*module1*/**'"
+			"regex": "^(.+) -m ([\\w-_]+)$",
+			"param": "-g '**/*$1*/**' -g '!**/node_modules/**'"
+		},
+		{
+			// filter the results to a folder and filetype
+			// Query: "redis -m module1 yaml"
+			// After: "rg 'redis' -g '**/*module1*/**/*.yaml'"
+			"regex": "^(.+) -m ([\\w-_]+) ([\\w]+)$",
+			"param": "-g '**/*$1*/**/*.$2'"
+		},
+		{
+			// filter the results that match a glob
+			// Query: "redis -g *module"
+			// After: "rg 'redis' -g '*module'"
+			"regex": "^(.+) -g (.+)$",
+			"param": "-g '$1'"
+		},
+		{
+			// filter the results to rg filetypes
+			// Query: "redis -t yaml"
+			// After: "rg 'redis' -t yaml"
+			"regex": "^(.+) -t ?(\\w+)$",
+			"param": "-t $1"
+		},
+		{
+			// filter the results that match a file extension through a glob
+			// Query: redis *.rs => rg 'redis' -g '*.rs'
+			"regex": "^(.+) \\*\\.(\\w+)$",
+			"param": "-g '*.$1'"
+		}
+	],
+	"workbench.colorTheme": "JetBrains New Dark",
 }

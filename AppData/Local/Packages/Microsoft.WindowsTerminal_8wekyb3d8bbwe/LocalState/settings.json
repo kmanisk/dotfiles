@@ -4,23 +4,6 @@
     "actions": 
     [
         {
-            "command": 
-            {
-                "action": "copy",
-                "singleLine": false
-            },
-            "id": "User.copy.644BA8F2",
-            "keys": "alt+shift+c"
-        },
-        {
-            "command": 
-            {
-                "action": "copy",
-                "singleLine": false
-            },
-            "keys": "alt+c"
-        },
-        {
             "command": "unbound",
             "keys": "ctrl+shift+w"
         },
@@ -175,6 +158,23 @@
         {
             "command": 
             {
+                "action": "copy",
+                "singleLine": false
+            },
+            "id": "User.copy.644BA8F2",
+            "keys": "alt+shift+c"
+        },
+        {
+            "command": 
+            {
+                "action": "copy",
+                "singleLine": false
+            },
+            "keys": "alt+c"
+        },
+        {
+            "command": 
+            {
                 "action": "newTab",
                 "index": 2
             },
@@ -189,6 +189,22 @@
             "command": "find",
             "id": "User.find",
             "keys": "alt+f"
+        },
+        {
+            "command": 
+            {
+                "action": "moveFocus",
+                "direction": "down"
+            },
+            "id": "User.moveFocus.F747588A",
+            "keys": "ctrl+j"
+        },
+        {
+            "command": 
+            {
+                "action": "newTab"
+            },
+            "id": "User.newTab.5DEADB41"
         },
         {
             "command": 
@@ -211,26 +227,19 @@
         {
             "command": 
             {
-                "action": "newTab"
-            },
-            "id": "User.newTab.5DEADB41"
-        },
-        {
-            "command": 
-            {
-                "action": "moveFocus",
-                "direction": "down"
-            },
-            "id": "User.moveFocus.F747588A",
-            "keys": "ctrl+j"
-        },
-        {
-            "command": 
-            {
                 "action": "prevTab"
             },
             "id": "User.prevTab.0",
             "keys": "alt+j"
+        },
+        {
+            "command": 
+            {
+                "action": "newTab",
+                "index": 3
+            },
+            "id": "User.newTab.F4C304FB",
+            "keys": "ctrl+shift+3"
         },
         {
             "command": 
@@ -243,15 +252,6 @@
             "keys": "alt+shift+h"
         },
         {
-            "command": 
-            {
-                "action": "newTab",
-                "index": 3
-            },
-            "id": "User.newTab.F4C304FB",
-            "keys": "ctrl+shift+3"
-        },
-        {
             "command": "closePane",
             "id": "User.closePane",
             "keys": "alt+shift+w"
@@ -259,10 +259,10 @@
         {
             "command": 
             {
-                "action": "newTab",
-                "index": 4
+                "action": "clearBuffer",
+                "clear": "all"
             },
-            "id": "User.newTab.89E6CA61"
+            "id": "User.clearBuffer.87C324ED"
         },
         {
             "command": 
@@ -276,10 +276,10 @@
         {
             "command": 
             {
-                "action": "clearBuffer",
-                "clear": "all"
+                "action": "newTab",
+                "index": 4
             },
-            "id": "User.clearBuffer.87C324ED"
+            "id": "User.newTab.89E6CA61"
         },
         {
             "command": 
@@ -449,6 +449,12 @@
                 "hidden": false,
                 "name": "Git Bash",
                 "source": "Git"
+            },
+            {
+                "guid": "{58ad8b0c-3ef8-5f4d-bc6f-13e4c00f2530}",
+                "hidden": false,
+                "name": "Debian",
+                "source": "Windows.Terminal.Wsl"
             }
         ]
     },
