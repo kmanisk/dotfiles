@@ -319,13 +319,13 @@ function Set-Wsl {
 
 function Set-PermanentMachine {
     Write-Host "Installing Spotify..."
-    try {
-        Invoke-Expression "& { $(Invoke-WebRequest -UseBasicParsing -Uri 'https://raw.githubusercontent.com/SpotX-Official/spotx-official.github.io/main/run.ps1') } -new_theme"
-    }
-    catch {
-        Write-Host "Failed to install Spotify. Error: $_" -ForegroundColor Red
-        return
-    }
+    #try {
+    #    Invoke-Expression "& { $(Invoke-WebRequest -UseBasicParsing -Uri 'https://raw.githubusercontent.com/SpotX-Official/spotx-official.github.io/main/run.ps1') } -new_theme"
+    #}
+    #catch {
+    #    Write-Host "Failed to install Spotify. Error: $_" -ForegroundColor Red
+    #    return
+    #}
         
     $installerPath = "C:\Users\Manisk\AppData\Local\installer\executable_MLWapp2.6.x64.exe"
     $mlwappInstalled = Test-Path "C:\Program Files\MLWapp\MLWapp.exe"
