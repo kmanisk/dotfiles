@@ -183,37 +183,8 @@ function Install-WingetPackages {
 }
 
 
-# Prompt the user for installation type
-$choice = Read-Host "Choose installation type (mini/full)"
-switch ($choice.ToLower()) {
-    "mini" {
-        # Install mini packages
-        # Install Scoop packages
-        Install-ScoopPackages -packages $config.scoop.mini
-        # Install Winget packages
-        Install-WingetPackages -packages $config.winget.mini
-        # Install Chocolatey packages
-        Install-ChocoPackages -packages $config.choco.mini
-    }
-    "full" {
-        # Install full packages
-        # Install Scoop packages
-        Install-ScoopPackages -packages $config.scoop.full
-        # Install Winget packages
-        Install-WingetPackages -packages $config.winget.full
-        # Install Chocolatey packages
-        Install-ChocoPackages -packages $config.choco.full
-    }
-    default {
-        Write-Host "Invalid choice. Exiting..."
-        exit
-    }
-}
 
-Write-Host "Installation completed!"
-
-
-
+# PermanentMachine Setup Function to call in the full setup section if chosen by the user
 function Install-OSDLayout {
     # Set location to the source directory
     Set-Location -Path "$HOME\.local\share\chezmoi\appdata\local\OSD"
@@ -416,58 +387,6 @@ function disable-Clipboard {
 
 }
 
-function Set-PermanentMachine {
-    Write-Host "========================================"
-    Write-Host "Disabling Clipboard"
-    disable-Clipboard
-    Write-Host "========================================"
-    Write-Host "OSD" -ForegroundColor Green
-    Install-OSDLayout
-    Write-Host "========================================"
-    Write-Host "Installing Spotify..."
-        
-    $spotifyScript = Join-Path $HOME "AppData\Local\installer\spotfily.ps1"
-    Write-Host "Installing Spotify..."
-    Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$spotifyScript`"" -Wait
-
-    Write-Host "========================================"
-    $installerDir = Join-Path $HOME "AppData\Local\installer"
-    $mlwappInstaller = Get-ChildItem -Path $installerDir -Filter "MLWapp*.exe" | Select-Object -First 1
-    $mlwappInstalled = Test-Path "C:\Program Files\MLWapp\MLWapp.exe"
-
-    if (-not $mlwappInstalled) {
-        if ($mlwappInstaller) {
-            Write-Host "Installing MLWapp..."
-            Start-Process -FilePath $mlwappInstaller.FullName -ArgumentList "/S" -NoNewWindow -Wait
-        }
-        else {
-            Write-Host "MLWapp installer not found in $installerDir." -ForegroundColor Red
-        }
-    }
-    else {
-        Write-Host "MLWapp is already installed."
-    }
-
-    Write-Host "========================================"
-
-    #function calls
-    Move-ConfigFolder
-    Write-Host "========================================"
-    Install-VSCodeExtensions
-    Write-Host "========================================"
-    Set-Wsl
-    Write-Host "========================================"
-}
-
-$userInput = Read-Host "Set per machine (Y/N)?"
-
-if ($userInput -eq 'y') {
-    Set-PermanentMachine
-}
-else {
-    Write-Host "Operation skipped."
-}
-
 
 function ClinkSetup {
     $clinkPath = "C:\Program Files (x86)\clink"
@@ -486,8 +405,122 @@ function ClinkSetup {
     }
 }
 
-# Call the Clink-setup function
-ClinkSetup
+function MLWapp {
+    
+    $installerDir = Join-Path $HOME "AppData\Local\installer"
+    $mlwappInstaller = Get-ChildItem -Path $installerDir -Filter "MLWapp*.exe" | Select-Object -First 1
+    $mlwappInstalled = Test-Path "C:\Program Files\MLWapp\MLWapp.exe"
+
+    if (-not $mlwappInstalled) {
+        if ($mlwappInstaller) {
+            Write-Host "Installing MLWapp..."
+            Start-Process -FilePath $mlwappInstaller.FullName -ArgumentList "/S" -NoNewWindow -Wait
+        }
+        else {
+            Write-Host "MLWapp installer not found in $installerDir." -ForegroundColor Red
+        }
+    }
+    else {
+        Write-Host "MLWapp is already installed."
+    }
+}
+
+
+function Set-PermanentMachine {
+    Write-Host "========================================"
+    Write-Host "Disabling Clipboard"
+    disable-Clipboard
+    Write-Host "========================================"
+    Write-Host "OSD" -ForegroundColor Green
+    Install-OSDLayout
+    Write-Host "========================================"
+    Write-Host "Installing Spotify..."
+        
+    $spotifyScript = Join-Path $HOME "AppData\Local\installer\spotfily.ps1"
+    Write-Host "Installing Spotify..."
+    Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$spotifyScript`"" -Wait
+
+    Write-Host "========================================"
+    Write-Host "Mlwapp install"
+    MLWapp
+    Write-Host "========================================"
+    Write-Host "Move config folder"
+    Move-ConfigFolder
+    Write-Host "========================================"
+    Install-VSCodeExtensions
+    Write-Host "========================================"
+    Set-Wsl
+    Write-Host "========================================"
+    ClinkSetup
+}
+
+$userInput = Read-Host "Set per machine (Y/N)?"
+
+if ($userInput -eq 'y') {
+    Set-PermanentMachine
+}
+else {
+    Write-Host "Operation skipped."
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Prompt the user for installation type
+$choice = Read-Host "Choose installation type (mini/full)"
+switch ($choice.ToLower()) {
+    "mini" {
+        # Install mini packages
+        # Install Scoop packages
+        #
+        Write-Host "========================================"
+        Install-ScoopPackages -packages $config.scoop.mini
+        Write-Host "========================================"
+        # Install Winget packages
+        Install-WingetPackages -packages $config.winget.mini
+
+        Write-Host "========================================"
+        # Install Chocolatey packages
+        Install-ChocoPackages -packages $config.choco.mini
+
+        Write-Host "========================================"
+    }
+    "full" {
+        # Install full packages
+        # Install Scoop packages
+        Write-Host "========================================"
+        Install-ScoopPackages -packages $config.scoop.full
+        Write-Host "========================================"
+        # Install Winget packages
+        Install-WingetPackages -packages $config.winget.full
+        Write-Host "========================================"
+        # Install Chocolatey packages
+        Install-ChocoPackages -packages $config.choco.full
+        #Permanent Machine Setup
+        Write-Host "========================================"
+        Set-PermanentMachine
+    }
+}
+
+Write-Host "Installation completed!" --ForegroundColor Green
+
+
+
+
 
 # Function to pin a Chocolatey package if it is installed
 function Pin-ChocoPackage {
