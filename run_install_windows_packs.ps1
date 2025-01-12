@@ -288,7 +288,6 @@ function Install-OSDLayout {
 }
 Install-OSDLayout
 
-
 function Move-ConfigFolder {
     $sourcePath = Join-Path -Path $env:USERPROFILE -ChildPath ".config\es"
     $destinationPath = "C:\es"
@@ -306,11 +305,10 @@ function Move-ConfigFolder {
                 }
                 Copy-Item -Path $_.FullName -Destination $destinationPath -Force -Recurse
             }
-            Remove-Item -Path $sourcePath -Recurse -Force
         }
         else {
             New-Item -Path $destinationPath -ItemType Directory
-            Move-Item -Path $sourcePath -Destination $destinationPath -Force
+            Copy-Item -Path "$sourcePath\*" -Destination $destinationPath -Force -Recurse
         }
         Write-Host "Config folder setup completed successfully"
     }
@@ -318,6 +316,8 @@ function Move-ConfigFolder {
         Write-Host "Source folder not found at $sourcePath"
     }
 }
+
+
 
 # function Install-VSCodeExtensions {
 #     # Check if VSCode and VSCodium are installed
