@@ -294,7 +294,7 @@ function Move-ConfigFolder {
 
     if (Test-Path $sourcePath) {
         if (Test-Path $destinationPath) {
-            Write-Host "Destination folder already exists at $destinationPath. Merging contents..."
+            Write-Host "Destination folder exists at $destinationPath. Syncing contents..."
             Get-ChildItem -Path $sourcePath | ForEach-Object {
                 $destItem = Join-Path $destinationPath $_.Name
                 if (Test-Path $destItem) {
@@ -307,10 +307,11 @@ function Move-ConfigFolder {
             }
         }
         else {
+            Write-Host "Creating and populating $destinationPath..."
             New-Item -Path $destinationPath -ItemType Directory
-            Copy-Item -Path "$sourcePath\*" -Destination $destinationPath -Force -Recurse
+            Get-ChildItem -Path $sourcePath | Copy-Item -Destination $destinationPath -Force -Recurse
         }
-        Write-Host "Config folder setup completed successfully"
+        Write-Host "Config folder sync completed successfully"
     }
     else {
         Write-Host "Source folder not found at $sourcePath"
