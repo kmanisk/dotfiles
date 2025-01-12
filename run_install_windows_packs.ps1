@@ -54,7 +54,7 @@ function Install-Scoop {
         }
     }
     else {
-        Write-Host "========================================"
+        Write-Host "========================================="
         Write-Host "Scoop is already installed."
         # Check and add buckets
         Check-And-AddBucket -bucketName "extras" -bucketUrl ""
@@ -99,7 +99,6 @@ function Install-Winget {
 }
 
 
-Write-Host "========================================"
 Install-Scoop
 Write-Host "========================================"
 Install-Chocolatey
