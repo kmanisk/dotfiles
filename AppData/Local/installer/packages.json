@@ -11,7 +11,7 @@
     "full": [
       "fzf",
       "psfzf",
-	  "main/fastfetch",
+	  "fastfetch",
       "less",
       "bat",
       "vifm",
