@@ -117,25 +117,6 @@ function Install-ScoopPackages {
     }
 }
 
-# Function to install Chocolatey packages
-# function Install-ChocoPackages {
-#     param (
-#         [string[]]$packages
-#     )
-#     foreach ($package in $packages) {
-#         # Check if the package has a version specified
-#         if ($package -match "^(.*) --version=(.*)$") {
-#             $packageName = $matches[1]
-#             $version = $matches[2]
-#             Write-Host "Installing Chocolatey package: $packageName with version $version"
-#             choco install $packageName --version=$version -y
-#         }
-#         else {
-#             Write-Host "Installing Chocolatey package: $package"
-#             choco install $package -y
-#         }
-#     }
-# }
 function Install-ChocoPackages {
     param (
         [string[]]$packages
