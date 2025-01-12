@@ -267,4 +267,5 @@
 			"param": "-g '*.$1'"
 		}
 	],
+	"workbench.colorTheme": "Default Dark+",
 }
