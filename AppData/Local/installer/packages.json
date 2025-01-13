@@ -15,7 +15,7 @@
       "bat",
       "vifm",
       "gcc",
-	  "aria2"
+	  "aria2",
       "extras/neovide",
       "grep",
       "ripgrep",
