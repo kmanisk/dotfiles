@@ -553,41 +553,43 @@ function spot {
         Write-Host "Operation Skipped" -ForegroundColor DarkMagenta
     }
 }
-
 function install-Curls {
+    # Check if already installed
+    $gm320Path = "C:\Program Files (x86)\GM320 RGB"
+    if (Test-Path $gm320Path) {
+        Write-Host "GM320 RGB is already installed at $gm320Path"
+        return
+    }
+
     # Check if aria2c is installed
     if (-not (Get-Command aria2c -ErrorAction SilentlyContinue)) {
         Write-Host "Installing aria2c via Scoop..."
         scoop install aria2
     }
-    # Set up paths
+
+    # Rest of your existing code...
     $documentsPath = [Environment]::GetFolderPath("MyDocuments")
     $curlsFolder = Join-Path $documentsPath "curls"
     $zipPath = Join-Path $curlsFolder "mouse.zip"
     
-    # Create curls directory if it doesn't exist
     if (-not (Test-Path $curlsFolder)) {
         Write-Host "Creating curls directory at $curlsFolder..."
         New-Item -Path $curlsFolder -ItemType Directory | Out-Null
     }
     
-    # Set working directory to curls folder
     Set-Location $curlsFolder
     
-    # Check if zip file exists, if not download it
     if (-not (Test-Path $zipPath)) {
         Write-Host "Downloading mouse.zip using aria2c..."
         $url = "https://drive.google.com/uc?export=download&id=1pa2ryQyBDNiS4aOOYjiOqweFybOrtO3f"
-        $aria2Path = "aria2c" # Ensure aria2c is in the PATH or provide the full path to the aria2c executable
+        $aria2Path = "aria2c"
         & $aria2Path --dir=$curlsFolder --out="mouse.zip" $url
     }
     
-    # Extract using 7z
     Write-Host "Extracting files..."
-    $sevenZipPath = "7z" # Ensure 7z is in the PATH or provide the full path to the 7z executable
+    $sevenZipPath = "7z"
     & $sevenZipPath x $zipPath -o$curlsFolder | Out-Null
     
-    # Find and run the first .exe or .msi file
     Write-Host "Searching for .exe or .msi files..."
     $executables = Get-ChildItem -Path $curlsFolder -Recurse -File | Where-Object { $_.Extension -in @(".exe", ".msi") }
     if ($executables) {
