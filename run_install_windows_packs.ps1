@@ -407,6 +407,7 @@ function Set-Wsl {
 function disable-Clipboard {
     
     # PowerShell script to disable the Clipboard User Service (cbdhsvc)
+    # disables services
 
     # Define the registry path and value name
     $registryPath = "HKLM:\SYSTEM\CurrentControlSet\Services\cbdhsvc"
@@ -421,6 +422,22 @@ function disable-Clipboard {
     else {
         Write-Host "The registry path does not exist. The service might not be available on this system."
     }
+
+    # Define the registry path and value
+    $registryPath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System"
+    $valueName = "AllowClipboardHistory"
+    $valueData = 0
+
+    # Check if the registry path exists; if not, create it
+    if (-not (Test-Path $registryPath)) {
+        New-Item -Path $registryPath -Force | Out-Null
+    }
+
+    # Set the registry value to disable Clipboard History
+    Set-ItemProperty -Path $registryPath -Name $valueName -Value $valueData -Type DWord
+
+    # Output the result
+    Write-Output "Clipboard History has been disabled."
 
 }
 
