@@ -250,13 +250,33 @@ function Install-OSDLayout {
     }
 }
 
-function Move-ConfigFolder {
-    $sourcePath = Join-Path -Path $env:USERPROFILE -ChildPath ".config\es"
-    $destinationPath = "C:\es"
+function Move-FileSafely {
+    param (
+        [string]$sourcePath,
+        [string]$destinationPath
+    )
 
     if (Test-Path $sourcePath) {
-        if (Test-Path $destinationPath) {
-            Write-Host "Destination folder exists at $destinationPath. Syncing contents..."
+        if (-not (Test-Path $destinationPath)) {
+            Write-Host "Creating destination directory: $destinationPath"
+            New-Item -Path $destinationPath -ItemType Directory -Force
+        }
+
+        Write-Host "Copying files from $sourcePath to $destinationPath"
+        if (Test-Path -Path $sourcePath -PathType Leaf) {
+            # Handle single file
+            $fileName = Split-Path $sourcePath -Leaf
+            $destFile = Join-Path $destinationPath $fileName
+            if (Test-Path $destFile) {
+                Write-Host "Updating existing file: $fileName"
+            }
+            else {
+                Write-Host "Adding new file: $fileName"
+            }
+            Copy-Item -Path $sourcePath -Destination $destinationPath -Force
+        }
+        else {
+            # Handle directory
             Get-ChildItem -Path $sourcePath | ForEach-Object {
                 $destItem = Join-Path $destinationPath $_.Name
                 if (Test-Path $destItem) {
@@ -268,18 +288,62 @@ function Move-ConfigFolder {
                 Copy-Item -Path $_.FullName -Destination $destinationPath -Force -Recurse
             }
         }
-        else {
-            Write-Host "Creating and populating $destinationPath..."
-            New-Item -Path $destinationPath -ItemType Directory
-            Get-ChildItem -Path $sourcePath | Copy-Item -Destination $destinationPath -Force -Recurse
-        }
-        Write-Host "Config folder sync completed successfully"
+        Write-Host "Files copied successfully"
     }
     else {
-        Write-Host "Source folder not found at $sourcePath"
+        Write-Host "Source path not found: $sourcePath"
     }
 }
 
+function Move-ConfigFolder {
+    # ES Config
+    $esSourcePath = Join-Path -Path $env:USERPROFILE -ChildPath ".config\es"
+    $esDestPath = "C:\es"
+    
+    # VSCodium Config
+    $vscodiumSourcePath = Join-Path -Path $env:USERPROFILE -ChildPath ".local\share\chezmoi\AppData\Local\installer\vscodium\product.json"
+    $vscodiumDestPath = "C:\Program Files\VSCodium\resources\app"
+
+    Move-FileSafely -sourcePath $esSourcePath -destinationPath $esDestPath
+    Move-FileSafely -sourcePath $vscodiumSourcePath -destinationPath $vscodiumDestPath
+}
+    
+
+
+
+# function Move-ConfigFolder {
+#     $sourcePath = Join-Path -Path $env:USERPROFILE -ChildPath ".config\es"
+#     $destinationPath = "C:\es"
+#
+# #in this function add to put the file from 
+# # C:\Users\Administrator\.local\share\chezmoi\AppData\Local\installer\vscodium
+# # to this C:\Program Files\VSCodium\resources\app dir and overwrite the product .json with this product .json
+#     if (Test-Path $sourcePath) {
+#         if (Test-Path $destinationPath) {
+#             Write-Host "Destination folder exists at $destinationPath. Syncing contents..."
+#             Get-ChildItem -Path $sourcePath | ForEach-Object {
+#                 $destItem = Join-Path $destinationPath $_.Name
+#                 if (Test-Path $destItem) {
+#                     Write-Host "Updating existing item: $($_.Name)"
+#                 }
+#                 else {
+#                     Write-Host "Adding new item: $($_.Name)"
+#                 }
+#                 Copy-Item -Path $_.FullName -Destination $destinationPath -Force -Recurse
+#             }
+#         }
+#         else {
+#             Write-Host "Creating and populating $destinationPath..."
+#             New-Item -Path $destinationPath -ItemType Directory
+#             Get-ChildItem -Path $sourcePath | Copy-Item -Destination $destinationPath -Force -Recurse
+#         }
+#         Write-Host "Config folder sync completed successfully"
+#     }
+#     else {
+#         Write-Host "Source folder not found at $sourcePath"
+#     }
+# }
+#
 
 
 function Install-VSCodeExtensions {
