@@ -491,6 +491,11 @@ function spot {
 }
 
 function install-Curls {
+    # Check if aria2c is installed
+    if (-not (Get-Command aria2c -ErrorAction SilentlyContinue)) {
+        Write-Host "Installing aria2c via Scoop..."
+        scoop install aria2c
+    }
     # Set up paths
     $documentsPath = [Environment]::GetFolderPath("MyDocuments")
     $curlsFolder = Join-Path $documentsPath "curls"
@@ -498,7 +503,8 @@ function install-Curls {
     
     # Create curls directory if it doesn't exist
     if (-not (Test-Path $curlsFolder)) {
-        New-Item -Path $curlsFolder -ItemType Directory
+        Write-Host "Creating curls directory at $curlsFolder..."
+        New-Item -Path $curlsFolder -ItemType Directory | Out-Null
     }
     
     # Set working directory to curls folder
@@ -506,21 +512,28 @@ function install-Curls {
     
     # Check if zip file exists, if not download it
     if (-not (Test-Path $zipPath)) {
-        Write-Host "Downloading mouse.zip..."
-        Invoke-WebRequest -Uri "https://drive.google.com/uc?export=download&id=1pa2ryQyBDNiS4aOOYjiOqweFybOrtO3f" -OutFile $zipPath
+        Write-Host "Downloading mouse.zip using aria2c..."
+        $url = "https://drive.google.com/uc?export=download&id=1pa2ryQyBDNiS4aOOYjiOqweFybOrtO3f"
+        $aria2Path = "aria2c" # Ensure aria2c is in the PATH or provide the full path to the aria2c executable
+        & $aria2Path --dir=$curlsFolder --out="mouse.zip" $url
     }
     
     # Extract using 7z
     Write-Host "Extracting files..."
-    & 7z x $zipPath
+    $sevenZipPath = "7z" # Ensure 7z is in the PATH or provide the full path to the 7z executable
+    & $sevenZipPath x $zipPath -o$curlsFolder | Out-Null
     
-    # Run the extracted file
-    $extractedFiles = Get-ChildItem -Path $curlsFolder -File
-    foreach ($file in $extractedFiles) {
-        if ($file.Extension -in @(".exe", ".msi")) {
+    # Find and run the first .exe or .msi file
+    Write-Host "Searching for .exe or .msi files..."
+    $executables = Get-ChildItem -Path $curlsFolder -Recurse -File | Where-Object { $_.Extension -in @(".exe", ".msi") }
+    if ($executables) {
+        foreach ($file in $executables) {
             Write-Host "Running $($file.Name)..."
-            Start-Process $file.FullName
+            Start-Process -FilePath $file.FullName -NoNewWindow -Wait
         }
+    }
+    else {
+        Write-Host "No .exe or .msi files found!"
     }
 }
 
