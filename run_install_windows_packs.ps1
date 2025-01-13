@@ -489,6 +489,34 @@ function spot {
         Write-Host "Operation Skipped" -ForegroundColor DarkMagenta
     }
 }
+function install-Curls {
+    # Set up paths
+    $documentsPath = [Environment]::GetFolderPath("MyDocuments")
+    $curlsFolder = Join-Path $documentsPath "curls"
+    
+    # Create curls directory if it doesn't exist
+    if (-not (Test-Path $curlsFolder)) {
+        New-Item -Path $curlsFolder -ItemType Directory
+    }
+    
+    # Set working directory to curls folder
+    Set-Location $curlsFolder
+    
+    # Download the file
+    $zipPath = Join-Path $curlsFolder "mouse.zip"
+    Invoke-WebRequest -Uri "https://drive.google.com/uc?export=download&id=1pa2ryQyBDNiS4aOOYjiOqweFybOrtO3f" -OutFile $zipPath
+    
+    # Extract using 7z
+    & 7z x $zipPath
+    
+    # Run the extracted file (assuming there's an executable)
+    $extractedFiles = Get-ChildItem -Path $curlsFolder -File
+    foreach ($file in $extractedFiles) {
+        if ($file.Extension -in @(".exe", ".msi")) {
+            Start-Process $file.FullName
+        }
+    }
+}
 
 
 function Set-PermanentMachine {
@@ -512,6 +540,9 @@ function Set-PermanentMachine {
     Set-Wsl
     Write-Host "========================================"
     ClinkSetup
+    Write-Host "========================================"
+    install-Curls
+
 }
 
 
