@@ -47,7 +47,7 @@ function codeext{
 
     # Proceed to manage extensions only if at least one editor is installed
     if ($vscodeInstalled -or $vscodiumInstalled) {
-        $extensionsFilePath = Join-Path $HOME ".local\share\chezmoi\AppData\Local\installer\vscode.txt"
+        $extensionsFilePath = Join-Path $HOME "AppData\Local\installer\vscode.txt"
 
         if (Test-Path $extensionsFilePath) {
             # Read desired extensions from file

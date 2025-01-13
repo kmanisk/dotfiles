@@ -1,6 +1,5 @@
 {
-		"security.workspace.trust.enabled": false,
-
+	"security.workspace.trust.enabled": false,
 	//test extension multi command
 	"vscode-neovim.highlightGroups.highlights": {
 		"HoverWidgetBackground": "ThemeColor"
@@ -269,5 +268,4 @@
 			"param": "-g '*.$1'"
 		}
 	],
-	"workbench.colorTheme": "JetBrains New Dark",
 }
