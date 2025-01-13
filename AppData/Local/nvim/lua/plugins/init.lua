@@ -207,25 +207,25 @@ return {
 	{
 		"neovim/nvim-lspconfig",
 		config = function()
-			require("lspconfig").lua_ls.setup({
-				on_attach = function(client, bufnr)
-					local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
-					-- Disable LSP for Lua if filetype is 'lua'
-					if filetype == "lua" then
-						client.stop()
-						return
-					end
-
-					-- Set up key mappings for Lua LSP
-					local bufopts = { noremap = true, silent = true, buffer = bufnr }
-					vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
-					vim.keymap.set("n", "L", vim.lsp.buf.hover, bufopts)
-					vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
-					vim.keymap.set("n", "<Leader>rn", vim.lsp.buf.rename, bufopts)
-					vim.keymap.set("n", "<Leader>ca", vim.lsp.buf.code_action, bufopts)
-				end,
-				capabilities = require("cmp_nvim_lsp").default_capabilities(),
-			})
+			-- require("lspconfig").lua_ls.setup({
+			-- 	on_attach = function(client, bufnr)
+			-- 		local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
+			-- 		-- Disable LSP for Lua if filetype is 'lua'
+			-- 		if filetype == "lua" then
+			-- 			client.stop()
+			-- 			return
+			-- 		end
+			--
+			-- 		-- Set up key mappings for Lua LSP
+			-- 		local bufopts = { noremap = true, silent = true, buffer = bufnr }
+			-- 		vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
+			-- 		vim.keymap.set("n", "L", vim.lsp.buf.hover, bufopts)
+			-- 		vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
+			-- 		vim.keymap.set("n", "<Leader>rn", vim.lsp.buf.rename, bufopts)
+			-- 		vim.keymap.set("n", "<Leader>ca", vim.lsp.buf.code_action, bufopts)
+			-- 	end,
+			-- 	capabilities = require("cmp_nvim_lsp").default_capabilities(),
+			-- })
 		end,
 	},
 }
