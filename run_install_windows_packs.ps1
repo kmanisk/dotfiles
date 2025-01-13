@@ -81,10 +81,10 @@ function Install-Chocolatey {
     }
 
     # Configure Chocolatey settings
-    Write-Host "Configuring Chocolatey settings..." -ForegroundColor Yellow
-    choco feature enable -n allowGlobalConfirmation
-    choco feature enable -n allowemptychecksums
-    choco feature enable -n checksumFiles
+    # Write-Host "Configuring Chocolatey settings..." -ForegroundColor Yellow
+    # choco feature enable -n allowGlobalConfirmation
+    # choco feature enable -n allowemptychecksums
+    # choco feature enable -n checksumFiles
 }
 # Function to install Winget
 function Install-Winget {
@@ -489,10 +489,12 @@ function spot {
         Write-Host "Operation Skipped" -ForegroundColor DarkMagenta
     }
 }
+
 function install-Curls {
     # Set up paths
     $documentsPath = [Environment]::GetFolderPath("MyDocuments")
     $curlsFolder = Join-Path $documentsPath "curls"
+    $zipPath = Join-Path $curlsFolder "mouse.zip"
     
     # Create curls directory if it doesn't exist
     if (-not (Test-Path $curlsFolder)) {
@@ -502,17 +504,21 @@ function install-Curls {
     # Set working directory to curls folder
     Set-Location $curlsFolder
     
-    # Download the file
-    $zipPath = Join-Path $curlsFolder "mouse.zip"
-    Invoke-WebRequest -Uri "https://drive.google.com/uc?export=download&id=1pa2ryQyBDNiS4aOOYjiOqweFybOrtO3f" -OutFile $zipPath
+    # Check if zip file exists, if not download it
+    if (-not (Test-Path $zipPath)) {
+        Write-Host "Downloading mouse.zip..."
+        Invoke-WebRequest -Uri "https://drive.google.com/uc?export=download&id=1pa2ryQyBDNiS4aOOYjiOqweFybOrtO3f" -OutFile $zipPath
+    }
     
     # Extract using 7z
+    Write-Host "Extracting files..."
     & 7z x $zipPath
     
-    # Run the extracted file (assuming there's an executable)
+    # Run the extracted file
     $extractedFiles = Get-ChildItem -Path $curlsFolder -File
     foreach ($file in $extractedFiles) {
         if ($file.Extension -in @(".exe", ".msi")) {
+            Write-Host "Running $($file.Name)..."
             Start-Process $file.FullName
         }
     }

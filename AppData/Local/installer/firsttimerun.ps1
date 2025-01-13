@@ -80,12 +80,18 @@ function Install-Chocolatey {
 	if (-not (Get-Command choco -ErrorAction SilentlyContinue)) {
 		Write-Host "Installing Chocolatey..."
 		Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+
+		Write-Host "Configuring Chocolatey settings..." -ForegroundColor Yellow
+		choco feature enable -n allowGlobalConfirmation
+		choco feature enable -n allowemptychecksums
+		choco feature enable -n checksumFiles
 	}
  else {
 		Write-Host "Chocolatey is already installed."
 
 		Write-Host "Configuring Chocolatey settings..." -ForegroundColor Yellow
 		choco feature enable -n allowGlobalConfirmation
+		choco feature enable -n allowemptychecksums
 		choco feature enable -n checksumFiles
 		# choco install git gh chezmoi -y
 	}
