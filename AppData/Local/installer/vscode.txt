@@ -12,3 +12,4 @@ ms-vscode.live-server
 ms-vscode.powershell
 robole.file-bunny
 sourcegraph.cody-ai
+nicohlr.pycharm
