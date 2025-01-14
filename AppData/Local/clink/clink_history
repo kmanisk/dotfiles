@@ -170,9 +170,9 @@ zoxide
 |	time=1736520298
 docs
 |	time=1736520300
-dir
+|ir
 |	time=1736520301
-ls
+|s
 |	time=1736520301
 lsd
 |	time=1736520305
@@ -181,3 +181,11 @@ pwsh
 |klink /D "C:\Users\Manisk\AppData\Local\installer\osd\msi" "C:\Program Files (x86)\MSI Afterburner\Profiles"
 |	time=1736520508
 mklink /D "C:\Users\Manisk\AppData\Local\installer\osd\msi" "C:\Program Files (x86)\MSI Afterburner\Profiles"
+|	time=1736717031
+ls
+|	time=1736717032
+dir
+|	time=1736717033
+which
+|	time=1736717034
+which 
