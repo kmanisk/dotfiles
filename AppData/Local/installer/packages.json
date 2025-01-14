@@ -28,8 +28,6 @@
 	  "extras/winaero-tweaker",
 	  "extras/nvcleanstall",
 	  "main/win32yank",
-	  "ntop",
-	  "lsd",
 	  "extras/revouninstaller"
     ]
   },
@@ -72,7 +70,9 @@
       "autohotkey",
       "zoxide --version=0.9.0",
       "starship",
-	  "irfanview"
+	  "irfanview",
+	  "lsd",
+	  "ntop"
     ]
   }
 }

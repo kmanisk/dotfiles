@@ -1,7 +1,8 @@
 asvetliakov.vscode-neovim
 bungcip.better-toml
-formulahendry.code-runner
 devgauravjatt.github-catppuccin-dark
+dsznajder.es7-react-js-snippets
+formulahendry.code-runner
 github.github-vscode-theme
 joshmu.periscope
 mhkb.vscode-theme-darcula-stormy
@@ -10,7 +11,6 @@ ms-python.debugpy
 ms-python.python
 ms-vscode.live-server
 ms-vscode.powershell
+nicohlr.pycharm
 robole.file-bunny
 sourcegraph.cody-ai
-nicohlr.pycharm
-dsznajder.es7-react-js-snippets
