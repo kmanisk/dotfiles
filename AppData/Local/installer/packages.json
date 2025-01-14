@@ -9,10 +9,13 @@
       "neovim"
     ],
     "full": [
+	  "7zip",
+	  "teracopy-np",
       "fzf",
       "psfzf",
       "less",
       "bat",
+	  "dark",
       "vifm",
       "gcc",
 	  "aria2",
