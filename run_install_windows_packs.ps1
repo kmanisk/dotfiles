@@ -544,16 +544,23 @@ function MLWapp {
     }
 }
 function spot {
-    $confirmation = Read-Host "Do you want to install Spotify? (y/n)"
-    
-    if ($confirmation -eq 'y') {
-        Write-Host "Installing Spotify..."
-        Invoke-Expression "& { $(Invoke-WebRequest -useb 'https://raw.githubusercontent.com/SpotX-Official/spotx-official.github.io/main/run.ps1') } -new_theme"
+    $spotifyPath = Join-Path $HOME "AppData\Roaming\Spotify\spotify.exe"
+    if (-not (Test-Path $spotifyPath)) {
+        $confirmation = Read-Host "Do you want to install Spotify? (y/n)"
+        
+        if ($confirmation -eq 'y') {
+            Write-Host "Installing Spotify..."
+            Invoke-Expression "& { $(Invoke-WebRequest -useb 'https://raw.githubusercontent.com/SpotX-Official/spotx-official.github.io/main/run.ps1') } -new_theme"
+        }
+        else {
+            Write-Host "Operation Skipped" -ForegroundColor DarkMagenta
+        }
     }
     else {
-        Write-Host "Operation Skipped" -ForegroundColor DarkMagenta
+        Write-Host "Spotify is already installed at $spotifyPath" -ForegroundColor Green
     }
 }
+
 function install-Curls {
     # Check if already installed
     $gm320Path = "C:\Program Files (x86)\GM320 RGB"
