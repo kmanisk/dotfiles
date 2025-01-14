@@ -658,7 +658,6 @@ function Set-PermanentMachine {
 
 }
 
-
 # Prompt the user for installation type
 $choice = Read-Host "Choose installation type (mini/full)"
 switch ($choice.ToLower()) {
@@ -740,3 +739,5 @@ function Pin-WingetPackage {
 Pin-ChocoPackage -packageName "zoxide"
 Pin-ChocoPackage -packageName "autohotkey"
 Pin-WingetPackage -packageId "AutoHotkey.AutoHotkey"
+
+Write-Output $PSVersionTable.PSVersion
