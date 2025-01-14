@@ -28,7 +28,8 @@
 	  "extras/winaero-tweaker",
 	  "extras/nvcleanstall",
 	  "main/win32yank",
-	  "extras/revouninstaller"
+	  "extras/revouninstaller",
+	  "kkzzhizhou_scoop-apps/NoxPlayer"
     ]
   },
   "winget": {
