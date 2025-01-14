@@ -28,8 +28,7 @@
 	  "extras/winaero-tweaker",
 	  "extras/nvcleanstall",
 	  "main/win32yank",
-	  "extras/revouninstaller",
-	  "ntop"
+	  "extras/revouninstaller"
     ]
   },
   "winget": {

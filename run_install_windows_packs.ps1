@@ -122,6 +122,7 @@ function Install-ScoopPackages {
         scoop install $package 
         Write-Host ""
     }
+    scoop install lsd
 }
 
 function Install-ChocoPackages {
@@ -739,5 +740,3 @@ function Pin-WingetPackage {
 Pin-ChocoPackage -packageName "zoxide"
 Pin-ChocoPackage -packageName "autohotkey"
 Pin-WingetPackage -packageId "AutoHotkey.AutoHotkey"
-
-Write-Output $PSVersionTable.PSVersion
