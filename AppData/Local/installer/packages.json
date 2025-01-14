@@ -22,7 +22,8 @@
       "java/openjdk",
 	  "extras/nexusfont",
 	  "extras/crystaldiskinfo",
-	  "extras/winaero-tweaker"
+	  "extras/winaero-tweaker",
+	  "extras/nvcleanstall"
     ]
   },
   "winget": {
@@ -33,7 +34,6 @@
     "full": [
       "Guru3D.Afterburner",
       "Guru3D.RTSS",
-      "TechPowerUp.NVCleanstall",
       "JanDeDobbeleer.OhMyPosh",
       "chrisant996.Clink",
       "Microsoft.PowerShell",
