@@ -122,7 +122,6 @@ function Install-ScoopPackages {
         scoop install $package 
         Write-Host ""
     }
-    scoop install lsd
 }
 
 function Install-ChocoPackages {
