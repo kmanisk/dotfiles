@@ -70,9 +70,7 @@
       "autohotkey",
       "zoxide --version=0.9.0",
       "starship",
-	  "irfanview",
-	  "lsd",
-	  "ntop"
+	  "irfanview"
     ]
   }
 }
