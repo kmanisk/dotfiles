@@ -387,6 +387,9 @@ function Install-VSCodeExtensions {
                 $vscodiumExtensions = & codium --list-extensions
             }
 
+            # Ask user about extension management
+            $removeConfirmation = Read-Host "Do you want to remove unmatched extensions? (y/n)"
+            
             # Handle VSCode Extensions
             if ($vscodeInstalled) {
                 # Install missing extensions
@@ -397,12 +400,20 @@ function Install-VSCodeExtensions {
                     }
                 }
                 
-                # Remove undesired extensions
-                foreach ($installed in $vscodeExtensions) {
-                    if ($desiredExtensions -notcontains $installed) {
-                        Write-Host "Removing VSCode extension: $installed"
-                        & code --uninstall-extension $installed
+                if ($removeConfirmation -eq 'y') {
+                    # Remove undesired extensions
+                    foreach ($installed in $vscodeExtensions) {
+                        if ($desiredExtensions -notcontains $installed) {
+                            Write-Host "Removing VSCode extension: $installed"
+                            & code --uninstall-extension $installed
+                        }
                     }
+                }
+                else {
+                    # Update vscode.txt with current extensions
+                    $allExtensions = $desiredExtensions + ($vscodeExtensions | Where-Object { $desiredExtensions -notcontains $_ })
+                    $allExtensions | Sort-Object -Unique | Set-Content -Path $extensionsFilePath
+                    Write-Host "Updated vscode.txt with current extensions"
                 }
             }
 
@@ -416,12 +427,20 @@ function Install-VSCodeExtensions {
                     }
                 }
                 
-                # Remove undesired extensions
-                foreach ($installed in $vscodiumExtensions) {
-                    if ($desiredExtensions -notcontains $installed) {
-                        Write-Host "Removing VSCodium extension: $installed"
-                        & codium --uninstall-extension $installed
+                if ($removeConfirmation -eq 'y') {
+                    # Remove undesired extensions
+                    foreach ($installed in $vscodiumExtensions) {
+                        if ($desiredExtensions -notcontains $installed) {
+                            Write-Host "Removing VSCodium extension: $installed"
+                            & codium --uninstall-extension $installed
+                        }
                     }
+                }
+                else {
+                    # Update vscode.txt with current extensions
+                    $allExtensions = $desiredExtensions + ($vscodiumExtensions | Where-Object { $desiredExtensions -notcontains $_ })
+                    $allExtensions | Sort-Object -Unique | Set-Content -Path $extensionsFilePath
+                    Write-Host "Updated vscode.txt with current extensions"
                 }
             }
 
@@ -435,6 +454,7 @@ function Install-VSCodeExtensions {
         Write-Host "Neither VSCode nor VSCodium is installed. Cannot manage extensions."
     }
 }
+
 
 
 function Set-Wsl {
