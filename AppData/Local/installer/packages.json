@@ -27,7 +27,10 @@
 	  "extras/crystaldiskinfo",
 	  "extras/winaero-tweaker",
 	  "extras/nvcleanstall",
-	  "main/win32yank"
+	  "main/win32yank",
+	  "main/ntop",
+	  "main/lsd",
+	  "extras/revouninstaller"
     ]
   },
   "winget": {
@@ -69,10 +72,7 @@
       "autohotkey",
       "zoxide --version=0.9.0",
       "starship",
-	  "irfanview",
-	  "lsd",
-	  "NTop.Portable",
-	  "revo-uninstaller"
+	  "irfanview"
     ]
   }
 }
