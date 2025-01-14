@@ -64,6 +64,7 @@ function Install-Scoop {
         Check-And-AddBucket -bucketName "volllly" -bucketUrl "https://github.com/volllly/scoop-bucket.git"
         Check-And-AddBucket -bucketName "shemnei" -bucketUrl "https://github.com/Shemnei/scoop-bucket.git"
         Check-And-AddBucket -bucketName "nonportable" -bucketUrl "https://github.com/Shemnei/scoop-bucket.git"
+        Check-And-AddBucket -bucketName "kkzzhizhou_scoop-apps" -bucketUrl "https://github.com/kkzzhizhou/scoop-apps"
         Write-Host "========================================"
     }
 }
@@ -482,12 +483,6 @@ function Set-Wsl {
 
     Write-Host "Setting WSL 2 as the default version..."
     wsl --set-default-version 2
-
-    # Write-Host "Installing Debian as the default Linux distribution..."
-    # wsl --install -d Debian
-
-    # Write-Host "Available Linux distributions:"
-    # wsl --list --online
 }
 function disable-Clipboard {
     
