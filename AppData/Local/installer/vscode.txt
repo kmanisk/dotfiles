@@ -13,3 +13,4 @@ ms-vscode.powershell
 robole.file-bunny
 sourcegraph.cody-ai
 nicohlr.pycharm
+dsznajder.es7-react-js-snippets
