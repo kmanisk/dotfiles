@@ -27,9 +27,7 @@
 	  "extras/crystaldiskinfo",
 	  "extras/winaero-tweaker",
 	  "extras/nvcleanstall",
-	  "main/win32yank",
-	  "extras/revouninstaller",
-	  "kkzzhizhou_scoop-apps/NoxPlayer"
+	  "main/win32yank"
     ]
   },
   "winget": {

@@ -1,8 +1,4 @@
 
-# Import required modules
-Import-Module Microsoft.PowerShell.Utility
-Import-Module Microsoft.PowerShell.Security
-
 
 # Function to check if the script is running as Administrator
 function Is-Admin {
@@ -17,15 +13,21 @@ Import-Module Microsoft.PowerShell.Utility
 
 
 #  Function to check if a Scoop bucket exists
-
 function Check-And-AddBucket {
     param (
         [string]$bucketName,
         [string]$bucketUrl
     )
 
-    # Get the list of existing buckets
-    $existingBuckets = (scoop bucket list) | ForEach-Object { $_.Split(' ')[0] }
+    # Get the list of existing buckets and extract just the names
+    $existingBuckets = scoop bucket list | ForEach-Object { 
+        if ($_ -match '^\s*(\S+)') {
+            $matches[1]  # Capture the first non-whitespace sequence
+        }
+    } | Where-Object { $_ -ne $null }  # Filter out any null values
+
+    # Debugging output to check existing buckets
+    Write-Host "Existing Buckets: $existingBuckets"
 
     # Check if the bucket is already in the list
     if ($existingBuckets -notcontains $bucketName) {
