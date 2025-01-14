@@ -26,7 +26,8 @@
 	  "extras/nexusfont",
 	  "extras/crystaldiskinfo",
 	  "extras/winaero-tweaker",
-	  "extras/nvcleanstall"
+	  "extras/nvcleanstall",
+	  "main/win32yank"
     ]
   },
   "winget": {
