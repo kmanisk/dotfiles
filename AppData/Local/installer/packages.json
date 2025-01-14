@@ -28,8 +28,8 @@
 	  "extras/winaero-tweaker",
 	  "extras/nvcleanstall",
 	  "main/win32yank",
-	  "main/ntop",
-	  "main/lsd",
+	  "ntop",
+	  "lsd",
 	  "extras/revouninstaller"
     ]
   },
