@@ -27,8 +27,7 @@
 	  "extras/crystaldiskinfo",
 	  "extras/winaero-tweaker",
 	  "extras/nvcleanstall",
-	  "main/win32yank",
-	  "gpu-z"
+	  "main/win32yank"
     ]
   },
   "winget": {
@@ -71,7 +70,8 @@
       "zoxide --version=0.9.0",
       "starship",
 	  "irfanview",
-	  "lsd"
+	  "lsd",
+	  "vmwareworkstation"
     ]
   }
 }
