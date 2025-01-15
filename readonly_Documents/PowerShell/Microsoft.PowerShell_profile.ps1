@@ -16,6 +16,9 @@ function extedit{
     nvim $ext
 
 }
+function his{
+    cat (Get-PSReadLineOption).HistorySavePath
+}
 #
 function codeext{
     # Check if VSCode and VSCodium are installed
