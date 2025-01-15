@@ -10,13 +10,6 @@ if (!(Get-Module -ListAvailable -Name PSReadLine)) {
     Install-Module -Name PSReadLine -Scope CurrentUser -Force -SkipPublisherCheck
 }
 Import-Module -Name PSReadLine
-# Map vi and vim to nvim
-# Alias z to cd
-# Remove any existing aliases to avoid conflicts
-#Remove-Item Alias:z -ErrorAction SilentlyContinue
-#Remove-Item Alias:ls -ErrorAction SilentlyContinue
-#
-#
 function extedit{
     $ext = Join-Path $HOME "AppData\Local\installer\vscode.txt"
     Write-Host "path : "  $ext
