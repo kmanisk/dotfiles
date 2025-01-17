@@ -587,7 +587,7 @@ function install-Curls {
     # Check if aria2c is installed
     if (-not (Get-Command aria2c -ErrorAction SilentlyContinue)) {
         Write-Host "Installing aria2c via Scoop..."
-        # scoop install aria2
+        scoop install aria2
     }
 
     # Rest of your existing code...
