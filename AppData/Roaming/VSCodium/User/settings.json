@@ -267,5 +267,5 @@
 			"param": "-g '*.$1'"
 		}
 	],
-	"workbench.colorTheme": "Gruvbox Dark Soft",
+	"workbench.colorTheme": "Gruvbox Dark Medium",
 }

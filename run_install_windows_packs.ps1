@@ -14,24 +14,32 @@ Import-Module Microsoft.PowerShell.Utility
 
 #  Function to check if a Scoop bucket exists
 
+
+
 function Check-And-AddBucket {
     param (
         [string]$bucketName,
         [string]$bucketUrl
     )
-    
-    # Get existing buckets directly into an array
-    $existingBuckets = @(scoop bucket list | ForEach-Object { $_.Split(' ')[0] })
-    
-    if ($existingBuckets -contains $bucketName) {
-        Write-Host "✓ Scoop bucket '$bucketName' is already installed" -ForegroundColor Green
-        return
-    }
-    Write-Host "Installing Scoop bucket: $bucketName..." -ForegroundColor Yellow
-    scoop bucket add $bucketName $bucketUrl
-    Write-Host "✓ Successfully added bucket: $bucketName" -ForegroundColor Green
-} 
 
+    # Get the list of current buckets
+    $currentBuckets = scoop bucket list
+
+    # Loop through each bucket and print its name
+    foreach ($bucket in $currentBuckets) {
+        Write-Host "Current Bucket Name: $($bucket.Name)"
+    }
+
+    # Check if the specified bucket is already in the list
+    if ($currentBuckets.Name -notcontains $bucketName) {
+        # If not, add the bucket
+        scoop bucket add $bucketName $bucketUrl
+        Write-Host "Bucket '$bucketName' added successfully."
+    }
+    else {
+        Write-Host "Bucket '$bucketName' already exists."
+    }
+}
 
 # Function to install Scoop
 function Install-Scoop {
