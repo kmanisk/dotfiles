@@ -13,32 +13,30 @@ Import-Module Microsoft.PowerShell.Utility
 
 
 #  Function to check if a Scoop bucket exists
+
 function Check-And-AddBucket {
     param (
         [string]$bucketName,
         [string]$bucketUrl
     )
 
-    # Get the list of existing buckets and extract just the names
-    $existingBuckets = scoop bucket list | ForEach-Object { 
+    # Get existing buckets once and store in hashtable for efficient lookup
+    $existingBuckets = @{}
+    scoop bucket list | ForEach-Object {
         if ($_ -match '^\s*(\S+)') {
-            $matches[1]  # Capture the first non-whitespace sequence
+            $existingBuckets[$matches[1]] = $true
         }
-    } | Where-Object { $_ -ne $null }  # Filter out any null values
+    }
 
-    # Debugging output to check existing buckets
-    Write-Host "Existing Buckets: $existingBuckets"
-
-    # Check if the bucket is already in the list
-    if ($existingBuckets -notcontains $bucketName) {
+    # Check if bucket exists using hashtable lookup
+    if (-not $existingBuckets.ContainsKey($bucketName)) {
         Write-Host "Adding Scoop bucket: $bucketName"
         scoop bucket add $bucketName $bucketUrl
     }
     else {
-        Write-Host "Scoop bucket '$bucketName' already exists."
+        Write-Host "Scoop bucket '$bucketName' already exists." -ForegroundColor Green
     }
 }
-
 
 # Function to install Scoop
 function Install-Scoop {
