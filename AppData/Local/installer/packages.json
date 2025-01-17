@@ -27,7 +27,8 @@
 	  "extras/crystaldiskinfo",
 	  "extras/winaero-tweaker",
 	  "extras/nvcleanstall",
-	  "main/win32yank"
+	  "main/win32yank",
+	  "ntop"
     ]
   },
   "winget": {
