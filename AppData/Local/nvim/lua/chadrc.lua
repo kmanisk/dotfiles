@@ -2,7 +2,7 @@ local M = {}
 
 -- UI Configuration
 M.ui = {
-	theme = "ayu_dark", -- Set the theme for Neovim
+	theme = "catppuccin", -- Set the theme for Neovim
 	transparency = true, -- Enable transparency
 
 
@@ -53,13 +53,13 @@ M.ui = {
 }
 
 M.base46 = {
-	theme = "ayu_dark", -- Change to your preferred base46 theme (e.g., 'tokyonight', 'gruvbox', etc.)
+	theme = "catppuccin", -- Change to your preferred base46 theme (e.g., 'tokyonight', 'gruvbox', etc.)
 	hl_add = {},
 	hl_override = {},
 	integrations = {},
 	changed_themes = {},
 	transparency = false,
-	theme_toggle = { "ayu_dark", "one_light" },
+	theme_toggle = { "catppuccin", "one_light" },
 }
 
 M.nvdash = {
