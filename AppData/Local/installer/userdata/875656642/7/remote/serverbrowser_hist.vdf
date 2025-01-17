@@ -1,0 +1,185 @@
+"Filters"
+{
+	"favorites"
+	{
+		"1"
+		{
+			"name"		"13.126.88.102:2222"
+			"address"		"13.126.88.102:2222"
+			"LastPlayed"		"1647855591"
+			"appid"		"0"
+			"accountid"		"4254687"
+		}
+		"2"
+		{
+			"name"		"90.188.226.116:27215"
+			"address"		"90.188.226.116:27215"
+			"LastPlayed"		"1651134147"
+			"appid"		"0"
+			"accountid"		"3396740"
+		}
+	}
+	"history"
+	{
+		"2"
+		{
+			"name"		"90.188.226.116:27215"
+			"address"		"90.188.226.116:27215"
+			"LastPlayed"		"1651134147"
+			"appid"		"0"
+			"accountid"		"3396740"
+		}
+		"3"
+		{
+			"name"		"192.168.0.103:27015"
+			"address"		"192.168.0.103:27015"
+			"LastPlayed"		"1660051883"
+			"appid"		"0"
+			"accountid"		"0"
+		}
+		"4"
+		{
+			"name"		"45.141.57.73:27007"
+			"address"		"45.141.57.73:27007"
+			"LastPlayed"		"1648670508"
+			"appid"		"0"
+			"accountid"		"0"
+		}
+		"5"
+		{
+			"name"		"172.105.43.26:27015"
+			"address"		"172.105.43.26:27015"
+			"LastPlayed"		"1648930202"
+			"appid"		"0"
+			"accountid"		"0"
+		}
+		"6"
+		{
+			"name"		"162.248.93.25:27015"
+			"address"		"162.248.93.25:27015"
+			"LastPlayed"		"1648938608"
+			"appid"		"0"
+			"accountid"		"0"
+		}
+		"7"
+		{
+			"name"		"192.168.0.102:27015"
+			"address"		"192.168.0.102:27015"
+			"LastPlayed"		"1656155285"
+			"appid"		"0"
+			"accountid"		"0"
+		}
+		"8"
+		{
+			"name"		"139.99.113.18:27015"
+			"address"		"139.99.113.18:27015"
+			"LastPlayed"		"1651133377"
+			"appid"		"0"
+			"accountid"		"0"
+		}
+		"9"
+		{
+			"name"		"0.0.0.1:27015"
+			"address"		"0.0.0.1:27015"
+			"LastPlayed"		"1669312733"
+			"appid"		"0"
+			"accountid"		"0"
+		}
+		"10"
+		{
+			"name"		"192.168.0.101:27015"
+			"address"		"192.168.0.101:27015"
+			"LastPlayed"		"1657292862"
+			"appid"		"0"
+			"accountid"		"0"
+		}
+		"11"
+		{
+			"name"		"43.204.55.37:27015"
+			"address"		"43.204.55.37:27015"
+			"LastPlayed"		"1663386392"
+			"appid"		"0"
+			"accountid"		"0"
+		}
+		"12"
+		{
+			"name"		"192.168.0.105:27015"
+			"address"		"192.168.0.105:27015"
+			"LastPlayed"		"1668366977"
+			"appid"		"0"
+			"accountid"		"0"
+		}
+		"13"
+		{
+			"name"		"0.0.0.2:27015"
+			"address"		"0.0.0.2:27015"
+			"LastPlayed"		"1669199916"
+			"appid"		"0"
+			"accountid"		"0"
+		}
+		"14"
+		{
+			"name"		"0.0.0.3:27015"
+			"address"		"0.0.0.3:27015"
+			"LastPlayed"		"1667821821"
+			"appid"		"0"
+			"accountid"		"0"
+		}
+		"15"
+		{
+			"name"		"0.0.0.4:27015"
+			"address"		"0.0.0.4:27015"
+			"LastPlayed"		"1667822494"
+			"appid"		"0"
+			"accountid"		"0"
+		}
+		"16"
+		{
+			"name"		"0.0.0.5:27015"
+			"address"		"0.0.0.5:27015"
+			"LastPlayed"		"1667822900"
+			"appid"		"0"
+			"accountid"		"0"
+		}
+		"17"
+		{
+			"name"		"0.0.0.6:27015"
+			"address"		"0.0.0.6:27015"
+			"LastPlayed"		"1667823560"
+			"appid"		"0"
+			"accountid"		"0"
+		}
+		"18"
+		{
+			"name"		"0.0.0.7:27015"
+			"address"		"0.0.0.7:27015"
+			"LastPlayed"		"1667824329"
+			"appid"		"0"
+			"accountid"		"0"
+		}
+		"19"
+		{
+			"name"		"0.0.0.8:27015"
+			"address"		"0.0.0.8:27015"
+			"LastPlayed"		"1667825152"
+			"appid"		"0"
+			"accountid"		"0"
+		}
+		"20"
+		{
+			"name"		"0.0.0.9:27015"
+			"address"		"0.0.0.9:27015"
+			"LastPlayed"		"1667825420"
+			"appid"		"0"
+			"accountid"		"0"
+		}
+		"21"
+		{
+			"name"		"3.6.89.160:27815"
+			"address"		"3.6.89.160:27815"
+			"LastPlayed"		"1669300550"
+			"appid"		"0"
+			"accountid"		"0"
+		}
+	}
+}

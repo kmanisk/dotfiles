@@ -201,3 +201,5 @@ dir
 bcdedit  /enum
 |	time=1736745675
 pwsh
+|	time=1737084039
+wsl --shutdown
