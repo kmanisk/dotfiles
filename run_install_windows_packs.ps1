@@ -64,8 +64,7 @@ function Install-Scoop {
         Check-And-AddBucket -bucketName "volllly" -bucketUrl "https://github.com/volllly/scoop-bucket.git"
         Check-And-AddBucket -bucketName "shemnei" -bucketUrl "https://github.com/Shemnei/scoop-bucket.git"
         Check-And-AddBucket -bucketName "nonportable" -bucketUrl "https://github.com/Shemnei/scoop-bucket.git"
-        Check-And-AddBucket -bucketName "kkzzhizhou_scoop-apps" -bucketUrl "https://github.com/kkzzhizhou/scoop-apps"
-        Write-Host "========================================"
+        # Check-And-AddBucket -bucketName "kkzzhizhou_scoop-apps" -bucketUrl "https://github.com/kkzzhizhou/scoop-apps"
     }
 }
 function Install-Chocolatey {
