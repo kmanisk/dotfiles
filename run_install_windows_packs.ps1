@@ -19,23 +19,18 @@ function Check-And-AddBucket {
         [string]$bucketName,
         [string]$bucketUrl
     )
-
-    # Get existing buckets once and store in hashtable for efficient lookup
-    $existingBuckets = @{}
-    scoop bucket list | ForEach-Object {
-        if ($_ -match '^\s*(\S+)') {
-            $existingBuckets[$matches[1]] = $true
-        }
+    
+    # Get existing buckets directly into an array
+    $existingBuckets = @(scoop bucket list | ForEach-Object { $_.Split(' ')[0] })
+    
+    if ($existingBuckets -contains $bucketName) {
+        Write-Host "✓ Scoop bucket '$bucketName' is already installed" -ForegroundColor Green
+        return
     }
-
-    # Check if bucket exists using hashtable lookup
-    if (-not $existingBuckets.ContainsKey($bucketName)) {
-        Write-Host "Adding Scoop bucket: $bucketName"
-        scoop bucket add $bucketName $bucketUrl
-    }
-    else {
-        Write-Host "Scoop bucket '$bucketName' already exists." -ForegroundColor Green
-    }
+    
+    Write-Host "Installing Scoop bucket: $bucketName..." -ForegroundColor Yellow
+    scoop bucket add $bucketName $bucketUrl
+    Write-Host "✓ Successfully added bucket: $bucketName" -ForegroundColor Green
 }
 
 # Function to install Scoop
