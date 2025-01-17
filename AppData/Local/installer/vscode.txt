@@ -4,6 +4,7 @@ devgauravjatt.github-catppuccin-dark
 dsznajder.es7-react-js-snippets
 formulahendry.code-runner
 github.github-vscode-theme
+jdinhlife.gruvbox
 joshmu.periscope
 mhkb.vscode-theme-darcula-stormy
 michaelzhou.fleet-theme
