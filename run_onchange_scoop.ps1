@@ -1,0 +1,2 @@
+
+scoop install ntop
