@@ -14,6 +14,9 @@ map("i", "<C-y>", "cmp.mapping.confirm({ select = true })", opts)
 -- Map 'jk' to 'zz' in normal mode
 map("n", "j", "jzz", opts)
 map("n", "k", "kzz", opts)
+
+-- Map 'jk' to escape terminal mode
+map('t', 'jk', [[<C-\><C-n>]], { noremap = true, silent = true })
 -- map("n", "j", "j", opts)
 -- map("n", "k", "k", opts)
 -- Custom mappings

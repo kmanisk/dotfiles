@@ -176,16 +176,28 @@ docs
 |	time=1736520301
 lsd
 |	time=1736520305
-pwsh
+|wsh
 |	time=1736520455
 |klink /D "C:\Users\Manisk\AppData\Local\installer\osd\msi" "C:\Program Files (x86)\MSI Afterburner\Profiles"
 |	time=1736520508
 mklink /D "C:\Users\Manisk\AppData\Local\installer\osd\msi" "C:\Program Files (x86)\MSI Afterburner\Profiles"
 |	time=1736717031
-ls
+|s
 |	time=1736717032
-dir
+|ir
 |	time=1736717033
 which
 |	time=1736717034
 which 
+|	time=1736745571
+|cdedit  /enum
+|	time=1736745602
+|s
+|	time=1736745606
+ls
+|	time=1736745607
+dir
+|	time=1736745623
+bcdedit  /enum
+|	time=1736745675
+pwsh
