@@ -12,7 +12,7 @@ return {
 		-- refer to the configuration section below
 		window = {
 			backdrop = 1,
-			width = 130,
+			width = 143,
 			height = 1,
 			options = {
 				-- Uncomment any options you'd like to use

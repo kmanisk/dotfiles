@@ -734,3 +734,6 @@ function Pin-WingetPackage {
 Pin-ChocoPackage -packageName "zoxide"
 Pin-ChocoPackage -packageName "autohotkey"
 Pin-WingetPackage -packageId "AutoHotkey.AutoHotkey"
+
+$varia = Get-ExecutionPolicy
+Write-Host "Execution Policy: $varia" -ForegroundColor Red
