@@ -27,7 +27,6 @@ function Check-And-AddBucket {
         Write-Host "✓ Scoop bucket '$bucketName' is already installed" -ForegroundColor Green
         return
     }
-    else {}
     Write-Host "Installing Scoop bucket: $bucketName..." -ForegroundColor Yellow
     scoop bucket add $bucketName $bucketUrl
     Write-Host "✓ Successfully added bucket: $bucketName" -ForegroundColor Green
