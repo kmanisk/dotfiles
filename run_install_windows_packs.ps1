@@ -33,6 +33,7 @@ function Check-And-AddBucket {
     Write-Host "✓ Successfully added bucket: $bucketName" -ForegroundColor Green
 }
 
+
 # Function to install Scoop
 function Install-Scoop {
     if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
