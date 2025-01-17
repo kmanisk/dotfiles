@@ -16,6 +16,11 @@ function extedit{
     nvim $ext
 
 }
+function epack{
+    $paths = Join-Path $Home "appdata\local\installer\packages.json"
+    nvim $paths
+
+}
 function his{
     cat (Get-PSReadLineOption).HistorySavePath
 }

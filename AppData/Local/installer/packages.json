@@ -13,7 +13,6 @@
 	  "teracopy-np",
       "fzf",
       "psfzf",
-	  "extras/ldplayer",
       "less",
       "bat",
 	  "dark",
@@ -72,7 +71,6 @@
       "starship",
 	  "irfanview",
 	  "lsd",
-	  "vmwareworkstation"
     ]
   }
 }
