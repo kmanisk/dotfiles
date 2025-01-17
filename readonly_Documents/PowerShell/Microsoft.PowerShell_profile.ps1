@@ -220,6 +220,7 @@ function ff($name) {
 function uall {
     scoop update *
     choco upgrade all
+    winget upgrade --all
 }
 
 
