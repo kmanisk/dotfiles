@@ -661,9 +661,9 @@ switch ($choice.ToLower()) {
         # Install Scoop packages
         #
         Write-Host "========================================"
-        # Install-ScoopPackages -packages $config.scoop.mini
+        Install-ScoopPackages -packages $config.scoop.mini
         # Call scoopinstallmini.ps1
-        & "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopinstallmini.ps1"
+        # & "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopinstallmini.ps1"
         
         
         Write-Host "========================================"
@@ -681,8 +681,8 @@ switch ($choice.ToLower()) {
         # Install Scoop packages
         Write-Host "========================================"
         # Call scoopinstallfull.ps1
-        & "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopinstallfull.ps1"
-        # Install-ScoopPackages -packages $config.scoop.full
+        # & "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopinstallfull.ps1"
+        Install-ScoopPackages -packages $config.scoop.full
         Write-Host "========================================"
         # Install Winget packages
         Install-WingetPackages -packages $config.winget.full
