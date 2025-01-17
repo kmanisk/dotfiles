@@ -663,6 +663,7 @@ switch ($choice.ToLower()) {
         Write-Host "========================================"
         # Install-ScoopPackages -packages $config.scoop.mini
         
+        
         Write-Host "========================================"
         # Install Winget packages
         Install-WingetPackages -packages $config.winget.mini
