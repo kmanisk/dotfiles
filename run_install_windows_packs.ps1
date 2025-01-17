@@ -26,9 +26,9 @@ function Check-And-AddBucket {
     $currentBuckets = scoop bucket list
 
     # Loop through each bucket and print its name
-    foreach ($bucket in $currentBuckets) {
-        Write-Host "Current Bucket Name: $($bucket.Name)"
-    }
+    # foreach ($bucket in $currentBuckets) {
+    #     Write-Host "Current Bucket Name: $($bucket.Name)"
+    # }
 
     # Check if the specified bucket is already in the list
     if ($currentBuckets.Name -notcontains $bucketName) {
