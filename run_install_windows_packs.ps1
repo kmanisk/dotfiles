@@ -31,7 +31,7 @@ function Check-And-AddBucket {
     Write-Host "Installing Scoop bucket: $bucketName..." -ForegroundColor Yellow
     scoop bucket add $bucketName $bucketUrl
     Write-Host "✓ Successfully added bucket: $bucketName" -ForegroundColor Green
-} # Added closing brace here
+} 
 
 
 # Function to install Scoop
