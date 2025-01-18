@@ -6,7 +6,8 @@
       "bat",
       "ripgrep",
 	  "extras/neovide",
-      "neovim"
+      "neovim",
+	  "starship"
     ],
     "full": [
 	  "7zip",
@@ -29,7 +30,8 @@
 	  "extras/nvcleanstall",
 	  "main/win32yank",
 	  "ntop",
-	  "lsd"
+	  "lsd",
+	  "starship"
     ]
   },
   "winget": {
@@ -54,7 +56,6 @@
     "mini": [
       "7zip",
       "autohotkey",
-      "starship",
 	  "zoxide --version=0.9.0"
     ],
     "full": [
@@ -65,12 +66,11 @@
       "ueli",
       "sharex",
       "everything",
-    "microsoft-windows-terminal",
+      "microsoft-windows-terminal",
       "vlc",
       "tldr-plusplus",
       "autohotkey",
       "zoxide --version=0.9.0",
-      "starship",
 	  "irfanview"
     ]
   }
