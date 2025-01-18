@@ -102,9 +102,9 @@ $installAll = Read-Host "y/n"
 
 if ($installAll -eq 'y') {
 	Install-Scoop
-  Write-Host "======================================================"
+	Write-Host "======================================================"
 	Install-Chocolatey
-  Write-Host "======================================================"
+	Write-Host "======================================================"
 }
 
 # Call the function to ensure Winget is installed
@@ -121,3 +121,6 @@ winget install twpayne.chezmoi --accept-package-agreements --accept-source-agree
 winget install Git.Git --accept-package-agreements --accept-source-agreements
 winget install -e --id GitHub.cli --accept-package-agreements --accept-source-agreements
 winget install --id=DEVCOM.JetBrainsMonoNerdFont -e --accept-package-agreements --accept-source-agreements
+
+# scoop packages to install
+scoop install main/python

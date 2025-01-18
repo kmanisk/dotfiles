@@ -10,64 +10,61 @@ function Is-Admin {
 Import-Module Microsoft.PowerShell.Utility
 # Install-Module z -AllowClobber
 # its different than the zoxide command 
-
-
-#  Function to check if a Scoop bucket exists
-
-
-
-function Check-And-AddBucket {
+function Add-ScoopBuckets {
     param (
-        [string]$bucketName,
-        [string]$bucketUrl
+        [hashtable]$buckets
     )
-
-    # Get the list of current buckets
+    
     $currentBuckets = scoop bucket list
-
-    # Loop through each bucket and print its name
-    # foreach ($bucket in $currentBuckets) {
-    #     Write-Host "Current Bucket Name: $($bucket.Name)"
-    # }
-
-    # Check if the specified bucket is already in the list
-    if ($currentBuckets.Name -notcontains $bucketName) {
-        # If not, add the bucket
-        scoop bucket add $bucketName $bucketUrl
-        Write-Host "Bucket '$bucketName' added successfully."
-    }
-    else {
-        Write-Host "Bucket '$bucketName' already exists."
+    
+    foreach ($bucket in $buckets.GetEnumerator()) {
+        if ($currentBuckets.Name -notcontains $bucket.Key) {
+            Write-Host "Adding bucket: $($bucket.Key)"
+            if ($bucket.Value) {
+                scoop bucket add $bucket.Key $bucket.Value
+            }
+            else {
+                scoop bucket add $bucket.Key
+            }
+        }
+        else {
+            Write-Host "Bucket '$($bucket.Key)' already exists"
+        }
     }
 }
 
-# Function to install Scoop
 function Install-Scoop {
     if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
         Write-Host "Installing Scoop..."
+        $installCommand = "& {$(Invoke-RestMethod get.scoop.sh)} -RunAsAdmin"
         if (-not (Is-Admin)) {
             Write-Host "Installing Scoop"
-            Write-Host "iex ""& {$(Invoke-RestMethod get.scoop.sh)} -RunAsAdmin"""
+            Write-Host $installCommand
         }
         else {
             Write-Host "Running Scoop installation with elevated permissions..."
-            Invoke-Expression "& {$(Invoke-RestMethod get.scoop.sh)} -RunAsAdmin"
+            Invoke-Expression $installCommand
         }
     }
     else {
         Write-Host "========================================="
         Write-Host "Scoop is already installed."
-        # Check and add buckets
-        Check-And-AddBucket -bucketName "extras" -bucketUrl ""
-        Check-And-AddBucket -bucketName "java" -bucketUrl ""
-        Check-And-AddBucket -bucketName "versions" -bucketUrl ""
-        Check-And-AddBucket -bucketName "nerd-fonts" -bucketUrl ""
-        Check-And-AddBucket -bucketName "volllly" -bucketUrl "https://github.com/volllly/scoop-bucket.git"
-        Check-And-AddBucket -bucketName "shemnei" -bucketUrl "https://github.com/Shemnei/scoop-bucket.git"
-        Check-And-AddBucket -bucketName "nonportable" -bucketUrl "https://github.com/Shemnei/scoop-bucket.git"
-        # Check-And-AddBucket -bucketName "kkzzhizhou_scoop-apps" -bucketUrl "https://github.com/kkzzhizhou/scoop-apps"
+        
+        $bucketConfig = @{
+            'extras'      = ''
+            'java'        = ''
+            'versions'    = ''
+            'nerd-fonts'  = ''
+            'volllly'     = 'https://github.com/volllly/scoop-bucket.git'
+            'shemnei'     = 'https://github.com/Shemnei/scoop-bucket.git'
+            'nonportable' = 'https://github.com/Shemnei/scoop-bucket.git'
+        }
+        
+        Add-ScoopBuckets -buckets $bucketConfig
     }
 }
+
+
 function Install-Chocolatey {
     if (-not (Get-Command choco -ErrorAction SilentlyContinue)) {
         Write-Host "Chocolatey is not installed. Installing Chocolatey..."
@@ -108,12 +105,8 @@ Write-Host "========================================"
 Install-Winget
 Write-Host "========================================"
 
-Import-Module Microsoft.PowerShell.Utility
-# Load the JSON configuration from the user's home directory
 $configPath = Join-Path $HOME ".local\share\chezmoi\AppData\Local\installer\packages.json"
-
 $path = Join-Path -Path $HOME -ChildPath ".local\share\chezmoi\AppData\Local\installer\packages.json"
-Microsoft.PowerShell.Utility\Get-FileHash -Path $path
 # Write-Host "Config Path : $configPath"
 $config = Get-Content -Path $configPath | ConvertFrom-Json
 # Function to install Scoop packages
