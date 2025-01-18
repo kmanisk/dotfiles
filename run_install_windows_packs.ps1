@@ -81,11 +81,6 @@ function Install-Chocolatey {
         Write-Host "Chocolatey is already installed."
     }
 
-    # Configure Chocolatey settings
-    # Write-Host "Configuring Chocolatey settings..." -ForegroundColor Yellow
-    # choco feature enable -n allowGlobalConfirmation
-    # choco feature enable -n allowemptychecksums
-    # choco feature enable -n checksumFiles
 }
 # Function to install Winget
 function Install-Winget {
@@ -100,22 +95,18 @@ function Install-Winget {
 }
 
 
-$configPath = Join-Path $HOME ".local\share\chezmoi\AppData\Local\installer\packages.json"
-$path = Join-Path -Path $HOME -ChildPath ".local\share\chezmoi\AppData\Local\installer\packages.json"
-# Write-Host "Config Path : $configPath"
-$config = Get-Content -Path $configPath | ConvertFrom-Json
 # Function to install Scoop packages
-function Install-ScoopPackages {
-    param (
-        [string[]]$packages  # Accept an array of package names
-    )
-
-    foreach ($package in $packages) {
-        Write-Host "Installing Scoop package: $package"
-        scoop install $package 
-        Write-Host ""
-    }
-}
+# function Install-ScoopPackages {
+#     param (
+#         [string[]]$packages  
+#     )
+#
+#     foreach ($package in $packages) {
+#         Write-Host "Installing Scoop package: $package"
+#         scoop install $package 
+#         Write-Host ""
+#     }
+# }
 function Install-ChocoPackages {
     param (
         [string[]]$packages
@@ -307,65 +298,6 @@ function Move-ConfigFolder {
     Move-FileSafely -sourcePath $vscodiumSourcePath -destinationPath $vscodiumDestPath
 }
 
-# function Install-VSCodeExtensions {
-#     $vscodeInstalled = Get-Command code -ErrorAction SilentlyContinue
-#     $vscodiumInstalled = Get-Command codium -ErrorAction SilentlyContinue
-#
-#     if (-not $vscodeInstalled) {
-#         Write-Host "VSCode is not installed. Installing via Chocolatey..."
-#         choco install vscode -y
-#     }
-#     else {
-#         Write-Host "VSCode is already installed."
-#     }
-#
-#     if (-not $vscodiumInstalled) {
-#         Write-Host "VSCodium is not installed. Installing via Chocolatey..."
-#         choco install vscodium -y
-#     }
-#     else {
-#         Write-Host "VSCodium is already installed."
-#     }
-#
-#     if ($vscodeInstalled -or $vscodiumInstalled) {
-#         $extensionsFilePath = Join-Path $HOME ".local\share\chezmoi\AppData\Local\installer\vscode.txt"
-#         
-#         if (Test-Path $extensionsFilePath) {
-#             $desiredExtensions = Get-Content -Path $extensionsFilePath
-#             $vscodeExtensions = @()
-#             $vscodiumExtensions = @()
-#             
-#             if ($vscodeInstalled) {
-#                 $vscodeExtensions = & code --list-extensions
-#                 $unmatchedVSCode = $vscodeExtensions | Where-Object { $desiredExtensions -notcontains $_ }
-#                 if ($unmatchedVSCode) {
-#                     Write-Host "`nUnmatched VSCode Extensions:" -ForegroundColor Yellow
-#                     $unmatchedVSCode | ForEach-Object { Write-Host "  - $_" }
-#                 }
-#             }
-#             
-#             if ($vscodiumInstalled) {
-#                 $vscodiumExtensions = & codium --list-extensions
-#                 $unmatchedVSCodium = $vscodiumExtensions | Where-Object { $desiredExtensions -notcontains $_ }
-#                 if ($unmatchedVSCodium) {
-#                     Write-Host "`nUnmatched VSCodium Extensions:" -ForegroundColor Yellow
-#                     $unmatchedVSCodium | ForEach-Object { Write-Host "  - $_" }
-#                 }
-#             }
-#
-#             $removeConfirmation = Read-Host "`nDo you want to remove unmatched extensions? (y/n)"
-#             
-#             # Rest of your existing code for handling VSCode and VSCodium extensions...
-#             # [Previous implementation continues here]
-#         }
-#         else {
-#             Write-Host "Extensions file not found at $extensionsFilePath."
-#         }
-#     }
-#     else {
-#         Write-Host "Neither VSCode nor VSCodium is installed. Cannot manage extensions."
-#     }
-# }
 function Install-VSCodeExtensions {
     $vscodeInstalled = Get-Command code -ErrorAction SilentlyContinue
     $vscodiumInstalled = Get-Command codium -ErrorAction SilentlyContinue
@@ -624,6 +556,9 @@ function Set-PermanentMachine {
 
 }
 
+$configPath = Join-Path $HOME ".local\share\chezmoi\AppData\Local\installer\packages.json"
+$path = Join-Path -Path $HOME -ChildPath ".local\share\chezmoi\AppData\Local\installer\packages.json"
+$config = Get-Content -Path $configPath | ConvertFrom-Json
 # Prompt the user for installation type
 $choice = Read-Host "Choose installation type (mini/full)"
 switch ($choice.ToLower()) {
