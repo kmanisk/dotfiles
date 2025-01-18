@@ -624,7 +624,7 @@ $env:SCCACHE_DIR = "C:\sccache_cache"
 
 # env print Shortcuts
 function envs {
-    Get-ChildItem Env:
+$env:PATH -split ";"
 }
 # Directory Management
 function mkcd { param($dir) mkdir $dir -Force; Set-Location $dir }
