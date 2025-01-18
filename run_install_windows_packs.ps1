@@ -705,7 +705,10 @@ function Pin-WingetPackage {
     }
 }
 
+Write-Host "================================================================================================="
 # Call the function to pin zoxide
 Pin-ChocoPackage -packageName "zoxide"
+Write-Host "================================================================================================="
 Pin-ChocoPackage -packageName "autohotkey"
+Write-Host "================================================================================================="
 Pin-WingetPackage -packageId "AutoHotkey.AutoHotkey"

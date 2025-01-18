@@ -12,7 +12,6 @@ ms-python.debugpy
 ms-python.python
 ms-vscode.live-server
 ms-vscode.powershell
-nabeeltahirdeveloper.theme-cobalt2-dark
 nicohlr.pycharm
 robole.file-bunny
 sourcegraph.cody-ai
