@@ -665,10 +665,10 @@ switch ($choice.ToLower()) {
         # Install Scoop packages
         #
         Write-Host "========================================"
-        Install-ScoopPackages -packages $config.scoop.mini
-        # Call scoopinstallmini.ps1
-        # & "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopinstallmini.ps1"
-        
+        # old method get-filehash issue
+        # Install-ScoopPackages -packages $config.scoop.mini
+        # Call scoopmini.py
+        python "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopmini.py"
         
         Write-Host "========================================"
         # Install Winget packages
@@ -684,10 +684,11 @@ switch ($choice.ToLower()) {
         # Install full packages
         # Install Scoop packages
         Write-Host "========================================"
-        # Call scoopinstallfull.ps1
-        # & "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopinstallfull.ps1"
-        Install-ScoopPackages -packages $config.scoop.full
+        # issue
+        # Install-ScoopPackages -packages $config.scoop.full
         Write-Host "========================================"
+        # Call scoopfull.py
+        python "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopfull.py"
         # Install Winget packages
         Install-WingetPackages -packages $config.winget.full
         Write-Host "========================================"

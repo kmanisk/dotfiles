@@ -28,7 +28,8 @@
 	  "extras/winaero-tweaker",
 	  "extras/nvcleanstall",
 	  "main/win32yank",
-	  "ntop"
+	  "ntop",
+	  "lsd"
     ]
   },
   "winget": {
@@ -70,8 +71,7 @@
       "autohotkey",
       "zoxide --version=0.9.0",
       "starship",
-	  "irfanview",
-	  "lsd"
+	  "irfanview"
     ]
   }
 }
