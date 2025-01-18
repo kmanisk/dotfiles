@@ -631,9 +631,14 @@ switch ($choice.ToLower()) {
         # Install Scoop packages
         # old method get-filehash issue
         # Install-ScoopPackages -packages $config.scoop.mini
-        # Call scoopmini.py
         # python "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopmini.py"
-        & "$HOME\scoop\apps\python\current\python.exe" "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopmini.py"
+        if (Test-Path "$HOME\scoop\apps\python\current\python.exe") {
+            & "$HOME\scoop\apps\python\current\python.exe" "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopmini.py"
+        }
+        else {
+            python "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopmini.py"
+        }
+
 
         
         Write-Host "=============================================================================================================================================="
@@ -653,7 +658,13 @@ switch ($choice.ToLower()) {
         Write-Host "=============================================================================================================================================="
         # Call scoopfull.py
         # python "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopfull.py"
-        & "$HOME\scoop\apps\python\current\python.exe" "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopfull.py"
+        ## Try scoop python first, fallback to regular python if not available
+        if (Test-Path "$HOME\scoop\apps\python\current\python.exe") {
+            & "$HOME\scoop\apps\python\current\python.exe" "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopfull.py"
+        }
+        else {
+            python "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopfull.py"
+        }
 
         # Install Winget packages
         Write-Host "=============================================================================================================================================="
