@@ -121,15 +121,21 @@ function Install-ScoopPackages {
         Write-Host ""
     }
 }
-
 function Install-ChocoPackages {
     param (
         [string[]]$packages
     )
     
-    # Get list of installed packages
-    $installedPackages = choco list | ForEach-Object { ($_ -split '\|')[0] }
-    
+    # Get list of installed packages with versions
+    $installedPackages = choco list | ForEach-Object {
+        if ($_ -match '^(\S+)\s+(\S+)') {
+            @{
+                Name    = $matches[1]
+                Version = $matches[2]
+            }
+        }
+    }
+
     # Separate packages into versioned and non-versioned
     $packagesToInstall = @()
     $versionedPackages = @()
@@ -138,18 +144,29 @@ function Install-ChocoPackages {
         if ($package -match "^(.*) --version=(.*)$") {
             $packageName = $matches[1]
             $version = $matches[2]
-            if ($installedPackages -notcontains $packageName) {
+            $installed = $installedPackages | Where-Object { $_.Name -eq $packageName }
+            
+            if (-not $installed) {
                 $versionedPackages += @{Name = $packageName; Version = $version }
             }
+            else {
+                Write-Host "Package already installed: $packageName ($($installed.Version))"
+            }
         }
-        elseif ($installedPackages -notcontains $package) {
-            $packagesToInstall += $package
+        else {
+            $installed = $installedPackages | Where-Object { $_.Name -eq $package }
+            if (-not $installed) {
+                $packagesToInstall += $package
+            }
+            else {
+                Write-Host "Package already installed: $package ($($installed.Version))"
+            }
         }
     }
     
-    # Batch install non-versioned packages
+    # Install non-versioned packages in batch if any
     if ($packagesToInstall.Count -gt 0) {
-        Write-Host "Installing packages: $($packagesToInstall -join ', ')"
+        Write-Host "Installing new packages: $($packagesToInstall -join ', ')"
         choco install $packagesToInstall -y
     }
     
@@ -159,6 +176,7 @@ function Install-ChocoPackages {
         choco install $pkg.Name --version=$($pkg.Version) -y
     }
 }
+
 function Install-WingetPackages {
     param (
         [string[]]$packages
