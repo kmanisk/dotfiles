@@ -111,7 +111,9 @@ Write-Host "========================================"
 Import-Module Microsoft.PowerShell.Utility
 # Load the JSON configuration from the user's home directory
 $configPath = Join-Path $HOME ".local\share\chezmoi\AppData\Local\installer\packages.json"
-Get-FileHash -Path Join-Path $home ".local\share\chezmoi\AppData\Local\installer\packages.json"
+
+$path = Join-Path -Path $HOME -ChildPath ".local\share\chezmoi\AppData\Local\installer\packages.json"
+Microsoft.PowerShell.Utility\Get-FileHash -Path $path
 # Write-Host "Config Path : $configPath"
 $config = Get-Content -Path $configPath | ConvertFrom-Json
 # Function to install Scoop packages
