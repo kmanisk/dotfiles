@@ -16,6 +16,7 @@
       "psfzf",
       "less",
       "bat",
+	  "neovim",
   	  "dark",
       "vifm",
       "gcc",

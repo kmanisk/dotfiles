@@ -2,6 +2,9 @@
 <NotepadPlus>
     <FindHistory nbMaxFindHistoryPath="10" nbMaxFindHistoryFilter="10" nbMaxFindHistoryFind="10" nbMaxFindHistoryReplace="10" matchWord="no" matchCase="no" wrap="yes" directionDown="yes" fifRecuisive="yes" fifInHiddenFolder="no" fifProjectPanel1="no" fifProjectPanel2="no" fifProjectPanel3="no" fifFilterFollowsDoc="no" fifFolderFollowsDoc="no" searchMode="0" transparencyMode="1" transparency="150" dotMatchesNewline="no" isSearch2ButtonsMode="no" regexBackward4PowerUser="no" bookmarkLine="no" purge="no">
         <Filter name="" />
+        <Find name="neovim" />
+        <Find name="nvim" />
+        <Find name="noevim" />
         <Find name="qt" />
         <Find name="revo" />
         <Find name="zed" />
@@ -9,21 +12,19 @@
         <Find name="extension" />
         <Find name="fast" />
         <Find name="autohotkey" />
-        <Find name="every" />
-        <Find name="tracer" />
-        <Find name="steam" />
         <Replace name="maniskpr" />
     </FindHistory>
     <History nbMaxFile="10" inSubMenu="no" customLength="-1">
-        <File filename="C:\Users\Manisk\AppData\Local\installer\backup.txt" />
-        <File filename="E:\tools\SaveMerge 1.0\readme.txt" />
-        <File filename="C:\Users\Manisk\AppData\Roaming\DarkSoulsIII\GraphicsConfig.xml" />
-        <File filename="E:\Dark Souls 3\Game\honestMerchant.ini" />
-        <File filename="C:\Users\Administrator\AppData\Roaming\ueli\config.json" />
         <File filename="C:\Users\Administrator\AppData\Roaming\Code\User\settings.json" />
         <File filename="C:\Users\Administrator\.local\share\chezmoi\run_install_windows_packs.ps1" />
         <File filename="C:\Program Files\VSCodium\resources\app\package.json" />
         <File filename="C:\Users\Administrator\AppData\Local\installer\extension.txt" />
+        <File filename="C:\Users\Administrator\AppData\Local\installer\spotify.ps1" />
+        <File filename="C:\Users\Administrator\Desktop\remember.txt" />
+        <File filename="C:\Users\Administrator\Desktop\new 1.txt" />
+        <File filename="C:\Program Files\VSCodium\resources\app\product.json" />
+        <File filename="C:\Users\Administrator\AppData\Roaming\vifm\scripts\README" />
+        <File filename="C:\Windows.old\ProgramData\chocolatey\config\chocolatey.config" />
     </History>
     <ProjectPanels>
         <ProjectPanel id="0" workSpaceFile="" />
@@ -41,7 +42,7 @@
         <GUIConfig name="ScintillaViewsSplitter">vertical</GUIConfig>
         <GUIConfig name="UserDefineDlg" position="undocked">hide</GUIConfig>
         <GUIConfig name="TabSetting" replaceBySpace="no" size="4" backspaceUnindent="no" />
-        <GUIConfig name="AppPosition" x="262" y="88" width="1343" height="910" isMaximized="no" />
+        <GUIConfig name="AppPosition" x="279" y="24" width="1343" height="910" isMaximized="no" />
         <GUIConfig name="FindWindowPosition" left="659" top="367" right="1262" bottom="726" isLessModeOn="no" />
         <GUIConfig name="FinderConfig" wrappedLines="no" purgeBeforeEverySearch="no" showOnlyOneEntryPerFoundLine="yes" />
         <GUIConfig name="noUpdate" intervalDays="15" nextUpdateDate="20250128">no</GUIConfig>
