@@ -626,9 +626,7 @@ function Set-PermanentMachine {
 $choice = Read-Host "Choose installation type (mini/full)"
 switch ($choice.ToLower()) {
     "mini" {
-        # Install mini packages
         # Install Scoop packages
-        #
         # old method get-filehash issue
         # Install-ScoopPackages -packages $config.scoop.mini
         # Call scoopmini.py

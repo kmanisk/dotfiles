@@ -16,6 +16,70 @@ function extedit{
     nvim $ext
 
 }
+# Custom key handlers
+#Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
+#Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
+Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
+#Set-PSReadLineKeyHandler -Chord 'Ctrl+d' -Function DeleteChar
+##Set-PSReadLineKeyHandler -Chord 'Ctrl+w' -Function BackwardDeleteWord
+#Set-PSReadLineKeyHandler -Chord 'Alt+d' -Function DeleteWord
+#Set-PSReadLineKeyHandler -Chord 'Ctrl+LeftArrow' -Function BackwardWord
+#Set-PSReadLineKeyHandler -Chord 'Ctrl+RightArrow' -Function ForwardWord
+#Set-PSReadLineKeyHandler -Chord 'Ctrl+z' -Function Undo
+#Set-PSReadLineKeyHandler -Chord 'Ctrl+y' -Function Redo
+function vssync {
+    $extensionsFilePath = Join-Path $HOME ".local\share\chezmoi\AppData\Local\installer\vscode.txt"
+    
+    if (Test-Path $extensionsFilePath) {
+        $desiredExtensions = Get-Content -Path $extensionsFilePath
+        $currentExtensions = @()
+        
+        # Get extensions from both editors
+        if (Get-Command code -ErrorAction SilentlyContinue) {
+            $currentExtensions += & code --list-extensions
+            # Install missing extensions from txt to VSCode
+            foreach ($ext in $desiredExtensions) {
+                if ($currentExtensions -notcontains $ext) {
+                    Write-Host "Installing $ext to VSCode..." -ForegroundColor Blue
+                    & code --install-extension $ext
+                }
+            }
+        }
+        
+        if (Get-Command codium -ErrorAction SilentlyContinue) {
+            $currentExtensions += & codium --list-extensions
+            # Install missing extensions from txt to VSCodium
+            foreach ($ext in $desiredExtensions) {
+                if ($currentExtensions -notcontains $ext) {
+                    Write-Host "Installing $ext to VSCodium..." -ForegroundColor Blue
+                    & codium --install-extension $ext
+                }
+            }
+        }
+
+        # Rest of the sync logic for vscode.txt remains the same
+        $extraExtensions = $currentExtensions | Where-Object { $desiredExtensions -notcontains $_ }
+        
+        if ($extraExtensions) {
+            Write-Host "`nFound additional extensions not in vscode.txt:" -ForegroundColor Yellow
+            $extraExtensions | ForEach-Object { Write-Host "  - $_" }
+            
+            $confirmation = Read-Host "`nWould you like to sync these extensions with vscode.txt? (y/n)"
+            if ($confirmation -eq 'y') {
+                $allExtensions = $desiredExtensions + $extraExtensions | Sort-Object -Unique
+                $allExtensions | Set-Content -Path $extensionsFilePath
+                Write-Host "vscode.txt has been updated with all extensions" -ForegroundColor Green
+            }
+        } else {
+            Write-Host "All extensions are in sync" -ForegroundColor Green
+        }
+    } else {
+        Write-Host "Creating new vscode.txt with current extensions..."
+        $currentExtensions | Set-Content -Path $extensionsFilePath
+        Write-Host "vscode.txt created successfully" -ForegroundColor Green
+    }
+}
+
 function epack{
     $paths = Join-Path $Home "appdata\local\installer\packages.json"
     nvim $paths
@@ -141,13 +205,36 @@ function shutit {
 #fastfetch
 
 
+# Enhanced PowerShell Experience
+# Enhanced PSReadLine Configuration
+$PSReadLineOptions = @{
+    EditMode = 'Windows'
+    HistoryNoDuplicates = $true
+    HistorySearchCursorMovesToEnd = $true
+    Colors = @{
+        Command = '#87CEEB'  # SkyBlue (pastel)
+        Parameter = '#98FB98'  # PaleGreen (pastel)
+        Operator = '#FFB6C1'  # LightPink (pastel)
+        Variable = '#DDA0DD'  # Plum (pastel)
+        String = '#FFDAB9'  # PeachPuff (pastel)
+        Number = '#B0E0E6'  # PowderBlue (pastel)
+        Type = '#F0E68C'  # Khaki (pastel)
+        Comment = '#D3D3D3'  # LightGray (pastel)
+        Keyword = '#8367c7'  # Violet (pastel)
+        Error = '#FF6347'  # Tomato (keeping it close to red for visibility)
+    }
+    PredictionSource = 'History'
+    PredictionViewStyle = 'ListView'
+    BellStyle = 'None'
+}
+
+Set-PSReadLineOption @PSReadLineOptions
 if ($Host.Name -notmatch 'ConsoleHost') {
     # Disable predictive suggestions for non-interactive shells
     Set-PSReadLineOption -PredictionSource None
 }
 else {
     # Enable predictive suggestions for interactive shells
-    #Set-PSReadLineOption -PredictionSource HistoryAndPlugin
     Set-PSReadLineOption -PredictionSource HistoryAndPlugin
     Set-PSReadLineOption -PredictionViewStyle ListView
     Set-PSReadLineOption -EditMode Windows
