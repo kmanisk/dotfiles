@@ -102,11 +102,14 @@ $installAll = Read-Host "y/n"
 
 if ($installAll -eq 'y') {
 	Install-Scoop
+  Write-Host "======================================================"
 	Install-Chocolatey
+  Write-Host "======================================================"
 }
 
 # Call the function to ensure Winget is installed
 Install-Winget
+Write-Host "======================================================"
 
 Write-Host "Installing first Core Packages" -ForegroundColor Yellow
 # winget install twpayne.chezmoi
