@@ -208,7 +208,6 @@ function Install-WingetPackages {
 
 
 # PermanentMachine Setup Function to call in the full setup section if chosen by the user
-
 function Install-OSDLayout {
     # Set location to the source directory
     Set-Location -Path "$HOME\.local\share\chezmoi\appdata\local\OSD"
@@ -221,6 +220,12 @@ function Install-OSDLayout {
     $msiTarget = "C:\Program Files (x86)\MSI Afterburner\Profiles"
     $rivaTarget = "C:\Program Files (x86)\RivaTuner Statistics Server\Profiles"
 
+    # Check if profiles already exist
+    if ((Test-Path "$msiTarget\*") -or (Test-Path "$rivaTarget\*")) {
+        Write-Host "Profiles already exist. Skipping installation." -ForegroundColor Yellow
+        return
+    }
+
     # Check if source directories exist and have files
     $msiHasFiles = (Test-Path $msiSource) -and (@(Get-ChildItem -Path $msiSource -File -Recurse).Count -gt 0)
     $rivaHasFiles = (Test-Path $rivaSource) -and (@(Get-ChildItem -Path $rivaSource -File -Recurse).Count -gt 0)
@@ -230,7 +235,7 @@ function Install-OSDLayout {
         return
     }
 
-    # Ensure the target directories exist, create them if they don't
+    # Create target directories if they don't exist
     foreach ($dir in @($msiTarget, $rivaTarget)) {
         if (-not (Test-Path $dir)) {
             Write-Host "Creating directory at $dir"
@@ -238,32 +243,14 @@ function Install-OSDLayout {
         }
     }
 
-    # Check if any profiles exist and handle copying
-    if ((Test-Path "$msiTarget\*") -or (Test-Path "$rivaTarget\*")) {
-        $confirmation = Read-Host "Existing profiles found. Do you want to overwrite? (y/n)"
-        if ($confirmation -eq 'y') {
-            if ($msiHasFiles) { 
-                Copy-Item -Path "$msiSource\*" -Destination $msiTarget -Recurse -Force 
-                Write-Host "MSI profiles copied" -ForegroundColor Green
-            }
-            if ($rivaHasFiles) { 
-                Copy-Item -Path "$rivaSource\*" -Destination $rivaTarget -Recurse -Force 
-                Write-Host "RivaTuner profiles copied" -ForegroundColor Green
-            }
-        }
-        else {
-            Write-Host "Profile update skipped" -ForegroundColor Yellow
-        }
+    # Install profiles
+    if ($msiHasFiles) { 
+        Copy-Item -Path "$msiSource\*" -Destination $msiTarget -Recurse -Force 
+        Write-Host "MSI profiles installed" -ForegroundColor Green
     }
-    else {
-        if ($msiHasFiles) { 
-            Copy-Item -Path "$msiSource\*" -Destination $msiTarget -Recurse -Force 
-            Write-Host "MSI profiles installed" -ForegroundColor Green
-        }
-        if ($rivaHasFiles) { 
-            Copy-Item -Path "$rivaSource\*" -Destination $rivaTarget -Recurse -Force 
-            Write-Host "RivaTuner profiles installed" -ForegroundColor Green
-        }
+    if ($rivaHasFiles) { 
+        Copy-Item -Path "$rivaSource\*" -Destination $rivaTarget -Recurse -Force 
+        Write-Host "RivaTuner profiles installed" -ForegroundColor Green
     }
 }
 
