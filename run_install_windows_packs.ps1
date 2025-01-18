@@ -652,6 +652,7 @@ switch ($choice.ToLower()) {
         # Call scoopfull.py
         python "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopfull.py"
         # Install Winget packages
+        Write-Host "=============================================================================================================================================="
         Install-WingetPackages -packages $config.winget.full
         Write-Host "=============================================================================================================================================="
         # Install Chocolatey packages
