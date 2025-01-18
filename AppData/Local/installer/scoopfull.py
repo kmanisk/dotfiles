@@ -39,9 +39,7 @@ def install_scoop_packages():
             print(f"Package already installed: {package_name}")
 
 def main():
-    print("========================================")
     install_scoop_packages()
-    print("========================================")
 
 if __name__ == "__main__":
     main()
