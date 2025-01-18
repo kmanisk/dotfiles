@@ -632,7 +632,9 @@ switch ($choice.ToLower()) {
         # old method get-filehash issue
         # Install-ScoopPackages -packages $config.scoop.mini
         # Call scoopmini.py
-        python "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopmini.py"
+        # python "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopmini.py"
+        & "$HOME\scoop\apps\python\current\python.exe" "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopmini.py"
+
         
         Write-Host "=============================================================================================================================================="
         # Install Winget packages
@@ -650,7 +652,9 @@ switch ($choice.ToLower()) {
         # Install-ScoopPackages -packages $config.scoop.full
         Write-Host "=============================================================================================================================================="
         # Call scoopfull.py
-        python "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopfull.py"
+        # python "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopfull.py"
+        & "$HOME\scoop\apps\python\current\python.exe" "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopfull.py"
+
         # Install Winget packages
         Write-Host "=============================================================================================================================================="
         Install-WingetPackages -packages $config.winget.full
