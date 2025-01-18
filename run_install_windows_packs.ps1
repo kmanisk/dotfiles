@@ -559,13 +559,11 @@ function Set-PermanentMachine {
 $configPath = Join-Path $HOME ".local\share\chezmoi\AppData\Local\installer\packages.json"
 $path = Join-Path -Path $HOME -ChildPath ".local\share\chezmoi\AppData\Local\installer\packages.json"
 $config = Get-Content -Path $configPath | ConvertFrom-Json
-# Prompt the user for installation type
+
 $choice = Read-Host "Choose installation type (mini/full)"
 switch ($choice.ToLower()) {
     "mini" {
-        # Install Scoop packages
-        # old method get-filehash issue
-        # Install-ScoopPackages -packages $config.scoop.mini
+        # old method get-filehash issue # Install-ScoopPackages -packages $config.scoop.mini
         # python "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopmini.py"
         if (Test-Path "$HOME\scoop\apps\python\current\python.exe") {
             & "$HOME\scoop\apps\python\current\python.exe" "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopmini.py"
@@ -577,22 +575,15 @@ switch ($choice.ToLower()) {
 
         
         Write-Host "=============================================================================================================================================="
-        # Install Winget packages
         Install-WingetPackages -packages $config.winget.mini
 
         Write-Host "=============================================================================================================================================="
-        # Install Chocolatey packages
         Install-ChocoPackages -packages $config.choco.mini
 
         Write-Host "=============================================================================================================================================="
     }
     "full" {
-        # Install full packages
-        # Install Scoop packages
-        # Install-ScoopPackages -packages $config.scoop.full
         Write-Host "=============================================================================================================================================="
-        # Call scoopfull.py
-        # python "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopfull.py"
         ## Try scoop python first, fallback to regular python if not available
         if (Test-Path "$HOME\scoop\apps\python\current\python.exe") {
             & "$HOME\scoop\apps\python\current\python.exe" "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopfull.py"
@@ -601,13 +592,10 @@ switch ($choice.ToLower()) {
             python "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopfull.py"
         }
 
-        # Install Winget packages
         Write-Host "=============================================================================================================================================="
         Install-WingetPackages -packages $config.winget.full
         Write-Host "=============================================================================================================================================="
-        # Install Chocolatey packages
         Install-ChocoPackages -packages $config.choco.full
-        #Permanent Machine Setup
         Write-Host "=============================================================================================================================================="
         Set-PermanentMachine
     }
@@ -616,8 +604,7 @@ switch ($choice.ToLower()) {
 Write-Host "Installation completed!" -ForegroundColor Green
 
 
-# Function to pin a Chocolatey package if it is installed
-# after everything pin packages that are stable with a speicifc versions 
+# Function to pin a Chocolatey package if it is installed  after everything pin packages that are stable with a speicifc versions 
 function Pin-ChocoPackage {
     param (
         [string]$packageName
