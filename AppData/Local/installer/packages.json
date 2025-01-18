@@ -72,7 +72,8 @@
       "tldr-plusplus",
       "autohotkey",
       "zoxide --version=0.9.0",
-	    "irfanview"
+	    "irfanview",
+		"vmwareworkstation"
     ]
   }
 }
