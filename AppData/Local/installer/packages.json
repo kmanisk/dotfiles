@@ -31,8 +31,7 @@
   	  "main/win32yank",
   	  "ntop",
   	  "lsd",
-  	  "starship",
-      "anderlli0053_DEV-tools/vmware-workstation-pro"
+  	  "starship"
     ]
   },
   "winget": {
