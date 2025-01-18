@@ -15,3 +15,9 @@ profile:
 	
 install:
 	codium --list-extensions --user-data-dir "$Home\AppData\Roaming\VSCodium\User\profiles\-1eab5c7f" | ForEach-Object { codium --install-extension $_ }
+
+scoop config:
+    aria2-enabled         : True
+    check_verifications   : False
+    aria2-warning-enabled : False
+    aria2-enabled         : True
