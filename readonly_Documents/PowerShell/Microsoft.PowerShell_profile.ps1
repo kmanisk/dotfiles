@@ -16,6 +16,58 @@ function extedit{
     nvim $ext
 
 }
+
+function vsync {
+	$vscodeInstalled = Get-Command code -ErrorAction SilentlyContinue
+	$vscodiumInstalled = Get-Command codium -ErrorAction SilentlyContinue
+	$extensionsFilePath = Join-Path $HOME ".local\share\chezmoi\AppData\Local\installer\vscode.txt"
+
+	if (Test-Path $extensionsFilePath) {
+		$desiredExtensions = Get-Content -Path $extensionsFilePath
+        
+		if ($vscodeInstalled) {
+			$currentVSCodeExtensions = & code --list-extensions
+			$extensionsToAdd = $desiredExtensions | Where-Object { $currentVSCodeExtensions -notcontains $_ }
+			$extensionsToRemove = $currentVSCodeExtensions | Where-Object { $desiredExtensions -notcontains $_ }
+
+			if ($extensionsToAdd -or $extensionsToRemove) {
+				Write-Host "`nVSCode Extensions to Add:" -ForegroundColor Green
+				$extensionsToAdd | ForEach-Object { Write-Host "  + $_" }
+				Write-Host "`nVSCode Extensions to Remove:" -ForegroundColor Red
+				$extensionsToRemove | ForEach-Object { Write-Host "  - $_" }
+
+				$confirmation = Read-Host "`nDo you want to update VSCode extensions? (y/n)"
+				if ($confirmation -eq 'y') {
+					$extensionsToAdd | ForEach-Object { & code --install-extension $_ }
+					$extensionsToRemove | ForEach-Object { & code --uninstall-extension $_ }
+				}
+			}
+		}
+
+		if ($vscodiumInstalled) {
+			$currentVSCodiumExtensions = & codium --list-extensions
+			$extensionsToAdd = $desiredExtensions | Where-Object { $currentVSCodiumExtensions -notcontains $_ }
+			$extensionsToRemove = $currentVSCodiumExtensions | Where-Object { $desiredExtensions -notcontains $_ }
+
+			if ($extensionsToAdd -or $extensionsToRemove) {
+				Write-Host "`nVSCodium Extensions to Add:" -ForegroundColor Green
+				$extensionsToAdd | ForEach-Object { Write-Host "  + $_" }
+				Write-Host "`nVSCodium Extensions to Remove:" -ForegroundColor Red
+				$extensionsToRemove | ForEach-Object { Write-Host "  - $_" }
+
+				$confirmation = Read-Host "`nDo you want to update VSCodium extensions? (y/n)"
+				if ($confirmation -eq 'y') {
+					$extensionsToAdd | ForEach-Object { & codium --install-extension $_ }
+					$extensionsToRemove | ForEach-Object { & codium --uninstall-extension $_ }
+				}
+			}
+		}
+	}
+ else {
+		Write-Host "Extensions file not found at $extensionsFilePath"
+	}
+}
+
 # Custom key handlers
 #Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
 #Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
@@ -27,59 +79,6 @@ Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
 #Set-PSReadLineKeyHandler -Chord 'Ctrl+RightArrow' -Function ForwardWord
 #Set-PSReadLineKeyHandler -Chord 'Ctrl+z' -Function Undo
 #Set-PSReadLineKeyHandler -Chord 'Ctrl+y' -Function Redo
-function vssync {
-    $extensionsFilePath = Join-Path $HOME ".local\share\chezmoi\AppData\Local\installer\vscode.txt"
-    
-    if (Test-Path $extensionsFilePath) {
-        $desiredExtensions = Get-Content -Path $extensionsFilePath
-        $currentExtensions = @()
-        
-        # Get extensions from both editors
-        if (Get-Command code -ErrorAction SilentlyContinue) {
-            $currentExtensions += & code --list-extensions
-            # Install missing extensions from txt to VSCode
-            foreach ($ext in $desiredExtensions) {
-                if ($currentExtensions -notcontains $ext) {
-                    Write-Host "Installing $ext to VSCode..." -ForegroundColor Blue
-                    & code --install-extension $ext
-                }
-            }
-        }
-        
-        if (Get-Command codium -ErrorAction SilentlyContinue) {
-            $currentExtensions += & codium --list-extensions
-            # Install missing extensions from txt to VSCodium
-            foreach ($ext in $desiredExtensions) {
-                if ($currentExtensions -notcontains $ext) {
-                    Write-Host "Installing $ext to VSCodium..." -ForegroundColor Blue
-                    & codium --install-extension $ext
-                }
-            }
-        }
-
-        # Rest of the sync logic for vscode.txt remains the same
-        $extraExtensions = $currentExtensions | Where-Object { $desiredExtensions -notcontains $_ }
-        
-        if ($extraExtensions) {
-            Write-Host "`nFound additional extensions not in vscode.txt:" -ForegroundColor Yellow
-            $extraExtensions | ForEach-Object { Write-Host "  - $_" }
-            
-            $confirmation = Read-Host "`nWould you like to sync these extensions with vscode.txt? (y/n)"
-            if ($confirmation -eq 'y') {
-                $allExtensions = $desiredExtensions + $extraExtensions | Sort-Object -Unique
-                $allExtensions | Set-Content -Path $extensionsFilePath
-                Write-Host "vscode.txt has been updated with all extensions" -ForegroundColor Green
-            }
-        } else {
-            Write-Host "All extensions are in sync" -ForegroundColor Green
-        }
-    } else {
-        Write-Host "Creating new vscode.txt with current extensions..."
-        $currentExtensions | Set-Content -Path $extensionsFilePath
-        Write-Host "vscode.txt created successfully" -ForegroundColor Green
-    }
-}
-
 function epack{
     $paths = Join-Path $Home "appdata\local\installer\packages.json"
     nvim $paths
