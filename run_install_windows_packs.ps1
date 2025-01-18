@@ -576,7 +576,6 @@ switch ($choice.ToLower()) {
         # Install mini packages
         # Install Scoop packages
         #
-        Write-Host "========================================"
         # old method get-filehash issue
         # Install-ScoopPackages -packages $config.scoop.mini
         # Call scoopmini.py
@@ -595,8 +594,6 @@ switch ($choice.ToLower()) {
     "full" {
         # Install full packages
         # Install Scoop packages
-        Write-Host "========================================"
-        # issue
         # Install-ScoopPackages -packages $config.scoop.full
         Write-Host "========================================"
         # Call scoopfull.py
