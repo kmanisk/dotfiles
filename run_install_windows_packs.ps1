@@ -474,6 +474,56 @@ function spot {
     }
 }
 
+function Update-VSCodeExtensions {
+    $vscodeInstalled = Get-Command code -ErrorAction SilentlyContinue
+    $vscodiumInstalled = Get-Command codium -ErrorAction SilentlyContinue
+    $extensionsFilePath = Join-Path $HOME ".local\share\chezmoi\AppData\Local\installer\vscode.txt"
+
+    if (Test-Path $extensionsFilePath) {
+        $desiredExtensions = Get-Content -Path $extensionsFilePath
+        
+        if ($vscodeInstalled) {
+            $currentVSCodeExtensions = & code --list-extensions
+            $extensionsToAdd = $desiredExtensions | Where-Object { $currentVSCodeExtensions -notcontains $_ }
+            $extensionsToRemove = $currentVSCodeExtensions | Where-Object { $desiredExtensions -notcontains $_ }
+
+            if ($extensionsToAdd -or $extensionsToRemove) {
+                Write-Host "`nVSCode Extensions to Add:" -ForegroundColor Green
+                $extensionsToAdd | ForEach-Object { Write-Host "  + $_" }
+                Write-Host "`nVSCode Extensions to Remove:" -ForegroundColor Red
+                $extensionsToRemove | ForEach-Object { Write-Host "  - $_" }
+
+                $confirmation = Read-Host "`nDo you want to update VSCode extensions? (y/n)"
+                if ($confirmation -eq 'y') {
+                    $extensionsToAdd | ForEach-Object { & code --install-extension $_ }
+                    $extensionsToRemove | ForEach-Object { & code --uninstall-extension $_ }
+                }
+            }
+        }
+
+        if ($vscodiumInstalled) {
+            $currentVSCodiumExtensions = & codium --list-extensions
+            $extensionsToAdd = $desiredExtensions | Where-Object { $currentVSCodiumExtensions -notcontains $_ }
+            $extensionsToRemove = $currentVSCodiumExtensions | Where-Object { $desiredExtensions -notcontains $_ }
+
+            if ($extensionsToAdd -or $extensionsToRemove) {
+                Write-Host "`nVSCodium Extensions to Add:" -ForegroundColor Green
+                $extensionsToAdd | ForEach-Object { Write-Host "  + $_" }
+                Write-Host "`nVSCodium Extensions to Remove:" -ForegroundColor Red
+                $extensionsToRemove | ForEach-Object { Write-Host "  - $_" }
+
+                $confirmation = Read-Host "`nDo you want to update VSCodium extensions? (y/n)"
+                if ($confirmation -eq 'y') {
+                    $extensionsToAdd | ForEach-Object { & codium --install-extension $_ }
+                    $extensionsToRemove | ForEach-Object { & codium --uninstall-extension $_ }
+                }
+            }
+        }
+    }
+    else {
+        Write-Host "Extensions file not found at $extensionsFilePath"
+    }
+}
 function install-Curls {
     # Check if already installed
     $gm320Path = "C:\Program Files (x86)\GM320 RGB"
@@ -524,7 +574,7 @@ function install-Curls {
     }
 }
 
-
+# Start OF THE SCRIPTS FIRST INSTALLING PACKAGE MANAGERS
 Install-Scoop
 Write-Host "=============================================================================================================================================="
 Install-Chocolatey
@@ -564,22 +614,16 @@ $choice = Read-Host "Choose installation type (mini/full)"
 switch ($choice.ToLower()) {
     "mini" {
         # old method get-filehash issue # Install-ScoopPackages -packages $config.scoop.mini
-        # python "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopmini.py"
         if (Test-Path "$HOME\scoop\apps\python\current\python.exe") {
             & "$HOME\scoop\apps\python\current\python.exe" "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopmini.py"
         }
         else {
             python "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopmini.py"
         }
-
-
-        
         Write-Host "=============================================================================================================================================="
         Install-WingetPackages -packages $config.winget.mini
-
         Write-Host "=============================================================================================================================================="
         Install-ChocoPackages -packages $config.choco.mini
-
         Write-Host "=============================================================================================================================================="
     }
     "full" {
@@ -591,7 +635,6 @@ switch ($choice.ToLower()) {
         else {
             python "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopfull.py"
         }
-
         Write-Host "=============================================================================================================================================="
         Install-WingetPackages -packages $config.winget.full
         Write-Host "=============================================================================================================================================="
@@ -600,19 +643,14 @@ switch ($choice.ToLower()) {
         Set-PermanentMachine
     }
 }
-
 Write-Host "Installation completed!" -ForegroundColor Green
-
-
 # Function to pin a Chocolatey package if it is installed  after everything pin packages that are stable with a speicifc versions 
 function Pin-ChocoPackage {
     param (
         [string]$packageName
     )
-
     # Check if the package is installed using choco list
     $installedPackages = choco list | Select-String -Pattern $packageName
-
     if ($installedPackages) {
         Write-Host "$packageName is installed. Pinning the package..."
         choco pin add -n $packageName
@@ -627,10 +665,7 @@ function Pin-WingetPackage {
     param (
         [string]$packageId
     )
-    
-    # Check if package is installed using winget list
     $installedPackages = winget list | Select-String -Pattern $packageId
-    
     if ($installedPackages) {
         Write-Host "$packageId is installed. Pinning the package..."
         winget pin add --id $packageId
@@ -642,10 +677,10 @@ function Pin-WingetPackage {
 }
 
 Write-Host "============================================================================================================================"
-# Call the function to pin zoxide
 Pin-ChocoPackage -packageName "zoxide"
 Write-Host "==========================================================================================================================="
 Pin-ChocoPackage -packageName "autohotkey"
 Write-Host "============================================================================================================================="
 Pin-WingetPackage -packageId "AutoHotkey.AutoHotkey"
 Write-Host "=============================================================================================================================="
+
