@@ -208,7 +208,6 @@
 	"cody.autocomplete.enabled": false,
 	"redhat.telemetry.enabled": false,
 	"chatgpt.lang": "en",
-	"workbench.iconTheme": "vscode-jetbrains-icon-theme",
 	"files.exclude": {
 		"**/*.class": true,
 		"**/*.exe": true,
@@ -267,5 +266,5 @@
 			"param": "-g '*.$1'"
 		}
 	],
-	"workbench.colorTheme": "Github Catppuccin Dark",
+	"workbench.colorTheme": "Github Catppuccin Dark Mix",
 }
