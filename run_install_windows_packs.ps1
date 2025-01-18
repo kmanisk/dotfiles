@@ -312,6 +312,65 @@ function Move-ConfigFolder {
     Move-FileSafely -sourcePath $vscodiumSourcePath -destinationPath $vscodiumDestPath
 }
 
+# function Install-VSCodeExtensions {
+#     $vscodeInstalled = Get-Command code -ErrorAction SilentlyContinue
+#     $vscodiumInstalled = Get-Command codium -ErrorAction SilentlyContinue
+#
+#     if (-not $vscodeInstalled) {
+#         Write-Host "VSCode is not installed. Installing via Chocolatey..."
+#         choco install vscode -y
+#     }
+#     else {
+#         Write-Host "VSCode is already installed."
+#     }
+#
+#     if (-not $vscodiumInstalled) {
+#         Write-Host "VSCodium is not installed. Installing via Chocolatey..."
+#         choco install vscodium -y
+#     }
+#     else {
+#         Write-Host "VSCodium is already installed."
+#     }
+#
+#     if ($vscodeInstalled -or $vscodiumInstalled) {
+#         $extensionsFilePath = Join-Path $HOME ".local\share\chezmoi\AppData\Local\installer\vscode.txt"
+#         
+#         if (Test-Path $extensionsFilePath) {
+#             $desiredExtensions = Get-Content -Path $extensionsFilePath
+#             $vscodeExtensions = @()
+#             $vscodiumExtensions = @()
+#             
+#             if ($vscodeInstalled) {
+#                 $vscodeExtensions = & code --list-extensions
+#                 $unmatchedVSCode = $vscodeExtensions | Where-Object { $desiredExtensions -notcontains $_ }
+#                 if ($unmatchedVSCode) {
+#                     Write-Host "`nUnmatched VSCode Extensions:" -ForegroundColor Yellow
+#                     $unmatchedVSCode | ForEach-Object { Write-Host "  - $_" }
+#                 }
+#             }
+#             
+#             if ($vscodiumInstalled) {
+#                 $vscodiumExtensions = & codium --list-extensions
+#                 $unmatchedVSCodium = $vscodiumExtensions | Where-Object { $desiredExtensions -notcontains $_ }
+#                 if ($unmatchedVSCodium) {
+#                     Write-Host "`nUnmatched VSCodium Extensions:" -ForegroundColor Yellow
+#                     $unmatchedVSCodium | ForEach-Object { Write-Host "  - $_" }
+#                 }
+#             }
+#
+#             $removeConfirmation = Read-Host "`nDo you want to remove unmatched extensions? (y/n)"
+#             
+#             # Rest of your existing code for handling VSCode and VSCodium extensions...
+#             # [Previous implementation continues here]
+#         }
+#         else {
+#             Write-Host "Extensions file not found at $extensionsFilePath."
+#         }
+#     }
+#     else {
+#         Write-Host "Neither VSCode nor VSCodium is installed. Cannot manage extensions."
+#     }
+# }
 function Install-VSCodeExtensions {
     $vscodeInstalled = Get-Command code -ErrorAction SilentlyContinue
     $vscodiumInstalled = Get-Command codium -ErrorAction SilentlyContinue
@@ -337,31 +396,27 @@ function Install-VSCodeExtensions {
         
         if (Test-Path $extensionsFilePath) {
             $desiredExtensions = Get-Content -Path $extensionsFilePath
-            $vscodeExtensions = @()
-            $vscodiumExtensions = @()
+            $allExtensions = @()
             
             if ($vscodeInstalled) {
                 $vscodeExtensions = & code --list-extensions
-                $unmatchedVSCode = $vscodeExtensions | Where-Object { $desiredExtensions -notcontains $_ }
-                if ($unmatchedVSCode) {
-                    Write-Host "`nUnmatched VSCode Extensions:" -ForegroundColor Yellow
-                    $unmatchedVSCode | ForEach-Object { Write-Host "  - $_" }
-                }
+                $allExtensions += $vscodeExtensions
             }
             
             if ($vscodiumInstalled) {
                 $vscodiumExtensions = & codium --list-extensions
-                $unmatchedVSCodium = $vscodiumExtensions | Where-Object { $desiredExtensions -notcontains $_ }
-                if ($unmatchedVSCodium) {
-                    Write-Host "`nUnmatched VSCodium Extensions:" -ForegroundColor Yellow
-                    $unmatchedVSCodium | ForEach-Object { Write-Host "  - $_" }
-                }
+                $allExtensions += $vscodiumExtensions
             }
 
-            $removeConfirmation = Read-Host "`nDo you want to remove unmatched extensions? (y/n)"
+            # Combine all unique extensions and update vscode.txt
+            $uniqueExtensions = $allExtensions | Sort-Object -Unique
+            $uniqueExtensions | Set-Content -Path $extensionsFilePath
+            Write-Host "Updated vscode.txt with current extensions from both editors"
             
-            # Rest of your existing code for handling VSCode and VSCodium extensions...
-            # [Previous implementation continues here]
+            # Display the current extension list
+            Write-Host "`nCurrent Extensions:" -ForegroundColor Green
+            $uniqueExtensions | ForEach-Object { Write-Host "  - $_" }
+            
         }
         else {
             Write-Host "Extensions file not found at $extensionsFilePath."
