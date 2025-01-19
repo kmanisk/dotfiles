@@ -644,39 +644,6 @@ switch ($choice.ToLower()) {
     }
 }
 Write-Host "Installation completed!" -ForegroundColor Green
-# Function to pin a Chocolatey package if it is installed  after everything pin packages that are stable with a speicifc versions 
-
-# function Pin-ChocoPackage {
-#     param (
-#         [string]$packageName
-#     )
-#     # Check if the package is installed using choco list
-#     $installedPackages = choco list | Select-String -Pattern $packageName
-#     if ($installedPackages) {
-#         Write-Host "$packageName is installed. Pinning the package..."
-#         choco pin add -n $packageName
-#         Write-Host "$packageName has been pinned."
-#     }
-#     else {
-#         Write-Host "$packageName is not installed. Skipping pinning."
-#     }
-# }
-#
-# function Pin-WingetPackage {
-#     param (
-#         [string]$packageId
-#     )
-#     $installedPackages = winget list | Select-String -Pattern $packageId
-#     if ($installedPackages) {
-#         Write-Host "$packageId is installed. Pinning the package..."
-#         winget pin add --id $packageId
-#         Write-Host "$packageId has been pinned."
-#     }
-#     else {
-#         Write-Host "$packageId is not installed. Skipping pinning."
-#     }
-# }
-#
 function Pin-ChocoPackage {
     param (
         [string]$packageName
@@ -722,15 +689,6 @@ function Pin-WingetPackage {
         Write-Host "$packageId is not installed. Skipping pinning."
     }
 }
-
-# Write-Host "============================================================================================================================"
-# Pin-ChocoPackage -packageName "zoxide"
-# Write-Host "==========================================================================================================================="
-# Pin-ChocoPackage -packageName "autohotkey"
-# Write-Host "============================================================================================================================="
-# Pin-WingetPackage -packageId "AutoHotkey.AutoHotkey"
-# Write-Host "=============================================================================================================================="
-#
 
 # Define packages to pin
 $chocoPackagesToPin = @(
