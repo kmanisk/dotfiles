@@ -723,11 +723,33 @@ function Pin-WingetPackage {
     }
 }
 
-Write-Host "============================================================================================================================"
-Pin-ChocoPackage -packageName "zoxide"
-Write-Host "==========================================================================================================================="
-Pin-ChocoPackage -packageName "autohotkey"
-Write-Host "============================================================================================================================="
-Pin-WingetPackage -packageId "AutoHotkey.AutoHotkey"
-Write-Host "=============================================================================================================================="
+# Write-Host "============================================================================================================================"
+# Pin-ChocoPackage -packageName "zoxide"
+# Write-Host "==========================================================================================================================="
+# Pin-ChocoPackage -packageName "autohotkey"
+# Write-Host "============================================================================================================================="
+# Pin-WingetPackage -packageId "AutoHotkey.AutoHotkey"
+# Write-Host "=============================================================================================================================="
+#
 
+# Define packages to pin
+$chocoPackagesToPin = @(
+    "zoxide",
+    "autohotkey"
+)
+
+$wingetPackagesToPin = @(
+    "AutoHotkey.AutoHotkey"
+)
+
+# Pin Chocolatey packages
+Write-Host "Pinning Chocolatey packages..." -ForegroundColor Green
+$chocoPackagesToPin | ForEach-Object {
+    Pin-ChocoPackage -packageName $_
+}
+
+# Pin Winget packages
+Write-Host "Pinning Winget packages..." -ForegroundColor Green
+$wingetPackagesToPin | ForEach-Object {
+    Pin-WingetPackage -packageId $_
+}
