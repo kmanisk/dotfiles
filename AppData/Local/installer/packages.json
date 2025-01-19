@@ -35,7 +35,8 @@
   	  "starship",
 	  "extras/msiafterburner",
 	  "extras/rtss",
-	  "anderlli0053_DEV-tools/sfss"
+	  "anderlli0053_DEV-tools/sfss",
+	  "main/sudo"
     ]
   },
   "winget": {

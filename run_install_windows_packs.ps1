@@ -541,14 +541,6 @@ function install-Curls {
     }
 }
 
-function install-Fonts {
-    if (-not (Get-Command sudo -ErrorAction SilentlyContinue)) {
-        scoop install sudo
-    }
-    # Install fonts globally
-    sudo scoop install -g nerd-fonts/FiraCode-NF
-    sudo scoop install -g nerd-fonts/JetBrainsMono-NF-Mono
-}
 # Start OF THE SCRIPTS FIRST INSTALLING PACKAGE MANAGERS
 Install-Scoop
 Write-Host "=============================================================================================================================================="
@@ -578,8 +570,6 @@ function Set-PermanentMachine {
     ClinkSetup
     Write-Host "=============================================================================================================================================="
     install-Curls
-    Write-Host "=============================================================================================================================================="
-    install-Fonts
 
 }
 
