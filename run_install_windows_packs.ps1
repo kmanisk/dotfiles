@@ -194,51 +194,54 @@ function Install-WingetPackages {
 
 
 # PermanentMachine Setup Function to call in the full setup section if chosen by the user
-function Install-OSDLayout {
-    # Set location to the source directory
-    Set-Location -Path "$HOME\.local\share\chezmoi\appdata\local\OSD"
-
-    # Define source directories
-    $msiSource = "msi\Profiles"
-    $rivaSource = "riva\Profiles"
-
-    # Define target directories
-    $msiTarget = "C:\Program Files (x86)\MSI Afterburner\Profiles"
-    $rivaTarget = "C:\Program Files (x86)\RivaTuner Statistics Server\Profiles"
-
-    # Check if profiles already exist
-    if ((Test-Path "$msiTarget\*") -or (Test-Path "$rivaTarget\*")) {
-        Write-Host "Profiles already exist. Skipping installation." -ForegroundColor Yellow
-        return
-    }
-
-    # Check if source directories exist and have files
-    $msiHasFiles = (Test-Path $msiSource) -and (@(Get-ChildItem -Path $msiSource -File -Recurse).Count -gt 0)
-    $rivaHasFiles = (Test-Path $rivaSource) -and (@(Get-ChildItem -Path $rivaSource -File -Recurse).Count -gt 0)
-
-    if (-not ($msiHasFiles -or $rivaHasFiles)) {
-        Write-Host "No source profiles found in either directory" -ForegroundColor Yellow
-        return
-    }
-
-    # Create target directories if they don't exist
-    foreach ($dir in @($msiTarget, $rivaTarget)) {
-        if (-not (Test-Path $dir)) {
-            Write-Host "Creating directory at $dir"
-            New-Item -Path $dir -ItemType Directory
-        }
-    }
-
-    # Install profiles
-    if ($msiHasFiles) { 
-        Copy-Item -Path "$msiSource\*" -Destination $msiTarget -Recurse -Force 
-        Write-Host "MSI profiles installed" -ForegroundColor Green
-    }
-    if ($rivaHasFiles) { 
-        Copy-Item -Path "$rivaSource\*" -Destination $rivaTarget -Recurse -Force 
-        Write-Host "RivaTuner profiles installed" -ForegroundColor Green
-    }
+function Install-OSDLayout{
+    
 }
+# function Install-OSDLayout {
+#     # Set location to the source directory
+#     Set-Location -Path "$HOME\.local\share\chezmoi\appdata\local\OSD"
+
+#     # Define source directories
+#     $msiSource = "msi\Profiles"
+#     $rivaSource = "riva\Profiles"
+
+#     # Define target directories
+#     $msiTarget = "C:\Program Files (x86)\MSI Afterburner\Profiles"
+#     $rivaTarget = "C:\Program Files (x86)\RivaTuner Statistics Server\Profiles"
+
+#     # Check if profiles already exist
+#     if ((Test-Path "$msiTarget\*") -or (Test-Path "$rivaTarget\*")) {
+#         Write-Host "Profiles already exist. Skipping installation." -ForegroundColor Yellow
+#         return
+#     }
+
+#     # Check if source directories exist and have files
+#     $msiHasFiles = (Test-Path $msiSource) -and (@(Get-ChildItem -Path $msiSource -File -Recurse).Count -gt 0)
+#     $rivaHasFiles = (Test-Path $rivaSource) -and (@(Get-ChildItem -Path $rivaSource -File -Recurse).Count -gt 0)
+
+#     if (-not ($msiHasFiles -or $rivaHasFiles)) {
+#         Write-Host "No source profiles found in either directory" -ForegroundColor Yellow
+#         return
+#     }
+
+#     # Create target directories if they don't exist
+#     foreach ($dir in @($msiTarget, $rivaTarget)) {
+#         if (-not (Test-Path $dir)) {
+#             Write-Host "Creating directory at $dir"
+#             New-Item -Path $dir -ItemType Directory
+#         }
+#     }
+
+#     # Install profiles
+#     if ($msiHasFiles) { 
+#         Copy-Item -Path "$msiSource\*" -Destination $msiTarget -Recurse -Force 
+#         Write-Host "MSI profiles installed" -ForegroundColor Green
+#     }
+#     if ($rivaHasFiles) { 
+#         Copy-Item -Path "$rivaSource\*" -Destination $rivaTarget -Recurse -Force 
+#         Write-Host "RivaTuner profiles installed" -ForegroundColor Green
+#     }
+# }
 
 function Move-FileSafely {
     param (

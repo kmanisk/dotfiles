@@ -32,7 +32,9 @@
   	  "main/win32yank",
   	  "ntop",
   	  "lsd",
-  	  "starship"
+  	  "starship",
+	  "extras/msiafterburner",
+	  "extras/rtss"
     ]
   },
   "winget": {
@@ -41,11 +43,8 @@
       "chrisant996.Clink"
     ],
     "full": [
-      "Guru3D.Afterburner",
-      "Guru3D.RTSS",
       "JanDeDobbeleer.OhMyPosh",
       "chrisant996.Clink",
-      "Microsoft.PowerShell",
       "Microsoft.PowerShell",
       "AntibodySoftware.WizTree",
       "GitHub.cli",

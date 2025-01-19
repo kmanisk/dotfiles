@@ -16,7 +16,7 @@ function extedit{
     nvim $ext
 
 }
-
+Invoke-Expression (&sfss --hook)
 function vsync {
 	$vscodeInstalled = Get-Command code -ErrorAction SilentlyContinue
 	$vscodiumInstalled = Get-Command codium -ErrorAction SilentlyContinue
