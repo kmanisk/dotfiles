@@ -742,14 +742,18 @@ $wingetPackagesToPin = @(
     "AutoHotkey.AutoHotkey"
 )
 
+Write-Host "=============================================================================================================================="
 # Pin Chocolatey packages
 Write-Host "Pinning Chocolatey packages..." -ForegroundColor Green
 $chocoPackagesToPin | ForEach-Object {
     Pin-ChocoPackage -packageName $_
 }
 
+Write-Host "=============================================================================================================================="
 # Pin Winget packages
 Write-Host "Pinning Winget packages..." -ForegroundColor Green
 $wingetPackagesToPin | ForEach-Object {
     Pin-WingetPackage -packageId $_
 }
+
+Write-Host "=============================================================================================================================="
