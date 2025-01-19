@@ -645,11 +645,50 @@ switch ($choice.ToLower()) {
 }
 Write-Host "Installation completed!" -ForegroundColor Green
 # Function to pin a Chocolatey package if it is installed  after everything pin packages that are stable with a speicifc versions 
+
+# function Pin-ChocoPackage {
+#     param (
+#         [string]$packageName
+#     )
+#     # Check if the package is installed using choco list
+#     $installedPackages = choco list | Select-String -Pattern $packageName
+#     if ($installedPackages) {
+#         Write-Host "$packageName is installed. Pinning the package..."
+#         choco pin add -n $packageName
+#         Write-Host "$packageName has been pinned."
+#     }
+#     else {
+#         Write-Host "$packageName is not installed. Skipping pinning."
+#     }
+# }
+#
+# function Pin-WingetPackage {
+#     param (
+#         [string]$packageId
+#     )
+#     $installedPackages = winget list | Select-String -Pattern $packageId
+#     if ($installedPackages) {
+#         Write-Host "$packageId is installed. Pinning the package..."
+#         winget pin add --id $packageId
+#         Write-Host "$packageId has been pinned."
+#     }
+#     else {
+#         Write-Host "$packageId is not installed. Skipping pinning."
+#     }
+# }
+#
 function Pin-ChocoPackage {
     param (
         [string]$packageName
     )
-    # Check if the package is installed using choco list
+    # First check if package is already pinned
+    $pinnedPackages = choco pin list | Select-String -Pattern $packageName
+    if ($pinnedPackages) {
+        Write-Host "$packageName is already pinned. Skipping..."
+        return
+    }
+
+    # Then check if package is installed
     $installedPackages = choco list | Select-String -Pattern $packageName
     if ($installedPackages) {
         Write-Host "$packageName is installed. Pinning the package..."
@@ -665,6 +704,14 @@ function Pin-WingetPackage {
     param (
         [string]$packageId
     )
+    # First check if package is already pinned
+    $pinnedPackages = winget pin list | Select-String -Pattern $packageId
+    if ($pinnedPackages) {
+        Write-Host "$packageId is already pinned. Skipping..."
+        return
+    }
+
+    # Then check if package is installed
     $installedPackages = winget list | Select-String -Pattern $packageId
     if ($installedPackages) {
         Write-Host "$packageId is installed. Pinning the package..."
