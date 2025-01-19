@@ -2,6 +2,9 @@
 <NotepadPlus>
     <FindHistory nbMaxFindHistoryPath="10" nbMaxFindHistoryFilter="10" nbMaxFindHistoryFind="10" nbMaxFindHistoryReplace="10" matchWord="no" matchCase="no" wrap="yes" directionDown="yes" fifRecuisive="yes" fifInHiddenFolder="no" fifProjectPanel1="no" fifProjectPanel2="no" fifProjectPanel3="no" fifFilterFollowsDoc="no" fifFolderFollowsDoc="no" searchMode="0" transparencyMode="1" transparency="150" dotMatchesNewline="no" isSearch2ButtonsMode="no" regexBackward4PowerUser="no" bookmarkLine="no" purge="no">
         <Filter name="" />
+        <Find name="th" />
+        <Find name="afterbu" />
+        <Find name="msi" />
         <Find name="neovim" />
         <Find name="nvim" />
         <Find name="noevim" />
@@ -9,13 +12,9 @@
         <Find name="revo" />
         <Find name="zed" />
         <Find name="nvclean" />
-        <Find name="extension" />
-        <Find name="fast" />
-        <Find name="autohotkey" />
         <Replace name="maniskpr" />
     </FindHistory>
     <History nbMaxFile="10" inSubMenu="no" customLength="-1">
-        <File filename="C:\Users\Administrator\AppData\Local\installer\extension.txt" />
         <File filename="C:\Users\Administrator\AppData\Local\installer\spotify.ps1" />
         <File filename="C:\Users\Administrator\Desktop\remember.txt" />
         <File filename="C:\Users\Administrator\Desktop\new 1.txt" />
@@ -25,6 +24,7 @@
         <File filename="C:\Program Files (x86)\RivaTuner Statistics Server\EncoderServer.cfg" />
         <File filename="C:\Users\Administrator\scoop\apps\msiafterburner\4.6.5\MSIAfterburner.cfg" />
         <File filename="C:\Program Files (x86)\RivaTuner Statistics Server\SaveMedia.cfg" />
+        <File filename="C:\Users\Administrator\scoop\persist\vifm\data\vifmrc" />
     </History>
     <ProjectPanels>
         <ProjectPanel id="0" workSpaceFile="" />

@@ -194,9 +194,18 @@ function Install-WingetPackages {
 
 
 # PermanentMachine Setup Function to call in the full setup section if chosen by the user
-function Install-OSDLayout{
+function Install-OSDLayout {
+    $rtssProfilePath = "$HOME\scoop\persist\rtss\Profiles"
+    $msiProfilePath = "$HOME\scoop\persist\msiafterburner\Profiles"
     
+    if (-not (Test-Path "$rtssProfilePath\*") -or -not (Test-Path "$msiProfilePath\*")) {
+        Write-Host "No profiles found. Please install MSI Afterburner and RivaTuner through Scoop and use Chezmoi to manage the profiles." -ForegroundColor Yellow
+        return
+    }
+    
+    Write-Host "Profiles are already managed by Scoop and Chezmoi" -ForegroundColor Green
 }
+
 # function Install-OSDLayout {
 #     # Set location to the source directory
 #     Set-Location -Path "$HOME\.local\share\chezmoi\appdata\local\OSD"
