@@ -22,12 +22,11 @@ Function flist {
     Select-Object Name
 }
 if (Get-Command lsd -ErrorAction SilentlyContinue) {
-    Set-Alias ls lsd
+Set-Alias -Force ls lsd
 }
 else {
     Set-Alias ls Get-ChildItem
 }
-#Remove-Item Alias:zi -ErrorAction SilentlyContinue
 function shutit {
     shutdown /s /t 0
 }
@@ -46,10 +45,6 @@ else {
     # Enable predictive suggestions for interactive shells
     Set-PSReadLineOption -PredictionSource HistoryAndPlugin
 }
-
-# Alias zi to cdi
-#Set-Alias -Name zi -Value cdi
-#Set-Alias -Name z -Value cd
 
 Set-Alias -Name vim -Value nvim
 Set-Alias -Name nivm -Value nvim
@@ -125,85 +120,6 @@ function pcheck {
 }
 
 
-#only cd to the dir
-#function fcd {
-#    $dir = Get-ChildItem -Directory | Select-Object -ExpandProperty FullName | fzf --preview 'ls -a {1}' --height 40% --border
-#    if ($dir) {
-#        # Change location in the current session
-#        Set-Location $dir
-#    }
-#}
-
-
-#dynamic can go ~ to home or .. one dir up but closes itself
-# function fzcd {
-#  
-#     # Get current location
-#     $currentDir = Get-Location
-#
-#     # Add a "Go Home" option and "Go Up One Level" option
-#     $directories = @(
-#         "~"  # Go Home
-#         ".." # Go Up One Level
-#         (Get-ChildItem -Directory -Path $currentDir) | Select-Object -ExpandProperty FullName
-#     )
-#
-#     # Use fzf to let the user select a directory
-#     $selectedDir = $directories | fzf --preview 'ls -a {1}' --height 40% --border
-#
-#     # If user selects a directory, change to that directory
-#     if ($selectedDir) {
-#         if ($selectedDir -eq "~") {
-#             # Go to home directory
-#             Set-Location $env:USERPROFILE
-#         }
-#         elseif ($selectedDir -eq "..") {
-#             # Go up one directory
-#             Set-Location (Split-Path $currentDir -Parent)
-#         }
-#         else {
-#             # Change to the selected directory
-#             Set-Location $selectedDir
-#         }
-#     }
-# }
-#
-
-#function fcd {
-#    # Get current location
-#    $currentDir = Get-Location
-#
-#    # Add a "Go Home" option and "Go Up One Level" option
-#    $directories = @(
-#        "~"  # Go Home
-#        ".." # Go Up One Level
-#        "D:\" # D: drive root
-#        "E:\" # E: drive root
-#        "F:\" # F: drive root
-#        "G:\" # G: drive root
-#        (Get-ChildItem -Directory -Path $currentDir -Recurse) | Select-Object -ExpandProperty FullName
-#    )
-#
-#    # Use fzf to let the user select a directory
-#    $selectedDir = $directories | fzf --preview 'ls -a {1}' --height 40% --border
-#
-#    # If user selects a directory, change to that directory
-#    if ($selectedDir) {
-#        if ($selectedDir -eq "~") {
-#            # Go to home directory
-#            Set-Location $env:USERPROFILE
-#        }
-#        elseif ($selectedDir -eq "..") {
-#            # Go up one directory
-#            Set-Location (Split-Path $currentDir -Parent)
-#        }
-#        else {
-#            # Change to the selected directory
-#            Set-Location $selectedDir
-#        }
-#    }
-#}
-#
 $env:EDITOR = "nvim"
 function q { exit }
 function st { chezmoi status }
@@ -281,6 +197,7 @@ function dp {
     #Set-Location -path "$HOME"
 }
 
+#chezmoi add modifiedFiles Automation via one command
 function dall {
     Write-Host "Changes Done..."
     st
@@ -359,7 +276,7 @@ $scriptblock = {
 }
 Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock $scriptblock
 
-#Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
+Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
 function kvim {
     nvim -u "C:\Users\Manisk\AppData\Local\kvim\init.lua"
 }
@@ -409,9 +326,6 @@ function roam { cd "C:\Users\Manisk\AppData\Roaming" }
 # Quick File Creation
 function nf { param($name) New-Item -ItemType "file" -Path . -Name $name }
 
-#Sccache setup lets see fail or not 
-$env:SCCACHE_DIR = "C:\sccache_cache"
-
 # env print Shortcuts
 function envs {
     Get-ChildItem Env:
@@ -428,10 +342,6 @@ function spshell { cd "C:\Users\Manisk\AppData\Roaming\Microsoft\Windows\Start M
 function cod { cd "C:\Users\Manisk\Coding\" }
 function cods { cd "C:\Users\Manisk\Coding\" }
 # Reload the PowerShell profile
-function reload-profile {
-    & $PROFILE
-    Write-Host "Success!"
-}
 function rel { . $profile }
 function rel { & $profile }
 Set-Alias e explorer.exe
@@ -469,11 +379,17 @@ Function cpyfile {
 }
 
 
-Set-Alias ps Get-Process
-Set-Alias rm Remove-Item
-Set-Alias cpy Copy-Item
-Set-Alias cls Clear-Host
-Set-Alias mv Move-Item
+
+Set-Alias -Force ps Get-Process
+Set-Alias -Force rm Remove-Item
+Set-Alias -Force cpy Copy-Item
+Set-Alias -Force cls Clear-Host
+Set-Alias -Force mv Move-Item
+#Set-Alias ps Get-Process
+#Set-Alias rm Remove-Item
+#Set-Alias cpy Copy-Item
+#Set-Alias cls Clear-Host
+#Set-Alias mv Move-Item
 
 
 function cpycmd {
@@ -521,7 +437,6 @@ function gc { param($m) git commit -m "$m" }
 
 function gp { git push }
 
-<# function g { __zoxide_z github } #>
 
 function gcl { git clone "$args" }
 
@@ -549,7 +464,6 @@ function fs {
 }
 #file manager for console 
 function fm { vifm }
-Set-Alias recon reload-profile
 
 # Set UNIX-like aliases for the admin command, so sudo <command> will run the command with elevated rights.
 Set-Alias -Name su -Value admin
@@ -713,9 +627,6 @@ Set-PSReadLineKeyHandler -Key Ctrl+Shift+b `
 
 Set-Alias lvim 'C:\Users\Manisk\.local\bin\lvim.ps1'
 
-# Prompt Configuration
-# Uncomment only one of the following blocks to enable the desired prompt.
-
 # Enable Starship Prompt
 # To disable Starship, comment this line and uncomment the Oh-My-Posh section.
 Invoke-Expression (&starship init powershell)
@@ -756,6 +667,7 @@ function Get-Theme {
         }
     }
 }
+#disable commnet to enable Oh-My-Posh remember to first disable the Starship prompt first 
 #Get-Theme
 
 
