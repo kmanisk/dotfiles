@@ -39,7 +39,8 @@
 	  "main/sudo"
     ],
 	"global": [
-      "nerd-fonts/JetBrainsMono-NF"
+      "nerd-fonts/JetBrainsMono-NF",
+    "nerd-fonts/Monocraft"
     ]
   },
   "winget": {
