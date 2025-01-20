@@ -16,8 +16,6 @@
     </FindHistory>
     <History nbMaxFile="10" inSubMenu="no" customLength="-1">
         <File filename="C:\Users\Administrator\AppData\Local\installer\spotify.ps1" />
-        <File filename="C:\Users\Administrator\Desktop\remember.txt" />
-        <File filename="C:\Users\Administrator\Desktop\new 1.txt" />
         <File filename="C:\Program Files\VSCodium\resources\app\product.json" />
         <File filename="C:\Users\Administrator\AppData\Roaming\vifm\scripts\README" />
         <File filename="C:\Windows.old\ProgramData\chocolatey\config\chocolatey.config" />
@@ -25,6 +23,8 @@
         <File filename="C:\Users\Administrator\scoop\apps\msiafterburner\4.6.5\MSIAfterburner.cfg" />
         <File filename="C:\Program Files (x86)\RivaTuner Statistics Server\SaveMedia.cfg" />
         <File filename="C:\Users\Administrator\scoop\persist\vifm\data\vifmrc" />
+        <File filename="C:\Users\Administrator\Desktop\new 1.txt" />
+        <File filename="C:\Users\Administrator\Desktop\remember.txt" />
     </History>
     <ProjectPanels>
         <ProjectPanel id="0" workSpaceFile="" />

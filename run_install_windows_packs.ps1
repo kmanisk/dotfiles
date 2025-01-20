@@ -95,19 +95,6 @@ function Install-Winget {
     }
 }
 
-
-# Function to install Scoop packages
-# function Install-ScoopPackages {
-#     param (
-#         [string[]]$packages  
-#     )
-#
-#     foreach ($package in $packages) {
-#         Write-Host "Installing Scoop package: $package"
-#         scoop install $package 
-#         Write-Host ""
-#     }
-# }
 function Install-ChocoPackages {
     param (
         [string[]]$packages
