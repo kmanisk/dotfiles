@@ -21,6 +21,7 @@ scoop config:
     check_verifications   : False
     aria2-warning-enabled : False
     aria2-enabled         : True
+    cat_style             : auto,full,numbers
 font:
     winget(jetbrains) : JetBrainsMono Nerd Font (name)
     scoop (nerdfont) : JetBrainsMono Nerd Font Mono (name)
