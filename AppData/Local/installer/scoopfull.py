@@ -62,7 +62,6 @@ def install_scoop_packages():
                 print(f"Failed to install package: {package}. Error: {e}")
         else:
             print(f"Package already installed: {package_name}")
-
     # Install global packages
     for package in global_packages:
         package_name = package.split('/')[-1] if '/' in package else package
@@ -70,11 +69,19 @@ def install_scoop_packages():
         if package_name not in installed_packages:
             try:
                 print(f"Installing global package: {package}")
+                # First try with sudo
                 subprocess.run([sudo_executable, scoop_executable, "install", package, "--global"], check=True)
-            except subprocess.CalledProcessError as e:
-                print(f"Failed to install global package: {package}. Error: {e}")
+            except FileNotFoundError:
+                print("sudo not found, attempting direct global installation...")
+                try:
+                    # Fallback to direct installation
+                    subprocess.run([scoop_executable, "install", package, "--global"], check=True)
+                except subprocess.CalledProcessError as e:
+                    print(f"Failed to install global package: {package}. Error: {e}")
         else:
             print(f"Global package already installed: {package_name}")
+
+
 
 
 

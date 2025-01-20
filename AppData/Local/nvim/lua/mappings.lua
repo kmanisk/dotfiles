@@ -430,3 +430,8 @@ map("n", "+", "<C-a>", { noremap = true, silent = true })
 -- Map '-' to decrement number (Ctrl+X)
 map("n", "-", "<C-x>", { noremap = true, silent = true })
 map("n", "<leader>sh", ":lua print(vim.api.nvim_buf_get_name(0))<CR>", { noremap = true, silent = true })
+
+map("n", "<leader>oe", function()
+  local current_file = vim.fn.expand("%:p:h") -- Get the directory of the current file
+  vim.cmd("silent !start explorer " .. current_file) -- Open Explorer at the directory
+end, { noremap = true, silent = true, desc = "Open Explorer at current file location" })
