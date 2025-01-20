@@ -197,14 +197,6 @@
         {
             "command": 
             {
-                "action": "commandPalette"
-            },
-            "id": "User.commandPalette.D3F0B923",
-            "keys": "alt+p"
-        },
-        {
-            "command": 
-            {
                 "action": "splitPane",
                 "split": "auto",
                 "splitMode": "duplicate"
@@ -215,9 +207,10 @@
         {
             "command": 
             {
-                "action": "newTab"
+                "action": "commandPalette"
             },
-            "id": "User.newTab.5DEADB41"
+            "id": "User.commandPalette.D3F0B923",
+            "keys": "alt+p"
         },
         {
             "command": 
@@ -227,6 +220,13 @@
             },
             "id": "User.moveFocus.F747588A",
             "keys": "ctrl+j"
+        },
+        {
+            "command": 
+            {
+                "action": "newTab"
+            },
+            "id": "User.newTab.5DEADB41"
         },
         {
             "command": 

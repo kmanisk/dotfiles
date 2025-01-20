@@ -44,8 +44,8 @@ def install_font():
     
     # Update existing fonts
     update_commands = [
-        ["update", "-g", "nerd-fonts/FiraCode-NF"],
-        ["update", "-g", "nerd-fonts/JetBrainsMono-NF-Mono"]
+        # ["update", "-g", "nerd-fonts/FiraCode-NF"],
+        ["update", "-g", "nerd-fonts/JetBrainsMono-NF"]
 		# Add new fonts here, for example:
         # ["update", "-g", "nerd-fonts/Hack-NF"],
         # ["update", "-g", "nerd-fonts/CascadiaCode-NF"]
