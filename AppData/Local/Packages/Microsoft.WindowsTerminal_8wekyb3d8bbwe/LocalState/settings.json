@@ -4,6 +4,23 @@
     "actions": 
     [
         {
+            "command": 
+            {
+                "action": "copy",
+                "singleLine": false
+            },
+            "id": "User.copy.644BA8F2",
+            "keys": "alt+shift+c"
+        },
+        {
+            "command": 
+            {
+                "action": "copy",
+                "singleLine": false
+            },
+            "keys": "alt+c"
+        },
+        {
             "command": "unbound",
             "keys": "ctrl+shift+w"
         },
@@ -162,27 +179,6 @@
         {
             "command": 
             {
-                "action": "copy",
-                "singleLine": false
-            },
-            "id": "User.copy.644BA8F2",
-            "keys": "alt+shift+c"
-        },
-        {
-            "command": 
-            {
-                "action": "copy",
-                "singleLine": false
-            },
-            "keys": "alt+c"
-        },
-        {
-            "command": "paste",
-            "id": "User.paste"
-        },
-        {
-            "command": 
-            {
                 "action": "newTab",
                 "index": 2
             },
@@ -190,25 +186,13 @@
             "keys": "alt+shift+b"
         },
         {
+            "command": "paste",
+            "id": "User.paste"
+        },
+        {
             "command": "find",
             "id": "User.find",
             "keys": "alt+f"
-        },
-        {
-            "command": 
-            {
-                "action": "moveFocus",
-                "direction": "down"
-            },
-            "id": "User.moveFocus.F747588A",
-            "keys": "ctrl+j"
-        },
-        {
-            "command": 
-            {
-                "action": "newTab"
-            },
-            "id": "User.newTab.5DEADB41"
         },
         {
             "command": 
@@ -231,6 +215,30 @@
         {
             "command": 
             {
+                "action": "newTab"
+            },
+            "id": "User.newTab.5DEADB41"
+        },
+        {
+            "command": 
+            {
+                "action": "moveFocus",
+                "direction": "down"
+            },
+            "id": "User.moveFocus.F747588A",
+            "keys": "ctrl+j"
+        },
+        {
+            "command": 
+            {
+                "action": "prevTab"
+            },
+            "id": "User.prevTab.0",
+            "keys": "alt+j"
+        },
+        {
+            "command": 
+            {
                 "action": "splitPane",
                 "split": "right",
                 "splitMode": "duplicate"
@@ -248,17 +256,18 @@
             "keys": "ctrl+shift+3"
         },
         {
-            "command": 
-            {
-                "action": "prevTab"
-            },
-            "id": "User.prevTab.0",
-            "keys": "alt+j"
-        },
-        {
             "command": "closePane",
             "id": "User.closePane",
             "keys": "alt+shift+w"
+        },
+        {
+            "command": 
+            {
+                "action": "newTab",
+                "index": 0
+            },
+            "id": "User.newTab.7975BEED",
+            "keys": "alt+shift+p"
         },
         {
             "command": 
@@ -293,15 +302,6 @@
                 "clear": "all"
             },
             "id": "User.clearBuffer.87C324ED"
-        },
-        {
-            "command": 
-            {
-                "action": "newTab",
-                "index": 0
-            },
-            "id": "User.newTab.7975BEED",
-            "keys": "alt+shift+p"
         },
         {
             "command": 
@@ -412,7 +412,7 @@
             "font": 
             {
                 "builtinGlyphs": true,
-                "face": "JetBrainsMono Nerd Font Mono",
+                "face": "JetBrainsMono Nerd Font",
                 "size": 14
             },
             "opacity": 100,
