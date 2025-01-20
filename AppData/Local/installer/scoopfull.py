@@ -41,17 +41,28 @@ def install_scoop_packages():
 
 def install_font():
     scoop_executable = os.path.join(os.getenv("USERPROFILE"), "scoop", "shims", "scoop.cmd")
-    font_commands = [
-        ["install", "-g", "nerd-fonts/FiraCode-NF"],
-        ["install", "-g", "nerd-fonts/JetBrainsMono-NF-Mono"]
+    
+    # Update existing fonts
+    update_commands = [
+        ["update", "-g", "nerd-fonts/FiraCode-NF"],
+        ["update", "-g", "nerd-fonts/JetBrainsMono-NF-Mono"]
+		# Add new fonts here, for example:
+        # ["update", "-g", "nerd-fonts/Hack-NF"],
+        # ["update", "-g", "nerd-fonts/CascadiaCode-NF"]
     ]
     
-    for command in font_commands:
+    print("Updating fonts...")
+    for command in update_commands:
         try:
-            print(f"Installing font: {command[2]}")
             subprocess.run([scoop_executable] + command, check=True)
-        except subprocess.CalledProcessError as e:
-            print(f"Failed to install font: {command[2]}. Error: {e}")
+        except subprocess.CalledProcessError:
+            # If update fails, try fresh install
+            try:
+                install_command = ["install", "-g", command[2]]
+                print(f"Installing font: {command[2]}")
+                subprocess.run([scoop_executable] + install_command, check=True)
+            except subprocess.CalledProcessError as e:
+                print(f"Note: Font {command[2]} installation requires all applications using it to be closed.")
 
     
 def main():
