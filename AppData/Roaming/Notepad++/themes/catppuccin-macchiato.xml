@@ -525,7 +525,7 @@
     </LexerStyles>
     <GlobalStyles>
         <!-- Attention : Don't modify the name of styleID="0" -->
-        <WidgetStyle name="Global override" styleID="0" fgColor="B8C0E0" bgColor="24273A" fontName="JetBrainsMono NFM" fontStyle="0" fontSize="10"></WidgetStyle>
+        <WidgetStyle name="Global override" styleID="0" fgColor="B8C0E0" bgColor="24273A" fontName="JetBrainsMono NF" fontStyle="0" fontSize="10"></WidgetStyle>
         <WidgetStyle name="Default Style" styleID="32" fgColor="B8C0E0" bgColor="24273A" fontName="Consolas" fontStyle="0" fontSize="10"></WidgetStyle>
         <WidgetStyle name="Indent guideline style" styleID="37" fgColor="8AADF4" bgColor="24273A" fontName="" fontStyle="0" fontSize=""></WidgetStyle>
         <WidgetStyle name="Brace highlight style" styleID="34" fgColor="B8C0E0" bgColor="C6A0F6" fontName="" fontStyle="1" fontSize="10"></WidgetStyle>

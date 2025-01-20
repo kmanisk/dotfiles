@@ -38,6 +38,9 @@
 	  "anderlli0053_DEV-tools/sfss",
 	  "main/sudo",
 	  "nerd-fonts/JetBrainsMono-NF"
+    ],
+	"global": [
+      "nerd-fonts/JetBrainsMono-NF"
     ]
   },
   "winget": {
