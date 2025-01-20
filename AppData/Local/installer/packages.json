@@ -36,7 +36,8 @@
 	  "extras/msiafterburner",
 	  "extras/rtss",
 	  "anderlli0053_DEV-tools/sfss",
-	  "main/sudo"
+	  "main/sudo",
+	  "nerd-fonts/JetBrainsMono-NF"
     ]
   },
   "winget": {
