@@ -38,8 +38,25 @@ def install_scoop_packages():
         else:
             print(f"Package already installed: {package_name}")
 
+
+def install_font():
+    scoop_executable = os.path.join(os.getenv("USERPROFILE"), "scoop", "shims", "scoop.cmd")
+    font_commands = [
+        ["install", "-g", "nerd-fonts/FiraCode-NF"],
+        ["install", "-g", "nerd-fonts/JetBrainsMono-NF-Mono"]
+    ]
+    
+    for command in font_commands:
+        try:
+            print(f"Installing font: {command[2]}")
+            subprocess.run([scoop_executable] + command, check=True)
+        except subprocess.CalledProcessError as e:
+            print(f"Failed to install font: {command[2]}. Error: {e}")
+
+    
 def main():
     install_scoop_packages()
+    install_font()
 
 if __name__ == "__main__":
     main()
