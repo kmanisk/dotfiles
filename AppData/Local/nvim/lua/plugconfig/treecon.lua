@@ -8,7 +8,11 @@ require("nvim-tree").setup({
 		enable = true,
 		update_root = false,
 	},
-
+    git = {
+      enable = true,
+      ignore = false,
+      timeout = 500,
+    },
 	-- View settings
 	view = {
 		width = 30,

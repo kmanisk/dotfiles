@@ -18,7 +18,7 @@
 	"editor.showFoldingControls": "always",
 	"editor.tabSize": 4,
 	"workbench.sideBar.location": "right",
-	"editor.fontSize": 17,
+	"editor.fontSize": 18,
 	"editor.lineHeight": 26,
 	"breadcrumbs.enabled": false,
 	"editor.fontFamily": "JetBrainsMono NF,Josefin Sans",
@@ -269,5 +269,5 @@
 			"param": "-g '*.$1'"
 		}
 	],
-	"workbench.colorTheme": "Github Catppuccin Dark Mix",
+	"workbench.colorTheme": "Gruvbox Dark Soft",
 }

@@ -333,7 +333,7 @@
         "ShowRegion": true
       },
       "OCROptions": {
-        "Language": "en",
+        "Language": "en-US",
         "ScaleFactor": 2.0,
         "SingleLine": false,
         "Silent": false,
@@ -642,7 +642,7 @@
   "PreviewSplitterDistance": 335,
   "Language": "Automatic",
   "ShowTray": true,
-  "SilentRun": false,
+  "SilentRun": true,
   "TrayIconProgressEnabled": true,
   "TaskbarProgressEnabled": true,
   "UseWhiteShareXIcon": false,
@@ -653,7 +653,7 @@
   "TrayLeftClickAction": "RectangleRegion",
   "TrayLeftDoubleClickAction": "OpenMainWindow",
   "TrayMiddleClickAction": "ClipboardUploadWithContentViewer",
-  "AutoCheckUpdate": true,
+  "AutoCheckUpdate": false,
   "UpdateChannel": "Release",
   "CheckPreReleaseUpdates": false,
   "UseCustomTheme": true,
@@ -785,7 +785,7 @@
       "SeparatorDarkColor": "33, 35, 43"
     }
   ],
-  "SelectedTheme": 3,
+  "SelectedTheme": 5,
   "UseCustomScreenshotsPath": true,
   "CustomScreenshotsPath": "%UserProfile%\\Nox_share\\Download\\DCIM",
   "SaveImageSubFolderPattern": "%y-%mo",

@@ -4,6 +4,15 @@
     "actions": 
     [
         {
+            "command": 
+            {
+                "action": "copy",
+                "singleLine": false
+            },
+            "id": "User.copy.644BA8F2",
+            "keys": "alt+c"
+        },
+        {
             "command": "unbound",
             "keys": "ctrl+shift+w"
         },
@@ -97,19 +106,11 @@
         },
         {
             "command": "unbound",
-            "keys": "alt+h"
-        },
-        {
-            "command": "unbound",
             "keys": "ctrl+shift+up"
         },
         {
             "command": "unbound",
             "keys": "ctrl+shift+down"
-        },
-        {
-            "command": "unbound",
-            "keys": "alt+t"
         },
         {
             "command": "unbound",
@@ -153,32 +154,11 @@
         },
         {
             "command": "unbound",
-            "keys": "alt+v"
-        },
-        {
-            "command": "unbound",
             "keys": "ctrl+shift+6"
         },
         {
-            "command": 
-            {
-                "action": "copy",
-                "singleLine": false
-            },
-            "id": "User.copy.644BA8F2",
+            "command": "unbound",
             "keys": "alt+shift+c"
-        },
-        {
-            "command": 
-            {
-                "action": "copy",
-                "singleLine": false
-            },
-            "keys": "alt+c"
-        },
-        {
-            "command": "paste",
-            "id": "User.paste"
         },
         {
             "command": 
@@ -190,25 +170,13 @@
             "keys": "alt+shift+b"
         },
         {
+            "command": "paste",
+            "id": "User.paste"
+        },
+        {
             "command": "find",
             "id": "User.find",
             "keys": "alt+f"
-        },
-        {
-            "command": 
-            {
-                "action": "moveFocus",
-                "direction": "down"
-            },
-            "id": "User.moveFocus.F747588A",
-            "keys": "ctrl+j"
-        },
-        {
-            "command": 
-            {
-                "action": "newTab"
-            },
-            "id": "User.newTab.5DEADB41"
         },
         {
             "command": 
@@ -231,12 +199,36 @@
         {
             "command": 
             {
+                "action": "newTab"
+            },
+            "id": "User.newTab.5DEADB41"
+        },
+        {
+            "command": 
+            {
+                "action": "moveFocus",
+                "direction": "down"
+            },
+            "id": "User.moveFocus.F747588A",
+            "keys": "ctrl+j"
+        },
+        {
+            "command": 
+            {
+                "action": "prevTab"
+            },
+            "id": "User.prevTab.0",
+            "keys": "alt+j"
+        },
+        {
+            "command": 
+            {
                 "action": "splitPane",
                 "split": "right",
                 "splitMode": "duplicate"
             },
             "id": "User.splitPane.FEF0D40B",
-            "keys": "alt+shift+h"
+            "keys": "alt+v"
         },
         {
             "command": 
@@ -248,17 +240,26 @@
             "keys": "ctrl+shift+3"
         },
         {
-            "command": 
-            {
-                "action": "prevTab"
-            },
-            "id": "User.prevTab.0",
-            "keys": "alt+j"
-        },
-        {
             "command": "closePane",
             "id": "User.closePane",
-            "keys": "alt+shift+w"
+            "keys": "alt+q"
+        },
+        {
+            "command": 
+            {
+                "action": "newTab",
+                "index": 0
+            },
+            "id": "User.newTab.7975BEED",
+            "keys": "alt+t"
+        },
+        {
+            "command": 
+            {
+                "action": "newTab",
+                "index": 0
+            },
+            "keys": "alt+shift+p"
         },
         {
             "command": 
@@ -297,15 +298,6 @@
         {
             "command": 
             {
-                "action": "newTab",
-                "index": 0
-            },
-            "id": "User.newTab.7975BEED",
-            "keys": "alt+shift+p"
-        },
-        {
-            "command": 
-            {
                 "action": "nextTab"
             },
             "id": "User.nextTab.0",
@@ -337,7 +329,7 @@
                 "splitMode": "duplicate"
             },
             "id": "User.splitPane.10B260D2",
-            "keys": "alt+shift+v"
+            "keys": "alt+h"
         },
         {
             "command": 
@@ -376,6 +368,13 @@
         {
             "command": 
             {
+                "action": "closeTabsAfter"
+            },
+            "id": "User.closeTabsAfter.0"
+        },
+        {
+            "command": 
+            {
                 "action": "experimental.colorSelection"
             },
             "id": "User.experimental.colorSelection.D3F0B923"
@@ -388,6 +387,14 @@
             },
             "id": "User.newTab.1FA5EB5",
             "keys": "alt+shift+l"
+        },
+        {
+            "command": 
+            {
+                "action": "closeOtherTabs"
+            },
+            "id": "User.closeOtherTabs.0",
+            "keys": "alt+shift+w"
         }
     ],
     "alwaysShowTabs": false,
@@ -416,9 +423,10 @@
                 "face": "JetBrainsMono Nerd Font",
                 "size": 14
             },
-            "opacity": 100,
+            "icon": null,
+            "opacity": 74,
             "padding": "7",
-            "useAcrylic": false
+            "useAcrylic": true
         },
         "list": 
         [
@@ -426,7 +434,7 @@
                 "antialiasingMode": "grayscale",
                 "autoMarkPrompts": true,
                 "bellStyle": "none",
-                "colorScheme": "One Half Dark",
+                "colorScheme": "Catppuccin Mocha",
                 "experimental.retroTerminalEffect": false,
                 "experimental.rightClickContextMenu": false,
                 "font": 
@@ -436,10 +444,11 @@
                 "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
                 "hidden": false,
                 "name": "PowerShell",
-                "opacity": 98,
+                "opacity": 82,
                 "padding": "8",
                 "scrollbarState": "hidden",
                 "source": "Windows.Terminal.PowershellCore",
+                "tabColor": "#13245C",
                 "tabTitle": "pwsh",
                 "useAcrylic": true
             },
@@ -704,5 +713,6 @@
                 "useMica": false
             }
         }
-    ]
+    ],
+    "useAcrylicInTabRow": true
 }
