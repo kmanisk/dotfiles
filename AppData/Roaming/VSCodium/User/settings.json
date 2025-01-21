@@ -269,5 +269,5 @@
 			"param": "-g '*.$1'"
 		}
 	],
-	"workbench.colorTheme": "Github Catppuccin Dark Mix",
+	"workbench.colorTheme": "Gruvbox Dark Soft",
 }

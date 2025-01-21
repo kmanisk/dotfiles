@@ -16,7 +16,6 @@ function extedit{
     nvim $ext
 
 }
-#
 function cat {
     if (Get-Command bat -ErrorAction SilentlyContinue) {
         Set-Alias -Name cat -Value bat
@@ -1014,6 +1013,7 @@ else {
     #Invoke-Expression (& { (zoxide init powershell | Out-String) })
     try {
         choco install zoxide --version=0.9.0 -y
+        #choco pin add --name zoxide
         #winget install -e --id ajeetdsouza.zoxide
         #Write-Host "zoxide installed successfully. Initializing..." -ForegroundColor Cyan
         # Write-Host "zoxide not installed"
