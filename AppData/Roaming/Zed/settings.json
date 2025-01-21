@@ -63,7 +63,7 @@
     "dark": "Github Dark Tritanopia"
   },
   "relative_line_numbers": true,
-  "buffer_font_family": "JetBrains Mono NL",
+  "buffer_font_family": "JetBrainsMono NF",
   "scrollbar": {
     "show": "never"
   },

@@ -1,17 +1,7 @@
 {
     "$help": "https://aka.ms/terminal-documentation",
     "$schema": "https://aka.ms/terminal-profiles-schema",
-    "actions": 
-    [
-        {
-            "command": 
-            {
-                "action": "copy",
-                "singleLine": false
-            },
-            "id": "User.copy.644BA8F2",
-            "keys": "alt+c"
-        },
+    "actions": [
         {
             "command": "unbound",
             "keys": "ctrl+shift+w"
@@ -161,8 +151,19 @@
             "keys": "alt+shift+c"
         },
         {
-            "command": 
-            {
+            "command": {
+                "action": "copy",
+                "singleLine": false
+            },
+            "id": "User.copy.644BA8F2",
+            "keys": "alt+c"
+        },
+        {
+            "command": "paste",
+            "id": "User.paste"
+        },
+        {
+            "command": {
                 "action": "newTab",
                 "index": 2
             },
@@ -170,25 +171,26 @@
             "keys": "alt+shift+b"
         },
         {
-            "command": "paste",
-            "id": "User.paste"
-        },
-        {
             "command": "find",
             "id": "User.find",
             "keys": "alt+f"
         },
         {
-            "command": 
-            {
-                "action": "commandPalette"
+            "command": {
+                "action": "newTab"
             },
-            "id": "User.commandPalette.D3F0B923",
-            "keys": "alt+p"
+            "id": "User.newTab.5DEADB41"
         },
         {
-            "command": 
-            {
+            "command": {
+                "action": "moveFocus",
+                "direction": "down"
+            },
+            "id": "User.moveFocus.F747588A",
+            "keys": "ctrl+j"
+        },
+        {
+            "command": {
                 "action": "splitPane",
                 "split": "auto",
                 "splitMode": "duplicate"
@@ -197,32 +199,14 @@
             "keys": "alt+shift+d"
         },
         {
-            "command": 
-            {
-                "action": "newTab"
+            "command": {
+                "action": "commandPalette"
             },
-            "id": "User.newTab.5DEADB41"
+            "id": "User.commandPalette.D3F0B923",
+            "keys": "alt+p"
         },
         {
-            "command": 
-            {
-                "action": "moveFocus",
-                "direction": "down"
-            },
-            "id": "User.moveFocus.F747588A",
-            "keys": "ctrl+j"
-        },
-        {
-            "command": 
-            {
-                "action": "prevTab"
-            },
-            "id": "User.prevTab.0",
-            "keys": "alt+j"
-        },
-        {
-            "command": 
-            {
+            "command": {
                 "action": "splitPane",
                 "split": "right",
                 "splitMode": "duplicate"
@@ -231,8 +215,7 @@
             "keys": "alt+v"
         },
         {
-            "command": 
-            {
+            "command": {
                 "action": "newTab",
                 "index": 3
             },
@@ -240,30 +223,19 @@
             "keys": "ctrl+shift+3"
         },
         {
+            "command": {
+                "action": "prevTab"
+            },
+            "id": "User.prevTab.0",
+            "keys": "alt+j"
+        },
+        {
             "command": "closePane",
             "id": "User.closePane",
             "keys": "alt+q"
         },
         {
-            "command": 
-            {
-                "action": "newTab",
-                "index": 0
-            },
-            "id": "User.newTab.7975BEED",
-            "keys": "alt+t"
-        },
-        {
-            "command": 
-            {
-                "action": "newTab",
-                "index": 0
-            },
-            "keys": "alt+shift+p"
-        },
-        {
-            "command": 
-            {
+            "command": {
                 "action": "newTab",
                 "index": 5
             },
@@ -271,16 +243,14 @@
             "keys": "alt+shift+a"
         },
         {
-            "command": 
-            {
+            "command": {
                 "action": "newTab",
                 "index": 4
             },
             "id": "User.newTab.89E6CA61"
         },
         {
-            "command": 
-            {
+            "command": {
                 "action": "moveFocus",
                 "direction": "left"
             },
@@ -288,24 +258,36 @@
             "keys": "ctrl+h"
         },
         {
-            "command": 
-            {
+            "command": {
                 "action": "clearBuffer",
                 "clear": "all"
             },
             "id": "User.clearBuffer.87C324ED"
         },
         {
-            "command": 
-            {
+            "command": {
+                "action": "newTab",
+                "index": 0
+            },
+            "id": "User.newTab.7975BEED",
+            "keys": "alt+t"
+        },
+        {
+            "command": {
+                "action": "newTab",
+                "index": 0
+            },
+            "keys": "alt+shift+p"
+        },
+        {
+            "command": {
                 "action": "nextTab"
             },
             "id": "User.nextTab.0",
             "keys": "alt+k"
         },
         {
-            "command": 
-            {
+            "command": {
                 "action": "moveFocus",
                 "direction": "right"
             },
@@ -313,8 +295,7 @@
             "keys": "ctrl+l"
         },
         {
-            "command": 
-            {
+            "command": {
                 "action": "moveFocus",
                 "direction": "up"
             },
@@ -322,8 +303,7 @@
             "keys": "ctrl+k"
         },
         {
-            "command": 
-            {
+            "command": {
                 "action": "splitPane",
                 "split": "down",
                 "splitMode": "duplicate"
@@ -332,8 +312,7 @@
             "keys": "alt+h"
         },
         {
-            "command": 
-            {
+            "command": {
                 "action": "adjustFontSize",
                 "delta": -1
             },
@@ -341,8 +320,7 @@
             "keys": "alt+shift+y"
         },
         {
-            "command": 
-            {
+            "command": {
                 "action": "adjustFontSize",
                 "delta": 1
             },
@@ -350,38 +328,33 @@
             "keys": "alt+shift+u"
         },
         {
-            "command": 
-            {
+            "command": {
                 "action": "scrollUp"
             },
             "id": "User.scrollUp.0",
             "keys": "alt+shift+k"
         },
         {
-            "command": 
-            {
+            "command": {
                 "action": "scrollDown"
             },
             "id": "User.scrollDown.0",
             "keys": "alt+shift+j"
         },
         {
-            "command": 
-            {
+            "command": {
                 "action": "closeTabsAfter"
             },
             "id": "User.closeTabsAfter.0"
         },
         {
-            "command": 
-            {
+            "command": {
                 "action": "experimental.colorSelection"
             },
             "id": "User.experimental.colorSelection.D3F0B923"
         },
         {
-            "command": 
-            {
+            "command": {
                 "action": "newTab",
                 "index": 1
             },
@@ -389,8 +362,7 @@
             "keys": "alt+shift+l"
         },
         {
-            "command": 
-            {
+            "command": {
                 "action": "closeOtherTabs"
             },
             "id": "User.closeOtherTabs.0",
@@ -402,23 +374,19 @@
     "copyOnSelect": false,
     "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
     "firstWindowPreference": "defaultProfile",
-    "newTabMenu": 
-    [
+    "newTabMenu": [
         {
             "type": "remainingProfiles"
         }
     ],
-    "profiles": 
-    {
-        "defaults": 
-        {
+    "profiles": {
+        "defaults": {
             "backgroundImage": null,
             "backgroundImageOpacity": 0.07,
             "colorScheme": "One Half Dark",
             "cursorShape": "filledBox",
             "experimental.retroTerminalEffect": false,
-            "font": 
-            {
+            "font": {
                 "builtinGlyphs": true,
                 "face": "JetBrainsMono Nerd Font",
                 "size": 14
@@ -428,17 +396,15 @@
             "padding": "7",
             "useAcrylic": true
         },
-        "list": 
-        [
+        "list": [
             {
                 "antialiasingMode": "grayscale",
                 "autoMarkPrompts": true,
                 "bellStyle": "none",
-                "colorScheme": "Catppuccin Mocha",
+                "colorScheme": "Sonokai Shusia",
                 "experimental.retroTerminalEffect": false,
                 "experimental.rightClickContextMenu": false,
-                "font": 
-                {
+                "font": {
                     "face": "JetBrainsMono Nerd Font"
                 },
                 "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
@@ -448,7 +414,7 @@
                 "padding": "8",
                 "scrollbarState": "hidden",
                 "source": "Windows.Terminal.PowershellCore",
-                "tabColor": "#13245C",
+                "tabColor": "#09143a",
                 "tabTitle": "pwsh",
                 "useAcrylic": true
             },
@@ -497,8 +463,7 @@
             }
         ]
     },
-    "schemes": 
-    [
+    "schemes": [
         {
             "background": "#1E1E2E",
             "black": "#45475A",
@@ -661,6 +626,29 @@
             "yellow": "#BC7053"
         },
         {
+            "background": "#2D2A2E",
+            "black": "#1A181A",
+            "blue": "#1080D0",
+            "brightBlack": "#707070",
+            "brightBlue": "#22D5FF",
+            "brightCyan": "#7ACCD7",
+            "brightGreen": "#A4CD7C",
+            "brightPurple": "#AB9DF2",
+            "brightRed": "#F882A5",
+            "brightWhite": "#E3E1E4",
+            "brightYellow": "#E5D37E",
+            "cursorColor": "#FFFFFF",
+            "cyan": "#3AA5D0",
+            "foreground": "#E3E1E4",
+            "green": "#7FCD2B",
+            "name": "Sonokai Shusia",
+            "purple": "#7C63F2",
+            "red": "#F82F66",
+            "selectionBackground": "#FFFFFF",
+            "white": "#E3E1E4",
+            "yellow": "#E5DE2D"
+        },
+        {
             "background": "#191724",
             "black": "#26233A",
             "blue": "#31748F",
@@ -688,24 +676,20 @@
     "showTerminalTitleInTitlebar": false,
     "tabWidthMode": "equal",
     "theme": "legacyDark",
-    "themes": 
-    [
+    "themes": [
         {
             "name": "Catppuccin Mocha",
-            "tab": 
-            {
+            "tab": {
                 "background": "#1E1E2EFF",
                 "iconStyle": "default",
                 "showCloseButton": "always",
                 "unfocusedBackground": null
             },
-            "tabRow": 
-            {
+            "tabRow": {
                 "background": "#181825FF",
                 "unfocusedBackground": "#11111BFF"
             },
-            "window": 
-            {
+            "window": {
                 "applicationTheme": "dark",
                 "experimental.rainbowFrame": false,
                 "frame": null,
@@ -714,5 +698,5 @@
             }
         }
     ],
-    "useAcrylicInTabRow": true
+    "useAcrylicInTabRow": false
 }
