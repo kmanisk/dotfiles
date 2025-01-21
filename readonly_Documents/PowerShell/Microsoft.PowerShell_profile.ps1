@@ -17,19 +17,24 @@ function extedit{
 
 }
 #
-#function cat {
-#    if (Get-Command bat -ErrorAction SilentlyContinue) {
-#        Set-Alias -Name cat -Value bat
-#    }
-#}
-#
 function cat {
     if (Get-Command bat -ErrorAction SilentlyContinue) {
-        bat @Args
-    } else {
-        Get-Content @Args
+        Set-Alias -Name cat -Value bat
+    }
+    else{
+        Set-Alias -Name cat -Value cat
     }
 }
+#
+#function cat {
+#    if (Get-Command bat -ErrorAction SilentlyContinue) {
+#        #bat @Args
+#        Set-Alias -Name cat -Value bat
+#    } else {
+#        #Get-Content @Args
+#    }
+#}
+
 function font{
 [System.Reflection.Assembly]::LoadWithPartialName("System.Drawing") | Out-Null; (New-Object System.Drawing.Text.InstalledFontCollection).Families.Name
 }
