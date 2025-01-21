@@ -203,3 +203,5 @@ bcdedit  /enum
 pwsh
 |	time=1737084039
 wsl --shutdown
+|	time=1737149299
+scoop list

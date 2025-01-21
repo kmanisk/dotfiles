@@ -216,6 +216,7 @@ else {
 }
 #Remove-Item Alias:zi -ErrorAction SilentlyContinue
 function shutit {
+    dall
     shutdown /s /t 0
 }
 
