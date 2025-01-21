@@ -316,9 +316,10 @@ map("n", "<C-l>", "<C-w>l", { desc = "Move focus to the right pane" })
 map("n", "<C-w>", ":tabclose<CR>", { desc = "Close current tab" })
 
 -- Save current file with Leader+w
-map("n", "<Leader>w", ":w<CR>", { desc = "Save current file" })
+map("n", "<Leader>w", ":w<CR>", { desc = "Save current file" },opts)
 
 -- Save all files with Leader+W
+map("n", "<Leader>W", ":wa<CR>", { desc = "Save all files in a buffer" })
 
 -- Remove trailing semicolons and commas, and append semicolons and commas at the end
 map("n", "<leader>d;", ":s/;$//<CR>", { noremap = true, silent = true, desc = "Remove trailing semicolons" })

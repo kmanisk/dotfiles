@@ -354,19 +354,14 @@
 		"command": "-cody.chat.signIn",
 		"when": "!cody.activated"
 	},
-	{
-		"key": "u",
-		"command": "undo",
-		"when": "filesExplorerFocus"
-	},
-	{
-		"key": "u",
-		"command": "undo",
-		"when": "filesExplorerFocus"
-	},
+	// {
+	// 	"key": "u",
+	// 	"command": "undo",
+	// 	"when": "filesExplorerFocus"
+	// },
 	{
 		"key": "shift+u",
-		"command": "redo",
+		"command": "undo",
 		"when": "filesExplorerFocus",
 	},
 	{
