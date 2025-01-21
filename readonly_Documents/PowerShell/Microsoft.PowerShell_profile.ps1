@@ -10,6 +10,11 @@ if (!(Get-Module -ListAvailable -Name PSReadLine)) {
     Install-Module -Name PSReadLine -Scope CurrentUser -Force -SkipPublisherCheck
 }
 Import-Module -Name PSReadLine
+
+if (!(Get-Module -ListAvailable -Name PowerType)) {
+Install-Module PowerType -AllowPrerelease
+Enable-PowerType
+}
 function extedit{
     $ext = Join-Path $HOME "AppData\Local\installer\vscode.txt"
     Write-Host "path : "  $ext
@@ -260,12 +265,15 @@ $PSReadLineOptions = @{
 Set-PSReadLineOption @PSReadLineOptions
 if ($Host.Name -notmatch 'ConsoleHost') {
     # Disable predictive suggestions for non-interactive shells
+    #Set-PSReadLineOption -PredictionSource HistoryAndPlugin -PredictionViewStyle ListView # Optional
     Set-PSReadLineOption -PredictionSource None
 }
 else {
     # Enable predictive suggestions for interactive shells
-    Set-PSReadLineOption -PredictionSource HistoryAndPlugin
-    Set-PSReadLineOption -PredictionViewStyle ListView
+    Set-PSReadLineOption -PredictionSource HistoryAndPlugin -PredictionViewStyle ListView # Optional
+    #Set-PSReadLineOption -PredictionSource HistoryAndPlugin
+    #Set-PSReadLineOption -PredictionViewStyle ListView
+    #can use -EditMode Emacs or Vi mode for folloing the windows one will use windows like home end keybinds   
     Set-PSReadLineOption -EditMode Windows
     
 }
