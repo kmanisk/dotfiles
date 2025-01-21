@@ -397,9 +397,9 @@ map(
 	{ noremap = true, silent = true, desc = "[C]onfig [G]rep" }
 )
 
-map("n", "<Leader>fd", function()
-	require("conform").format({ async = true })
-end, { noremap = true, silent = true })
+-- map("n", "<Leader>fd", function()
+-- 	require("conform").format({ async = true })
+-- end, { noremap = true, silent = true })
 -- Close all buffers except the current one
 map("n", "<Leader>ct", ":lua require('nvchad.tabufline').closeAllBufs(false)<CR>", { noremap = true, silent = true })
 
@@ -435,3 +435,16 @@ map("n", "<leader>oe", function()
   local current_file = vim.fn.expand("%:p:h") -- Get the directory of the current file
   vim.cmd("silent !start explorer " .. current_file) -- Open Explorer at the directory
 end, { noremap = true, silent = true, desc = "Open Explorer at current file location" })
+
+
+local telescope = require('telescope.builtin')
+local telescope_last = 0
+function telescope_resume()
+  if telescope_last == 0 then
+    telescope_last = 1
+    telescope.live_grep()
+  else
+    telescope.resume()
+  end
+end
+vim.keymap.set("n", "<leader>fd", telescope_resume, opts)
