@@ -26,14 +26,12 @@ function Show-PathValues {
 
 # Create an alias for the function
 Set-Alias -Name spath -Value Show-PathValues
-function cat {
     if (Get-Command bat -ErrorAction SilentlyContinue) {
         Set-Alias -Name cat -Value bat
     }
     else{
         Set-Alias -Name cat -Value cat
     }
-}
 #
 #function cat {
 #    if (Get-Command bat -ErrorAction SilentlyContinue) {
