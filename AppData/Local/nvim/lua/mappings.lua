@@ -60,9 +60,9 @@ map("x", "K", ":move '<-2<CR>gv-gv", opts)
 --
 -- Function to safely remove a keymap if it exists
 local function safe_remove_keymap(mode, key)
-	if vim.fn.maparg(key, mode) ~= "" then
-		pcall(vim.keymap.del, mode, key) -- Use pcall to handle potential errors gracefully
-	end
+    if vim.fn.maparg(key, mode) ~= "" then
+        pcall(vim.keymap.del, mode, key) -- Use pcall to handle potential errors gracefully
+    end
 end
 
 -- Remove default mappings
@@ -91,31 +91,31 @@ map("n", "<S-Up>", ":resize -5<CR>", opts)
 
 -- Map `cr` to invoke the LSP renamer from NvChad
 map("n", "cr", function()
-	require("nvchad.lsp.renamer")() -- Assuming this is how the function is accessed
+    require("nvchad.lsp.renamer")() -- Assuming this is how the function is accessed
 end, opts)
 -- Remove the original mapping for <Space>ra in normal mode
 --
 map("n", "<leader>th", function()
-	require("nvchad.themes").open({
-		border = true,
-		-- style = "compact",
-	})
+    require("nvchad.themes").open({
+        border = true,
+        -- style = "compact",
+    })
 end, opts)
 
 map("n", "<leader>q", function()
-	require("nvchad.tabufline").close_buffer()
+    require("nvchad.tabufline").close_buffer()
 end, opts)
 
 map("n", "<leader>fh", ":Telescope oldfiles<CR>", { noremap = true, silent = true, desc = "Search Previous Files" })
 -- Keybinding to resume the last Telescope search
 map(
-	"n",
-	"<leader>fr",
-	":Telescope resume<CR>",
-	{ noremap = true, silent = true, desc = "Resume Last Telescope Search" }
+    "n",
+    "<leader>fr",
+    ":Telescope resume<CR>",
+    { noremap = true, silent = true, desc = "Resume Last Telescope Search" }
 )
 map({ "n", "t" }, "<A-;>", function()
-	require("nvchad.term").toggle({ pos = "sp", id = "htoggleTerm" })
+    require("nvchad.term").toggle({ pos = "sp", id = "htoggleTerm" })
 end, { desc = "Toggle terminal horizontally" })
 
 map("n", "<A-v>", ":vsplit<CR>", { noremap = true, silent = true, desc = "Vertical split" })
@@ -127,15 +127,15 @@ map("n", "<A-h>", ":split<CR>", { noremap = true, silent = true, desc = "Horizon
 map("n", "<A-w>", ":close<CR>", { noremap = true, silent = true, desc = "Close current split" })
 
 map("n", "<leader>sk", function()
-	require("telescope.builtin").keymaps()
+    require("telescope.builtin").keymaps()
 end, { desc = "Telescope Keymaps" })
 
 map("n", "<leader>bb", ":lua InputCommand()<CR>", opts)
 
 map("n", "<leader>j", "mzJ`z", { noremap = true, silent = true })
 function InputCommand()
-	local command = vim.fn.input("Shell command: ")
-	vim.cmd("!" .. command)
+    local command = vim.fn.input("Shell command: ")
+    vim.cmd("!" .. command)
 end
 
 -- map({ "n", "t" }, "<A-i>", function()
@@ -168,21 +168,21 @@ end
 --
 --
 -- Yank to system clipboard for any 'y' and '<Leader>d' mappings
-map("v", "y", '"+y', opts) -- Visual mode yank to clipboard
+map("v", "y", '"+y', opts)   -- Visual mode yank to clipboard
 map("n", "yy", '"+yy', opts) -- Normal mode double 'yy' to clipboard
-map("n", "p", '"+p', opts) -- Paste from system clipboard
+map("n", "p", '"+p', opts)   -- Paste from system clipboard
 -- map("v", "<leader>y", '"+y', opts) -- Yank with <Leader> to clipboard
-map("v", "p", '"+p', opts) -- Paste from clipboard in visual mode
+map("v", "p", '"+p', opts)   -- Paste from clipboard in visual mode
 
 -- Special handling for paste operations with specific behavior
 map("n", "gp", 'o<Esc>"+p', opts) -- Paste in new line after cursor
 map("n", "gP", 'O<Esc>"+P', opts) -- Paste in new line before cursor
 
 -- Prevent content from being placed in clipboard when deleting, use black hole register
-map("n", "d", '"_d', opts) -- Delete in normal mode without affecting clipboard
+map("n", "d", '"_d', opts)   -- Delete in normal mode without affecting clipboard
 map("n", "dd", '"_dd', opts) -- Delete whole line without clipboard
-map("v", "d", '"_d', opts) -- Delete in visual mode without clipboard
-map("v", "D", '"_D', opts) -- Delete to the end of line without clipboard
+map("v", "d", '"_d', opts)   -- Delete in visual mode without clipboard
+map("v", "D", '"_D', opts)   -- Delete to the end of line without clipboard
 
 -- Map <Leader>d to yank to system clipboard
 map("n", "<Leader>d", '"+y', opts) -- Leader+d for system clipboard
@@ -300,7 +300,7 @@ map("n", "G", "Gzz", opts)
 
 -- mapping with a lua function
 map("n", "<A-i>", function()
-	-- do something
+    -- do something
 end, { desc = "Terminal toggle floating" })
 
 --
@@ -316,7 +316,7 @@ map("n", "<C-l>", "<C-w>l", { desc = "Move focus to the right pane" })
 map("n", "<C-w>", ":tabclose<CR>", { desc = "Close current tab" })
 
 -- Save current file with Leader+w
-map("n", "<Leader>w", ":w<CR>", { desc = "Save current file" },opts)
+map("n", "<Leader>w", ":w<CR>", { desc = "Save current file" }, opts)
 
 -- Save all files with Leader+W
 map("n", "<Leader>W", ":wa<CR>", { desc = "Save all files in a buffer" })
@@ -380,22 +380,22 @@ local builtin = require("telescope.builtin")
 
 -- Set the keymap for searching Neovim configuration files
 map("n", "<leader>oc", function()
-	builtin.find_files({ cwd = vim.fn.stdpath("config") })
+    builtin.find_files({ cwd = vim.fn.stdpath("config") })
 end, { desc = "[S]earch [N]eovim files" })
 
 map("n", "<leader>ss", function()
-	require("telescope.builtin").live_grep({
-		grep_open_files = true,
-		prompt_title = "Live Grep in Open Files",
-	})
+    require("telescope.builtin").live_grep({
+        grep_open_files = true,
+        prompt_title = "Live Grep in Open Files",
+    })
 end, { desc = "[S]earch [/] in Open Files" })
 
 -- Map <leader>cg to live grep within Neovim config directory
 map(
-	"n",
-	"<leader>og",
-	':lua require("telescope.builtin").live_grep({ cwd = vim.fn.stdpath("config") })<CR>',
-	{ noremap = true, silent = true, desc = "[C]onfig [G]rep" }
+    "n",
+    "<leader>og",
+    ':lua require("telescope.builtin").live_grep({ cwd = vim.fn.stdpath("config") })<CR>',
+    { noremap = true, silent = true, desc = "[C]onfig [G]rep" }
 )
 
 -- map("n", "<Leader>fd", function()
@@ -406,16 +406,16 @@ map("n", "<Leader>ct", ":lua require('nvchad.tabufline').closeAllBufs(false)<CR>
 
 -- Close all buffers to the right
 map(
-	"n",
-	"<Leader>cr",
-	":lua require('nvchad.tabufline').closeBufs_at_direction('right')<CR>",
-	{ noremap = true, silent = true }
+    "n",
+    "<Leader>cr",
+    ":lua require('nvchad.tabufline').closeBufs_at_direction('right')<CR>",
+    { noremap = true, silent = true }
 )
 map(
-	"n",
-	"<Leader>cl",
-	":lua require('nvchad.tabufline').closeBufs_at_direction('left')<CR>",
-	{ noremap = true, silent = true }
+    "n",
+    "<Leader>cl",
+    ":lua require('nvchad.tabufline').closeBufs_at_direction('left')<CR>",
+    { noremap = true, silent = true }
 )
 -- Move the buffer to the left (using Alt + <)
 --
@@ -433,19 +433,20 @@ map("n", "-", "<C-x>", { noremap = true, silent = true })
 map("n", "<leader>sh", ":lua print(vim.api.nvim_buf_get_name(0))<CR>", { noremap = true, silent = true })
 
 map("n", "<leader>oe", function()
-  local current_file = vim.fn.expand("%:p:h") -- Get the directory of the current file
-  vim.cmd("silent !start explorer " .. current_file) -- Open Explorer at the directory
+    local current_file = vim.fn.expand("%:p:h")        -- Get the directory of the current file
+    vim.cmd("silent !start explorer " .. current_file) -- Open Explorer at the directory
 end, { noremap = true, silent = true, desc = "Open Explorer at current file location" })
 
 
 local telescope = require('telescope.builtin')
 local telescope_last = 0
 function telescope_resume()
-  if telescope_last == 0 then
-    telescope_last = 1
-    telescope.live_grep()
-  else
-    telescope.resume()
-  end
+    if telescope_last == 0 then
+        telescope_last = 1
+        telescope.live_grep()
+    else
+        telescope.resume()
+    end
 end
+
 vim.keymap.set("n", "<leader>fd", telescope_resume, opts)

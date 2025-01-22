@@ -17,12 +17,12 @@ o.relativenumber = true
 
 -- Set shell to pwsh or fallback to powershell
 if fn.executable("pwsh") == 1 then
-	o.shell = "pwsh"
-	o.shellcmdflag =
-		"-NoLogo -NoProfile  -ExecutionPolicy RemoteSigned -Command $PSStyle.OutputRendering = 'PlainText';"
+    o.shell = "pwsh"
+    o.shellcmdflag =
+    "-NoLogo -NoProfile  -ExecutionPolicy RemoteSigned -Command $PSStyle.OutputRendering = 'PlainText';"
 else
-	o.shell = "powershell"
-	o.shellcmdflag = "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command"
+    o.shell = "powershell"
+    o.shellcmdflag = "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command"
 end
 
 -- Configure shell output redirection
@@ -65,11 +65,11 @@ vim.opt.shiftwidth = 4 -- Number of spaces for each indentation level
 -- Highlight the current line
 vim.opt.cursorline = true
 -- vim.api.nvim_set_hl(0, "CursorLine", { bg = "#333333" })
-vim.opt.tabstop = 2 -- Number of spaces a tab represents
-vim.opt.expandtab = true -- Convert tabs to spaces
+vim.opt.tabstop = 2        -- Number of spaces a tab represents
+vim.opt.expandtab = true   -- Convert tabs to spaces
 
 vim.opt.smartindent = true -- Enable automatic indentation
-vim.opt.autoindent = true -- Auto-indent new lines
+vim.opt.autoindent = true  -- Auto-indent new lines
 -- Enable line break at word boundary
 o.linebreak = true
 
@@ -84,6 +84,6 @@ o.background = "dark" -- or "light"
 
 -- Ensure window options are modifiable before making changes
 if bo.modifiable then
-	-- Example buffer-specific options (only if the buffer is modifiable)
-	bo.textwidth = 80 -- Example option
+    -- Example buffer-specific options (only if the buffer is modifiable)
+    bo.textwidth = 80 -- Example option
 end

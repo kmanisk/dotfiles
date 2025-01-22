@@ -4,23 +4,6 @@
     "actions": 
     [
         {
-            "command": 
-            {
-                "action": "copy",
-                "singleLine": false
-            },
-            "id": "User.copy.644BA8F2",
-            "keys": "alt+c"
-        },
-        {
-            "command": 
-            {
-                "action": "movePane",
-                "index": 5
-            },
-            "id": "User.movePane.371F23CF"
-        },
-        {
             "command": "unbound",
             "keys": "ctrl+shift+w"
         },
@@ -165,6 +148,39 @@
             "keys": "ctrl+shift+6"
         },
         {
+            "command": "unbound",
+            "keys": "win+sc(41)"
+        },
+        {
+            "command": "unbound",
+            "keys": "ctrl+shift+h"
+        },
+        {
+            "command": "unbound",
+            "keys": "f2"
+        },
+        {
+            "command": 
+            {
+                "action": "movePane",
+                "index": 5
+            },
+            "id": "User.movePane.371F23CF"
+        },
+        {
+            "command": 
+            {
+                "action": "copy",
+                "singleLine": false
+            },
+            "id": "User.copy.644BA8F2",
+            "keys": "alt+c"
+        },
+        {
+            "command": "paste",
+            "id": "User.paste"
+        },
+        {
             "command": 
             {
                 "action": "newTab",
@@ -172,10 +188,6 @@
             },
             "id": "User.newTab.CCE909E3",
             "keys": "alt+shift+o"
-        },
-        {
-            "command": "paste",
-            "id": "User.paste"
         },
         {
             "command": "find",
@@ -194,9 +206,25 @@
         {
             "command": 
             {
+                "action": "quakeMode"
+            },
+            "id": "User.quakeMode.F1E129A4",
+            "keys": "f4"
+        },
+        {
+            "command": 
+            {
                 "action": "newTab"
             },
             "id": "User.newTab.5DEADB41"
+        },
+        {
+            "command": 
+            {
+                "action": "commandPalette"
+            },
+            "id": "User.commandPalette.D3F0B923",
+            "keys": "alt+p"
         },
         {
             "command": 
@@ -211,18 +239,19 @@
         {
             "command": 
             {
-                "action": "commandPalette"
-            },
-            "id": "User.commandPalette.D3F0B923",
-            "keys": "alt+p"
-        },
-        {
-            "command": 
-            {
                 "action": "prevTab"
             },
             "id": "User.prevTab.0",
             "keys": "alt+j"
+        },
+        {
+            "command": 
+            {
+                "action": "newTab",
+                "index": 3
+            },
+            "id": "User.newTab.F4C304FB",
+            "keys": "alt+shift+a"
         },
         {
             "command": 
@@ -233,15 +262,6 @@
             },
             "id": "User.splitPane.FEF0D40B",
             "keys": "alt+v"
-        },
-        {
-            "command": 
-            {
-                "action": "newTab",
-                "index": 3
-            },
-            "id": "User.newTab.F4C304FB",
-            "keys": "alt+shift+a"
         },
         {
             "command": 
@@ -272,6 +292,14 @@
         {
             "command": 
             {
+                "action": "clearBuffer",
+                "clear": "all"
+            },
+            "id": "User.clearBuffer.87C324ED"
+        },
+        {
+            "command": 
+            {
                 "action": "newTab",
                 "index": 5
             },
@@ -285,14 +313,6 @@
             },
             "id": "User.moveFocus.2A0DA8E0",
             "keys": "ctrl+h"
-        },
-        {
-            "command": 
-            {
-                "action": "clearBuffer",
-                "clear": "all"
-            },
-            "id": "User.clearBuffer.87C324ED"
         },
         {
             "command": "closePane",
@@ -399,6 +419,13 @@
             },
             "id": "User.closeOtherTabs.0",
             "keys": "alt+shift+w"
+        },
+        {
+            "command": 
+            {
+                "action": "adjustOpacity"
+            },
+            "id": "User.adjustOpacity.4C657714"
         }
     ],
     "alwaysShowTabs": false,

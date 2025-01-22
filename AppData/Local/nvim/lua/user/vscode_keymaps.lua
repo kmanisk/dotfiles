@@ -14,10 +14,11 @@ vim.g.clipboard = vim.g.vscode_clipboard
 -- Smarter Search
 -- Ignore case during search unless uppercase is used
 vim.o.ignorecase = true -- Case insensitive search
-vim.o.smartcase = true -- Override ignorecase if search pattern contains uppercase
+vim.o.smartcase = true  -- Override ignorecase if search pattern contains uppercase
 
 -- Highlight search matches
 vim.o.hlsearch = true
+
 
 -- Incremental search (shows matches as you type)
 vim.o.incsearch = true
@@ -73,10 +74,10 @@ map("v", "<leader>/", ":call VSCodeNotify('editor.action.commentLine')<CR>gv", o
 -- map('n', '<S-Down>', ':resize +5<CR>', opts)
 -- map('n', '<S-Up>', ':resize -5<CR>', opts)
 map("n", "<leader>gv", function()
-	require("vscode").action("workbench.action.splitEditor")
+    require("vscode").action("workbench.action.splitEditor")
 end, opts)
 map("n", "<leader>gh", function()
-	require("vscode").action("workbench.action.splitEditorDown")
+    require("vscode").action("workbench.action.splitEditorDown")
 end, opts)
 map({ "n", "v" }, "<leader>oe", "<cmd>lua require('vscode').action('revealFileInOS')<CR>", opts)
 
@@ -102,11 +103,11 @@ map("n", "<leader>rf", ":call VSCodeNotify('filebunny.renameActiveFile')<CR>", o
 map("n", "<leader>ff", ":call VSCodeNotify('filebunny.openFile')<CR>", opts)
 
 map("n", "<S-j>", function()
-	require("vscode").call("workbench.action.nextEditorInGroup")
+    require("vscode").call("workbench.action.nextEditorInGroup")
 end, opts)
 
 map("n", "<S-k>", function()
-	require("vscode").call("workbench.action.previousEditorInGroup")
+    require("vscode").call("workbench.action.previousEditorInGroup")
 end, opts)
 
 map("n", "<Esc>", "<Esc>:noh<CR>", opts)
@@ -150,16 +151,16 @@ map({ "n", "v" }, "<leader>rw", "<cmd>lua require('vscode').action('workbench.ac
 map({ "n", "v" }, "<leader>s", "<cmd>lua require('vscode').action('workbench.action.toggleSidebarVisibility')<CR>")
 -- make the sidebar close and focus on the file explorer and if pressed space e then closes the file explorer
 map(
-	"n",
-	"<leader>e",
-	"<cmd>lua require('vscode').action('workbench.action.toggleSidebarVisibility')<CR><cmd>lua require('vscode').action('workbench.files.action.focusFilesExplorer')<CR>"
+    "n",
+    "<leader>e",
+    "<cmd>lua require('vscode').action('workbench.action.toggleSidebarVisibility')<CR><cmd>lua require('vscode').action('workbench.files.action.focusFilesExplorer')<CR>"
 )
 -- make close any side bar
 map(
-	"n",
-	"<leader>gq",
-	"<cmd>lua require('vscode').action('workbench.action.toggleSidebarVisibility')<CR>",
-	{ desc = "Toggle Sidebar" }
+    "n",
+    "<leader>gq",
+    "<cmd>lua require('vscode').action('workbench.action.toggleSidebarVisibility')<CR>",
+    { desc = "Toggle Sidebar" }
 )
 
 map("n", "<leader>ow", '<Cmd>lua require("vscode").action("workbench.action.output.toggleOutput")<CR>', opts)
@@ -180,30 +181,30 @@ map("n", "]d", "<cmd>lua require('vscode').action('editor.action.marker.prev')<C
 ---- Mapping to open a specific file using VSCode command
 
 map("n", "<leader>vp", function()
-	vim.fn.VSCodeNotify("workbench.actions.view.problems")
+    vim.fn.VSCodeNotify("workbench.actions.view.problems")
 end)
 map("n", "<leader>gr", function()
-	require("vscode").action("editor.action.referenceSearch.trigger")
+    require("vscode").action("editor.action.referenceSearch.trigger")
 end, { desc = "Show references" })
 
 map("n", "gd", function()
-	require("vscode").action("editor.action.revealDefinition")
+    require("vscode").action("editor.action.revealDefinition")
 end, { desc = "Go to definition" })
 
 map("n", "gD", function()
-	require("vscode").action("editor.action.peekDefinition")
+    require("vscode").action("editor.action.peekDefinition")
 end, { desc = "Peek definition" })
 
 map("n", "gr", function()
-	require("vscode").action("editor.action.referenceSearch.trigger")
+    require("vscode").action("editor.action.referenceSearch.trigger")
 end, { desc = "Search references" })
 map({ "n", "v" }, "<S-l>", "<cmd>lua require('vscode').action('editor.action.showHover')<CR>")
 map("n", "<leader>gi", function()
-	require("vscode").action("editor.action.goToImplementation")
+    require("vscode").action("editor.action.goToImplementation")
 end, { desc = "Go to implementation" })
 
 map("n", "za", function()
-	require("vscode").action("editor.toggleFold")
+    require("vscode").action("editor.toggleFold")
 end, { desc = "Toggle fold" })
 
 --[[
@@ -235,9 +236,9 @@ map("n", "<leader>k", "kmzJ`z", opts)
 map("n", "<leader>n", "o<Esc>", opts)
 map("n", "<leader>N", "O<Esc>", opts)
 map({ "n", "x", "i" }, "<C-d>", function()
-	vscode.with_insert(function()
-		vscode.action("editor.action.addSelectionToNextFindMatch")
-	end)
+    vscode.with_insert(function()
+        vscode.action("editor.action.addSelectionToNextFindMatch")
+    end)
 end)
 
 --[[
@@ -250,11 +251,11 @@ map({ "n", "v" }, "<leader>ho", "<cmd>lua require('vscode').action('vscode-harpo
 map({ "n", "v" }, "<leader>he", "<cmd>lua require('vscode').action('vscode-harpoon.editEditors')<CR>")
 
 for i = 1, 9 do
-	map(
-		{ "n", "v" },
-		string.format("<leader>h%d", i),
-		string.format("<cmd>lua require('vscode').action('vscode-harpoon.gotoEditor%d')<CR>", i)
-	)
+    map(
+        { "n", "v" },
+        string.format("<leader>h%d", i),
+        string.format("<cmd>lua require('vscode').action('vscode-harpoon.gotoEditor%d')<CR>", i)
+    )
 end
 
 --[[
