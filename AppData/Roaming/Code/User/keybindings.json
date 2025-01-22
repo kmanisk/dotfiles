@@ -6,12 +6,12 @@
 		"when": "editorTextFocus"
 	},
 	{
-		"key": "alt+m",
+		"key": "alt+k",
 		"command": "workbench.action.nextEditor",
 		"when": "editorTextFocus || !editorHasSelection"
 	},
 	{
-		"key": "alt+n",
+		"key": "alt+j",
 		"command": "workbench.action.previousEditor",
 		"when": "editorTextFocus || !editorHasSelection"
 	},
@@ -475,5 +475,65 @@
 	{
 		"key": "alt+t",
 		"command": "PowerShell.RunSelection"
+	},
+	{
+		"key": "alt+k",
+		"command": "-cody.command.edit-code",
+		"when": "cody.activated && !editorReadonly"
+	},
+	{
+		"key": "alt+k",
+		"command": "-cody.tutorial.edit",
+		"when": "cody.activated && cody.tutorialActive && !editorReadonly"
+	},
+	{
+		"key": "alt+k",
+		"command": "-editor.action.accessibilityHelpConfigureKeybindings",
+		"when": "accessibilityHelpIsShown && accessibleViewHasUnassignedKeybindings"
+	},
+	{
+		"key": "alt+k",
+		"command": "-keybindings.editor.recordSearchKeys",
+		"when": "inKeybindings && inKeybindingsSearch"
+	},
+	{
+		"key": "alt+l",
+		"command": "workbench.panel.chat",
+		"when": "workbench.panel.chat.view.copilot.active"
+	},
+	{
+		"key": "ctrl+alt+i",
+		"command": "-workbench.panel.chat",
+		"when": "workbench.panel.chat.view.copilot.active"
+	},
+	{
+		"key": "alt+l",
+		"command": "-cody.chat.signIn",
+		"when": "!cody.activated"
+	},
+	{
+		"key": "alt+l",
+		"command": "-toggleSearchEditorContextLines",
+		"when": "inSearchEditor"
+	},
+	{
+		"key": "alt+l",
+		"command": "-cody.chat.toggle",
+		"when": "cody.activated && editorTextFocus"
+	},
+	{
+		"key": "alt+l",
+		"command": "-cody.tutorial.chat",
+		"when": "cody.activated && cody.tutorialActive"
+	},
+	{
+		"key": "alt+l",
+		"command": "-cody.chat.toggle",
+		"when": "cody.activated && !editorTextFocus"
+	},
+	{
+		"key": "alt+l",
+		"command": "-toggleFindInSelection",
+		"when": "editorFocus"
 	}
 ]

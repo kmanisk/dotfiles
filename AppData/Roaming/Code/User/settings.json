@@ -269,6 +269,7 @@
 			"param": "-g '*.$1'"
 		}
 	],
-	"workbench.colorTheme": "Gruvbox Dark Soft",
+	"workbench.colorTheme": "PyCharm Night Theme",
 	"extensions.ignoreRecommendations": true,
+	"terminal.integrated.sendKeybindingsToShell": true,
 }
