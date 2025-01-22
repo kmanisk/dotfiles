@@ -11,10 +11,10 @@ if (!(Get-Module -ListAvailable -Name PSReadLine)) {
 }
 Import-Module -Name PSReadLine
 
-if (!(Get-Module -ListAvailable -Name PowerType)) {
-Install-Module PowerType -AllowPrerelease
-Enable-PowerType
-}
+#if (!(Get-Module -ListAvailable -Name PowerType)) {
+#Install-Module PowerType -AllowPrerelease
+#Enable-PowerType
+#}
 function extedit{
     $ext = Join-Path $HOME "AppData\Local\installer\vscode.txt"
     Write-Host "path : "  $ext
