@@ -5,65 +5,55 @@
       "less",
       "bat",
       "ripgrep",
-  	  "extras/neovide",
+      "extras/neovide",
       "neovim",
-  	  "starship"
+      "starship"
     ],
     "full": [
-  	  "7zip",
-  	  "teracopy-np",
+      "7zip",
+      "teracopy-np",
       "fzf",
       "psfzf",
       "less",
       "bat",
-	  "neovim",
-  	  "dark",
+      "neovim",
+      "dark",
       "vifm",
       "gcc",
-  	  "aria2",
+      "aria2",
       "extras/neovide",
       "grep",
       "ripgrep",
       "java/openjdk",
-  	  "extras/nexusfont",
-  	  "extras/crystaldiskinfo",
-  	  "extras/winaero-tweaker",
-  	  "extras/nvcleanstall",
-  	  "main/win32yank",
-  	  "ntop",
-  	  "lsd",
-  	  "starship",
-	  "extras/msiafterburner",
-	  "extras/rtss",
-	  "anderlli0053_DEV-tools/sfss",
-	  "main/sudo",
-            "main/gh"
+      "extras/nexusfont",
+      "extras/crystaldiskinfo",
+      "extras/winaero-tweaker",
+      "extras/nvcleanstall",
+      "main/win32yank",
+      "ntop",
+      "lsd",
+      "starship",
+      "extras/msiafterburner",
+      "extras/rtss",
+      "anderlli0053_DEV-tools/sfss",
+      "main/sudo",
+      "main/gh"
     ],
-	"global": [
-      "nerd-fonts/JetBrainsMono-NF",
-    "nerd-fonts/Monocraft"
-    ]
+    "global": ["nerd-fonts/JetBrainsMono-NF"]
   },
   "winget": {
-    "mini": [
-      "JanDeDobbeleer.OhMyPosh",
-      "chrisant996.Clink"
-    ],
+    "mini": ["JanDeDobbeleer.OhMyPosh", "chrisant996.Clink"],
     "full": [
       "JanDeDobbeleer.OhMyPosh",
       "chrisant996.Clink",
       "Microsoft.PowerShell",
       "AntibodySoftware.WizTree",
-  	  "Notepad++.Notepad++",
-  	  "Valve.Steam"
+      "Notepad++.Notepad++",
+      "Valve.Steam"
     ]
   },
   "choco": {
-    "mini": [
-      "7zip",
-      "autohotkey",
-	    "zoxide --version=0.9.0"
-    ],
+    "mini": ["7zip", "autohotkey", "zoxide --version=0.9.0"],
     "full": [
       "7zip",
       "vscode",
@@ -77,8 +67,8 @@
       "tldr-plusplus",
       "autohotkey",
       "zoxide --version=0.9.0",
-	    "irfanview",
-		"vmwareworkstation"
+      "irfanview",
+      "vmwareworkstation"
     ]
   }
 }
