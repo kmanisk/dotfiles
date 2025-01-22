@@ -528,6 +528,90 @@ function install-Curls {
         Write-Host "No .exe or .msi files found!"
     }
 }
+function Set-RegistryValue {
+    param (
+        [Parameter(Mandatory = $true)]
+        [string]$RegistryPath,
+
+        [Parameter(Mandatory = $true)]
+        [string]$ValueName,
+
+        [Parameter(Mandatory = $true)]
+        [object]$Value,
+
+        [Parameter(Mandatory = $true)]
+        [ValidateSet("String", "ExpandString", "Binary", "DWord", "MultiString", "QWord")]
+        [string]$ValueType
+    )
+
+    # Check if the registry key exists; if not, create it
+    if (-not (Test-Path $RegistryPath)) {
+        try {
+            New-Item -Path $RegistryPath -Force | Out-Null
+            Write-Host "Created registry key: $RegistryPath" -ForegroundColor Yellow
+        }
+        catch {
+            Write-Host "Failed to create registry key: $RegistryPath. Error: $_" -ForegroundColor Red
+            return
+        }
+    }
+    else {
+        Write-Host "Registry key exists: $RegistryPath" -ForegroundColor Green
+    }
+
+    # Retrieve the current value if it exists
+    try {
+        $CurrentValue = Get-ItemProperty -Path $RegistryPath -Name $ValueName -ErrorAction Stop | Select-Object -ExpandProperty $ValueName
+        $ValueExists = $true
+    }
+    catch {
+        $ValueExists = $false
+    }
+
+    # Determine the PropertyType based on the ValueType
+    switch ($ValueType) {
+        "String" { $PropertyType = "String" }
+        "ExpandString" { $PropertyType = "ExpandString" }
+        "Binary" { $PropertyType = "Binary" }
+        "DWord" { $PropertyType = "DWord" }
+        "MultiString" { $PropertyType = "MultiString" }
+        "QWord" { $PropertyType = "QWord" }
+    }
+
+    # Set or update the registry value
+    if ($ValueExists) {
+        if ($CurrentValue -eq $Value) {
+            Write-Host "Value '$ValueName' is already set to '$Value'. No changes made." -ForegroundColor Green
+        }
+        else {
+            try {
+                Set-ItemProperty -Path $RegistryPath -Name $ValueName -Value $Value
+                Write-Host "Changed value of '$ValueName' from '$CurrentValue' to '$Value'." -ForegroundColor Yellow
+            }
+            catch {
+                Write-Host "Failed to change value of '$ValueName'. Error: $_" -ForegroundColor Red
+            }
+        }
+    }
+    else {
+        try {
+            New-ItemProperty -Path $RegistryPath -Name $ValueName -Value $Value -PropertyType $PropertyType -Force | Out-Null
+            Write-Host "Created and set value '$ValueName' to '$Value'." -ForegroundColor Yellow
+        }
+        catch {
+            Write-Host "Failed to create and set value '$ValueName'. Error: $_" -ForegroundColor Red
+        }
+    }
+}
+# example of using the above function
+# $RegistryPath = "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize"
+# $ValueName = "EnableTransparency"
+# $Value = 1
+# $ValueType = "DWord"
+#
+# Set-RegistryValue -RegistryPath $RegistryPath -ValueName $ValueName -Value $Value -ValueType $ValueType
+
+
 
 # Start OF THE SCRIPTS FIRST INSTALLING PACKAGE MANAGERS
 Install-Scoop
