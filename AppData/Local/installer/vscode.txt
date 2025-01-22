@@ -3,6 +3,8 @@ bungcip.better-toml
 devgauravjatt.github-catppuccin-dark
 dsznajder.es7-react-js-snippets
 formulahendry.code-runner
+github.copilot
+github.copilot-chat
 github.github-vscode-theme
 jdinhlife.gruvbox
 joshmu.periscope
@@ -15,3 +17,5 @@ ms-vscode.powershell
 nicohlr.pycharm
 robole.file-bunny
 sourcegraph.cody-ai
+tamasfe.even-better-toml
+zainchen.json

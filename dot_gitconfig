@@ -1,0 +1,7 @@
+[user]
+	email = mathewmanisk699@gmail.com
+	name = kmanisk
+[credential "helperselector"]
+	selected = manager
+[credential]
+	helper = manager
