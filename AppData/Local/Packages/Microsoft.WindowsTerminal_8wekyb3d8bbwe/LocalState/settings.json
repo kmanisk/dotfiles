@@ -3,6 +3,13 @@
     "$schema": "https://aka.ms/terminal-profiles-schema",
     "actions": [
         {
+            "command": {
+                "action": "movePane",
+                "index": 5
+            },
+            "keys": "alt+shift+a"
+        },
+        {
             "command": "unbound",
             "keys": "ctrl+shift+w"
         },
@@ -168,7 +175,7 @@
                 "index": 2
             },
             "id": "User.newTab.CCE909E3",
-            "keys": "alt+shift+b"
+            "keys": "alt+shift+o"
         },
         {
             "command": "find",
@@ -220,7 +227,15 @@
                 "index": 3
             },
             "id": "User.newTab.F4C304FB",
-            "keys": "ctrl+shift+3"
+            "keys": "alt+shift+a"
+        },
+        {
+            "command": {
+                "action": "newTab",
+                "index": 4
+            },
+            "id": "User.newTab.F4C304FB",
+            "keys": "alt+shift+c"
         },
         {
             "command": {
@@ -230,17 +245,26 @@
             "keys": "alt+j"
         },
         {
-            "command": "closePane",
-            "id": "User.closePane",
-            "keys": "alt+q"
+            "command": {
+                "action": "newTab",
+                "index": 0
+            },
+            "id": "User.newTab.7975BEED",
+            "keys": "alt+t"
+        },
+        {
+            "command": {
+                "action": "newTab",
+                "index": 0
+            },
+            "keys": "alt+shift+p"
         },
         {
             "command": {
                 "action": "newTab",
                 "index": 5
             },
-            "id": "User.newTab.663EF760",
-            "keys": "alt+shift+a"
+            "id": "User.newTab.663EF760"
         },
         {
             "command": {
@@ -265,19 +289,9 @@
             "id": "User.clearBuffer.87C324ED"
         },
         {
-            "command": {
-                "action": "newTab",
-                "index": 0
-            },
-            "id": "User.newTab.7975BEED",
-            "keys": "alt+t"
-        },
-        {
-            "command": {
-                "action": "newTab",
-                "index": 0
-            },
-            "keys": "alt+shift+p"
+            "command": "closePane",
+            "id": "User.closePane",
+            "keys": "alt+q"
         },
         {
             "command": {
@@ -359,7 +373,7 @@
                 "index": 1
             },
             "id": "User.newTab.1FA5EB5",
-            "keys": "alt+shift+l"
+            "keys": "alt+shift+b"
         },
         {
             "command": {
@@ -414,15 +428,9 @@
                 "padding": "8",
                 "scrollbarState": "hidden",
                 "source": "Windows.Terminal.PowershellCore",
-                "tabColor": "#09143a",
+                "tabColor": "#09143A",
                 "tabTitle": "pwsh",
                 "useAcrylic": true
-            },
-            {
-                "guid": "{51855cb2-8cce-5362-8f54-464b92b32386}",
-                "hidden": false,
-                "name": "Ubuntu",
-                "source": "CanonicalGroupLimited.Ubuntu_79rhkp1fndgsc"
             },
             {
                 "commandline": "\"C:\\Program Files\\Git\\bin\\bash.exe\" --login -i",
@@ -438,28 +446,16 @@
                 "name": "Windows PowerShell"
             },
             {
-                "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
-                "hidden": false,
-                "name": "Command Prompt"
-            },
-            {
-                "guid": "{2ece5bfe-50ed-5f3a-ab87-5cd4baafed2b}",
-                "hidden": false,
-                "name": "Git Bash",
-                "source": "Git"
-            },
-            {
-                "guid": "{58ad8b0c-3ef8-5f4d-bc6f-13e4c00f2530}",
-                "hidden": false,
-                "name": "Debian",
-                "source": "Windows.Terminal.Wsl"
-            },
-            {
                 "guid": "{96933987-e7b7-55a2-a499-f9d06dcf0997}",
                 "hidden": false,
                 "name": "alpine",
                 "source": "Windows.Terminal.Wsl",
                 "startingDirectory": "\\\\wsl.localhost\\alpine\\root"
+            },
+            {
+                "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+                "hidden": false,
+                "name": "Command Prompt"
             }
         ]
     },
