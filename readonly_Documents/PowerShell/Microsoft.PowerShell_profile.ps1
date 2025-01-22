@@ -15,6 +15,8 @@ Import-Module -Name PSReadLine
 #Install-Module PowerType -AllowPrerelease
 #Enable-PowerType
 #}
+
+#this is added
 function extedit{
     $ext = Join-Path $HOME "AppData\Local\installer\vscode.txt"
     Write-Host "path : "  $ext
