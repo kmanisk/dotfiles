@@ -3,7 +3,7 @@ local M = {}
 
 -- UI Configuration
 M.ui = {
-  theme = "bearded-arc", -- Set the theme for Neovim
+  theme = "onedark", -- Set the theme for Neovim
   transparency = true, -- Enable transparency
 -- default/vscode/vscode_colored/minimal
 -- default/round/block/arrow separators work only for default statusline theme
@@ -35,7 +35,7 @@ M.ui = {
 }
 
 M.base46 = {
-  theme = "bearded-arc", -- Change to your preferred base46 theme (e.g., 'tokyonight', 'gruvbox', etc.)
+  theme = "onedark", -- Change to your preferred base46 theme (e.g., 'tokyonight', 'gruvbox', etc.)
   hl_add = {},
   hl_override = {},
   integrations = {},
