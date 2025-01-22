@@ -78,12 +78,19 @@ o.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50"
 
 -- Set clipboard to use the system clipboard (only if supported)
 o.clipboard = "unnamedplus" -- Allows use of system clipboard for copy-paste
-
+-- Animation speed adjustments
+vim.g.neovide_animation_fps = 100  -- Increase FPS for faster animations
+vim.g.neovide_scroll_animation_length = 0.3  -- Faster scroll animations
+vim.g.neovide_cursor_animation_length = 0.05  -- Faster cursor animations
+vim.g.neovide_cursor_trail_size = 0.5  -- Smaller cursor trail
+-- Set JetBrains Nerd Font with a specific size
+vim.o.guifont = "JetBrainsMono Nerd Font:h14"  -- Replace with desired size (e.g., 14)
 -- Set background (dark or light)
 o.background = "dark" -- or "light"
 
+vim.opt.linespace = 9  -- Adjust the line spacing; increase the value for more space between lines
 -- Ensure window options are modifiable before making changes
 if bo.modifiable then
     -- Example buffer-specific options (only if the buffer is modifiable)
-    bo.textwidth = 80 -- Example option
+    bo.textwidth = 100 -- Example option
 end

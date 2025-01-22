@@ -23,7 +23,6 @@ M.ui = {
       tailwind = false,
     },
   },
-
   telescope = { style = "bordered" }, -- borderless / bordered
   
   tabufline = {

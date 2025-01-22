@@ -167,7 +167,8 @@ return {
                     fields = { "kind", "abbr", "menu" },
                     format = lspkind.cmp_format({ mode = "symbol_text", maxwidth = 50 }),
                 },
-            })
+            }
+            )
         end,
     },
 
