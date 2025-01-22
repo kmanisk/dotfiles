@@ -16,6 +16,16 @@ function extedit{
     nvim $ext
 
 }
+function Show-PathValues {
+    Write-Host "System PATH Values:" -ForegroundColor Green
+    [Environment]::GetEnvironmentVariable("Path", [System.EnvironmentVariableTarget]::Machine) -split ';' | ForEach-Object { Write-Output $_ }
+
+    Write-Host "User PATH Values:" -ForegroundColor Cyan
+    [Environment]::GetEnvironmentVariable("Path", [System.EnvironmentVariableTarget]::User) -split ';' | ForEach-Object { Write-Output $_ }
+}
+
+# Create an alias for the function
+Set-Alias -Name spath -Value Show-PathValues
 function cat {
     if (Get-Command bat -ErrorAction SilentlyContinue) {
         Set-Alias -Name cat -Value bat
