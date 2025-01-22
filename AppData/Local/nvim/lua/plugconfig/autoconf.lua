@@ -1,7 +1,7 @@
 
 
 require("autosave").setup({
-    enable = true,
+    enable = false,
     prompt = {
         enable = false, -- Disable the prompt
     },
