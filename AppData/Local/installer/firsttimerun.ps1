@@ -112,13 +112,17 @@ Install-Winget
 Write-Host "======================================================"
 
 Write-Host "Installing first Core Packages" -ForegroundColor Yellow
+# scoop packages to install
 scoop install main/aria2
 scoop install main/chezmoi
-# winget install twpayne.chezmoi --accept-package-agreements --accept-source-agreements
-winget install Git.Git --accept-package-agreements --accept-source-agreements
-winget install -e --id GitHub.cli --accept-package-agreements --accept-source-agreements
+scoop install main/git
+scoop install main/gh
+scoop install main/python
+
 #python installation from msstore
 winget install --id 9PNRBTZXMB4Z
 
-# scoop packages to install
-scoop install main/python
+# winget install twpayne.chezmoi --accept-package-agreements --accept-source-agreements
+#winget install Git.Git --accept-package-agreements --accept-source-agreements
+#winget install -e --id GitHub.cli --accept-package-agreements --accept-source-agreements
+
