@@ -270,4 +270,5 @@
 		}
 	],
 	"workbench.colorTheme": "Gruvbox Dark Soft",
+	"extensions.ignoreRecommendations": true,
 }

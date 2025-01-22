@@ -23,6 +23,7 @@
   "mason.nvim": { "branch": "main", "commit": "e2f7f9044ec30067bc11800a9e266664b88cda22" },
   "menu": { "branch": "main", "commit": "bea08e6f8772cb4d362795b0c7ae6343d0b229df" },
   "minty": { "branch": "main", "commit": "6dce9f097667862537823d515a0250ce58faab05" },
+  "null-ls.nvim": { "branch": "main", "commit": "0010ea927ab7c09ef0ce9bf28c2b573fc302f5a7" },
   "nvim-autopairs": { "branch": "master", "commit": "d2f791ceeb26d04d87aa54343bc94e8ad8d7be1c" },
   "nvim-cmp": { "branch": "main", "commit": "b555203ce4bd7ff6192e759af3362f9d217e8c89" },
   "nvim-lspconfig": { "branch": "master", "commit": "f4ed656e876e45cf914d7beb972830561178e232" },
