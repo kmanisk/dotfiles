@@ -21,13 +21,18 @@ map("n", "<leader>fm", ":Vifm<CR>", opts)
 map("n", "<leader>ts", ":Telescope colorscheme<CR>", opts)
 map("n", "<leader>e", ":NvimTreeToggle<CR>", opts)
 map("n", "<A-d>", ":NvimTreeClose<CR>", opts)
-map("n", "<S-j>", ":bnext<CR>", opts)
-map("n", "<S-k>", ":bprevious<CR>", opts)
+-- map("n", "<S-j>", ":bnext<CR>", opts)
+-- map("n", "<S-k>", ":bprevious<CR>", opts)
+
+map("n", "<S-k>", ":lua require('nvchad.tabufline').prev()<CR>", { noremap = true, silent = true })
+map("n", "<S-j>", ":lua require('nvchad.tabufline').next()<CR>", { noremap = true, silent = true })
+-- map("n", "<S-j>", require("nvchad.tabufline").prev())
+-- map("n", "<S-k>", require("nvchad.tabufline").next())
 map("n", "<leader>j", "J")
 map("v", "<", "<gv", opts)
 map("v", ">", ">gv", opts)
-map("v", "J", ":m .+1<CR>==", opts)
-map("v", "K", ":m .-2<CR>==", opts)
+map("v", "J", ":m .+1<CR>==zz", opts)
+map("v", "K", ":m .-2<CR>==zz", opts)
 map("x", "J", ":move '>+1<CR>gv-gv", opts)
 map("x", "K", ":move '<-2<CR>gv-gv", opts)
 -- map("n", "<S-l>", vim.lsp.buf.hover, { desc = "Show hover information" })
@@ -96,6 +101,7 @@ map("n", "<leader>th", function()
     require("nvchad.themes").open({
         border = true,
         -- style = "compact",
+        -- flat/compact
     })
 end, opts)
 
@@ -139,29 +145,6 @@ end
 -- 	require("nvchad.term").toggle({ pos = "float", id = "floatTerm" })
 -- end, { desc = "terminal toggle floating term" })
 
--- Yank to system clipboard in normal and visual mode
--- map("v", "y", '"+y', opts)
--- map("n", "yy", '"+yy', opts)
--- map("n", "p", '"+p', opts)
--- map("v", "<leader>y", '"+y', opts)
--- map("v", "p", '"+p', opts)
---
--- -- Paste from system clipboard with specific behavior
--- map("n", "gp", 'o<Esc>"+p', opts)
--- map("n", "gP", 'O<Esc>"+P', opts)
--- "asdfasfy"
--- -- Prevent content from being placed in clipboard when deleting (use black hole register)
--- map("n", "d", '"_d', opts)
--- map("n", "dd", '"_dd', opts)
--- map("v", "d", '"_d', opts)
--- map("v", "D", '"_D', opts)
---
--- -- Map <Leader>d to yank to clipboard
--- map("n", "<Leader>d", '"+y', opts)
--- map("v", "<Leader>d", '"+y', opts)
---
--- -- Replace paste with black hole register
--- map("v", "p", '"_dP', opts)
 --
 --
 -- Yank to system clipboard for any 'y' and '<Leader>d' mappings
@@ -236,69 +219,14 @@ map("n", "<leader>tt", ":tabnew<CR>", opts)
 
 -- Mapping Ctrl+m to paste from the system clipboard in insert mode
 map("i", "<C-m>", "<C-R>+", opts)
--- place this in one of your configuration file(s)
--- local hop = require("hop")
--- local directions = require("hop.hint").HintDirection
--- map("", "f", function()
--- 	hop.hint_char2({ direction = directions.AFTER_CURSOR, current_line_only = true })
--- end, { remap = true })
--- map("", "F", function()
--- 	hop.hint_char2({ direction = directions.BEFORE_CURSOR, current_line_only = true })
--- end, { remap = true })
--- map("", "t", function()
--- 	hop.hint_char2({ direction = directions.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })
--- end, { remap = true })
--- map("", "T", function()
--- 	hop.hint_char2({ direction = directions.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })
--- end, { remap = true })
 
 map("n", "gg", "ggzz", opts)
 map("n", "G", "Gzz", opts)
 
--- vim.opts.preset("")
--- local cmp = require("cmp")
--- cmp.setup({
---   snippet = {
---     expand = function(args)
---       require("luasnip").lsp_expand(args.body) -- For LuaSnip
---     end,
---   },
---   mapping = cmp.mapping.preset.insert({
---     ["<C-Space>"] = cmp.mapping.complete(), -- Trigger completion manually with Ctrl-Space
---     ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Confirm selection with Enter key
---     ["<Tab>"] = cmp.mapping(function(fallback)
---       if cmp.visible() then
---         cmp.select_next_item()  -- Move to the next completion item
---       else
---         fallback()  -- Fall back to default behavior (e.g., insert a tab)
---       end
---     end, { "i", "s" }),
---
---     ["<S-Tab>"] = cmp.mapping(function(fallback)
---       if cmp.visible() then
---         cmp.select_prev_item()  -- Move to the previous completion item
---       else
---         fallback()  -- Fall back to default behavior (e.g., insert a tab)
---       end
---     end, { "i", "s" }),
---   }),
---   sources = cmp.config.sources({
---     { name = "nvim_lsp" }, -- LSP completion
---     { name = "luasnip" },  -- Snippet completions
---   }, {
---     { name = "buffer" },    -- Buffer completion
---   }),
--- })
---
-
--- multiple modes
--- map({ "i", "n" }, "<C-k>", "<Up>", { desc = "Move up" })
--- map({ "i", "n" }, "<C-j>", "<Down>", { desc = "Move down" })
-
 -- mapping with a lua function
-map("n", "<A-i>", function()
-    -- do something
-end, { desc = "Terminal toggle floating" })
+-- map("n", "<A-i>", function()
+--     -- do something
+-- end, { desc = "Terminal toggle floating" })
 
 --
 map("n", "<Leader><Tab>", ":qa!<CR>", { noremap = true, silent = true, desc = "Force quit Neovim" })
@@ -313,7 +241,7 @@ map("n", "<C-l>", "<C-w>l", { desc = "Move focus to the right pane" })
 map("n", "<C-w>", ":tabclose<CR>", { desc = "Close current tab" })
 
 -- Save current file with Leader+w
-map("n", "<Leader>w", ":w<CR>", { desc = "Save current file" }, opts)
+map("n", "<Leader>w", ":w<CR>", opts)
 
 -- Save all files with Leader+W
 map("n", "<Leader>W", ":wa<CR>", { desc = "Save all files in a buffer" })
@@ -445,4 +373,11 @@ function telescope_resume()
     end
 end
 
-vim.keymap.set("n", "<leader>fd", telescope_resume, opts)
+map("n", "<leader>fd", telescope_resume, opts)
+map("n", "<leader>ih", "<cmd>ToggleInlayHints<CR>", { desc = "Toggle inlay hints" })
+-- Shortcut to use blackhole register by default
+map("v", "c", '"_c', opts)
+map("v", "C", '"_C', opts)
+map("n", "c", '"_c', opts)
+map("n", "C", '"_C', opts)
+map("n", "x", '"_x')
