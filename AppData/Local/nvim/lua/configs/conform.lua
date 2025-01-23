@@ -1,19 +1,83 @@
+-- local options = {
+-- 	formatters_by_ft = {
+-- 		-- lua = { "stylua" },
+-- 		css = { "prettier" },
+-- 		html = { "prettier" },
+--      typescript = { "prettier" }, -- Add TypeScript
+--         javascript = { "prettier" }, -- Optional: Add JavaScript as well
+--         typescriptreact = { "prettier" }, -- Optional: Add React TSX files
+--         javascriptreact = { "prettier" }, -- Optional: Add React JSX files
+-- 	},
+--
+-- 	format_on_save = {
+-- 		-- These options will be passed to conform.format()
+-- 		timeout_ms = 500,
+-- 		lsp_fallback = true,
+-- 	},
+-- }
+--
+--- return options
 local options = {
-	formatters_by_ft = {
-		-- lua = { "stylua" },
-		css = { "prettier" },
-		html = { "prettier" },
-     typescript = { "prettier" }, -- Add TypeScript
-        javascript = { "prettier" }, -- Optional: Add JavaScript as well
-        typescriptreact = { "prettier" }, -- Optional: Add React TSX files
-        javascriptreact = { "prettier" }, -- Optional: Add React JSX files
-	},
+    formatters_by_ft = {
+        lua = { "stylua" },
+        -- c = { "clang-format" },
+        -- cpp = { "clang-format" },
+        -- go = { "gofumpt", "goimports-reviser", "golines" },
+        -- haskell = { "fourmolu", "stylish-haskell" },
+        -- python = { "isort", "black" },
+    },
 
-	format_on_save = {
-		-- These options will be passed to conform.format()
-		timeout_ms = 500,
-		lsp_fallback = true,
-	},
+    formatters = {
+        -- -- C & C++
+        -- ["clang-format"] = {
+        --     prepend_args = {
+        --         "-style={ \
+        --                 IndentWidth: 4, \
+        --                 TabWidth: 4, \
+        --                 UseTab: Never, \
+        --                 AccessModifierOffset: 0, \
+        --                 IndentAccessModifiers: true, \
+        --                 PackConstructorInitializers: Never}",
+        --     },
+        -- },
+        -- -- Golang
+        -- ["goimports-reviser"] = {
+        --     prepend_args = { "-rm-unused" },
+        -- },
+        -- golines = {
+        --     prepend_args = { "--max-len=80" },
+        -- },
+        -- -- Lua
+        -- stylua = {
+        --     prepend_args = {
+        --         "--column-width", "80",
+        --         "--line-endings", "Unix",
+        --         "--indent-type", "Spaces",
+        --         "--indent-width", "4",
+        --         "--quote-style", "AutoPreferDouble",
+        --     },
+        -- },
+        -- -- Python
+        -- black = {
+        --     prepend_args = {
+        --         "--fast",
+        --         "--line-length",
+        --         "80",
+        --     },
+        -- },
+        -- isort = {
+        --     prepend_args = {
+        --         "--profile",
+        --         "black",
+        --     },
+        -- },
+    },
+
+    format_on_save = {
+        -- These options will be passed to conform.format()
+        timeout_ms = 500,
+        lsp_fallback = true,
+    },
 }
 
-return options
+require("conform").setup(options)

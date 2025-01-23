@@ -6,7 +6,6 @@ local opts = { noremap = true, silent = true }
 -- map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>")
 -- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
---
 -- map("i", "<C-p>", "<C-r>+", opts)
 -- map("i", "<C-y>", '<Esc>"+yyi', opts)
 -- For nvim-cmp or other completion plugins
@@ -17,8 +16,6 @@ map("n", "k", "kzz", opts)
 
 -- Map 'jk' to escape terminal mode
 map('t', 'jk', [[<C-\><C-n>]], { noremap = true, silent = true })
--- map("n", "j", "j", opts)
--- map("n", "k", "k", opts)
 -- Custom mappings
 map("n", "<leader>fm", ":Vifm<CR>", opts)
 map("n", "<leader>ts", ":Telescope colorscheme<CR>", opts)
@@ -26,7 +23,7 @@ map("n", "<leader>e", ":NvimTreeToggle<CR>", opts)
 map("n", "<A-d>", ":NvimTreeClose<CR>", opts)
 map("n", "<S-j>", ":bnext<CR>", opts)
 map("n", "<S-k>", ":bprevious<CR>", opts)
--- map("n", "<leader>j", "J")
+map("n", "<leader>j", "J")
 map("v", "<", "<gv", opts)
 map("v", ">", ">gv", opts)
 map("v", "J", ":m .+1<CR>==", opts)

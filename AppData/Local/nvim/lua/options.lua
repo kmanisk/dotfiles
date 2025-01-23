@@ -56,17 +56,21 @@ vim.o.shada = ""
 
 -- Disable swap files
 vim.opt.swapfile = false
+-- vim.opt.backup = false
 
 -- Disable backup files
 
 -- Set these options in Lua config
 vim.opt.shiftwidth = 4 -- Number of spaces for each indentation level
 
+-- Indenting
+o.shiftwidth = 4
+o.tabstop = 4
+o.softtabstop = 4
 -- Highlight the current line
 vim.opt.cursorline = true
 -- vim.api.nvim_set_hl(0, "CursorLine", { bg = "#333333" })
-vim.opt.tabstop = 2        -- Number of spaces a tab represents
-vim.opt.expandtab = true   -- Convert tabs to spaces
+-- vim.opt.expandtab = true   -- Convert tabs to spaces
 
 vim.opt.smartindent = true -- Enable automatic indentation
 vim.opt.autoindent = true  -- Auto-indent new lines

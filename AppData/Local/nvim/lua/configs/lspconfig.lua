@@ -1,75 +1,100 @@
-local nvlsp = require "nvchad.configs.lspconfig"
-local lspconfig = require "lspconfig"
+local on_attach = require("nvchad.configs.lspconfig").on_attach
+local on_init = require("nvchad.configs.lspconfig").on_init
+local capabilities = require("nvchad.configs.lspconfig").capabilities
 
-nvlsp.defaults() -- Load NvChad's default LSP configurations
-local servers = {}
+local lspconfig = require("lspconfig")
 
--- lspconfig.lua_ls.setup {
---   on_attach = nvlsp.on_attach,
---   on_init = nvlsp.on_init,
---   capabilities = nvlsp.capabilities,
---   settings = {
---     Lua = {
---       runtime = {
---         version = 'LuaJIT', -- Specify LuaJIT for Neovim
---         path = vim.split(package.path, ';'),
---       },
---       diagnostics = {
---         globals = {'vim'}, -- Recognize the `vim` global
---       },
---       workspace = {
---         library = vim.api.nvim_get_runtime_file("", true), -- Make the server aware of Neovim runtime files
---         checkThirdParty = false, -- Disable third-party library check
---       },
---       telemetry = {
---         enable = false, -- Disable telemetry data
---       },
---     },
---   },
--- }
---
+-- list of all servers configured.
+lspconfig.servers = {
+    "lua_ls",
+    -- "clangd",
+    -- "gopls",
+    -- "hls",
+    -- "ols",
+    -- "pyright",
+}
+
+-- list of servers configured with default config.
+local default_servers = {
+    -- "ols",
+    -- "pyright",
+}
+
 -- lsps with default config
-for _, lsp in ipairs(servers) do
-	lspconfig[lsp].setup({
-		on_attach = nvlsp.on_attach,
-		on_init = nvlsp.on_init,
-		capabilities = nvlsp.capabilities,
-	})
+for _, lsp in ipairs(default_servers) do
+    lspconfig[lsp].setup({
+        on_attach = on_attach,
+        on_init = on_init,
+        capabilities = capabilities,
+    })
 end
---
---
---python lspconfig example
--- lspconfig.pyright.setup({
---   on_attach = function(client, bufnr)
---     local bufopts = { noremap = true, silent = true, buffer = bufnr }
---     -- Key mappings for LSP functions
---     vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
---     vim.keymap.set("n", "L", vim.lsp.buf.hover, bufopts)
---     vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
---     vim.keymap.set("n", "<Leader>rn", vim.lsp.buf.rename, bufopts)
---     vim.keymap.set("n", "<Leader>ca", vim.lsp.buf.code_action, bufopts)
---   end,
---   capabilities = require("cmp_nvim_lsp").default_capabilities(),
+
+-- lspconfig.clangd.setup({
+--     on_attach = function(client, bufnr)
+--         client.server_capabilities.documentFormattingProvider = false
+--         client.server_capabilities.documentRangeFormattingProvider = false
+--         on_attach(client, bufnr)
+--     end,
+--     on_init = on_init,
+--     capabilities = capabilities,
 -- })
--- configuring single server, example: typescript
--- lspconfig.ts_ls.setup {
---   on_attach = nvlsp.on_attach,
---   on_init = nvlsp.on_init,
---   capabilities = nvlsp.capabilities,
--- }
--- ---- Configure JDK version and LSP for Java
--- require("lspconfig").jdtls.setup({
+
+-- lspconfig.gopls.setup({
+--     on_attach = function(client, bufnr)
+--         client.server_capabilities.documentFormattingProvider = false
+--         client.server_capabilities.documentRangeFormattingProvider = false
+--         on_attach(client, bufnr)
+--     end,
+--     on_init = on_init,
+--     capabilities = capabilities,
+--     cmd = { "gopls" },
+--     filetypes = { "go", "gomod", "gotmpl", "gowork" },
+--     root_dir = lspconfig.util.root_pattern("go.work", "go.mod", ".git"),
 --     settings = {
---         java = {
---             configuration = {
---                 runtimes = {
---                     {
---                         name = "JavaSE-21",
---                         path = "/opt/jdk-21", -- Path to your JDK installation
---                         default = true,       -- Set this version as the default JDK
---                     },
---                 },
+--         gopls = {
+--             analyses = {
+--                 unusedparams = true,
 --             },
+--             completeUnimported = true,
+--             usePlaceholders = true,
+--             staticcheck = true,
 --         },
 --     },
 -- })
+
+-- lspconfig.hls.setup({
+--     on_attach = function(client, bufnr)
+--         client.server_capabilities.documentFormattingProvider = false
+--         client.server_capabilities.documentRangeFormattingProvider = false
+--         on_attach(client, bufnr)
+--     end,
+--
+--     on_init = on_init,
+--     capabilities = capabilities,
+-- })
+
+lspconfig.lua_ls.setup({
+    on_attach = on_attach,
+    on_init = on_init,
+    capabilities = capabilities,
+
+    settings = {
+        Lua = {
+            diagnostics = {
+                enable = false, -- Disable all diagnostics from lua_ls
+                -- globals = { "vim" },
+            },
+            workspace = {
+                library = {
+                    vim.fn.expand("$VIMRUNTIME/lua"),
+                    vim.fn.expand("$VIMRUNTIME/lua/vim/lsp"),
+                    vim.fn.stdpath("data") .. "/lazy/ui/nvchad_types",
+                    vim.fn.stdpath("data") .. "/lazy/lazy.nvim/lua/lazy",
+                    "${3rd}/love2d/library",
+                },
+                maxPreload = 100000,
+                preloadFileSize = 10000,
+            },
+        },
+    },
+})
