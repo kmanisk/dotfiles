@@ -14,7 +14,6 @@ if ($PSVersionTable.PSVersion.Major -ge 5) {
     }
     Import-Module -Name Terminal-Icons -ErrorAction SilentlyContinue
 }
-
 Function flist {
     param (
         [string]$SearchTerm = "*"
