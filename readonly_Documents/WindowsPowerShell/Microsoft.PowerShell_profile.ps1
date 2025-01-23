@@ -2,17 +2,19 @@
 # Ensure Terminal-Icons module is installed before importing
 # now Everything is fixed as per my need for god sake don't chagne or break
 # after this
-if (-not (Get-Module -ListAvailable -Name Terminal-Icons)) {
-    Install-Module -Name Terminal-Icons -Scope CurrentUser -Force -SkipPublisherCheck
-}
-Import-Module -Name Terminal-Icons
+# if (-not (Get-Module -ListAvailable -Name Terminal-Icons)) {
+#     Install-Module -Name Terminal-Icons -Scope CurrentUser -Force -SkipPublisherCheck
+# }
+# Import-Module -Name Terminal-Icons
 # Map vi and vim to nvim
-# Alias z to cd
-# Remove any existing aliases to avoid conflicts
-#Remove-Item Alias:z -ErrorAction SilentlyContinue
-#Remove-Item Alias:ls -ErrorAction SilentlyContinue
-#
-#
+## Replace the current Terminal-Icons block with:
+if ($PSVersionTable.PSVersion.Major -ge 5) {
+    if (-not (Get-Module -ListAvailable -Name Terminal-Icons)) {
+        Install-Module -Name Terminal-Icons -Repository PSGallery -Force -Scope CurrentUser
+    }
+    Import-Module -Name Terminal-Icons -ErrorAction SilentlyContinue
+}
+
 Function flist {
     param (
         [string]$SearchTerm = "*"
