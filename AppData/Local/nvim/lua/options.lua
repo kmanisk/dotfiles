@@ -100,4 +100,3 @@ if bo.modifiable then
 end
 o.termguicolors = true
 -- o.scrolloff = 11
-o.colorcolumn = "+1"

@@ -269,5 +269,5 @@
 			"param": "-g '*.$1'"
 		}
 	],
-	"workbench.colorTheme": "Gruvbox Dark Hard",
+	"workbench.colorTheme": "PyCharm Night Theme",
 }
