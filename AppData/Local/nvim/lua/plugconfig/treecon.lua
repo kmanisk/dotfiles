@@ -16,7 +16,7 @@ require("nvim-tree").setup({
     -- View settings
     view = {
         width = 30,
-        adaptive_size = true,
+        -- adaptive_size = true,
         preserve_window_proportions = true,
         side = "right", -- Make sure to add this if you want to position the tree on the right
     },

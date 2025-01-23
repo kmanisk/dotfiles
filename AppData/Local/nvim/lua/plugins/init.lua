@@ -104,5 +104,10 @@ return {
             return not vim.g.vscode -- Exclude this plugin in VSCode
         end,
     },
-    { "wellle/targets.vim" },
+    {
+        "wellle/targets.vim",
+        cond = function()
+            return not vim.g.vscode
+        end,
+    },
 }
