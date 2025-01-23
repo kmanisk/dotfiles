@@ -1,19 +1,3 @@
--- local ensure_installed = {
---     -- Language servers
---     "typescript-language-server", -- TypeScript/JavaScript LSP
---     -- "json-lsp", -- JSON LSP
---     -- "lua-language-server",        -- Lua LSP
---
---     -- Linters/Formatters
---     "eslint_d",  -- ESLint
---     "prettierd", -- Prettier
--- }
--- -- comment this to make the lua lsp work
--- vim.g.disable_lua_lsp = true
--- -- Conditionally include Lua LSP
--- if not vim.g.disable_lua_lsp then
---     table.insert(ensure_installed, "lua-language-server")
--- end
 return {
     {
         "nvim-treesitter/nvim-treesitter",

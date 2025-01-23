@@ -15,7 +15,7 @@ map("n", "j", "jzz", opts)
 map("n", "k", "kzz", opts)
 
 -- Map 'jk' to escape terminal mode
-map('t', 'jk', [[<C-\><C-n>]], { noremap = true, silent = true })
+map("t", "jk", [[<C-\><C-n>]], { noremap = true, silent = true })
 -- Custom mappings
 map("n", "<leader>fm", ":Vifm<CR>", opts)
 map("n", "<leader>ts", ":Telescope colorscheme<CR>", opts)
@@ -165,21 +165,21 @@ end
 --
 --
 -- Yank to system clipboard for any 'y' and '<Leader>d' mappings
-map("v", "y", '"+y', opts)   -- Visual mode yank to clipboard
+map("v", "y", '"+y', opts) -- Visual mode yank to clipboard
 map("n", "yy", '"+yy', opts) -- Normal mode double 'yy' to clipboard
-map("n", "p", '"+p', opts)   -- Paste from system clipboard
+map("n", "p", '"+p', opts) -- Paste from system clipboard
 -- map("v", "<leader>y", '"+y', opts) -- Yank with <Leader> to clipboard
-map("v", "p", '"+p', opts)   -- Paste from clipboard in visual mode
+map("v", "p", '"+p', opts) -- Paste from clipboard in visual mode
 
 -- Special handling for paste operations with specific behavior
 map("n", "gp", 'o<Esc>"+p', opts) -- Paste in new line after cursor
 map("n", "gP", 'O<Esc>"+P', opts) -- Paste in new line before cursor
 
 -- Prevent content from being placed in clipboard when deleting, use black hole register
-map("n", "d", '"_d', opts)   -- Delete in normal mode without affecting clipboard
+map("n", "d", '"_d', opts) -- Delete in normal mode without affecting clipboard
 map("n", "dd", '"_dd', opts) -- Delete whole line without clipboard
-map("v", "d", '"_d', opts)   -- Delete in visual mode without clipboard
-map("v", "D", '"_D', opts)   -- Delete to the end of line without clipboard
+map("v", "d", '"_d', opts) -- Delete in visual mode without clipboard
+map("v", "D", '"_D', opts) -- Delete to the end of line without clipboard
 
 -- Map <Leader>d to yank to system clipboard
 map("n", "<Leader>d", '"+y', opts) -- Leader+d for system clipboard
@@ -430,12 +430,11 @@ map("n", "-", "<C-x>", { noremap = true, silent = true })
 map("n", "<leader>sh", ":lua print(vim.api.nvim_buf_get_name(0))<CR>", { noremap = true, silent = true })
 
 map("n", "<leader>oe", function()
-    local current_file = vim.fn.expand("%:p:h")        -- Get the directory of the current file
+    local current_file = vim.fn.expand("%:p:h") -- Get the directory of the current file
     vim.cmd("silent !start explorer " .. current_file) -- Open Explorer at the directory
 end, { noremap = true, silent = true, desc = "Open Explorer at current file location" })
 
-
-local telescope = require('telescope.builtin')
+local telescope = require("telescope.builtin")
 local telescope_last = 0
 function telescope_resume()
     if telescope_last == 0 then
