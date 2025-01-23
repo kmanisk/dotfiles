@@ -22,7 +22,8 @@ Function flist {
     Select-Object Name
 }
 if (Get-Command lsd -ErrorAction SilentlyContinue) {
-Set-Alias -Force ls lsd
+    Remove-Item Alias:ls -Force -ErrorAction SilentlyContinue
+    New-Alias -Name ls -Value lsd
 }
 else {
     Set-Alias ls Get-ChildItem
@@ -39,11 +40,11 @@ function shutit {
 
 if ($Host.Name -notmatch 'ConsoleHost') {
     # Disable predictive suggestions for non-interactive shells
-    Set-PSReadLineOption -PredictionSource None
+    # Set-PSReadLineOption -PredictionSource None
 }
 else {
     # Enable predictive suggestions for interactive shells
-    Set-PSReadLineOption -PredictionSource HistoryAndPlugin
+    # Set-PSReadLineOption -PredictionSource HistoryAndPlugin
 }
 
 Set-Alias -Name vim -Value nvim
@@ -60,6 +61,8 @@ function rel {
     & $profile
     Write-Host "done"
 }
+
+
 Function cf {
     $cacheFile = "$HOME\fzf_dir_cache.txt"
     if (Test-Path $cacheFile) {
@@ -247,7 +250,7 @@ function dallm {
 }
 Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
 Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
-Set-PSReadLineOption -PredictionSource HistoryAndPlugin
+# Set-PSReadLineOption -PredictionSource HistoryAndPlugin
 Set-PSReadLineOption -MaximumHistoryCount 10000
 # Custom completion for common commands
 $scriptblock = {
@@ -293,7 +296,8 @@ Set-PSReadLineOption -AddToHistoryHandler {
 }
 
 # Improved prediction settings
-Set-PSReadLineOption -PredictionSource HistoryAndPlugin
+Set-PSReadLineOption -HistorySearchCursorMovesToEnd
+# Set-PSReadLineOption -PredictionSource HistoryAndPlugin
 Set-PSReadLineOption -MaximumHistoryCount 10000
 # Network Utilities
 function Get-PubIP { (Invoke-WebRequest http://ifconfig.me/ip).Content }
@@ -379,18 +383,22 @@ Function cpyfile {
 }
 
 
+Remove-Item Alias:ps -Force -ErrorAction SilentlyContinue
+New-Alias -Name ps -Value Get-Process
 
-Set-Alias -Force ps Get-Process
-Set-Alias -Force rm Remove-Item
-Set-Alias -Force cpy Copy-Item
-Set-Alias -Force cls Clear-Host
-Set-Alias -Force mv Move-Item
-#Set-Alias ps Get-Process
-#Set-Alias rm Remove-Item
-#Set-Alias cpy Copy-Item
-#Set-Alias cls Clear-Host
-#Set-Alias mv Move-Item
+Remove-Item Alias:rm -Force -ErrorAction SilentlyContinue
+New-Alias -Name rm -Value Remove-Item
 
+Remove-Item Alias:cls -Force -ErrorAction SilentlyContinue
+New-Alias -Name cls -Value Clear-Host
+
+Remove-Item Alias:mv -Force -ErrorAction SilentlyContinue
+New-Alias -Name mv -Value Move-Item
+# Set-Alias -Force ps Get-Process
+# Set-Alias -Force rm Remove-Item
+# Set-Alias -Force cpy Copy-Item
+# Set-Alias -Force cls Clear-Host
+# Set-Alias -Force mv Move-Item
 
 function cpycmd {
     param (
@@ -672,22 +680,27 @@ function Get-Theme {
 
 
 # Zoxide Initialization
+# if (Get-Command zoxide -ErrorAction SilentlyContinue) {
+#     Invoke-Expression (& { (zoxide init --cmd cd powershell | Out-String) })
+# }
+# else {
+#     Write-Warning "zoxide is not installed. Install it using Scoop or manually from https://github.com/ajeetdsouza/zoxide."
+#     #winget install -e --id ajeetdsouza.zoxide
+#     #Write-Host "zoxide installed successfully. Initializing..."
+#     #Write-Host "zoxide not installed"
+#     #Invoke-Expression (& { (zoxide init powershell | Out-String) })
+#     try {
+#         #winget install -e --id ajeetdsouza.zoxide
+#         #Write-Host "zoxide installed successfully. Initializing..." -ForegroundColor Cyan
+#         # Write-Host "zoxide not installed"
+#         # Invoke-Expression (& { (zoxide init powershell | Out-String) })
+#     }
+#     catch {
+#         Write-Error "Failed to install zoxide. Error: $_"
+#     }
+# }
+
+# Replace the zoxide initialization with this
 if (Get-Command zoxide -ErrorAction SilentlyContinue) {
-    Invoke-Expression (& { (zoxide init --cmd cd powershell | Out-String) })
-}
-else {
-    Write-Warning "zoxide is not installed. Install it using Scoop or manually from https://github.com/ajeetdsouza/zoxide."
-    #winget install -e --id ajeetdsouza.zoxide
-    #Write-Host "zoxide installed successfully. Initializing..."
-    #Write-Host "zoxide not installed"
-    #Invoke-Expression (& { (zoxide init powershell | Out-String) })
-    try {
-        #winget install -e --id ajeetdsouza.zoxide
-        #Write-Host "zoxide installed successfully. Initializing..." -ForegroundColor Cyan
-        # Write-Host "zoxide not installed"
-        # Invoke-Expression (& { (zoxide init powershell | Out-String) })
-    }
-    catch {
-        Write-Error "Failed to install zoxide. Error: $_"
-    }
+    Invoke-Expression (& { (zoxide init powershell --hook prompt | Out-String) })
 }

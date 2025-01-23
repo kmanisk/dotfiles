@@ -11,6 +11,11 @@ if (!(Get-Module -ListAvailable -Name PSReadLine)) {
 }
 Import-Module -Name PSReadLine
 
+# Ensure the required modules are loaded
+if (-not (Get-Command Expand-Archive -ErrorAction SilentlyContinue)) {
+    Import-Module Microsoft.PowerShell.Archive
+}
+
 #if (!(Get-Module -ListAvailable -Name PowerType)) {
 #Install-Module PowerType -AllowPrerelease
 #Enable-PowerType
