@@ -34,6 +34,23 @@ function shutit {
     shutdown /s /t 0
 }
 
+# if (Get-Command bat -ErrorAction SilentlyContinue) {
+#     Set-Alias -Name cat -Value bat
+# }
+# else {
+#     Set-Alias -Name cat -Value Get-Content
+# }
+# Replace the current block with:
+if (Get-Command bat -ErrorAction SilentlyContinue) {
+    Remove-Item Alias:cat -Force -ErrorAction SilentlyContinue
+    New-Alias -Name cat -Value bat
+}
+else {
+    Remove-Item Alias:cat -Force -ErrorAction SilentlyContinue
+    New-Alias -Name cat -Value Get-Content
+}
+
+
 #with logo
 #fastfetch --logo C:\Users\Manisk\.config\fastfetch\logo.txt
 #with default
