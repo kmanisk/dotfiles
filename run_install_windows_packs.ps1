@@ -737,7 +737,8 @@ $chocoPackagesToPin = @(
 )
 
 $wingetPackagesToPin = @(
-    "AutoHotkey.AutoHotkey"
+    "AutoHotkey.AutoHotkey",
+    "Spotify.Spotify"
 )
 
 Write-Host "=============================================================================================================================="
