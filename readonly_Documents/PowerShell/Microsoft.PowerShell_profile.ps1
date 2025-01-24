@@ -1,21 +1,41 @@
 # Ensure Terminal-Icons module is installed before importing
 # now Everything is fixed as per my need for god sake don't chagne or break
 # after this
-if (-not (Get-Module -ListAvailable -Name Terminal-Icons)) {
-    Install-Module -Name Terminal-Icons -Scope CurrentUser -Force -SkipPublisherCheck
+#if (-not (Get-Module -ListAvailable -Name Terminal-Icons)) {
+#    Install-Module -Name Terminal-Icons -Scope CurrentUser -Force -SkipPublisherCheck
+#}
+#Import-Module -Name Terminal-Icons
+## Check if PSReadLine is installed, if not, install it
+#if (!(Get-Module -ListAvailable -Name PSReadLine)) {
+#    Install-Module -Name PSReadLine -Scope CurrentUser -Force -SkipPublisherCheck
+#}
+#Import-Module -Name PSReadLine
+#
+## Ensure the required modules are loaded
+#if (-not (Get-Command Expand-Archive -ErrorAction SilentlyContinue)) {
+#    Import-Module Microsoft.PowerShell.Archive
+#}
+# For Terminal-Icons
+if ($PSVersionTable.PSVersion.Major -ge 7) {
+    if (-not (Get-Module -ListAvailable -Name Terminal-Icons)) {
+        Install-Module -Name Terminal-Icons -Repository PSGallery -Force -Scope CurrentUser
+    }
+    Import-Module -Name Terminal-Icons -ErrorAction SilentlyContinue
 }
-Import-Module -Name Terminal-Icons
-# Check if PSReadLine is installed, if not, install it
-if (!(Get-Module -ListAvailable -Name PSReadLine)) {
-    Install-Module -Name PSReadLine -Scope CurrentUser -Force -SkipPublisherCheck
-}
-Import-Module -Name PSReadLine
 
-# Ensure the required modules are loaded
-if (-not (Get-Command Expand-Archive -ErrorAction SilentlyContinue)) {
-    Import-Module Microsoft.PowerShell.Archive
+# For PSReadLine
+if ($PSVersionTable.PSVersion.Major -ge 7) {
+    if (!(Get-Module -ListAvailable -Name PSReadLine)) {
+        Install-Module -Name PSReadLine -AllowPrerelease -Force -SkipPublisherCheck
+    }
+    Import-Module PSReadLine
 }
 
+# Archive module is built into PS7, so this check isn't needed
+# Remove or comment out this section
+# if (-not (Get-Command Expand-Archive -ErrorAction SilentlyContinue)) {
+#     Import-Module Microsoft.PowerShell.Archive
+# }
 #if (!(Get-Module -ListAvailable -Name PowerType)) {
 #Install-Module PowerType -AllowPrerelease
 #Enable-PowerType
