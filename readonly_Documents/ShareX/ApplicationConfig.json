@@ -647,7 +647,7 @@
   "TaskbarProgressEnabled": true,
   "UseWhiteShareXIcon": false,
   "RememberMainFormPosition": false,
-  "MainFormPosition": "530, 270",
+  "MainFormPosition": "946, 202",
   "RememberMainFormSize": false,
   "MainFormSize": "860, 525",
   "TrayLeftClickAction": "RectangleRegion",
@@ -875,22 +875,6 @@
   "HistoryCheckURL": false,
   "RecentTasks": [
     {
-      "FilePath": "C:\\Users\\Manisk\\Nox_share\\Download\\DCIM\\2025-01\\fPxzv6HaTV.png",
-      "URL": null,
-      "ThumbnailURL": null,
-      "DeletionURL": null,
-      "ShortenedURL": null,
-      "Time": "2025-01-02T15:45:19.7967644Z"
-    },
-    {
-      "FilePath": "C:\\Users\\Manisk\\Nox_share\\Download\\DCIM\\2025-01\\WindowsTerminal_ISjQbGFW2M.png",
-      "URL": null,
-      "ThumbnailURL": null,
-      "DeletionURL": null,
-      "ShortenedURL": null,
-      "Time": "2025-01-03T09:50:04.5062558Z"
-    },
-    {
       "FilePath": "C:\\Users\\Manisk\\Nox_share\\Download\\DCIM\\2025-01\\ZcBrMMaMAe.png",
       "URL": null,
       "ThumbnailURL": null,
@@ -953,6 +937,22 @@
       "DeletionURL": null,
       "ShortenedURL": null,
       "Time": "2025-01-19T20:38:54.5971293Z"
+    },
+    {
+      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-01\\bf1_W3ZFvBaLib.png",
+      "URL": null,
+      "ThumbnailURL": null,
+      "DeletionURL": null,
+      "ShortenedURL": null,
+      "Time": "2025-01-24T17:24:10.0038409Z"
+    },
+    {
+      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-01\\bf1_Blbc6kl1xH.png",
+      "URL": null,
+      "ThumbnailURL": null,
+      "DeletionURL": null,
+      "ShortenedURL": null,
+      "Time": "2025-01-24T17:24:22.0091068Z"
     }
   ],
   "RecentTasksSave": true,
