@@ -59,6 +59,7 @@ function Install-Scoop {
             'shemnei'               = 'https://github.com/Shemnei/scoop-bucket.git'
             'nonportable'           = 'https://github.com/Shemnei/scoop-bucket.git'
             'kkzzhizhou_scoop-apps' = 'https://github.com/kkzzhizhou/scoop-apps'
+            'chawyehsu_dorado' = 'https://github.com/chawyehsu/dorado'
             # 'anderlli0053_DEV-tools' = 'https://github.com/anderlli0053/DEV-tools'
 
         }
