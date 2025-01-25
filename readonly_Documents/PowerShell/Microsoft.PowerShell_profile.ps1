@@ -77,7 +77,11 @@ Set-Alias -Name spath -Value Show-PathValues
 function font{
 [System.Reflection.Assembly]::LoadWithPartialName("System.Drawing") | Out-Null; (New-Object System.Drawing.Text.InstalledFontCollection).Families.Name
 }
+
 Invoke-Expression (&sfss --hook)
+
+
+
 function vsync {
 	$vscodeInstalled = Get-Command code -ErrorAction SilentlyContinue
 	$vscodiumInstalled = Get-Command codium -ErrorAction SilentlyContinue
