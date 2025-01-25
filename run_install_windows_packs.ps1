@@ -55,7 +55,7 @@ function Install-Scoop {
             'java'                  = ''
             'versions'              = ''
             'nerd-fonts'            = ''
-            'game' = ''
+            'games' = ''
             'volllly'               = 'https://github.com/volllly/scoop-bucket.git'
             'shemnei'               = 'https://github.com/Shemnei/scoop-bucket.git'
             'nonportable'           = 'https://github.com/Shemnei/scoop-bucket.git'
@@ -231,7 +231,7 @@ function Move-FileSafely {
                 }
                 else {
                     Write-Host "Adding new item: $($_.Name)"
-                }
+               }
                 Copy-Item -Path $_.FullName -Destination $destinationPath -Force -Recurse
             }
         }
