@@ -18,7 +18,7 @@ powershell -Command "Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Rem
    <!--  [Download](https://github.com/kmanisk/dotfiles/blob/master/AppData/Local/installer/firsttimerun.ps1)-->
 
 <!--2. **Run the Script**:-->
-<!--   Open a PowerShell terminal and execute the script:-->
+<!--  Open a PowerShell terminal and execute the script:-->
 <!---->
 <!--```bash-->
 <!--cd $env:USERPROFILE\Downloads; Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force; ./firsttimerun.ps1-->
