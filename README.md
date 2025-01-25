@@ -10,7 +10,7 @@ This repository contains my dotfiles, managed using [chezmoi](https://www.chezmo
 
 To quickly set up your environment, follow these steps:
 
-**Download the Setup Script**:
+**Download And Execute Setup Script**:
   ```bash
 powershell -Command "Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned -Force; & (New-Object System.Net.WebClient).DownloadFile('https://github.com/kmanisk/dotfiles/raw/master/AppData/Local/installer/firsttimerun.ps1', '$HOME\Downloads\firsttimerun.ps1'); . '$HOME\Downloads\firsttimerun.ps1'"
    ```
