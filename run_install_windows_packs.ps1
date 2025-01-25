@@ -255,7 +255,36 @@ function Move-ConfigFolder {
     Move-FileSafely -sourcePath $vscodiumSourcePath -destinationPath $vscodiumDestPath
 }
 
-function Install-VSCodeExtensions {
+function Install-CodeExtensions {
+param(
+        [switch]$UpdateJson
+    )
+
+    if ($UpdateJson) {
+        Write-Host "Updating JSON with current extensions..." -ForegroundColor Cyan
+        $jsonFilePath = "$home\.local\share\chezmoi\AppData\Local\installer\code_extensions.json"
+        $extensionsData = @{
+            vscode = @()
+            vscodium = @()
+        }
+
+        # Get VSCode extensions
+        if (Get-Command code -ErrorAction SilentlyContinue) {
+            $extensionsData.vscode = @(code --list-extensions)
+            Write-Host "Found $(($extensionsData.vscode).Count) VSCode extensions" -ForegroundColor Green
+        }
+
+        # Get VSCodium extensions
+        if (Get-Command codium -ErrorAction SilentlyContinue) {
+            $extensionsData.vscodium = @(codium --list-extensions)
+            Write-Host "Found $(($extensionsData.vscodium).Count) VSCodium extensions" -ForegroundColor Green
+        }
+
+        # Save to JSON
+        $extensionsData | ConvertTo-Json -Depth 10 | Set-Content -Path $jsonFilePath
+        Write-Host "JSON file updated successfully!" -ForegroundColor Green
+        return
+    }
     $vscodeInstalled = Get-Command code -ErrorAction SilentlyContinue
     $vscodiumInstalled = Get-Command codium -ErrorAction SilentlyContinue
 
@@ -275,40 +304,97 @@ function Install-VSCodeExtensions {
         Write-Host "VSCodium is already installed."
     }
 
-    if ($vscodeInstalled -or $vscodiumInstalled) {
-        $extensionsFilePath = Join-Path $HOME ".local\share\chezmoi\AppData\Local\installer\vscode.txt"
-        
-        if (Test-Path $extensionsFilePath) {
-            $desiredExtensions = Get-Content -Path $extensionsFilePath
-            $allExtensions = @()
-            
-            if ($vscodeInstalled) {
-                $vscodeExtensions = & code --list-extensions
-                $allExtensions += $vscodeExtensions
-            }
-            
-            if ($vscodiumInstalled) {
-                $vscodiumExtensions = & codium --list-extensions
-                $allExtensions += $vscodiumExtensions
-            }
+    Write-Host "Starting VSCode/VSCodium extension sync..." -ForegroundColor Cyan
+    $jsonFilePath = "$home\.local\share\chezmoi\AppData\Local\installer\code_extensions.json"
+    Write-Host "Looking for extensions file at: $jsonFilePath" -ForegroundColor Cyan
 
-            # Combine all unique extensions and update vscode.txt
-            $uniqueExtensions = $allExtensions | Sort-Object -Unique
-            $uniqueExtensions | Set-Content -Path $extensionsFilePath
-            Write-Host "Updated vscode.txt with current extensions from both editors"
-            
-            # Display the current extension list
-            Write-Host "`nCurrent Extensions:" -ForegroundColor Green
-            $uniqueExtensions | ForEach-Object { Write-Host "  - $_" }
-            
+    $vscodeInstalled = Get-Command code -ErrorAction SilentlyContinue
+    $vscodiumInstalled = Get-Command codium -ErrorAction SilentlyContinue
+
+    if (Test-Path $jsonFilePath) {
+        $extensionsData = Get-Content -Path $jsonFilePath | ConvertFrom-Json
+        $syncNeeded = $false
+        
+        if ($vscodeInstalled) {
+            $currentVSCodeExtensions = & code --list-extensions
+            $desiredVSCodeExtensions = $extensionsData.vscode
+            $extensionsToAdd = $desiredVSCodeExtensions | Where-Object { $currentVSCodeExtensions -notcontains $_ }
+            $extensionsToRemove = $currentVSCodeExtensions | Where-Object { $desiredVSCodeExtensions -notcontains $_ }
+
+            if ($extensionsToAdd -or $extensionsToRemove) {
+                $syncNeeded = $true
+                Write-Host "`nVSCode Extensions to Add:" -ForegroundColor Green
+                $extensionsToAdd | ForEach-Object { Write-Host "  + $_" }
+                
+                if ($extensionsToRemove) {
+                    Write-Host "`nFound extensions not in JSON file:" -ForegroundColor Yellow
+                    $extensionsToRemove | ForEach-Object { Write-Host "  * $_" }
+                    $updateChoice = Read-Host "`nDo you want to (K)eep these extensions and update JSON, or (R)emove them? (K/R)"
+                    
+                    if ($updateChoice -eq 'K') {
+                        $extensionsData.vscode += $extensionsToRemove
+                        $extensionsData | ConvertTo-Json -Depth 10 | Set-Content -Path $jsonFilePath
+                        Write-Host "JSON file updated with current extensions" -ForegroundColor Green
+                        $extensionsToRemove = @()
+                    }
+                }
+
+                if ($extensionsToAdd -or $extensionsToRemove) {
+                    $confirmation = Read-Host "`nDo you want to apply these changes? (y/n)"
+                    if ($confirmation -eq 'y') {
+                        $extensionsToAdd | ForEach-Object { & code --install-extension $_ }
+                        $extensionsToRemove | ForEach-Object { & code --uninstall-extension $_ }
+                    }
+                }
+            } else {
+                Write-Host "`nVSCode extensions are in sync!" -ForegroundColor Green
+            }
         }
-        else {
-            Write-Host "Extensions file not found at $extensionsFilePath."
+
+        if ($vscodiumInstalled) {
+            $currentVSCodiumExtensions = & codium --list-extensions
+            $desiredVSCodiumExtensions = $extensionsData.vscodium
+            $extensionsToAdd = $desiredVSCodiumExtensions | Where-Object { $currentVSCodiumExtensions -notcontains $_ }
+            $extensionsToRemove = $currentVSCodiumExtensions | Where-Object { $desiredVSCodiumExtensions -notcontains $_ }
+
+            if ($extensionsToAdd -or $extensionsToRemove) {
+                $syncNeeded = $true
+                Write-Host "`nVSCodium Extensions to Add:" -ForegroundColor Green
+                $extensionsToAdd | ForEach-Object { Write-Host "  + $_" }
+                
+                if ($extensionsToRemove) {
+                    Write-Host "`nFound extensions not in JSON file:" -ForegroundColor Yellow
+                    $extensionsToRemove | ForEach-Object { Write-Host "  * $_" }
+                    $updateChoice = Read-Host "`nDo you want to (K)eep these extensions and update JSON, or (R)emove them? (K/R)"
+                    
+                    if ($updateChoice -eq 'K') {
+                        $extensionsData.vscodium += $extensionsToRemove
+                        $extensionsData | ConvertTo-Json -Depth 10 | Set-Content -Path $jsonFilePath
+                        Write-Host "JSON file updated with current extensions" -ForegroundColor Green
+                        $extensionsToRemove = @()
+                    }
+                }
+
+                if ($extensionsToAdd -or $extensionsToRemove) {
+                    $confirmation = Read-Host "`nDo you want to apply these changes? (y/n)"
+                    if ($confirmation -eq 'y') {
+                        $extensionsToAdd | ForEach-Object { & codium --install-extension $_ }
+                        $extensionsToRemove | ForEach-Object { & codium --uninstall-extension $_ }
+                    }
+                }
+            } else {
+                Write-Host "`nVSCodium extensions are in sync!" -ForegroundColor Green
+            }
+        }
+
+        if (!$syncNeeded) {
+            Write-Host "`nAll extensions are perfectly synced with code_extensions.json!" -ForegroundColor Green
         }
     }
     else {
-        Write-Host "Neither VSCode nor VSCodium is installed. Cannot manage extensions."
+        Write-Host "Extensions file not found at $jsonFilePath" -ForegroundColor Red
     }
+
 }
 
 
@@ -637,7 +723,7 @@ function Set-PermanentMachine {
     Write-Host "Move config folder"
     Move-ConfigFolder
     Write-Host "=============================================================================================================================================="
-    Install-VSCodeExtensions
+    Install-CodeExtensions
     Write-Host "=============================================================================================================================================="
     Set-Wsl
     Write-Host "=============================================================================================================================================="
@@ -646,6 +732,7 @@ function Set-PermanentMachine {
     install-Curls
 
 }
+
 
 $configPath = Join-Path $HOME ".local\share\chezmoi\AppData\Local\installer\packages.json"
 $path = Join-Path -Path $HOME -ChildPath ".local\share\chezmoi\AppData\Local\installer\packages.json"
