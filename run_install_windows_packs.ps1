@@ -55,6 +55,7 @@ function Install-Scoop {
             'java'                  = ''
             'versions'              = ''
             'nerd-fonts'            = ''
+            'game' = ''
             'volllly'               = 'https://github.com/volllly/scoop-bucket.git'
             'shemnei'               = 'https://github.com/Shemnei/scoop-bucket.git'
             'nonportable'           = 'https://github.com/Shemnei/scoop-bucket.git'
