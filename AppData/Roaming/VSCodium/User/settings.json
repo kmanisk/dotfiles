@@ -2,7 +2,9 @@
 	"security.workspace.trust.enabled": false,
 	//test extension multi command
 	"vscode-neovim.highlightGroups.highlights": {
-		"HoverWidgetBackground": "ThemeColor"
+		"HoverWidgetBackground": {
+			"color": "ThemeColor"
+		}
 	},
 	"periscope.rgGlobExcludes": [
 		"**/node_modules/**",
@@ -218,10 +220,10 @@
 	},
 	"prettier.trailingComma": "all",
 	"cody.commandCodeLenses": true,
-	"workbench.productIconTheme": "jetbrains-idea-product-icon-theme",
+	// "workbench.productIconTheme": "jetbrains-idea-product-icon-theme",
 	"window.menuBarVisibility": "compact",
 	"[java]": {
-		"editor.defaultFormatter": "redhat.java"
+		// "editor.defaultFormatter": "redhat.java"
 	},
 	"security.workspace.trust.untrustedFiles": "open",
 	"cody.commandHints.enabled": false,
