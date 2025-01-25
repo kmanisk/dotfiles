@@ -20,7 +20,7 @@
 	"editor.showFoldingControls": "always",
 	"editor.tabSize": 4,
 	"workbench.sideBar.location": "right",
-	"editor.fontSize": 18,
+	"editor.fontSize": 17,
 	"editor.lineHeight": 26,
 	"breadcrumbs.enabled": false,
 	"editor.fontFamily": "JetBrainsMono NF,Josefin Sans",
@@ -220,8 +220,7 @@
 	},
 	"prettier.trailingComma": "all",
 	"cody.commandCodeLenses": true,
-	// "workbench.productIconTheme": "jetbrains-idea-product-icon-theme",
-	"window.menuBarVisibility": "compact",
+	// "workbench.productIconTheme":	"window.menuBarVisibility": "compact",
 	"[java]": {
 		// "editor.defaultFormatter": "redhat.java"
 	},
