@@ -29,7 +29,6 @@
 	// "editor.fontFamily": "'Hack Nerd Font Mono', 'Hack Nerd Font', 'JetBrainsMonoNL Nerd Font Mono', 'JetBrainsMono Nerd Font Mono', 'JetBrainsMono Nerd Font', monospace",
 	// Terminal
 	"terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font', 'monospace', monospace",
-	"terminal.integrated.fontSize": 15,
 	"screencastMode.fontSize": 36,
 	"screencastMode.verticalOffset": 1,
 	"editor.fontLigatures": true,
@@ -270,7 +269,7 @@
 			"param": "-g '*.$1'"
 		}
 	],
-	"workbench.colorTheme": "Gruvbox Dark Hard",
+	"workbench.colorTheme": "Gruvbox Dark Medium",
 	"window.menuBarVisibility": "compact",
-	"workbench.iconTheme": "vscode-jetbrains-icon-theme-2023-dark",
+	"workbench.iconTheme": "material-icon-theme",
 }

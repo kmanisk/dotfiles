@@ -647,7 +647,7 @@
   "TaskbarProgressEnabled": true,
   "UseWhiteShareXIcon": false,
   "RememberMainFormPosition": false,
-  "MainFormPosition": "946, 202",
+  "MainFormPosition": "530, 270",
   "RememberMainFormSize": false,
   "MainFormSize": "860, 525",
   "TrayLeftClickAction": "RectangleRegion",
@@ -875,22 +875,6 @@
   "HistoryCheckURL": false,
   "RecentTasks": [
     {
-      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-01\\MSIAfterburner_hzMgv0AV6G.png",
-      "URL": null,
-      "ThumbnailURL": null,
-      "DeletionURL": null,
-      "ShortenedURL": null,
-      "Time": "2025-01-19T20:38:54.5971293Z"
-    },
-    {
-      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-01\\bf1_W3ZFvBaLib.png",
-      "URL": null,
-      "ThumbnailURL": null,
-      "DeletionURL": null,
-      "ShortenedURL": null,
-      "Time": "2025-01-24T17:24:10.0038409Z"
-    },
-    {
       "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-01\\bf1_Blbc6kl1xH.png",
       "URL": null,
       "ThumbnailURL": null,
@@ -953,6 +937,22 @@
       "DeletionURL": null,
       "ShortenedURL": null,
       "Time": "2025-01-25T07:30:35.6940736Z"
+    },
+    {
+      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-01\\thorium_Fr5iCnD12u.png",
+      "URL": null,
+      "ThumbnailURL": null,
+      "DeletionURL": null,
+      "ShortenedURL": null,
+      "Time": "2025-01-26T14:55:59.8142457Z"
+    },
+    {
+      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-01\\thorium_F87xh6AS1e.png",
+      "URL": null,
+      "ThumbnailURL": null,
+      "DeletionURL": null,
+      "ShortenedURL": null,
+      "Time": "2025-01-26T15:57:16.467543Z"
     }
   ],
   "RecentTasksSave": true,
