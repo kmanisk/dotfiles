@@ -765,16 +765,36 @@ function cpycmd {
     # Copy the output to the clipboard
     $output | Set-Clipboard
 }
+
+#function cpytree {
+#    param (
+#        [string]$dirPath
+#    )
+#
+#    # Generate the tree output with /f /a options
+#    $treeOutput = & cmd.exe /c "tree $dirPath /f /a"
+#
+#    # Copy the tree output to the clipboard
+#    $treeOutput | Set-Clipboard
+#}
 function cpytree {
     param (
-        [string]$dirPath
+        [string]$dirPath = (Get-Location).Path # Default to the current directory
     )
+
+    # Directories to exclude
+    $excludeDirs = @("node_modules", "next", "build")
 
     # Generate the tree output with /f /a options
     $treeOutput = & cmd.exe /c "tree $dirPath /f /a"
 
-    # Copy the tree output to the clipboard
-    $treeOutput | Set-Clipboard
+    # Filter out lines containing the excluded directory names
+    $filteredOutput = $treeOutput | Where-Object {
+        -not ($_ -match ($excludeDirs -join "|"))
+    }
+
+    # Copy the filtered output to the clipboard
+    $filteredOutput | Set-Clipboard
 }
 
 function cpypath {

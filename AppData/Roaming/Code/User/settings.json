@@ -272,4 +272,5 @@
 	],
 	"workbench.colorTheme": "Gruvbox Dark Hard",
 	"window.menuBarVisibility": "compact",
+	"workbench.iconTheme": "vscode-jetbrains-icon-theme-2023-dark",
 }
