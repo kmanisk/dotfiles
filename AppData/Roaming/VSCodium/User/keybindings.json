@@ -475,5 +475,15 @@
 	{
 		"key": "alt+t",
 		"command": "PowerShell.RunSelection"
+	},
+	{
+		"key": "shift+alt+g",
+		"command": "workbench.view.scm",
+		"when": "workbench.scm.active"
+	},
+	{
+		"key": "ctrl+shift+g",
+		"command": "-workbench.view.scm",
+		"when": "workbench.scm.active"
 	}
 ]

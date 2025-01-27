@@ -587,6 +587,14 @@ function gall {
     git commit -m "for readme file"
     git push -u origin master
 }
+function gitall {
+    param (
+        [Parameter(Mandatory=$true)]
+        [string]$commitMessage
+    )
+    git add . ; git commit -m $commitMessage ; git push
+}
+
 function dallm {
     Write-Host "Changes Done..."
     st
