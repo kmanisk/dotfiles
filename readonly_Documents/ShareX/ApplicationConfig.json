@@ -875,14 +875,6 @@
   "HistoryCheckURL": false,
   "RecentTasks": [
     {
-      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-01\\bf1_Blbc6kl1xH.png",
-      "URL": null,
-      "ThumbnailURL": null,
-      "DeletionURL": null,
-      "ShortenedURL": null,
-      "Time": "2025-01-24T17:24:22.0091068Z"
-    },
-    {
       "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-01\\thorium_wUyPIza0yG.png",
       "URL": null,
       "ThumbnailURL": null,
@@ -953,6 +945,14 @@
       "DeletionURL": null,
       "ShortenedURL": null,
       "Time": "2025-01-26T15:57:16.467543Z"
+    },
+    {
+      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-01\\explorer_oBmjzOpmO8.png",
+      "URL": null,
+      "ThumbnailURL": null,
+      "DeletionURL": null,
+      "ShortenedURL": null,
+      "Time": "2025-01-27T16:27:12.3909136Z"
     }
   ],
   "RecentTasksSave": true,
