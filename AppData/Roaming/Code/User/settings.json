@@ -227,7 +227,6 @@
 	"cody.commandHints.enabled": false,
 	"git.openRepositoryInParentFolders": "never",
 	"git.autofetch": false,
-	"git.enabled": false,
 	"editor.lineDecorationsWidth": 10,
 	"editor.folding": false,
 	"editor.glyphMargin": false,
