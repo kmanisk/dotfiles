@@ -29,8 +29,9 @@
 	// "editor.fontFamily": "'Hack Nerd Font Mono', 'Hack Nerd Font', 'JetBrainsMonoNL Nerd Font Mono', 'JetBrainsMono Nerd Font Mono', 'JetBrainsMono Nerd Font', monospace",
 	// Terminal
 	"terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font', 'monospace', monospace",
+	"terminal.integrated.fontSize": 15,
 	"screencastMode.fontSize": 36,
-	"screencastMode.verticalOffset": 1,
+	"screencastMode.verticalOffset": 8,
 	"editor.fontLigatures": true,
 	"editor.wordWrap": "on",
 	"editor.wrappingIndent": "same",
@@ -269,7 +270,7 @@
 			"param": "-g '*.$1'"
 		}
 	],
-	"workbench.colorTheme": "Gruvbox Dark Soft",
+	"workbench.colorTheme": "Gruvbox Dark Medium",
 	"workbench.iconTheme": "material-icon-theme",
 	"terminal.integrated.profiles.windows": {
 		"New Powershell": {
