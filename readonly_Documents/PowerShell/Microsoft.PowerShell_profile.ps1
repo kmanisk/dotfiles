@@ -78,7 +78,12 @@ function font{
 [System.Reflection.Assembly]::LoadWithPartialName("System.Drawing") | Out-Null; (New-Object System.Drawing.Text.InstalledFontCollection).Families.Name
 }
 
-Invoke-Expression (&sfss --hook)
+#Invoke-Expression (&sfss --hook)
+
+#if (Get-Command sfss -ErrorAction SilentlyContinue) {
+#    Invoke-Expression (&sfss --hook)
+#} 
+
 
 
 
