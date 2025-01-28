@@ -51,11 +51,12 @@ function Install-Scoop {
         Write-Host "Scoop is already installed."
         
         $bucketConfig = @{
-            'extras'                = ''
-            'java'                  = ''
-            'versions'              = ''
-            'nerd-fonts'            = ''
-            'games' = ''
+            'main' = 'https://github.com/ScoopInstaller/Main'
+            'extras'                = 'https://github.com/ScoopInstaller/Extras'
+            'java'                  = 'https://github.com/ScoopInstaller/Java'
+            'versions'              = 'https://github.com/ScoopInstaller/Versions'
+            'nerd-fonts'            = 'https://github.com/ScoopInstaller/scoop-nerd-fonts'
+            'games' = 'https://github.com/Calinou/scoop-games'
             'volllly'               = 'https://github.com/volllly/scoop-bucket.git'
             'shemnei'               = 'https://github.com/Shemnei/scoop-bucket.git'
             'nonportable'           = 'https://github.com/Shemnei/scoop-bucket.git'
