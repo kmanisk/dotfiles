@@ -271,4 +271,16 @@
 	"workbench.colorTheme": "Gruvbox Dark Medium",
 	"window.menuBarVisibility": "compact",
 	"workbench.iconTheme": "material-icon-theme",
+	"extensions.ignoreRecommendations": true,
+	"terminal.integrated.profiles.windows": {
+		"New Powershell": {
+			"path": "pwsh.exe",
+			"args": [
+				"-noexit",
+				"-file",
+				"${env:USERPROFILE}\\Documents\\PowerShell\\Microsoft.PowerShell_profile.ps1"
+			]
+		}
+	},
+	"terminal.integrated.defaultProfile.windows": "New Powershell"
 }
