@@ -36,6 +36,7 @@
       "lsd",
       "starship",
       "extras/msiafterburner",
+      "extras/vcredist2022",
       "extras/rtss",
       "main/sudo",
       "main/gh",
