@@ -793,6 +793,30 @@
 					"needsUserConfirmationBeforeExecution": false,
 					"tags": [],
 					"type": "URL"
+				},
+				{
+					"description": "",
+					"executionArgument": "https://github.com/kmanisk/",
+					"icon": {
+						"parameter": "",
+						"type": "URL"
+					},
+					"name": "github",
+					"needsUserConfirmationBeforeExecution": false,
+					"tags": [],
+					"type": "URL"
+				},
+				{
+					"description": "",
+					"executionArgument": "https://github.com/kmanisk/dotfiles",
+					"icon": {
+						"parameter": "",
+						"type": "URL"
+					},
+					"name": "dotfiles",
+					"needsUserConfirmationBeforeExecution": false,
+					"tags": [],
+					"type": "URL"
 				}
 			]
 		},
@@ -993,7 +1017,7 @@
 					},
 					"isFallback": false,
 					"name": "MyLiveWallpaper",
-					"prefix": "live/",
+					"prefix": "l/",
 					"priority": 0,
 					"url": "https://mylivewallpapers.com/?s={{query}}"
 				},
