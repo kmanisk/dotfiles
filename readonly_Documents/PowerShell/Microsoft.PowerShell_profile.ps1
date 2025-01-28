@@ -63,8 +63,8 @@ function cdwhich {
 }
 #this is added
 function extedit{
-    $ext = Join-Path $HOME "AppData\Local\installer\vscode.txt"
-    Write-Host "path : "  $ext
+    $ext = Join-Path $HOME "AppData\Local\installer\code_extensions.json"
+    #Write-Host "path : "  $ext
     nvim $ext
 
 }
