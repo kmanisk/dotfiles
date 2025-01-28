@@ -185,18 +185,55 @@ function Install-WingetPackages {
 
 
 # PermanentMachine Setup Function to call in the full setup section if chosen by the user
+#function Install-OSDLayout {
+#    $rtssProfilePath = "$HOME\scoop\persist\rtss\Profiles"
+#    $msiProfilePath = "$HOME\scoop\persist\msiafterburner\Profiles"
+#
+#    if (-not (Test-Path "$rtssProfilePath\*") -or -not (Test-Path "$msiProfilePath\*")) {
+#        Write-Host "No profiles found. Please install MSI Afterburner and RivaTuner through Scoop and use Chezmoi to manage the profiles." -ForegroundColor Yellow
+#        return
+#    }
+#
+#    Write-Host "Profiles are already managed by Scoop and Chezmoi" -ForegroundColor Green
+#}
+
 function Install-OSDLayout {
-    $rtssProfilePath = "$HOME\scoop\persist\rtss\Profiles"
-    $msiProfilePath = "$HOME\scoop\persist\msiafterburner\Profiles"
-    
-    if (-not (Test-Path "$rtssProfilePath\*") -or -not (Test-Path "$msiProfilePath\*")) {
-        Write-Host "No profiles found. Please install MSI Afterburner and RivaTuner through Scoop and use Chezmoi to manage the profiles." -ForegroundColor Yellow
+    $msiExecutablePath = "$HOME\scoop\apps\msiafterburner\current\msiafterburner.exe"
+    $rtssExecutablePath = "$HOME\scoop\apps\rtss\current\RTSS.exe"
+    $startupFolder = "$HOME\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup"
+
+    # Check if MSI Afterburner and RTSS executables exist
+    if (-not (Test-Path $msiExecutablePath) -or -not (Test-Path $rtssExecutablePath)) {
+        Write-Host "MSI Afterburner or RTSS not found. Please install them using Scoop." -ForegroundColor Yellow
         return
     }
-    
-    Write-Host "Profiles are already managed by Scoop and Chezmoi" -ForegroundColor Green
-}
 
+    # Add shortcuts to the startup folder if they don't already exist
+    $msiShortcut = Join-Path -Path $startupFolder -ChildPath "MSIAfterburner.lnk"
+    $rtssShortcut = Join-Path -Path $startupFolder -ChildPath "RTSS.lnk"
+
+    if (-not (Test-Path $msiShortcut)) {
+        Write-Host "Adding MSI Afterburner to startup..." -ForegroundColor Green
+        $wshell = New-Object -ComObject WScript.Shell
+        $shortcut = $wshell.CreateShortcut($msiShortcut)
+        $shortcut.TargetPath = $msiExecutablePath
+        $shortcut.Save()
+    } else {
+        Write-Host "MSI Afterburner is already in the startup folder." -ForegroundColor Green
+    }
+
+    if (-not (Test-Path $rtssShortcut)) {
+        Write-Host "Adding RTSS to startup..." -ForegroundColor Green
+        $wshell = New-Object -ComObject WScript.Shell
+        $shortcut = $wshell.CreateShortcut($rtssShortcut)
+        $shortcut.TargetPath = $rtssExecutablePath
+        $shortcut.Save()
+    } else {
+        Write-Host "RTSS is already in the startup folder." -ForegroundColor Green
+    }
+
+    Write-Host "Profiles are managed by Scoop and Chezmoi." -ForegroundColor Green
+}
 
 function Move-FileSafely {
     param (
