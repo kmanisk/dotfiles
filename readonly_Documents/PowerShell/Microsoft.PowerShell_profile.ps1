@@ -157,95 +157,96 @@ function epack{
 function his{
     cat (Get-PSReadLineOption).HistorySavePath
 }
+
+
+#function codeext{
+#    # Check if VSCode and VSCodium are installed
+#    $vscodeInstalled = Get-Command code -ErrorAction SilentlyContinue
+#    $vscodiumInstalled = Get-Command codium -ErrorAction SilentlyContinue
 #
-function codeext{
-    # Check if VSCode and VSCodium are installed
-    $vscodeInstalled = Get-Command code -ErrorAction SilentlyContinue
-    $vscodiumInstalled = Get-Command codium -ErrorAction SilentlyContinue
-
-    if (-not $vscodeInstalled) {
-        Write-Host "VSCode is not installed. Installing via Chocolatey..."
-        choco install vscode -y
-    }
-    else {
-        Write-Host "VSCode is already installed."
-    }
-
-    if (-not $vscodiumInstalled) {
-        Write-Host "VSCodium is not installed. Installing via Chocolatey..."
-        choco install vscodium -y
-    }
-    else {
-        Write-Host "VSCodium is already installed."
-    }
-
-    # Proceed to manage extensions only if at least one editor is installed
-    if ($vscodeInstalled -or $vscodiumInstalled) {
-        $extensionsFilePath = Join-Path $HOME "AppData\Local\installer\vscode.txt"
-
-        if (Test-Path $extensionsFilePath) {
-            # Read desired extensions from file
-            $desiredExtensions = Get-Content -Path $extensionsFilePath
-
-            # Get currently installed extensions
-            $vscodeExtensions = @()
-            $vscodiumExtensions = @()
-            
-            if ($vscodeInstalled) {
-                $vscodeExtensions = & code --list-extensions
-            }
-            if ($vscodiumInstalled) {
-                $vscodiumExtensions = & codium --list-extensions
-            }
-
-            # Handle VSCode Extensions
-            if ($vscodeInstalled) {
-                # Install missing extensions
-                foreach ($extension in $desiredExtensions) {
-                    if ($vscodeExtensions -notcontains $extension) {
-                        Write-Host "Installing VSCode extension: $extension"
-                        & code --install-extension $extension
-                    }
-                }
-                
-                # Remove undesired extensions
-                foreach ($installed in $vscodeExtensions) {
-                    if ($desiredExtensions -notcontains $installed) {
-                        Write-Host "Removing VSCode extension: $installed"
-                        & code --uninstall-extension $installed
-                    }
-                }
-            }
-
-            # Handle VSCodium Extensions
-            if ($vscodiumInstalled) {
-                # Install missing extensions
-                foreach ($extension in $desiredExtensions) {
-                    if ($vscodiumExtensions -notcontains $extension) {
-                        Write-Host "Installing VSCodium extension: $extension"
-                        & codium --install-extension $extension
-                    }
-                }
-                
-                # Remove undesired extensions
-                foreach ($installed in $vscodiumExtensions) {
-                    if ($desiredExtensions -notcontains $installed) {
-                        Write-Host "Removing VSCodium extension: $installed"
-                        & codium --uninstall-extension $installed
-                    }
-                }
-            }
-
-            Write-Host "Extensions synchronization completed successfully."
-        }
-        else {
-            Write-Host "Extensions file not found at $extensionsFilePath."
-        }
-    }
-    else {
-        Write-Host "Neither VSCode nor VSCodium is installed. Cannot manage extensions."
-    }
-}
+#    if (-not $vscodeInstalled) {
+#        Write-Host "VSCode is not installed. Installing via Chocolatey..."
+#        choco install vscode -y
+#    }
+#    else {
+#        Write-Host "VSCode is already installed."
+#    }
+#
+#    if (-not $vscodiumInstalled) {
+#        Write-Host "VSCodium is not installed. Installing via Chocolatey..."
+#        choco install vscodium -y
+#    }
+#    else {
+#        Write-Host "VSCodium is already installed."
+#    }
+#
+#    # Proceed to manage extensions only if at least one editor is installed
+#    if ($vscodeInstalled -or $vscodiumInstalled) {
+#        $extensionsFilePath = Join-Path $HOME "AppData\Local\installer\vscode.txt"
+#
+#        if (Test-Path $extensionsFilePath) {
+#            # Read desired extensions from file
+#            $desiredExtensions = Get-Content -Path $extensionsFilePath
+#
+#            # Get currently installed extensions
+#            $vscodeExtensions = @()
+#            $vscodiumExtensions = @()
+#
+#            if ($vscodeInstalled) {
+#                $vscodeExtensions = & code --list-extensions
+#            }
+#            if ($vscodiumInstalled) {
+#                $vscodiumExtensions = & codium --list-extensions
+#            }
+#
+#            # Handle VSCode Extensions
+#            if ($vscodeInstalled) {
+#                # Install missing extensions
+#                foreach ($extension in $desiredExtensions) {
+#                    if ($vscodeExtensions -notcontains $extension) {
+#                        Write-Host "Installing VSCode extension: $extension"
+#                        & code --install-extension $extension
+#                    }
+#                }
+#
+#                # Remove undesired extensions
+#                foreach ($installed in $vscodeExtensions) {
+#                    if ($desiredExtensions -notcontains $installed) {
+#                        Write-Host "Removing VSCode extension: $installed"
+#                        & code --uninstall-extension $installed
+#                    }
+#                }
+#            }
+#
+#            # Handle VSCodium Extensions
+#            if ($vscodiumInstalled) {
+#                # Install missing extensions
+#                foreach ($extension in $desiredExtensions) {
+#                    if ($vscodiumExtensions -notcontains $extension) {
+#                        Write-Host "Installing VSCodium extension: $extension"
+#                        & codium --install-extension $extension
+#                    }
+#                }
+#
+#                # Remove undesired extensions
+#                foreach ($installed in $vscodiumExtensions) {
+#                    if ($desiredExtensions -notcontains $installed) {
+#                        Write-Host "Removing VSCodium extension: $installed"
+#                        & codium --uninstall-extension $installed
+#                    }
+#                }
+#            }
+#
+#            Write-Host "Extensions synchronization completed successfully."
+#        }
+#        else {
+#            Write-Host "Extensions file not found at $extensionsFilePath."
+#        }
+#    }
+#    else {
+#        Write-Host "Neither VSCode nor VSCodium is installed. Cannot manage extensions."
+#    }
+#}
 
 Set-Alias -Name rn -Value Rename-Item
 
