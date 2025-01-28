@@ -12,6 +12,7 @@
     ],
     "full": [
       "7zip",
+    "extras/ueli@8.28.0",
       "teracopy-np",
       "fzf",
       "psfzf",
@@ -61,10 +62,8 @@
       "vscode",
       "vscodium",
       "f.lux",
-      "ueli",
       "sharex",
       "everything",
-      "microsoft-windows-terminal",
       "vlc",
       "tldr-plusplus",
       "autohotkey",
