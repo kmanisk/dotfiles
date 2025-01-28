@@ -832,10 +832,12 @@ function Set-TimeZone {
     # Get current time zone
     $currentTimeZone = (Get-TimeZone).Id
 
+    # Check if the current time zone is already set to "India Standard Time"
     if ($currentTimeZone -eq "India Standard Time") {
         Write-Host "Time zone is already set to India Standard Time (IST)." -ForegroundColor Green
     }
     else {
+        # If not, set the time zone to India Standard Time
         Set-TimeZone -Name "India Standard Time"
         Write-Host "Time zone has been set to India Standard Time (IST)." -ForegroundColor Green
     }
