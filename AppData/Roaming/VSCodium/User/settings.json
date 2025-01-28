@@ -283,5 +283,9 @@
 			]
 		}
 	},
-	"terminal.integrated.defaultProfile.windows": "New Powershell"
+	"terminal.integrated.defaultProfile.windows": "New Powershell",
+	//experimentall may break the app
+	"vscode_custom_css.imports": [
+		"file://${userHome}/.config/code/custom.css",
+	],
 }
