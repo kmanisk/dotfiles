@@ -925,7 +925,9 @@ function dots { Set-Location -Path $Home\.local\share\chezmoi\ }
 
 # Quick Access to Editing the Profile
 function ep { nvim $PROFILE }
-function eueli { nvim "C:\Users\Manisk\AppData\Roaming\ueli\config.json" }
+function eueli {
+    nvim "$env:HOME\AppData\Roaming\ueli\config.json"
+}
 # Simplified Process Management
 function k9 { Stop-Process -Name $args[0] }
 
