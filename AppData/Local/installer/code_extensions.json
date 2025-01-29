@@ -41,6 +41,9 @@
                      "robole.file-bunny",
                      "sourcegraph.cody-ai",
                      "zainchen.json",
-"tobias-z.vscode-harpoon"
+                     "tobias-z.vscode-harpoon",
+                     "be5invis.vscode-custom-css",
+                     "pkief.material-icon-theme",
+                     "usernamehw.errorlens"
                  ]
 }
