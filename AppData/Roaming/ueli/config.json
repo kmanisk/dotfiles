@@ -628,7 +628,7 @@
 				},
 				{
 					"description": "",
-					"executionArgument": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\VSCodium.exe",
+					"executionArgument": "C:\\Program Files\\VSCodium\\VSCodium.exe",
 					"icon": {
 						"parameter": "",
 						"type": "URL"
@@ -640,7 +640,7 @@
 				},
 				{
 					"description": "",
-					"executionArgument": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe",
+					"executionArgument": "C:\\Program Files\\Microsoft VS Code\\Code.exe",
 					"icon": {
 						"parameter": "",
 						"type": "URL"
@@ -790,30 +790,6 @@
 						"type": "URL"
 					},
 					"name": "perplexity",
-					"needsUserConfirmationBeforeExecution": false,
-					"tags": [],
-					"type": "URL"
-				},
-				{
-					"description": "",
-					"executionArgument": "https://github.com/kmanisk/",
-					"icon": {
-						"parameter": "",
-						"type": "URL"
-					},
-					"name": "github",
-					"needsUserConfirmationBeforeExecution": false,
-					"tags": [],
-					"type": "URL"
-				},
-				{
-					"description": "",
-					"executionArgument": "https://github.com/kmanisk/dotfiles",
-					"icon": {
-						"parameter": "",
-						"type": "URL"
-					},
-					"name": "dotfiles",
 					"needsUserConfirmationBeforeExecution": false,
 					"tags": [],
 					"type": "URL"
@@ -1017,7 +993,7 @@
 					},
 					"isFallback": false,
 					"name": "MyLiveWallpaper",
-					"prefix": "l/",
+					"prefix": "live/",
 					"priority": 0,
 					"url": "https://mylivewallpapers.com/?s={{query}}"
 				},
