@@ -36,7 +36,7 @@ function Install-Scoop {
 			Invoke-Expression "& {$(Invoke-RestMethod get.scoop.sh)} -RunAsAdmin"
 		}
 	}
- else {
+	else {
 		Write-Host "Scoop is already installed."
 
 
@@ -74,6 +74,29 @@ function Install-Scoop {
 
 	}
 }
+function Set-ScoopConfig {
+	if (Get-Command scoop -ErrorAction SilentlyContinue) {
+		Write-Host "Configuring Scoop settings..." -ForegroundColor Yellow
+        
+		# Enable aria2 for parallel downloads
+		scoop config aria2-enabled true
+		scoop config aria2-warning-enabled false
+        
+		# Set proxy settings if needed
+		# scoop config proxy [username:password@]host:port
+        
+		# Configure default installation directory
+		# scoop config SCOOP 'C:\Scoop'
+		# scoop config SCOOP_GLOBAL 'C:\ScoopApps'
+        
+		# Show status
+		Write-Host "Current Scoop Configuration:" -ForegroundColor Green
+		scoop config show
+	}
+ else {
+		Write-Host "Scoop is not installed. Please install Scoop first." -ForegroundColor Red
+	}
+}
 
 # Function to install Chocolatey
 function Install-Chocolatey {
@@ -86,7 +109,7 @@ function Install-Chocolatey {
 		choco feature enable -n allowemptychecksums
 		choco feature enable -n checksumFiles
 	}
- else {
+	else {
 		Write-Host "Chocolatey is already installed."
 
 		Write-Host "Configuring Chocolatey settings..." -ForegroundColor Yellow
@@ -104,7 +127,7 @@ function Install-AeroTheme {
 		Start-Process "rundll32.exe" -ArgumentList "syssetup,SetupInfObjectInstallAction DefaultInstall 128 $aeroPath" -Wait -NoNewWindow
 		Write-Host "Aero Theme installation completed"
 	}
- else {
+	else {
 		Write-Host "Aero.inf not found at expected location"
 	}
 }
@@ -207,7 +230,7 @@ function Install-FirstTimePackages {
 		Write-Host "Running install_all.bat..."
 		Start-Process -FilePath $installBatPath -NoNewWindow -Wait
 	}
- else {
+	else {
 		Write-Host "install_all.bat not found in the extracted files"
 	}
 }

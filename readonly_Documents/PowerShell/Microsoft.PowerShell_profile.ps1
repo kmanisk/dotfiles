@@ -30,7 +30,13 @@ if ($PSVersionTable.PSVersion.Major -ge 7) {
     }
     Import-Module PSReadLine
 }
-
+function cha {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$path
+    )
+    chezmoi add $path
+}
 function chu{
     chezmoi update
 }
