@@ -72,5 +72,8 @@
       "irfanview",
       "vmwareworkstation"
     ]
+  },
+  "pip":{
+      "gdown"
   }
 }
