@@ -157,7 +157,8 @@ scoop install main/python
 
 #python installation from msstore
 # winget install --id 9PNRBTZXMB4Z
-winget install --id 9PNRBTZXMB4Z --accept-package-agreements --accept-source-agreements
+# winget install --id 9PNRBTZXMB4Z --accept-package-agreements --accept-source-agreements
+winget install --id 9PNRBTZXMB4Z --accept-package-agreements --accept-source-agreements --silent --disable-interactivity
 
 # winget install twpayne.chezmoi --accept-package-agreements --accept-source-agreements
 #winget install Git.Git --accept-package-agreements --accept-source-agreements
