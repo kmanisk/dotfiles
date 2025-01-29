@@ -485,5 +485,25 @@
 		"key": "ctrl+shift+g",
 		"command": "-workbench.view.scm",
 		"when": "workbench.scm.active"
+	},
+	{
+		"key": "alt+'",
+		"command": "editor.toggleFold",
+		"when": "editorTextFocus && foldingEnabled"
+	},
+	{
+		"key": "ctrl+k ctrl+l",
+		"command": "-editor.toggleFold",
+		"when": "editorTextFocus && foldingEnabled"
+	},
+	{
+		"key": "shift+alt+'",
+		"command": "editor.toggleFoldRecursively",
+		"when": "editorTextFocus && foldingEnabled"
+	},
+	{
+		"key": "ctrl+k ctrl+shift+l",
+		"command": "-editor.toggleFoldRecursively",
+		"when": "editorTextFocus && foldingEnabled"
 	}
 ]

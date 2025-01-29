@@ -18,7 +18,7 @@
 	"workbench.tree.indent": 16,
 	"workbench.tree.renderIndentGuides": "always",
 	"window.title": "",
-	"editor.showFoldingControls": "always",
+	"editor.showFoldingControls": "never",
 	"editor.tabSize": 4,
 	"workbench.sideBar.location": "right",
 	"editor.fontSize": 17,
@@ -228,10 +228,8 @@
 	},
 	"security.workspace.trust.untrustedFiles": "open",
 	"cody.commandHints.enabled": false,
-	"git.openRepositoryInParentFolders": "never",
-	"git.autofetch": false,
 	"editor.lineDecorationsWidth": 10,
-	"editor.folding": false,
+	"editor.folding": true,
 	"editor.glyphMargin": false,
 	"tabnine.experimentalAutoImports": true,
 	//added a commnet
@@ -271,7 +269,7 @@
 			"param": "-g '*.$1'"
 		}
 	],
-	"workbench.colorTheme": "Gruvbox Dark Medium",
+	"workbench.colorTheme": "GitHub Dark Dimmed",
 	"workbench.iconTheme": "material-icon-theme",
 	"terminal.integrated.profiles.windows": {
 		"New Powershell": {
@@ -288,4 +286,10 @@
 	"vscode_custom_css.imports": [
 		"file://${userHome}/.config/code/custom.css",
 	],
+	//git settings
+	"git.openRepositoryInParentFolders": "never",
+	"git.autofetch": false,
+	"scm.diffDecorations": "none",
+	"explorer.confirmPasteNative": false,
+	"extensions.ignoreRecommendations": true,
 }
