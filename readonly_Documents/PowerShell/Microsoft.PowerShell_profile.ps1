@@ -40,6 +40,9 @@ function cha {
 function chu{
     chezmoi update
 }
+function scclear{
+    scoop cache rm *
+}
 # Archive module is built into PS7, so this check isn't needed
 # Remove or comment out this section
 # if (-not (Get-Command Expand-Archive -ErrorAction SilentlyContinue)) {

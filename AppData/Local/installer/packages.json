@@ -12,7 +12,6 @@
     ],
     "full": [
       "7zip",
-    "extras/ueli@8.28.0",
       "teracopy-np",
       "fzf",
       "psfzf",
@@ -51,8 +50,6 @@
       "JanDeDobbeleer.OhMyPosh",
       "chrisant996.Clink",
       "AntibodySoftware.WizTree",
-      "VSCodium.VSCodium",
-    "Microsoft.VisualStudioCode",
       "Notepad++.Notepad++",
       "Valve.Steam"
     ]
@@ -63,6 +60,9 @@
       "7zip",
       "f.lux",
       "sharex",
+      "ueli",
+      "vscode vscode.install",
+      "vscodium vscodium.install",
       "everything",
       "vlc",
       "tldr-plusplus",
