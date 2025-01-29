@@ -7,19 +7,25 @@ function pipInstallEssential {
         "gdown"
     )
 
-    # Check if pip is installed
-    if (-not (Get-Command pip -ErrorAction SilentlyContinue)) {
-        Write-Host "Installing pip..."
-        python -m ensurepip --upgrade
+    # Check if gdown is already installed
+    if (-not (Get-Command gdown -ErrorAction SilentlyContinue)) {
+        # Check if pip is installed
+        if (-not (Get-Command pip -ErrorAction SilentlyContinue)) {
+            Write-Host "Installing pip..."
+            python -m ensurepip --upgrade
+        }
+
+        # Upgrade pip itself
+        python -m pip install --upgrade pip
+
+        # Install each package
+        foreach ($package in $packages) {
+            Write-Host "Installing $package..."
+            pip install $package
+        }
     }
-
-    # Upgrade pip itself
-    python -m pip install --upgrade pip
-
-    # Install each package
-    foreach ($package in $packages) {
-        Write-Host "Installing $package..."
-        pip install $package
+    else {
+        Write-Host "gdown is already installed, skipping Python package installation"
     }
 
     Write-Host "Essential Python packages installation completed"
