@@ -219,7 +219,7 @@ if ($confirmation -eq 'y') {
 	Install-FirstTimePackages
 	Write-Host "======================================================"
 }
-else {
-	Write-Host "Installation skipped" -ForegroundColor DarkMagenta
-}
+# else {
+# Write-Host "Installation skipped" -ForegroundColor DarkMagenta
+# }
 
