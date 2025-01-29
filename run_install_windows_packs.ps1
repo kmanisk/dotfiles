@@ -24,7 +24,6 @@ function pipInstallEssential {
 
     Write-Host "Essential Python packages installation completed"
 }
-pipInstallEssential
 
 # Function to check if the script is running as Administrator
 function Is-Admin {
@@ -895,6 +894,8 @@ switch ($choice.ToLower()) {
         else {
             python "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopfull.py"
         }
+        Write-Host "=============================================================================================================================================="
+        pipInstallEssential
         Write-Host "=============================================================================================================================================="
         Install-WingetPackages -packages $config.winget.full
         Write-Host "=============================================================================================================================================="
