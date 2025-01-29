@@ -1,4 +1,30 @@
 
+function pipInstallEssential {
+    Write-Host "Installing essential Python packages..."
+    
+    # List of essential packages
+    $packages = @(
+        "gdown",
+    )
+
+    # Check if pip is installed
+    if (-not (Get-Command pip -ErrorAction SilentlyContinue)) {
+        Write-Host "Installing pip..."
+        python -m ensurepip --upgrade
+    }
+
+    # Upgrade pip itself
+    python -m pip install --upgrade pip
+
+    # Install each package
+    foreach ($package in $packages) {
+        Write-Host "Installing $package..."
+        pip install $package
+    }
+
+    Write-Host "Essential Python packages installation completed"
+}
+pipInstallEssential
 
 # Function to check if the script is running as Administrator
 function Is-Admin {
@@ -673,6 +699,8 @@ function Update-VSCodeExtensions {
 #         Write-Host "No .exe or .msi files found!"
 #     }
 # }
+
+
 function install-Curls {
     # Check if already installed
     $gm320Path = "C:\Program Files (x86)\GM320 RGB"
@@ -700,8 +728,7 @@ function install-Curls {
     
     if (-not (Test-Path $zipPath)) {
         Write-Host "Downloading mouse.zip using gdown..."
-        $fileId = "1pa2ryQyBDNiS4aOOYjiOqweFybOrtO3f"
-        gdown $fileId -O mouse.zip
+        gdown "https://drive.google.com/uc?export=download&id=1pa2ryQyBDNiS4aOOYjiOqweFybOrtO3f"
     }
     
     Write-Host "Extracting files..."

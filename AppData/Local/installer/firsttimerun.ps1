@@ -96,17 +96,30 @@ function Install-Chocolatey {
 		# choco install git gh chezmoi -y
 	}
 }
-
-# Ask user whether to install all package managers or just Winget
-$installAll = Read-Host "Choco and Scoop as well Y/N?"
-
-if ($installAll -eq 'y') {
-	Install-Scoop
-	Write-Host "======================================================"
-	Install-Chocolatey
-	Write-Host "======================================================"
+function Install-AeroTheme {
+	$aeroPath = "C:\Users\Administrator\.local\share\chezmoi\AppData\Local\installer\appconfigs\mouse\Aero\Aero.inf"
+    
+	if (Test-Path $aeroPath) {
+		Write-Host "Installing Windows 10 Aero Theme..."
+		Start-Process "rundll32.exe" -ArgumentList "syssetup,SetupInfObjectInstallAction DefaultInstall 128 $aeroPath" -Wait -NoNewWindow
+		Write-Host "Aero Theme installation completed"
+	}
+ else {
+		Write-Host "Aero.inf not found at expected location"
+	}
 }
 
+# Ask user whether to install all package managers or just Winget
+# $installAll = Read-Host "Choco and Scoop as well Y/N?"
+
+# if ($installAll -eq 'y') {
+Install-Scoop
+Write-Host "======================================================"
+Install-Chocolatey
+Write-Host "======================================================"
+# }
+
+Install-AeroTheme
 # Call the function to ensure Winget is installed
 Install-Winget
 Write-Host "======================================================"
