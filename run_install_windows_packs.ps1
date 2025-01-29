@@ -4,7 +4,7 @@ function pipInstallEssential {
     
     # List of essential packages
     $packages = @(
-        "gdown",
+        "gdown"
     )
 
     # Check if pip is installed
