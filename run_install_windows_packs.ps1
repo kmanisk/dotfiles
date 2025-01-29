@@ -319,26 +319,18 @@ function Move-ConfigFolder {
     $esDestPath = "C:\es"
 
     Move-FileSafely -sourcePath $esSourcePath -destinationPath $esDestPath
+
     # VSCodium Config
     $vscodiumDefaultSourcePath = Join-Path -Path $env:USERPROFILE -ChildPath ".local\share\chezmoi\AppData\Local\installer\vscodium\product.json"
-    $vscodiumScoopSourcePath = Join-Path -Path $env:USERPROFILE -ChildPath "scoop\apps\vscodium\current\resources\app\product.json"
     $vscodiumDestPath = "C:\Program Files\VSCodium\resources\app"
 
     # Check and update product.json
     if (Test-Path $vscodiumDefaultSourcePath) {
         Move-FileSafely -sourcePath $vscodiumDefaultSourcePath -destinationPath (Join-Path -Path $vscodiumDestPath -ChildPath "product.json")
     }
-    elseif (Test-Path $vscodiumScoopSourcePath) {
-        Move-FileSafely -sourcePath $vscodiumScoopSourcePath -destinationPath (Join-Path -Path $vscodiumDestPath -ChildPath "product.json")
-    }
     else {
-        Write-Host "No VSCodium config file (product.json) found in the expected locations." -ForegroundColor Yellow
+        Write-Host "No VSCodium config file (product.json) found in the expected location." -ForegroundColor Yellow
     }
-    # VSCodium Config
-    #$vscodiumSourcePath = Join-Path -Path $env:USERPROFILE -ChildPath ".local\share\chezmoi\AppData\Local\installer\vscodium\product.json"
-    #$vscodiumDestPath = "C:\Program Files\VSCodium\resources\app"
-
-    #Move-FileSafely -sourcePath $vscodiumSourcePath -destinationPath $vscodiumDestPath
 }
 
 function Install-CodeExtensions {
