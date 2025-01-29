@@ -139,3 +139,87 @@ winget install --id 9PNRBTZXMB4Z
 #winget install Git.Git --accept-package-agreements --accept-source-agreements
 #winget install -e --id GitHub.cli --accept-package-agreements --accept-source-agreements
 
+
+
+
+function pipInstallEssential {
+	Write-Host "Installing essential Python packages..."
+    
+	# List of essential packages
+	$packages = @(
+		"gdown"
+	)
+
+	# Check if gdown is already installed
+	if (-not (Get-Command gdown -ErrorAction SilentlyContinue)) {
+		# Check if pip is installed
+		if (-not (Get-Command pip -ErrorAction SilentlyContinue)) {
+			Write-Host "Installing pip..."
+			python -m ensurepip --upgrade
+		}
+
+		# Upgrade pip itself
+		python -m pip install --upgrade pip
+
+		# Install each package
+		foreach ($package in $packages) {
+			Write-Host "Installing $package..."
+			pip install $package
+		}
+	}
+	else {
+		Write-Host "gdown is already installed, skipping Python package installation"
+	}
+
+	Write-Host "Essential Python packages installation completed"
+}
+
+
+
+function Install-FirstTimePackages {
+	# Check if gdown is installed via pip
+	if (-not (Get-Command gdown -ErrorAction SilentlyContinue)) {
+		Write-Host "Installing gdown via pip..."
+		pip install gdown
+	}
+
+	$tempPath = [System.IO.Path]::GetTempPath()
+	$firstTimeFolder = Join-Path $tempPath "firsttime"
+	$downloadedZip = Join-Path $firstTimeFolder "Visual-C-Runtimes-All-in-One-Nov-2024.zip"
+    
+	if (-not (Test-Path $firstTimeFolder)) {
+		Write-Host "Creating firsttime directory at $firstTimeFolder..."
+		New-Item -Path $firstTimeFolder -ItemType Directory | Out-Null
+	}
+    
+	Set-Location $firstTimeFolder
+    
+	if (-not (Test-Path $downloadedZip)) {
+		Write-Host "Downloading zip using gdown..."
+		gdown "https://drive.google.com/uc?export=download&id=1vrkXd9SfWCBJ8WdyWwICDTEoyYMoXjGA"
+	}
+    
+	Write-Host "Extracting files..."
+	Expand-Archive -Path $downloadedZip -DestinationPath $firstTimeFolder -Force
+    
+	$installBatPath = Join-Path $firstTimeFolder "install_all.bat"
+	if (Test-Path $installBatPath) {
+		Write-Host "Running install_all.bat..."
+		Start-Process -FilePath $installBatPath -NoNewWindow -Wait
+	}
+ else {
+		Write-Host "install_all.bat not found in the extracted files"
+	}
+}
+
+$confirmation = Read-Host "Do you want to install essential packages and Visual C++ Runtimes? (y/n)"
+if ($confirmation -eq 'y') {
+	pipInstallEssential
+	Write-Host "======================================================"
+	Install-FirstTimePackages
+	Write-Host "======================================================"
+}
+else {
+	Write-Host "Installation skipped" -ForegroundColor DarkMagenta
+}
+

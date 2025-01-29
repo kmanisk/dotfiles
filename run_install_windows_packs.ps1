@@ -730,7 +730,7 @@ function install-Curls {
     }
     
     Set-Location $curlsFolder
-    
+    # mouse software gm320 
     if (-not (Test-Path $zipPath)) {
         Write-Host "Downloading mouse.zip using gdown..."
         gdown "https://drive.google.com/uc?export=download&id=1pa2ryQyBDNiS4aOOYjiOqweFybOrtO3f"
