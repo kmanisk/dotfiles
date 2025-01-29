@@ -51,17 +51,17 @@ function Install-Scoop {
         Write-Host "Scoop is already installed."
         
         $bucketConfig = @{
-            'main' = 'https://github.com/ScoopInstaller/Main'
+            'main'                  = 'https://github.com/ScoopInstaller/Main'
             'extras'                = 'https://github.com/ScoopInstaller/Extras'
             'java'                  = 'https://github.com/ScoopInstaller/Java'
             'versions'              = 'https://github.com/ScoopInstaller/Versions'
             'nerd-fonts'            = 'https://github.com/ScoopInstaller/scoop-nerd-fonts'
-            'games' = 'https://github.com/Calinou/scoop-games'
+            'games'                 = 'https://github.com/Calinou/scoop-games'
             'volllly'               = 'https://github.com/volllly/scoop-bucket.git'
             'shemnei'               = 'https://github.com/Shemnei/scoop-bucket.git'
             'nonportable'           = 'https://github.com/Shemnei/scoop-bucket.git'
             'kkzzhizhou_scoop-apps' = 'https://github.com/kkzzhizhou/scoop-apps'
-            'chawyehsu_dorado' = 'https://github.com/chawyehsu/dorado'
+            'chawyehsu_dorado'      = 'https://github.com/chawyehsu/dorado'
             # 'anderlli0053_DEV-tools' = 'https://github.com/anderlli0053/DEV-tools'
 
         }
@@ -218,7 +218,8 @@ function Install-OSDLayout {
         $shortcut = $wshell.CreateShortcut($msiShortcut)
         $shortcut.TargetPath = $msiExecutablePath
         $shortcut.Save()
-    } else {
+    }
+    else {
         Write-Host "MSI Afterburner is already in the startup folder." -ForegroundColor Green
     }
 
@@ -228,7 +229,8 @@ function Install-OSDLayout {
         $shortcut = $wshell.CreateShortcut($rtssShortcut)
         $shortcut.TargetPath = $rtssExecutablePath
         $shortcut.Save()
-    } else {
+    }
+    else {
         Write-Host "RTSS is already in the startup folder." -ForegroundColor Green
     }
 
@@ -269,7 +271,7 @@ function Move-FileSafely {
                 }
                 else {
                     Write-Host "Adding new item: $($_.Name)"
-               }
+                }
                 Copy-Item -Path $_.FullName -Destination $destinationPath -Force -Recurse
             }
         }
@@ -291,12 +293,14 @@ function Move-ConfigFolder {
     $vscodiumScoopSourcePath = Join-Path -Path $env:USERPROFILE -ChildPath "scoop\apps\vscodium\current\resources\app\product.json"
     $vscodiumDestPath = "C:\Program Files\VSCodium\resources\app"
 
-# Check and update product.json
+    # Check and update product.json
     if (Test-Path $vscodiumDefaultSourcePath) {
         Move-FileSafely -sourcePath $vscodiumDefaultSourcePath -destinationPath (Join-Path -Path $vscodiumDestPath -ChildPath "product.json")
-    } elseif (Test-Path $vscodiumScoopSourcePath) {
+    }
+    elseif (Test-Path $vscodiumScoopSourcePath) {
         Move-FileSafely -sourcePath $vscodiumScoopSourcePath -destinationPath (Join-Path -Path $vscodiumDestPath -ChildPath "product.json")
-    } else {
+    }
+    else {
         Write-Host "No VSCodium config file (product.json) found in the expected locations." -ForegroundColor Yellow
     }
     # VSCodium Config
@@ -307,7 +311,7 @@ function Move-ConfigFolder {
 }
 
 function Install-CodeExtensions {
-param(
+    param(
         [switch]$UpdateJson
     )
 
@@ -315,7 +319,7 @@ param(
         Write-Host "Updating JSON with current extensions..." -ForegroundColor Cyan
         $jsonFilePath = "$home\.local\share\chezmoi\AppData\Local\installer\code_extensions.json"
         $extensionsData = @{
-            vscode = @()
+            vscode   = @()
             vscodium = @()
         }
 
@@ -397,7 +401,8 @@ param(
                         $extensionsToRemove | ForEach-Object { & code --uninstall-extension $_ }
                     }
                 }
-            } else {
+            }
+            else {
                 Write-Host "`nVSCode extensions are in sync!" -ForegroundColor Green
             }
         }
@@ -433,7 +438,8 @@ param(
                         $extensionsToRemove | ForEach-Object { & codium --uninstall-extension $_ }
                     }
                 }
-            } else {
+            }
+            else {
                 Write-Host "`nVSCodium extensions are in sync!" -ForegroundColor Green
             }
         }
@@ -618,6 +624,55 @@ function Update-VSCodeExtensions {
         Write-Host "Extensions file not found at $extensionsFilePath"
     }
 }
+# function install-Curls {
+#     # Check if already installed
+#     $gm320Path = "C:\Program Files (x86)\GM320 RGB"
+#     if (Test-Path $gm320Path) {
+#         Write-Host "GM320 RGB is already installed at $gm320Path"
+#         return
+#     }
+#
+#     # Check if aria2c is installed
+#     if (-not (Get-Command aria2c -ErrorAction SilentlyContinue)) {
+#         Write-Host "Installing aria2c via Scoop..."
+#         scoop install aria2
+#     }
+#
+#     # Rest of your existing code...
+#     $documentsPath = [Environment]::GetFolderPath("MyDocuments")
+#     $curlsFolder = Join-Path $documentsPath "curls"
+#     $zipPath = Join-Path $curlsFolder "mouse.zip"
+#     
+#     if (-not (Test-Path $curlsFolder)) {
+#         Write-Host "Creating curls directory at $curlsFolder..."
+#         New-Item -Path $curlsFolder -ItemType Directory | Out-Null
+#     }
+#     
+#     Set-Location $curlsFolder
+#     
+#     if (-not (Test-Path $zipPath)) {
+#         Write-Host "Downloading mouse.zip using aria2c..."
+#         $url = "https://drive.google.com/uc?export=download&id=1pa2ryQyBDNiS4aOOYjiOqweFybOrtO3f"
+#         $aria2Path = "aria2c"
+#         & $aria2Path --dir=$curlsFolder --out="mouse.zip" $url
+#     }
+#     
+#     Write-Host "Extracting files..."
+#     $sevenZipPath = "7z"
+#     & $sevenZipPath x $zipPath -o$curlsFolder | Out-Null
+#     
+#     Write-Host "Searching for .exe or .msi files..."
+#     $executables = Get-ChildItem -Path $curlsFolder -Recurse -File | Where-Object { $_.Extension -in @(".exe", ".msi") }
+#     if ($executables) {
+#         foreach ($file in $executables) {
+#             Write-Host "Running $($file.Name)..."
+#             Start-Process -FilePath $file.FullName -NoNewWindow -Wait
+#         }
+#     }
+#     else {
+#         Write-Host "No .exe or .msi files found!"
+#     }
+# }
 function install-Curls {
     # Check if already installed
     $gm320Path = "C:\Program Files (x86)\GM320 RGB"
@@ -626,13 +681,12 @@ function install-Curls {
         return
     }
 
-    # Check if aria2c is installed
-    if (-not (Get-Command aria2c -ErrorAction SilentlyContinue)) {
-        Write-Host "Installing aria2c via Scoop..."
-        scoop install aria2
+    # Check if gdown is installed via pip
+    if (-not (Get-Command gdown -ErrorAction SilentlyContinue)) {
+        Write-Host "Installing gdown via pip..."
+        pip install gdown
     }
 
-    # Rest of your existing code...
     $documentsPath = [Environment]::GetFolderPath("MyDocuments")
     $curlsFolder = Join-Path $documentsPath "curls"
     $zipPath = Join-Path $curlsFolder "mouse.zip"
@@ -645,10 +699,9 @@ function install-Curls {
     Set-Location $curlsFolder
     
     if (-not (Test-Path $zipPath)) {
-        Write-Host "Downloading mouse.zip using aria2c..."
-        $url = "https://drive.google.com/uc?export=download&id=1pa2ryQyBDNiS4aOOYjiOqweFybOrtO3f"
-        $aria2Path = "aria2c"
-        & $aria2Path --dir=$curlsFolder --out="mouse.zip" $url
+        Write-Host "Downloading mouse.zip using gdown..."
+        $fileId = "1pa2ryQyBDNiS4aOOYjiOqweFybOrtO3f"
+        gdown $fileId -O mouse.zip
     }
     
     Write-Host "Extracting files..."
@@ -667,6 +720,7 @@ function install-Curls {
         Write-Host "No .exe or .msi files found!"
     }
 }
+
 function Set-RegistryValue {
     param (
         [Parameter(Mandatory = $true)]

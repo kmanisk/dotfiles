@@ -41,6 +41,14 @@ if ($PSVersionTable.PSVersion.Major -ge 7) {
 #Enable-PowerType
 #}
 
+function cdwhich {
+    param (
+        [string]$commandName
+    )
+    
+    # Change location to the source of the provided command
+    Set-Location (Get-Command $commandName).Source
+}
 #this is added
 function extedit{
     $ext = Join-Path $HOME "AppData\Local\installer\vscode.txt"

@@ -1,0 +1,54 @@
+; Windows 10 Aero
+; created by CurInstaller [http://rokksoftware.blogspot.com]
+; To install, Right click on this file & then Select 'Install' 
+
+
+[Version]
+signature ="$CHICAGO$"
+
+[DefaultInstall]
+CopyFiles = Scheme.Cur
+AddReg = Scheme.Reg
+
+[DestinationDirs]
+Scheme.Cur = 10,"%CUR_DIR%"
+
+[Scheme.Reg]
+HKCU,"Control Panel\Cursors\Schemes","%SCHEME_NAME%",,"%10%\%CUR_DIR%\%pointer%,%10%\%CUR_DIR%\%help%,%10%\%CUR_DIR%\%work%,%10%\%CUR_DIR%\%busy%,%10%\%CUR_DIR%\%Cross%,%10%\%CUR_DIR%\%Text%,%10%\%CUR_DIR%\%Hand%,%10%\%CUR_DIR%\%Unavailable%,%10%\%CUR_DIR%\%Vert%,%10%\%CUR_DIR%\%Horz%,%10%\%CUR_DIR%\%Dgn1%,%10%\%CUR_DIR%\%Dgn2%,%10%\%CUR_DIR%\%move%,%10%\%CUR_DIR%\%alternate%,%10%\%CUR_DIR%\%link%"
+
+[Scheme.Cur]
+aero_link.cur
+aero_up.cur
+aero_pen.cur
+beam_r.cur
+cross_r.cur
+aero_arrow.cur
+aero_helpsel.cur
+aero_working.ani
+aero_busy.ani
+aero_unavail.cur
+aero_ns.cur
+aero_ew.cur
+aero_nwse.cur
+aero_nesw.cur
+aero_move.cur
+
+[Strings]
+CUR_DIR = "Cursors\Windows 10 Aero"
+SCHEME_NAME = "Windows 10 Aero"
+pointer = "aero_arrow.cur"
+help = "aero_helpsel.cur"
+work = "aero_working.ani"
+busy = "aero_busy.ani"
+text = "beam_r.cur"
+unavailable = "aero_unavail.cur"
+vert = "aero_ns.cur"
+horz = "aero_ew.cur"
+dgn1 = "aero_nwse.cur"
+dgn2 = "aero_nesw.cur"
+move = "aero_move.cur"
+link = "aero_link.cur"
+cross = "cross_r.cur"
+hand = "aero_pen.cur"
+alternate = "aero_up.cur"
+
