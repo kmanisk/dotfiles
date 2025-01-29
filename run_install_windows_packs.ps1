@@ -828,6 +828,19 @@ function Set-RegistryValue {
 #
 # Set-RegistryValue -RegistryPath $RegistryPath -ValueName $ValueName -Value $Value -ValueType $ValueType
 
+function Set-TimeZone {
+    # Get current time zone
+    $currentTimeZone = (Get-TimeZone).Id
+
+    if ($currentTimeZone -eq "India Standard Time") {
+        Write-Host "Time zone is already set to India Standard Time (IST)." -ForegroundColor Green
+    }
+    else {
+        Set-TimeZone -Name "India Standard Time"
+        Write-Host "Time zone has been set to India Standard Time (IST)." -ForegroundColor Green
+    }
+}
+
 
 
 # Start OF THE SCRIPTS FIRST INSTALLING PACKAGE MANAGERS
@@ -859,6 +872,9 @@ function Set-PermanentMachine {
     ClinkSetup
     Write-Host "=============================================================================================================================================="
     install-Curls
+
+    Write-Host "=============================================================================================================================================="
+    Set-TimeZone
 
 }
 
