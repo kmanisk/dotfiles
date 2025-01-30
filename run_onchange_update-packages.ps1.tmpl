@@ -1,0 +1,12 @@
+#!/usr/bin/env pwsh
+
+# packages.json hash: {{ include "AppData/Local/installer/packages.json" | sha256sum }}
+
+# Define the path to packages.json
+$PackagesJson = "{{ joinPath .chezmoi.sourceDir "AppData/Local/installer/packages.json" | quote }}"
+
+# Read package list and install/update them (example: using winget)
+$Packages = Get-Content -Path $PackagesJson | ConvertFrom-Json
+foreach ($Package in $Packages.packages) {
+    Write-Host "Installing/Updating: $($Package.name)"
+}
