@@ -43,6 +43,43 @@ function chu{
 function scclear{
     scoop cache rm *
 }
+
+function find {
+    param (
+        [string]$query
+    )
+
+    $results = @{}
+
+    # Search in Scoop
+    try {
+        $scoopResult = scoop search $query
+        $results['scoop'] = $scoopResult
+    } catch {
+        $results['scoop'] = "Error: Unable to search using scoop for $query"
+    }
+
+    # Search in Winget
+    try {
+        $wingetResult = winget search $query
+        $results['winget'] = $wingetResult
+    } catch {
+        $results['winget'] = "Error: Unable to search using winget for $query"
+    }
+
+    # Search in Chocolatey (choco)
+    try {
+        $chocoResult = choco search $query
+        $results['choco'] = $chocoResult
+    } catch {
+        $results['choco'] = "Error: Unable to search using choco for $query"
+    }
+
+    # Print results for each tool
+    foreach ($tool in $results.Keys) {
+        Write-Host "`nResults from ${tool}:`n$($results[$tool])`n----------------------------"
+    }
+}
 # Archive module is built into PS7, so this check isn't needed
 # Remove or comment out this section
 # if (-not (Get-Command Expand-Archive -ErrorAction SilentlyContinue)) {
