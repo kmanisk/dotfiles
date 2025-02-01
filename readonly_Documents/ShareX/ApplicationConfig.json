@@ -875,84 +875,84 @@
   "HistoryCheckURL": false,
   "RecentTasks": [
     {
-      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-01\\thorium_wUyPIza0yG.png",
+      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-01\\thorium_EQMiNqRGQz.mp4",
       "URL": null,
       "ThumbnailURL": null,
       "DeletionURL": null,
       "ShortenedURL": null,
-      "Time": "2025-01-25T06:03:50.9584542Z"
+      "Time": "2025-01-31T08:09:35.7019754Z"
     },
     {
-      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-01\\thorium_kR9lr0Dtgs.png",
+      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-01\\thorium_UrdzbueKcL.mp4",
       "URL": null,
       "ThumbnailURL": null,
       "DeletionURL": null,
       "ShortenedURL": null,
-      "Time": "2025-01-25T06:29:04.4966929Z"
+      "Time": "2025-01-31T08:56:27.5484854Z"
     },
     {
-      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-01\\thorium_1UR1OtiTlj.png",
+      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-01\\bf1_SnCY3LUOwm.png",
       "URL": null,
       "ThumbnailURL": null,
       "DeletionURL": null,
       "ShortenedURL": null,
-      "Time": "2025-01-25T06:31:28.1214988Z"
+      "Time": "2025-01-31T16:53:44.7707727Z"
     },
     {
-      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-01\\Code_3WTJizYxvn.png",
+      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-01\\bf1_S6yyweyd4B.png",
       "URL": null,
       "ThumbnailURL": null,
       "DeletionURL": null,
       "ShortenedURL": null,
-      "Time": "2025-01-25T07:30:02.3220719Z"
+      "Time": "2025-01-31T16:53:47.5833362Z"
     },
     {
-      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-01\\iCUpNvlp0q.png",
+      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-01\\bf1_o0yFHPskkJ.png",
       "URL": null,
       "ThumbnailURL": null,
       "DeletionURL": null,
       "ShortenedURL": null,
-      "Time": "2025-01-25T07:30:06.0530735Z"
+      "Time": "2025-01-31T17:03:52.2060005Z"
     },
     {
-      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-01\\Taskmgr_AnUQui3HiJ.png",
+      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-01\\bf1_fSsYrTnFvh.png",
       "URL": null,
       "ThumbnailURL": null,
       "DeletionURL": null,
       "ShortenedURL": null,
-      "Time": "2025-01-25T07:30:17.3730738Z"
+      "Time": "2025-01-31T17:09:21.176808Z"
     },
     {
-      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-01\\VOt7EpWCM7.png",
+      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-01\\bf1_4edtITVms1.png",
       "URL": null,
       "ThumbnailURL": null,
       "DeletionURL": null,
       "ShortenedURL": null,
-      "Time": "2025-01-25T07:30:35.6940736Z"
+      "Time": "2025-01-31T17:09:23.3373294Z"
     },
     {
-      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-01\\thorium_Fr5iCnD12u.png",
+      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-01\\bf1_FGObBZJcfd.png",
       "URL": null,
       "ThumbnailURL": null,
       "DeletionURL": null,
       "ShortenedURL": null,
-      "Time": "2025-01-26T14:55:59.8142457Z"
+      "Time": "2025-01-31T17:09:26.568834Z"
     },
     {
-      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-01\\thorium_F87xh6AS1e.png",
+      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-01\\bf1_hob4EaiR0H.png",
       "URL": null,
       "ThumbnailURL": null,
       "DeletionURL": null,
       "ShortenedURL": null,
-      "Time": "2025-01-26T15:57:16.467543Z"
+      "Time": "2025-01-31T17:39:30.2524334Z"
     },
     {
-      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-01\\explorer_oBmjzOpmO8.png",
+      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-01\\bf1_fHSHgaqrIE.jpg",
       "URL": null,
       "ThumbnailURL": null,
       "DeletionURL": null,
       "ShortenedURL": null,
-      "Time": "2025-01-27T16:27:12.3909136Z"
+      "Time": "2025-01-31T17:39:34.4312697Z"
     }
   ],
   "RecentTasksSave": true,
@@ -1004,7 +1004,7 @@
   "AutoCaptureRepeatTime": 60.0,
   "AutoCaptureMinimizeToTray": true,
   "AutoCaptureWaitUpload": true,
-  "ScreenRecordRegion": "301, 641, 1242, 163",
+  "ScreenRecordRegion": "0, 87, 1920, 962",
   "ActionsToolbarList": [
     "RectangleRegion",
     "PrintScreen",

@@ -268,7 +268,7 @@
 			"param": "-g '*.$1'"
 		}
 	],
-	"workbench.colorTheme": "Gruvbox Dark Medium",
+	"workbench.colorTheme": "PyCharm Night Theme",
 	"window.menuBarVisibility": "compact",
 	"workbench.iconTheme": "material-icon-theme",
 	"extensions.ignoreRecommendations": true,

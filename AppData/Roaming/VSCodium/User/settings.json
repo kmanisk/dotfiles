@@ -8,6 +8,7 @@
 	},
 	"periscope.rgGlobExcludes": [
 		"**/node_modules/**",
+		"node_modules/**",
 		"**/package.json",
 		"**/package-lock.json",
 		"**/yarn.lock",
@@ -291,5 +292,5 @@
 	"scm.diffDecorations": "none",
 	"explorer.confirmPasteNative": false,
 	"extensions.ignoreRecommendations": true,
-	"workbench.colorTheme": "Gruvbox Dark Medium",
+	"workbench.colorTheme": "Pycharm Original Theme",
 }

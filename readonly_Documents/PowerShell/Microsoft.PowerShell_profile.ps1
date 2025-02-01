@@ -43,6 +43,38 @@ function chu{
 function scclear{
     scoop cache rm *
 }
+function imginfo{
+    $sourceFolder = "G:\photos\organized_media"
+
+# Define photo and video extensions
+    $photoExtensions = @("jpg", "jpeg", "png", "gif", "bmp", "tiff", "heic", "webp")
+    $videoExtensions = @("mp4", "mov", "avi", "mkv", "wmv", "flv", "webm", "m4v")
+
+# Get all files recursively
+    $allFiles = Get-ChildItem -Path $sourceFolder -Recurse -File
+
+# Filter photo and video files separately
+    $photoFiles = $allFiles | Where-Object { $photoExtensions -contains $_.Extension.TrimStart(".").ToLower() }
+    $videoFiles = $allFiles | Where-Object { $videoExtensions -contains $_.Extension.TrimStart(".").ToLower() }
+
+# Count and size calculations
+    $photoCount = $photoFiles.Count
+    $photoSize = ($photoFiles | Measure-Object -Property Length -Sum).Sum / 1GB  # Convert to GB
+
+    $videoCount = $videoFiles.Count
+    $videoSize = ($videoFiles | Measure-Object -Property Length -Sum).Sum / 1GB  # Convert to GB
+
+    $totalCount = $photoCount + $videoCount
+    $totalSize = $photoSize + $videoSize
+
+# Output the results
+    Write-Output "Total Photos: $photoCount"
+    Write-Output ("Total Photo Size: {0:N2} GB" -f $photoSize)
+    Write-Output "Total Videos: $videoCount"
+    Write-Output ("Total Video Size: {0:N2} GB" -f $videoSize)
+    Write-Output "Total Media Files: $totalCount"
+    Write-Output ("Total Media Size: {0:N2} GB" -f $totalSize)
+}
 
 function find {
     param (
