@@ -209,7 +209,6 @@
 	},
 	"files.autoSave": "afterDelay",
 	"editor.inlineSuggest.suppressSuggestions": true,
-	"workbench.activityBar.location": "hidden",
 	"prettier.requireConfig": true,
 	//Cody autocomplete turn off 
 	"cody.autocomplete.enabled": false,
@@ -293,4 +292,7 @@
 	"explorer.confirmPasteNative": false,
 	"extensions.ignoreRecommendations": true,
 	"workbench.colorTheme": "Pycharm Original Theme",
+	"pieces.OS.launchOnStartup": "Yes",
+	"pieces.cloudCapabilities": "Blended",
+	"pieces.telemetry": true,
 }

@@ -4,6 +4,23 @@
     "actions": 
     [
         {
+            "command": 
+            {
+                "action": "copy",
+                "singleLine": false
+            },
+            "id": "User.copy.644BA8F2",
+            "keys": "alt+c"
+        },
+        {
+            "command": 
+            {
+                "action": "movePane",
+                "index": 5
+            },
+            "id": "User.movePane.371F23CF"
+        },
+        {
             "command": "unbound",
             "keys": "ctrl+shift+w"
         },
@@ -160,25 +177,8 @@
             "keys": "f2"
         },
         {
-            "command": 
-            {
-                "action": "movePane",
-                "index": 5
-            },
-            "id": "User.movePane.371F23CF"
-        },
-        {
-            "command": 
-            {
-                "action": "copy",
-                "singleLine": false
-            },
-            "id": "User.copy.644BA8F2",
-            "keys": "alt+c"
-        },
-        {
-            "command": "paste",
-            "id": "User.paste"
+            "command": "unbound",
+            "keys": "f4"
         },
         {
             "command": 
@@ -190,9 +190,20 @@
             "keys": "alt+shift+o"
         },
         {
+            "command": "paste",
+            "id": "User.paste"
+        },
+        {
             "command": "find",
             "id": "User.find",
             "keys": "alt+f"
+        },
+        {
+            "command": 
+            {
+                "action": "quakeMode"
+            },
+            "id": "User.quakeMode.F1E129A4"
         },
         {
             "command": 
@@ -202,14 +213,6 @@
             },
             "id": "User.moveFocus.F747588A",
             "keys": "ctrl+j"
-        },
-        {
-            "command": 
-            {
-                "action": "quakeMode"
-            },
-            "id": "User.quakeMode.F1E129A4",
-            "keys": "f4"
         },
         {
             "command": 
