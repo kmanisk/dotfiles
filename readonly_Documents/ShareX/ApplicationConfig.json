@@ -786,7 +786,7 @@
     }
   ],
   "SelectedTheme": 5,
-  "UseCustomScreenshotsPath": true,
+  "UseCustomScreenshotsPath": false,
   "CustomScreenshotsPath": "%UserProfile%\\Nox_share\\Download\\DCIM",
   "SaveImageSubFolderPattern": "%y-%mo",
   "SaveImageSubFolderPatternWindow": "",
@@ -875,38 +875,6 @@
   "HistoryCheckURL": false,
   "RecentTasks": [
     {
-      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-01\\thorium_EQMiNqRGQz.mp4",
-      "URL": null,
-      "ThumbnailURL": null,
-      "DeletionURL": null,
-      "ShortenedURL": null,
-      "Time": "2025-01-31T08:09:35.7019754Z"
-    },
-    {
-      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-01\\thorium_UrdzbueKcL.mp4",
-      "URL": null,
-      "ThumbnailURL": null,
-      "DeletionURL": null,
-      "ShortenedURL": null,
-      "Time": "2025-01-31T08:56:27.5484854Z"
-    },
-    {
-      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-01\\bf1_SnCY3LUOwm.png",
-      "URL": null,
-      "ThumbnailURL": null,
-      "DeletionURL": null,
-      "ShortenedURL": null,
-      "Time": "2025-01-31T16:53:44.7707727Z"
-    },
-    {
-      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-01\\bf1_S6yyweyd4B.png",
-      "URL": null,
-      "ThumbnailURL": null,
-      "DeletionURL": null,
-      "ShortenedURL": null,
-      "Time": "2025-01-31T16:53:47.5833362Z"
-    },
-    {
       "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-01\\bf1_o0yFHPskkJ.png",
       "URL": null,
       "ThumbnailURL": null,
@@ -953,6 +921,38 @@
       "DeletionURL": null,
       "ShortenedURL": null,
       "Time": "2025-01-31T17:39:34.4312697Z"
+    },
+    {
+      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-02\\BSW7ljHKWl.png",
+      "URL": null,
+      "ThumbnailURL": null,
+      "DeletionURL": null,
+      "ShortenedURL": null,
+      "Time": "2025-02-03T13:35:18.3100039Z"
+    },
+    {
+      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-02\\pdfeditor_Rug0XWqV4Y.png",
+      "URL": null,
+      "ThumbnailURL": null,
+      "DeletionURL": null,
+      "ShortenedURL": null,
+      "Time": "2025-02-03T13:35:36.0599539Z"
+    },
+    {
+      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-02\\pdfeditor_JmOl7pP8Ta.png",
+      "URL": null,
+      "ThumbnailURL": null,
+      "DeletionURL": null,
+      "ShortenedURL": null,
+      "Time": "2025-02-03T13:35:58.8270155Z"
+    },
+    {
+      "FilePath": "C:\\Users\\Administrator\\Documents\\ShareX\\Screenshots\\2025-02\\R0B3bKwLyF.png",
+      "URL": null,
+      "ThumbnailURL": null,
+      "DeletionURL": null,
+      "ShortenedURL": null,
+      "Time": "2025-02-03T13:36:49.8635915Z"
     }
   ],
   "RecentTasksSave": true,

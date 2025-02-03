@@ -121,5 +121,8 @@
   },
   "chat_panel": {
     "dock": "left"
-  }
+  },
+  "cursor_blink": false,
+  "multi_cursor_modifier": "alt",
+  "cursor_shape": "bar"
 }
