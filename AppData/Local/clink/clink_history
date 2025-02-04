@@ -205,3 +205,9 @@ pwsh
 wsl --shutdown
 |	time=1737149299
 scoop list
+|	time=1738168793
+pkill
+|	time=1738168797
+taskill 10688
+|	time=1738168804
+taskill -h
