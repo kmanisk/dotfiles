@@ -295,4 +295,5 @@
 	"pieces.OS.launchOnStartup": "Yes",
 	"pieces.cloudCapabilities": "Blended",
 	"pieces.telemetry": true,
+	"workbench.activityBar.location": "hidden",
 }
