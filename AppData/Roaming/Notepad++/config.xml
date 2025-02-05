@@ -15,16 +15,16 @@
         <Replace name="maniskpr" />
     </FindHistory>
     <History nbMaxFile="10" inSubMenu="no" customLength="-1">
-        <File filename="C:\Users\Administrator\Desktop\new 1.txt" />
-        <File filename="F:\SteamLibrary\steamapps\common\Battlefield 4\user.cfg" />
-        <File filename="C:\Program Files\AutoHotkey\Installer.ahk" />
-        <File filename="C:\Program Files\AutoHotkey\WindowSpy.ahk" />
         <File filename="C:\Users\Administrator\scoop\persist\revouninstaller\settings.ini" />
         <File filename="C:\Users\Administrator\scoop\persist\msiafterburner\Profiles\Profile2.cfg" />
         <File filename="C:\Users\Administrator\scoop\persist\msiafterburner\Profiles\Profile1.cfg" />
         <File filename="C:\Users\Administrator\Desktop\env\old\.env" />
         <File filename="E:\HITMAN - World of Assassination\Launcher.bat" />
         <File filename="E:\Downloads\config.json" />
+        <File filename="C:\Users\Administrator\AppData\Roaming\Zed\settings.json" />
+        <File filename="C:\Users\Administrator\AppData\Roaming\Zed\keymap.json" />
+        <File filename="C:\Users\Administrator\AppData\Roaming\Mechvibes\Preferences" />
+        <File filename="C:\Users\Administrator\AppData\Roaming\Mechvibes\TransportSecurity" />
     </History>
     <ProjectPanels>
         <ProjectPanel id="0" workSpaceFile="" />
