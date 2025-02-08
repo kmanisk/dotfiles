@@ -291,7 +291,7 @@
 	"scm.diffDecorations": "none",
 	"explorer.confirmPasteNative": false,
 	"extensions.ignoreRecommendations": true,
-	"workbench.colorTheme": "Pycharm Original Theme",
+	"workbench.colorTheme": "PyCharm Night Theme",
 	"pieces.OS.launchOnStartup": "Yes",
 	"pieces.cloudCapabilities": "Blended",
 	"pieces.telemetry": true,

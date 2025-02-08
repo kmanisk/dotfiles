@@ -1130,13 +1130,6 @@ Set-Alias lvim 'C:\Users\Manisk\.local\bin\lvim.ps1'
 # Prompt Configuration
 # Uncomment only one of the following blocks to enable the desired prompt.
 
-# Enable Starship Prompt
-# To disable Starship, comment this line and uncomment the Oh-My-Posh section.
-Invoke-Expression (&starship init powershell)
-
-# Enable Oh-My-Posh Prompt
-# Uncomment this section to enable Oh-My-Posh and disable Starship.
- 
 function Get-Theme {
     if (Test-Path -Path $PROFILE.CurrentUserAllHosts -PathType leaf) {
         $existingTheme = Select-String -Raw -Path $PROFILE.CurrentUserAllHosts -Pattern "oh-my-posh init pwsh --config"
@@ -1170,6 +1163,12 @@ function Get-Theme {
         }
     }
 }
+# Enable Starship Prompt  To disable Starship, comment this line and uncomment the Oh-My-Posh section.
+Invoke-Expression (&starship init powershell)
+
+# Enable Oh-My-Posh Prompt
+# Uncomment this section to enable Oh-My-Posh and disable Starship.
+ 
 #Get-Theme
 
 

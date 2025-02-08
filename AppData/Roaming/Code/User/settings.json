@@ -30,6 +30,7 @@
 	// Terminal
 	"terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font', 'monospace', monospace",
 	"screencastMode.fontSize": 36,
+	"terminal.integrated.fontSize": 16,
 	"screencastMode.verticalOffset": 1,
 	"editor.fontLigatures": true,
 	"editor.wordWrap": "on",

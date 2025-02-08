@@ -8,6 +8,7 @@
       "extras/neovide",
       "neovim",
       "starship",
+      "extras/windows-terminal",
       "gcc"
     ],
     "full": [
@@ -16,6 +17,7 @@
       "fzf",
       "psfzf",
       "less",
+      "extras/windows-terminal",
       "bat",
       "neovim",
       "innounp",
@@ -45,9 +47,8 @@
     "global": ["nerd-fonts/JetBrainsMono-NF"]
   },
   "winget": {
-    "mini": ["JanDeDobbeleer.OhMyPosh", "chrisant996.Clink"],
+    "mini": ["chrisant996.Clink"],
     "full": [
-      "JanDeDobbeleer.OhMyPosh",
       "chrisant996.Clink",
       "AntibodySoftware.WizTree",
       "Notepad++.Notepad++",
@@ -55,13 +56,14 @@
     ]
   },
   "choco": {
-    "mini": ["7zip", "autohotkey", "zoxide --version=0.9.0"],
+    "mini": ["7zip", "autohotkey", "zoxide --version=0.9.0","oh-my-posh"],
     "full": [
       "7zip",
       "f.lux",
       "sharex",
       "ueli",
       "vscode",
+      "oh-my-posh",
       "vscode.install",
       "vscodium",
       "vscodium.install",

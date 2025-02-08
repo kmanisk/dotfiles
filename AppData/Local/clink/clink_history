@@ -124,7 +124,7 @@ cd Coding\Java\
 |	time=1735725255
 lcink
 |	time=1735725258
-clink
+|link
 |	time=1735725265
 clink config
 |	time=1735725340
@@ -194,9 +194,9 @@ which
 |	time=1736745602
 |s
 |	time=1736745606
-ls
+|s
 |	time=1736745607
-dir
+|ir
 |	time=1736745623
 bcdedit  /enum
 |	time=1736745675
@@ -211,3 +211,51 @@ pkill
 taskill 10688
 |	time=1738168804
 taskill -h
+|	time=1738677810
+|ir
+|	time=1738677813
+|ir
+|	time=1738842731
+cd g:
+|	time=1738842731
+|s
+|	time=1738842739
+cd G:
+|	time=1738842757
+cd G:\Rooting\platform-tools\
+|	time=1738842759
+|ir
+|	time=1738842765
+|s
+|	time=1738842766
+dir
+|	time=1738842767
+|s
+|	time=1738842772
+clink
+|	time=1738842792
+cmd.exe /D
+|	time=1738842847
+fastboot devices
+|	time=1738842852
+fastboot.exe  devices
+|	time=1738842858
+fastboot.exe device
+|	time=1738994637
+|db shell
+|	time=1738995015
+|s
+|	time=1738995020
+cd "Desktop\ADB and Fastboot++ v1.1.1 Portable\
+|	time=1738995021
+ls
+|	time=1738995023
+adb shell
+|	time=1738995043
+adb.exe  shell
+|	time=1738995057
+adb.exe  shell pm list packages 
+|	time=1738995065
+adb.exe  shell pm list packages  | clip
+|	time=1738996257
+choco install oh-my-posh
