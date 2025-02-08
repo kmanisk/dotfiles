@@ -248,7 +248,7 @@ fastboot.exe device
 |	time=1738995020
 cd "Desktop\ADB and Fastboot++ v1.1.1 Portable\
 |	time=1738995021
-ls
+|s
 |	time=1738995023
 adb shell
 |	time=1738995043
@@ -259,3 +259,7 @@ adb.exe  shell pm list packages
 adb.exe  shell pm list packages  | clip
 |	time=1738996257
 choco install oh-my-posh
+|	time=1738996295
+|s
+|	time=1738996296
+ls
