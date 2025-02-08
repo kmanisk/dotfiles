@@ -216,8 +216,8 @@ function Install-WingetPackages {
 function Add-AdbToPath {
     $adbPath = Join-Path $HOME "AppData\Local\installer\adbdrivers"
     
-    # More specific path matching using regex
-    if ($env:Path -notmatch [regex]::Escape("installer\adbdrivers")) {
+    # Check if the path is already in the PATH environment variable
+    if ($env:Path -notlike "*$adbPath*") {
         Write-Host "Adding ADB path to the system PATH variable..."
         
         # Add the ADB path to the system PATH variable
