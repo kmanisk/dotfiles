@@ -213,6 +213,22 @@ function Install-WingetPackages {
     }
 }
 
+function Add-AdbToPath {
+    $adbPath = Join-Path $HOME "AppData\Local\installer\adbdrivers"
+    
+    # Check if the path is already in the PATH environment variable
+    if ($env:Path -notlike "*$adbPath*") {
+        Write-Host "Adding ADB path to the system PATH variable..."
+        
+        # Add the ADB path to the system PATH variable
+        [System.Environment]::SetEnvironmentVariable("Path", $env:Path + ";$adbPath", [System.EnvironmentVariableTarget]::Machine)
+        
+        Write-Host "ADB path added successfully."
+    }
+    else {
+        Write-Host "ADB path is already in the system PATH variable."
+    }
+}
 
 
 # PermanentMachine Setup Function to call in the full setup section if chosen by the user
@@ -878,6 +894,8 @@ function Set-PermanentMachine {
     Write-Host "=============================================================================================================================================="
     Set-TimeZone
     Write-Host "=============================================================================================================================================="
+    Add-AdbToPath
+    Write-Host "=============================================================================================================================================="
 
 }
 
@@ -977,7 +995,7 @@ $chocoPackagesToPin = @(
 $wingetPackagesToPin = @(
     "AutoHotkey.AutoHotkey",
     "Spotify.Spotify",
-     "OliverSchwendener.ueli"
+    "OliverSchwendener.ueli"
 )
 
 Write-Host "=============================================================================================================================="
