@@ -224,10 +224,10 @@ function Add-AdbToPath {
         # Add the ADB path to the system PATH variable
         [System.Environment]::SetEnvironmentVariable("Path", $env:Path + ";$adbPath", [System.EnvironmentVariableTarget]::Machine)
         
-        Write-Host "ADB path added successfully."
+        Write-Host "ADB path added successfully." -ForegroundColor Green
     }
     else {
-        Write-Host "ADB path is already in the system PATH variable."
+        Write-Host "ADB path is already in the system PATH variable." -ForegroundColor Blue
     }
 }
 
