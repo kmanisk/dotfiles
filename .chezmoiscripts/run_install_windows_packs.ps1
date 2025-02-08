@@ -906,7 +906,7 @@ $config = Get-Content -Path $configPath | ConvertFrom-Json
 
 $choice = Read-Host "Choose installation type (mini/full)"
 switch ($choice.ToLower()) {
-    "mini" {
+    { $_ -in "mini", "m" } {
         # old method get-filehash issue # Install-ScoopPackages -packages $config.scoop.mini
         if (Test-Path "$HOME\scoop\apps\python\current\python.exe") {
             & "$HOME\scoop\apps\python\current\python.exe" "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopmini.py"
@@ -920,7 +920,7 @@ switch ($choice.ToLower()) {
         Install-ChocoPackages -packages $config.choco.mini
         Write-Host "=============================================================================================================================================="
     }
-    "full" {
+    { $_ -in "full", "f" } {
         Write-Host "=============================================================================================================================================="
         ## Try scoop python first, fallback to regular python if not available
         if (Test-Path "$HOME\scoop\apps\python\current\python.exe") {

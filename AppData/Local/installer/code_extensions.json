@@ -45,6 +45,7 @@
                      "be5invis.vscode-custom-css",
                      "pkief.material-icon-theme",
                      "usernamehw.errorlens",
-                     "bradlc.vscode-tailwindcss"
+                     "bradlc.vscode-tailwindcss",
+                     "ms-azuretools.vscode-docker"
                  ]
 }
