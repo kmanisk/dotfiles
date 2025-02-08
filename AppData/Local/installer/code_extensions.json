@@ -44,6 +44,7 @@
                      "tobias-z.vscode-harpoon",
                      "be5invis.vscode-custom-css",
                      "pkief.material-icon-theme",
-                     "usernamehw.errorlens"
+                     "usernamehw.errorlens",
+                     "bradlc.vscode-tailwindcss"
                  ]
 }
