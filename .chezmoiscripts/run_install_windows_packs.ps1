@@ -213,6 +213,7 @@ function Install-WingetPackages {
     }
 }
 
+
 function Add-AdbToPath {
     $adbPath = Join-Path $HOME "AppData\Local\installer\adbdrivers"
     
@@ -229,7 +230,6 @@ function Add-AdbToPath {
         Write-Host "ADB path is already in the system PATH variable."
     }
 }
-
 
 # PermanentMachine Setup Function to call in the full setup section if chosen by the user
 #function Install-OSDLayout {

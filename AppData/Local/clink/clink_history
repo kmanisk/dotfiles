@@ -228,7 +228,7 @@ cd G:\Rooting\platform-tools\
 |	time=1738842765
 |s
 |	time=1738842766
-dir
+|ir
 |	time=1738842767
 |s
 |	time=1738842772
@@ -262,4 +262,10 @@ choco install oh-my-posh
 |	time=1738996295
 |s
 |	time=1738996296
+|s
+|	time=1738997653
+mv '.\ADB and Fastboot++ v1.1.1 Portable\' C:\Users\Administrator\AppData\Local\installer\
+|	time=1739025255
 ls
+|	time=1739025256
+dir
