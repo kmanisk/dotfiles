@@ -57,7 +57,7 @@ LoadLibraryW=00020640
 Version=00000009
 D3D12Core.DLL=001C4F50 26D91B7F
 [Shared]
-Flags=00000000
+Flags=00000001
 [Settings]
 UpdateCheckingPeriod=3
 Language=
@@ -75,4 +75,4 @@ EnableEncoderServer=1
 Enable64Bit=1
 Use64BitEncoderServer=0
 HidePreCreatedProfiles=1
-LastUpdateCheck=67A0B2ABh
+LastUpdateCheck=67A9F534h

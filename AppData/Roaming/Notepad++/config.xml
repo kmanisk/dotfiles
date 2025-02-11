@@ -15,16 +15,15 @@
         <Replace name="maniskpr" />
     </FindHistory>
     <History nbMaxFile="10" inSubMenu="no" customLength="-1">
-        <File filename="C:\Users\Administrator\scoop\persist\revouninstaller\settings.ini" />
-        <File filename="C:\Users\Administrator\scoop\persist\msiafterburner\Profiles\Profile2.cfg" />
-        <File filename="C:\Users\Administrator\scoop\persist\msiafterburner\Profiles\Profile1.cfg" />
-        <File filename="C:\Users\Administrator\Desktop\env\old\.env" />
-        <File filename="E:\HITMAN - World of Assassination\Launcher.bat" />
         <File filename="E:\Downloads\config.json" />
         <File filename="C:\Users\Administrator\AppData\Roaming\Zed\settings.json" />
         <File filename="C:\Users\Administrator\AppData\Roaming\Zed\keymap.json" />
         <File filename="C:\Users\Administrator\AppData\Roaming\Mechvibes\Preferences" />
         <File filename="C:\Users\Administrator\AppData\Roaming\Mechvibes\TransportSecurity" />
+        <File filename="C:\Users\Administrator\Desktop\MiFlash20220507\MiFlash20220507\log\miflash@2025210.txt" />
+        <File filename="C:\Users\Administrator\Desktop\MiFlash20220507\MiFlash20220507\log\MiFlash-Result@2025210.txt" />
+        <File filename="C:\Users\Administrator\Desktop\MiFlash20220507\MiFlash20220507\log\MNTSBQZHH6E6Q4YL@20252109423.txt" />
+        <File filename="C:\fleur_in_global_images_V13.0.5.0.RKEINXM_20220718.0000.00_11.0_in\flash_all.bat" />
     </History>
     <ProjectPanels>
         <ProjectPanel id="0" workSpaceFile="" />
@@ -42,7 +41,7 @@
         <GUIConfig name="ScintillaViewsSplitter">vertical</GUIConfig>
         <GUIConfig name="UserDefineDlg" position="undocked">hide</GUIConfig>
         <GUIConfig name="TabSetting" replaceBySpace="no" size="4" backspaceUnindent="no" />
-        <GUIConfig name="AppPosition" x="286" y="66" width="1343" height="910" isMaximized="no" />
+        <GUIConfig name="AppPosition" x="77" y="66" width="1552" height="910" isMaximized="no" />
         <GUIConfig name="FindWindowPosition" left="659" top="367" right="1262" bottom="726" isLessModeOn="no" />
         <GUIConfig name="FinderConfig" wrappedLines="no" purgeBeforeEverySearch="no" showOnlyOneEntryPerFoundLine="yes" />
         <GUIConfig name="noUpdate" intervalDays="15" nextUpdateDate="20250212">no</GUIConfig>

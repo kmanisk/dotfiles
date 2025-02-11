@@ -4,3 +4,5 @@
 #     refreshPeriod = "168h"
 #     format = "zip"
 #     stripComponents = 1
+# [diff]
+#     exclude = ["scripts"]

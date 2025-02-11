@@ -1,0 +1,7 @@
+[wsl2]
+memory=500MB         # Limit RAM to 500MB
+processors=2         # Restrict WSL to 2 CPU cores
+swap=0               # Disable swap completely
+localhostForwarding=true  # Allow access to WSL services from Windows
+pageReporting=false  # Disable page reporting for better performance on low RAM
+guiApplications=false  # Disable GUI apps (useful for CLI-only workloads)

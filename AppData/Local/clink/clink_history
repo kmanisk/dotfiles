@@ -106,7 +106,7 @@ echo $home
 |	time=1735568895
 |d ..
 |	time=1735568896
-cd ..
+|d ..
 |	time=1735568899
 |ir
 |	time=1735568903
@@ -236,7 +236,7 @@ clink
 |	time=1738842792
 cmd.exe /D
 |	time=1738842847
-fastboot devices
+|astboot devices
 |	time=1738842852
 fastboot.exe  devices
 |	time=1738842858
@@ -266,6 +266,70 @@ choco install oh-my-posh
 |	time=1738997653
 mv '.\ADB and Fastboot++ v1.1.1 Portable\' C:\Users\Administrator\AppData\Local\installer\
 |	time=1739025255
-ls
+|s
 |	time=1739025256
+|ir
+|	time=1739025263
+ls
+|	time=1739025264
+|ir
+|	time=1739025269
+which nvim
+|	time=1739025277
+adb -h
+|	time=1739025279
+|db
+|	time=1739025286
+|db devices
+|	time=1739025288
+|db
+|	time=1739138400
+|astboot devices
+|	time=1739138404
+|ir
+|	time=1739138471
+cd Corvus_OS_17_Vanguard_Gapps_11\
+|	time=1739138473
+|ir
+|	time=1739138733
+cd ..
+|	time=1739138734
+|ir
+|	time=1739138757
+fastboot flash boot Corvus_boot.img
+|	time=1739138765
+fastboot reboot
+|	time=1739140022
+|ir
+|	time=1739157984
 dir
+|	time=1739158020
+fastboot flash boot boot.img 
+|	time=1739158037
+|astboot reboot recovery
+|	time=1739164108
+fasatboot devices
+|	time=1739164113
+|astboot devices
+|	time=1739164119
+|astboot devices
+|	time=1739172668
+|astboot devices
+|	time=1739192960
+|astboot devices
+|	time=1739192985
+|astboot devices
+|	time=1739192995
+fastboot boot G:\Rooting\newtwrp\twrp-3.7.1_12-0-fleur.img
+|	time=1739193044
+adb
+|	time=1739193047
+|db devices
+|	time=1739193144
+fastboot devices
+|	time=1739193180
+fastboot flash boot G:\Rooting\TWRP\twrp_12122022_A11.img
+|	time=1739193188
+fastboot reboot recovery
+|	time=1739193540
+adb devices
