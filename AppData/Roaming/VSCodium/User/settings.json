@@ -31,7 +31,7 @@
 	// "editor.fontFamily": "'Hack Nerd Font Mono', 'Hack Nerd Font', 'JetBrainsMonoNL Nerd Font Mono', 'JetBrainsMono Nerd Font Mono', 'JetBrainsMono Nerd Font', monospace",
 	// Terminal
 	"terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font', 'monospace', monospace",
-	"terminal.integrated.fontSize": 16,
+	"terminal.integrated.fontSize": 21,
 	"screencastMode.fontSize": 36,
 	"screencastMode.verticalOffset": 8,
 	"editor.fontLigatures": true,
@@ -291,7 +291,7 @@
 	"scm.diffDecorations": "none",
 	"explorer.confirmPasteNative": false,
 	"extensions.ignoreRecommendations": true,
-	"workbench.colorTheme": "Gruvbox Dark Hard",
+	"workbench.colorTheme": "Gruvbox Dark Soft",
 	"pieces.OS.launchOnStartup": "Yes",
 	"pieces.cloudCapabilities": "Blended",
 	"pieces.telemetry": true,

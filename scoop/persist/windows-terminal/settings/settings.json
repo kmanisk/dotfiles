@@ -485,14 +485,15 @@
                 "tabTitle": "pwsh",
                 "useAcrylic": true
             },
-            {
-                "commandline": "\"C:\\Program Files\\Git\\bin\\bash.exe\" --login -i",
-                "guid": "{e2e7b6b3-0f8e-4774-bf3a-d256d6b09ab9}",
-                "hidden": false,
-                "icon": "C:\\Program Files\\Git\\mingw64\\share\\git\\git-for-windows.ico",
-                "name": "Git Bash",
-                "startingDirectory": "%USERPROFILE%"
-            },
+{
+    "commandline": "git-bash.exe --login -i",
+    "guid": "{e2e7b6b3-0f8e-4774-bf3a-d256d6b09ab9}",
+    "hidden": false,
+    "icon": "C:\\Users\\Administrator\\scoop\\apps\\git\\current\\mingw64\\share\\git\\git-for-windows.ico",
+    "name": "Git Bash",
+    "startingDirectory": "%USERPROFILE%"
+},
+
             {
                 "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
                 "hidden": false,

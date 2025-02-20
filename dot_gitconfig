@@ -5,3 +5,5 @@
 	selected = manager
 [credential]
 	helper = manager
+[init]
+	defaultBranch = main

@@ -270,7 +270,7 @@ mv '.\ADB and Fastboot++ v1.1.1 Portable\' C:\Users\Administrator\AppData\Local\
 |	time=1739025256
 |ir
 |	time=1739025263
-ls
+|s
 |	time=1739025264
 |ir
 |	time=1739025269
@@ -302,7 +302,7 @@ fastboot reboot
 |	time=1739140022
 |ir
 |	time=1739157984
-dir
+|ir
 |	time=1739158020
 fastboot flash boot boot.img 
 |	time=1739158037
@@ -326,10 +326,78 @@ adb
 |	time=1739193047
 |db devices
 |	time=1739193144
-fastboot devices
+|astboot devices
 |	time=1739193180
-fastboot flash boot G:\Rooting\TWRP\twrp_12122022_A11.img
+|astboot flash boot G:\Rooting\TWRP\twrp_12122022_A11.img
 |	time=1739193188
 fastboot reboot recovery
 |	time=1739193540
 adb devices
+|	time=1739199945
+|astboot devices
+|	time=1739199959
+fastboot flash boot magisk_patched-28100_vsO7E.img 
+|	time=1739199973
+fastboot flash vbmeta --disable-verity --disable-verification vbmeta.img
+|	time=1739259952
+flashboot devices
+|	time=1739259956
+flashboot device
+|	time=1739259967
+fastboot devices
+|	time=1739260000
+fastboot flash boot G:\Rooting\TWRP\twrp_12122022_A11.img
+|	time=1740061480
+|s
+|	time=1740061473
+|ir
+|	time=1740061474
+|s
+|	time=1740061474
+|ir
+|	time=1740061475
+|ir
+|	time=1740061484
+git
+|	time=1740061486
+gitbash
+|	time=1740063864
+|s
+|	time=1740063886
+|s
+|	time=1740063887
+|ir
+|	time=1740063891
+|s
+|	time=1740063892
+|ir
+|	time=1740063893
+|s
+|	time=1740064039
+clink set clink.autoupdate of
+|	time=1740064040
+clink set clink.autoupdate off
+|	time=1740064046
+|s
+|	time=1740064047
+|ir
+|	time=1740064048
+|s
+|	time=1740064049
+|ir
+|	time=1740064049
+|ir
+|	time=1740064228
+cd docker ls
+|	time=1740064236
+cd Coding\maniskpracs\
+|	time=1740064237
+sl
+|	time=1740064238
+|s
+|	time=1740064239
+ls
+|	time=1740064240
+|ir
+|	time=1740064242
+dir
