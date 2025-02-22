@@ -4,23 +4,6 @@
     "actions": 
     [
         {
-            "command": 
-            {
-                "action": "copy",
-                "singleLine": false
-            },
-            "id": "User.copy.644BA8F2",
-            "keys": "alt+c"
-        },
-        {
-            "command": 
-            {
-                "action": "movePane",
-                "index": 5
-            },
-            "id": "User.movePane.371F23CF"
-        },
-        {
             "command": "unbound",
             "keys": "ctrl+shift+w"
         },
@@ -183,15 +166,32 @@
         {
             "command": 
             {
+                "action": "movePane",
+                "index": 5
+            },
+            "id": "User.movePane.371F23CF"
+        },
+        {
+            "command": 
+            {
+                "action": "copy",
+                "singleLine": false
+            },
+            "id": "User.copy.644BA8F2",
+            "keys": "alt+c"
+        },
+        {
+            "command": "paste",
+            "id": "User.paste"
+        },
+        {
+            "command": 
+            {
                 "action": "newTab",
                 "index": 2
             },
             "id": "User.newTab.CCE909E3",
             "keys": "alt+shift+o"
-        },
-        {
-            "command": "paste",
-            "id": "User.paste"
         },
         {
             "command": "find",
@@ -201,18 +201,18 @@
         {
             "command": 
             {
-                "action": "quakeMode"
-            },
-            "id": "User.quakeMode.F1E129A4"
-        },
-        {
-            "command": 
-            {
                 "action": "moveFocus",
                 "direction": "down"
             },
             "id": "User.moveFocus.F747588A",
             "keys": "ctrl+j"
+        },
+        {
+            "command": 
+            {
+                "action": "quakeMode"
+            },
+            "id": "User.quakeMode.F1E129A4"
         },
         {
             "command": 
@@ -448,7 +448,7 @@
         {
             "backgroundImage": null,
             "backgroundImageOpacity": 0.07,
-            "colorScheme": "Sonokai Shusia",
+            "colorScheme": "GruvboxDarkHard",
             "cursorShape": "filledBox",
             "experimental.retroTerminalEffect": false,
             "font": 
@@ -485,15 +485,14 @@
                 "tabTitle": "pwsh",
                 "useAcrylic": true
             },
-{
-    "commandline": "git-bash.exe --login -i",
-    "guid": "{e2e7b6b3-0f8e-4774-bf3a-d256d6b09ab9}",
-    "hidden": false,
-    "icon": "C:\\Users\\Administrator\\scoop\\apps\\git\\current\\mingw64\\share\\git\\git-for-windows.ico",
-    "name": "Git Bash",
-    "startingDirectory": "%USERPROFILE%"
-},
-
+            {
+                "commandline": "git-bash.exe --login -i",
+                "guid": "{e2e7b6b3-0f8e-4774-bf3a-d256d6b09ab9}",
+                "hidden": false,
+                "icon": "C:\\Users\\Administrator\\scoop\\apps\\git\\current\\mingw64\\share\\git\\git-for-windows.ico",
+                "name": "Git Bash",
+                "startingDirectory": "%USERPROFILE%"
+            },
             {
                 "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
                 "hidden": false,

@@ -396,8 +396,14 @@ sl
 |	time=1740064238
 |s
 |	time=1740064239
-ls
+|s
 |	time=1740064240
 |ir
 |	time=1740064242
+|ir
+|	time=1740238863
+echo print("hello") > hi.py
+|	time=1740238864
+ls
+|	time=1740238865
 dir
