@@ -1,5 +1,5 @@
 [wsl2]
-memory=524288000         # Limit RAM to 500MB
+memory=500         # Limit RAM to 500MB
 processors=2         # Restrict WSL to 2 CPU cores
 swap=0               # Disable swap completely
 localhostForwarding=true  # Allow access to WSL services from Windows
