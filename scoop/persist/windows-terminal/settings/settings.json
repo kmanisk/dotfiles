@@ -458,7 +458,7 @@
                 "size": 14
             },
             "icon": null,
-            "opacity": 74,
+            "opacity": 77,
             "padding": "7",
             "useAcrylic": true
         },
@@ -468,6 +468,7 @@
                 "antialiasingMode": "grayscale",
                 "autoMarkPrompts": true,
                 "bellStyle": "none",
+                "colorScheme": "GruvboxDark",
                 "experimental.retroTerminalEffect": false,
                 "experimental.rightClickContextMenu": false,
                 "font": 
@@ -477,7 +478,7 @@
                 "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
                 "hidden": false,
                 "name": "PowerShell",
-                "opacity": 81,
+                "opacity": 100,
                 "padding": "8",
                 "scrollbarState": "hidden",
                 "source": "Windows.Terminal.PowershellCore",

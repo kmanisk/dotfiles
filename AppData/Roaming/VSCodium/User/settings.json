@@ -290,7 +290,7 @@
 	"scm.diffDecorations": "none",
 	"explorer.confirmPasteNative": false,
 	"extensions.ignoreRecommendations": true,
-	"workbench.colorTheme": "Gruvbox Dark Hard",
+	"workbench.colorTheme": "Pycharm Original Theme",
 	"pieces.OS.launchOnStartup": "Yes",
 	"pieces.cloudCapabilities": "Blended",
 	"pieces.telemetry": true,

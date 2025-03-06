@@ -269,7 +269,7 @@
 			"param": "-g '*.$1'"
 		}
 	],
-	"workbench.colorTheme": "PyCharm Night Theme",
+	"workbench.colorTheme": "Default Light+",
 	"window.menuBarVisibility": "compact",
 	"workbench.iconTheme": "material-icon-theme",
 	"extensions.ignoreRecommendations": true,
@@ -283,5 +283,6 @@
 			]
 		}
 	},
-	"terminal.integrated.defaultProfile.windows": "New Powershell"
+	"terminal.integrated.defaultProfile.windows": "New Powershell",
+	"github.copilot.editor.enableAutoCompletions": false
 }

@@ -43,6 +43,10 @@ function chu{
 function scclear{
     scoop cache rm *
 }
+
+Set-Alias -Name word -Value "C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"
+Set-Alias -Name xl -Value "C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"
+Set-Alias -Name ppt -Value "C:\Program Files\Microsoft Office\root\Office16\POWERPNT.EXE"
 function imginfo{
     $sourceFolder = "G:\photos\organized_media"
 
