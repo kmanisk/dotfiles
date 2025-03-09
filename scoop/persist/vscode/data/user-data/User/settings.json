@@ -1,0 +1,288 @@
+{
+	"security.workspace.trust.enabled": false,
+	//test extension multi command
+	"vscode-neovim.highlightGroups.highlights": {
+		"HoverWidgetBackground": {
+			"color": "ThemeColor"
+		}
+	},
+	"periscope.rgGlobExcludes": [
+		"**/node_modules/**",
+		"**/package.json",
+		"**/package-lock.json",
+		"**/yarn.lock"
+	],
+	// "editor.matchBrackets": "never",
+	"editor.lightbulb.enabled": "off",
+	"workbench.tree.indent": 16,
+	"workbench.tree.renderIndentGuides": "always",
+	"window.title": "",
+	"editor.showFoldingControls": "always",
+	"editor.tabSize": 4,
+	"workbench.sideBar.location": "right",
+	"editor.fontSize": 17,
+	"editor.lineHeight": 26,
+	"breadcrumbs.enabled": false,
+	"editor.fontFamily": "JetBrainsMono NF,Josefin Sans",
+	// "editor.fontFamily": "JetbrainsMono NF,JetBrainsMono Nerd Font, FiraCode Nerd Font",
+	// "editor.fontFamily": "'FiraCode Nerd Font Mono','JetBrainsMonoNL Nerd Font Mono','JetBrainsMono Nerd Font Mono','JetBrainsMono Nerd Font', monospace",
+	// "editor.fontFamily": "'Hack Nerd Font Mono', 'Hack Nerd Font', 'JetBrainsMonoNL Nerd Font Mono', 'JetBrainsMono Nerd Font Mono', 'JetBrainsMono Nerd Font', monospace",
+	// Terminal
+	"terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font', 'monospace', monospace",
+	"screencastMode.fontSize": 36,
+	"terminal.integrated.fontSize": 16,
+	"screencastMode.verticalOffset": 1,
+	"editor.fontLigatures": true,
+	"editor.wordWrap": "on",
+	"editor.wrappingIndent": "same",
+	"editor.lineNumbers": "relative",
+	"editor.wordWrapColumn": 60,
+	// changed commented
+	// "editor.folding": false,
+	// "editor.glyphMargin": false,
+	"editor.insertSpaces": false,
+	"editor.minimap.enabled": false,
+	"editor.detectIndentation": true,
+	"editor.scrollBeyondLastLine": false,
+	"editor.renderControlCharacters": false,
+	"editor.unicodeHighlight.ambiguousCharacters": false,
+	"editor.quickSuggestionsDelay": 0,
+	"editor.cursorBlinking": "solid",
+	"editor.bracketPairColorization.enabled": false,
+	"editor.scrollbar.horizontal": "hidden",
+	"editor.scrollbar.vertical": "hidden",
+	"editor.hideCursorInOverviewRuler": true,
+	"zenMode.fullScreen": false,
+	"zenMode.hideLineNumbers": false,
+	"editor.occurrencesHighlight": "off",
+	//changed now
+	"editor.parameterHints.enabled": true,
+	"editor.hover.enabled": true,
+	//java autocomplete off :
+	"editor.selectionHighlight": false,
+	"zenMode.silentNotifications": false,
+	//Editor settings for formatting
+	"editor.formatOnSave": true,
+	"workbench.startupEditor": "none",
+	"window.openFilesInNewWindow": "off",
+	//Explorer
+	"explorer.confirmDelete": false,
+	"explorer.compactFolders": false,
+	"explorer.confirmDragAndDrop": false,
+	//Formatters
+	"prettier.semi": true,
+	"prettier.useTabs": true,
+	"prettier.singleQuote": false,
+	"prettier.jsxSingleQuote": false,
+	"prettier.arrowParens": "avoid",
+	// "editor.defaultFormatter": "esbenp.prettier-vscode",
+	// "editor.defaultFormatter": "rust-lang.rust-analyzer",
+	"editor.inlineSuggest.enabled": true,
+	"errorLens.exclude": [
+		"rust-analyzer(unused_variables)",
+		"rust-analyzer(unused_imports)",
+	],
+	"errorLens.enabledDiagnosticLevels": [
+		"error"
+	],
+	//Neovim Specific Config
+	"extensions.experimental.affinity": {
+		"asvetliakov.vscode-neovim": 1
+	},
+	"vscode-neovim.compositeKeys": {
+		"jk": {
+			// Use lua to execute any logic
+			"command": "vscode-neovim.lua",
+			"args": [
+				[
+					"local code = require('vscode')",
+					"code.action('vscode-neovim.escape')",
+					// "code.action('workbench.action.files.save')"
+				]
+			]
+		}
+	},
+	"vscode-neovim.compositeTimeout": 450,
+	"vscode-neovim.ctrlKeysForNormalMode": [
+		"a",
+		"b",
+		"c",
+		"d",
+		"e",
+		"f",
+		"h",
+		"i",
+		"j",
+		"k",
+		"l",
+		"m",
+		"o",
+		"r",
+		"t",
+		"u",
+		"v",
+		"w",
+		"x",
+		"y",
+		"z",
+		"/",
+		"]",
+		"right",
+		"left",
+		"up",
+		"down",
+		"backspace",
+		"delete"
+	],
+	"window.commandCenter": false,
+	"workbench.layoutControl.enabled": false,
+	"code-runner.runInTerminal": true,
+	"code-runner.enableAppInsights": false,
+	"editor.mouseWheelZoom": true,
+	"terminal.integrated.mouseWheelZoom": true,
+	"workbench.editor.enablePreview": false,
+	"workbench.editor.centeredLayoutAutoResize": true,
+	"zenMode.restore": true,
+	//remember changed
+	"editor.inlayHints.enabled": "off",
+	"code-runner.executorMap": {
+		"javascript": "node",
+		"java": "cd $dir && javac $fileName && java $fileNameWithoutExt",
+		"c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+		"zig": "zig run",
+		"cpp": "cd $dir && g++ $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+		"objective-c": "cd $dir && gcc -framework Cocoa $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+		"php": "php",
+		"python": "python -u",
+		"perl": "perl",
+		"perl6": "perl6",
+		"ruby": "ruby",
+		"go": "go run",
+		"lua": "lua",
+		"groovy": "groovy",
+		"powershell": "powershell -ExecutionPolicy ByPass -File",
+		"bat": "cmd /c",
+		"shellscript": "bash",
+		"fsharp": "fsi",
+		"csharp": "scriptcs",
+		"vbscript": "cscript //Nologo",
+		"typescript": "ts-node",
+		"coffeescript": "coffee",
+		"scala": "scala",
+		"swift": "swift",
+		"julia": "julia",
+		"crystal": "crystal",
+		"ocaml": "ocaml",
+		"r": "Rscript",
+		"applescript": "osascript",
+		"clojure": "lein exec",
+		"haxe": "haxe --cwd $dirWithoutTrailingSlash --run $fileNameWithoutExt",
+		// "rust": "cd $dir && cargo run",
+		"rust": "cd $workspaceRoot/src && cargo run",
+		"racket": "racket",
+		"scheme": "csi -script",
+		"ahk": "autohotkey",
+		"autoit": "autoit3",
+		"dart": "dart",
+		"pascal": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt",
+		"d": "cd $dir && dmd $fileName && $dir$fileNameWithoutExt",
+		"haskell": "runghc",
+		"nim": "nim compile --verbosity:0 --hints:off --run",
+		"lisp": "sbcl --script",
+		"kit": "kitc --run",
+		"v": "v run",
+		"sass": "sass --style expanded",
+		"scss": "scss --style expanded",
+		"less": "cd $dir && lessc $fileName $fileNameWithoutExt.css",
+		"FortranFreeForm": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+		"fortran-modern": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+		"fortran_fixed-form": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+		"fortran": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+		"sml": "cd $dir && sml $fileName",
+		"mojo": "mojo run",
+		"erlang": "escript",
+		"spwn": "spwn build",
+		"pkl": "cd $dir && pkl eval -f yaml $fileName -o $fileNameWithoutExt.yaml",
+		"gleam": "gleam run -m $fileNameWithoutExt"
+	},
+	"files.autoSave": "afterDelay",
+	"editor.inlineSuggest.suppressSuggestions": true,
+	"workbench.activityBar.location": "hidden",
+	"prettier.requireConfig": true,
+	//Cody autocomplete turn off 
+	"cody.autocomplete.enabled": false,
+	"redhat.telemetry.enabled": false,
+	"chatgpt.lang": "en",
+	"files.exclude": {
+		"**/*.class": true,
+		"**/*.exe": true,
+		"**/*.pdb": true,
+	},
+	"prettier.trailingComma": "all",
+	"cody.commandCodeLenses": true,
+	// "workbench.productIconTheme":	"window.menuBarVisibility": "compact",
+	"[java]": {
+		// "editor.defaultFormatter": "redhat.java"
+	},
+	"security.workspace.trust.untrustedFiles": "open",
+	"cody.commandHints.enabled": false,
+	"git.openRepositoryInParentFolders": "never",
+	"git.autofetch": false,
+	"editor.lineDecorationsWidth": 10,
+	"editor.folding": false,
+	"editor.glyphMargin": false,
+	"tabnine.experimentalAutoImports": true,
+	//added a commnet
+	"periscope.rgQueryParams": [
+		{
+			// filter the results to a folder
+			// Query: "redis -m module1"
+			// After: "rg 'redis' -g '**/*module1*/**'"
+			"regex": "^(.+) -m ([\\w-_]+)$",
+			"param": "-g '**/*$1*/**' -g '!**/node_modules/**'"
+		},
+		{
+			// filter the results to a folder and filetype
+			// Query: "redis -m module1 yaml"
+			// After: "rg 'redis' -g '**/*module1*/**/*.yaml'"
+			"regex": "^(.+) -m ([\\w-_]+) ([\\w]+)$",
+			"param": "-g '**/*$1*/**/*.$2'"
+		},
+		{
+			// filter the results that match a glob
+			// Query: "redis -g *module"
+			// After: "rg 'redis' -g '*module'"
+			"regex": "^(.+) -g (.+)$",
+			"param": "-g '$1'"
+		},
+		{
+			// filter the results to rg filetypes
+			// Query: "redis -t yaml"
+			// After: "rg 'redis' -t yaml"
+			"regex": "^(.+) -t ?(\\w+)$",
+			"param": "-t $1"
+		},
+		{
+			// filter the results that match a file extension through a glob
+			// Query: redis *.rs => rg 'redis' -g '*.rs'
+			"regex": "^(.+) \\*\\.(\\w+)$",
+			"param": "-g '*.$1'"
+		}
+	],
+	"workbench.colorTheme": "Default Dark+",
+	"window.menuBarVisibility": "compact",
+	"workbench.iconTheme": "material-icon-theme",
+	"extensions.ignoreRecommendations": true,
+	"terminal.integrated.profiles.windows": {
+		"New Powershell": {
+			"path": "pwsh.exe",
+			"args": [
+				"-noexit",
+				"-file",
+				"${env:USERPROFILE}\\Documents\\PowerShell\\Microsoft.PowerShell_profile.ps1"
+			]
+		}
+	},
+	"terminal.integrated.defaultProfile.windows": "New Powershell",
+	"github.copilot.editor.enableAutoCompletions": false
+}
