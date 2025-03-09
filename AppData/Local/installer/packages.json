@@ -42,7 +42,8 @@
       "extras/rtss",
       "main/sudo",
       "main/gh",
-      "chawyehsu_dorado/powershell"
+      "chawyehsu_dorado/powershell",
+      "extras/revouninstaller"
     ],
     "global": ["nerd-fonts/JetBrainsMono-NF"]
   },
