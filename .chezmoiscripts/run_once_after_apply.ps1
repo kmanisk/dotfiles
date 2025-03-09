@@ -1,4 +1,3 @@
-
 # Function to check if the script is running as Administrator
 function Is-Admin {
 	$identity = [Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()

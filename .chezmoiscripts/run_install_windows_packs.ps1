@@ -64,6 +64,44 @@ function Add-ScoopBuckets {
     }
 }
 
+#function Install-Scoop {
+#    if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
+#        Write-Host "Installing Scoop..."
+#        $installCommand = "& {$(Invoke-RestMethod get.scoop.sh)} -RunAsAdmin"
+#        if (-not (Is-Admin)) {
+#            Write-Host "Installing Scoop"
+#            Write-Host $installCommand
+#        }
+#        else {
+#            Write-Host "Running Scoop installation with elevated permissions..."
+#            Invoke-Expression $installCommand
+#        }
+#    }
+#    else {
+#        Write-Host "======================================================================================================================="
+#        Write-Host "Scoop is already installed."
+#
+#        $bucketConfig = @{
+#            'main'                  = 'https://github.com/ScoopInstaller/Main'
+#            'extras'                = 'https://github.com/ScoopInstaller/Extras'
+#            'java'                  = 'https://github.com/ScoopInstaller/Java'
+#            'versions'              = 'https://github.com/ScoopInstaller/Versions'
+#            #'nerd-fonts'            = 'https://github.com/ScoopInstaller/scoop-nerd-fonts'
+#            'nerd-fonts'            = 'https://github.com/ScoopInstaller/Nerd-Fonts'
+#            'games'                 = 'https://github.com/Calinou/scoop-games'
+#            'volllly'               = 'https://github.com/volllly/scoop-bucket.git'
+#            'shemnei'               = 'https://github.com/Shemnei/scoop-bucket.git'
+#            'nonportable'           = 'https://github.com/Shemnei/scoop-bucket.git'
+#            'kkzzhizhou_scoop-apps' = 'https://github.com/kkzzhizhou/scoop-apps'
+#            'chawyehsu_dorado'      = 'https://github.com/chawyehsu/dorado'
+#            # 'anderlli0053_DEV-tools' = 'https://github.com/anderlli0053/DEV-tools'
+#
+#        }
+#
+#        Add-ScoopBuckets -buckets $bucketConfig
+#    }
+#}
+
 function Install-Scoop {
     if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
         Write-Host "Installing Scoop..."
@@ -80,28 +118,48 @@ function Install-Scoop {
     else {
         Write-Host "======================================================================================================================="
         Write-Host "Scoop is already installed."
-        
-        $bucketConfig = @{
-            'main'                  = 'https://github.com/ScoopInstaller/Main'
-            'extras'                = 'https://github.com/ScoopInstaller/Extras'
-            'java'                  = 'https://github.com/ScoopInstaller/Java'
-            'versions'              = 'https://github.com/ScoopInstaller/Versions'
-            #'nerd-fonts'            = 'https://github.com/ScoopInstaller/scoop-nerd-fonts'
-            'nerd-fonts'            = 'https://github.com/ScoopInstaller/Nerd-Fonts'
-            'games'                 = 'https://github.com/Calinou/scoop-games'
+
+        # Get a list of currently added buckets
+        $existingBuckets = scoop bucket list | ForEach-Object { ($_ -split '\s+')[0] }
+
+        # Official buckets (no URL required)
+        $officialBuckets = @(
+            'main'
+            'extras'
+            'java'
+            'versions'
+            'nerd-fonts'
+            'games'
+        )
+
+        # Custom buckets (require URL)
+        $customBuckets = @{
             'volllly'               = 'https://github.com/volllly/scoop-bucket.git'
             'shemnei'               = 'https://github.com/Shemnei/scoop-bucket.git'
             'nonportable'           = 'https://github.com/Shemnei/scoop-bucket.git'
             'kkzzhizhou_scoop-apps' = 'https://github.com/kkzzhizhou/scoop-apps'
             'chawyehsu_dorado'      = 'https://github.com/chawyehsu/dorado'
-            # 'anderlli0053_DEV-tools' = 'https://github.com/anderlli0053/DEV-tools'
-
         }
-        
-        Add-ScoopBuckets -buckets $bucketConfig
+
+        # Add official buckets
+        foreach ($bucket in $officialBuckets) {
+            if ($existingBuckets -notcontains $bucket) {
+                scoop bucket add $bucket
+            } else {
+                Write-Host "Bucket '$bucket' already exists."
+            }
+        }
+
+        # Add custom buckets
+        foreach ($bucket in $customBuckets.Keys) {
+            if ($existingBuckets -notcontains $bucket) {
+                scoop bucket add $bucket $customBuckets[$bucket]
+            } else {
+                Write-Host "Bucket '$bucket' already exists."
+            }
+        }
     }
 }
-
 
 function Install-Chocolatey {
     if (-not (Get-Command choco -ErrorAction SilentlyContinue)) {
