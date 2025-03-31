@@ -24,7 +24,6 @@
     "GeneralSettings": {
       "PlaySoundAfterCapture": true,
       "PlaySoundAfterUpload": true,
-      "PlaySoundAfterAction": true,
       "ShowToastNotificationAfterTaskCompleted": true,
       "ToastWindowDuration": 3.0,
       "ToastWindowFadeDuration": 1.0,
@@ -34,15 +33,14 @@
       "ToastWindowRightClickAction": "CloseNotification",
       "ToastWindowMiddleClickAction": "AnnotateImage",
       "ToastWindowAutoHide": true,
-      "DisableNotificationsOnFullscreen": false,
       "UseCustomCaptureSound": false,
       "CustomCaptureSoundPath": "",
       "UseCustomTaskCompletedSound": false,
       "CustomTaskCompletedSoundPath": "",
-      "UseCustomActionCompletedSound": false,
-      "CustomActionCompletedSoundPath": "",
       "UseCustomErrorSound": false,
-      "CustomErrorSoundPath": ""
+      "CustomErrorSoundPath": "",
+      "DisableNotifications": false,
+      "DisableNotificationsOnFullscreen": false
     },
     "UseDefaultImageSettings": true,
     "ImageSettings": {
@@ -169,7 +167,7 @@
         "ShowInfo": true,
         "ShowMagnifier": true,
         "UseSquareMagnifier": false,
-        "MagnifierPixelCount": 17,
+        "MagnifierPixelCount": 15,
         "MagnifierPixelSize": 10,
         "ShowCrosshair": false,
         "UseLightResizeNodes": false,
@@ -328,12 +326,11 @@
         "AutoScrollTop": false,
         "ScrollDelay": 300,
         "ScrollAmount": 2,
-        "AutoIgnoreBottomEdge": true,
         "AutoUpload": false,
         "ShowRegion": true
       },
       "OCROptions": {
-        "Language": "en-US",
+        "Language": "en",
         "ScaleFactor": 2.0,
         "SingleLine": false,
         "Silent": false,
@@ -514,7 +511,7 @@
       },
       "BorderlessWindowSettings": {
         "RememberWindowTitle": true,
-        "WindowTitle": "Volume Mixer - Speakers (High Definition Audio Device)",
+        "WindowTitle": null,
         "AutoCloseWindow": false,
         "ExcludeTaskbarArea": false
       }
@@ -642,7 +639,7 @@
   "PreviewSplitterDistance": 335,
   "Language": "Automatic",
   "ShowTray": true,
-  "SilentRun": true,
+  "SilentRun": false,
   "TrayIconProgressEnabled": true,
   "TaskbarProgressEnabled": true,
   "UseWhiteShareXIcon": false,
@@ -653,7 +650,7 @@
   "TrayLeftClickAction": "RectangleRegion",
   "TrayLeftDoubleClickAction": "OpenMainWindow",
   "TrayMiddleClickAction": "ClipboardUploadWithContentViewer",
-  "AutoCheckUpdate": false,
+  "AutoCheckUpdate": true,
   "UpdateChannel": "Release",
   "CheckPreReleaseUpdates": false,
   "UseCustomTheme": true,
@@ -785,8 +782,8 @@
       "SeparatorDarkColor": "33, 35, 43"
     }
   ],
-  "SelectedTheme": 5,
-  "UseCustomScreenshotsPath": false,
+  "SelectedTheme": 0,
+  "UseCustomScreenshotsPath": true,
   "CustomScreenshotsPath": "%UserProfile%\\Nox_share\\Download\\DCIM",
   "SaveImageSubFolderPattern": "%y-%mo",
   "SaveImageSubFolderPatternWindow": "",
@@ -819,6 +816,7 @@
     "ImageShack",
     "Flickr",
     "Photobucket",
+    "Picasa",
     "Twitter",
     "Chevereto",
     "Vgyme",
@@ -875,84 +873,84 @@
   "HistoryCheckURL": false,
   "RecentTasks": [
     {
-      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-01\\bf1_o0yFHPskkJ.png",
+      "FilePath": "C:\\Users\\Manisk\\Nox_share\\Download\\DCIM\\2024-12\\QFMedpFAmj.png",
       "URL": null,
       "ThumbnailURL": null,
       "DeletionURL": null,
       "ShortenedURL": null,
-      "Time": "2025-01-31T17:03:52.2060005Z"
+      "Time": "2024-12-10T15:44:54.0661905Z"
     },
     {
-      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-01\\bf1_fSsYrTnFvh.png",
+      "FilePath": "C:\\Users\\Manisk\\Nox_share\\Download\\DCIM\\2024-12\\cs2_SpyRDsLtcs.png",
       "URL": null,
       "ThumbnailURL": null,
       "DeletionURL": null,
       "ShortenedURL": null,
-      "Time": "2025-01-31T17:09:21.176808Z"
+      "Time": "2024-12-10T15:44:57.7270622Z"
     },
     {
-      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-01\\bf1_4edtITVms1.png",
+      "FilePath": "C:\\Users\\Manisk\\Nox_share\\Download\\DCIM\\2024-12\\cs2_vmrCFwdUlp.jpg",
       "URL": null,
       "ThumbnailURL": null,
       "DeletionURL": null,
       "ShortenedURL": null,
-      "Time": "2025-01-31T17:09:23.3373294Z"
+      "Time": "2024-12-10T15:45:19.2062182Z"
     },
     {
-      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-01\\bf1_FGObBZJcfd.png",
+      "FilePath": "C:\\Users\\Manisk\\Nox_share\\Download\\DCIM\\2024-12\\cs2_eMhtU4I7Vz.jpg",
       "URL": null,
       "ThumbnailURL": null,
       "DeletionURL": null,
       "ShortenedURL": null,
-      "Time": "2025-01-31T17:09:26.568834Z"
+      "Time": "2024-12-10T15:52:20.5383849Z"
     },
     {
-      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-01\\bf1_hob4EaiR0H.png",
+      "FilePath": "C:\\Users\\Manisk\\Nox_share\\Download\\DCIM\\2024-12\\cs2_zv7KdeU5O9.jpg",
       "URL": null,
       "ThumbnailURL": null,
       "DeletionURL": null,
       "ShortenedURL": null,
-      "Time": "2025-01-31T17:39:30.2524334Z"
+      "Time": "2024-12-10T15:52:22.7752675Z"
     },
     {
-      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-01\\bf1_fHSHgaqrIE.jpg",
+      "FilePath": "C:\\Users\\Manisk\\Nox_share\\Download\\DCIM\\2024-12\\cs2_39MOezdHt3.jpg",
       "URL": null,
       "ThumbnailURL": null,
       "DeletionURL": null,
       "ShortenedURL": null,
-      "Time": "2025-01-31T17:39:34.4312697Z"
+      "Time": "2024-12-10T16:57:47.6813694Z"
     },
     {
-      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-02\\BSW7ljHKWl.png",
+      "FilePath": "C:\\Users\\Manisk\\Nox_share\\Download\\DCIM\\2024-12\\cs2_pTT4MGyAHl.jpg",
       "URL": null,
       "ThumbnailURL": null,
       "DeletionURL": null,
       "ShortenedURL": null,
-      "Time": "2025-02-03T13:35:18.3100039Z"
+      "Time": "2024-12-10T16:57:49.97022Z"
     },
     {
-      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-02\\pdfeditor_Rug0XWqV4Y.png",
+      "FilePath": "C:\\Users\\Manisk\\Nox_share\\Download\\DCIM\\2024-12\\cs2_grzwgBdobA.jpg",
       "URL": null,
       "ThumbnailURL": null,
       "DeletionURL": null,
       "ShortenedURL": null,
-      "Time": "2025-02-03T13:35:36.0599539Z"
+      "Time": "2024-12-10T17:00:43.0477625Z"
     },
     {
-      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-02\\pdfeditor_JmOl7pP8Ta.png",
+      "FilePath": "C:\\Users\\Manisk\\Nox_share\\Download\\DCIM\\2024-12\\64dcrUSTMv.png",
       "URL": null,
       "ThumbnailURL": null,
       "DeletionURL": null,
       "ShortenedURL": null,
-      "Time": "2025-02-03T13:35:58.8270155Z"
+      "Time": "2024-12-12T17:17:24.8660732Z"
     },
     {
-      "FilePath": "C:\\Users\\Administrator\\Documents\\ShareX\\Screenshots\\2025-02\\R0B3bKwLyF.png",
+      "FilePath": "C:\\Users\\Manisk\\Nox_share\\Download\\DCIM\\2024-12\\yjQjh6THNa.png",
       "URL": null,
       "ThumbnailURL": null,
       "DeletionURL": null,
       "ShortenedURL": null,
-      "Time": "2025-02-03T13:36:49.8635915Z"
+      "Time": "2024-12-13T11:57:25.9218524Z"
     }
   ],
   "RecentTasksSave": true,
@@ -1004,7 +1002,7 @@
   "AutoCaptureRepeatTime": 60.0,
   "AutoCaptureMinimizeToTray": true,
   "AutoCaptureWaitUpload": true,
-  "ScreenRecordRegion": "0, 87, 1920, 962",
+  "ScreenRecordRegion": "301, 641, 1242, 163",
   "ActionsToolbarList": [
     "RectangleRegion",
     "PrintScreen",
@@ -1050,5 +1048,5 @@
   "DropAlignment": "BottomRight",
   "DropOpacity": 100,
   "DropHoverOpacity": 255,
-  "ApplicationVersion": "17.0.0"
+  "ApplicationVersion": "16.1.0"
 }

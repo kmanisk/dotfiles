@@ -29,7 +29,7 @@ GstRender.DofMethod 2
 GstRender.EffectsQuality 2
 GstRender.FullscreenMode 0
 GstRender.FullscreenScreen 1
-GstRender.HDRMode 1
+GstRender.HDRMode 0
 GstRender.LightingQuality 2
 GstRender.MeshQuality 2
 GstRender.MotionBlurEnabled 1
@@ -37,9 +37,9 @@ GstRender.OverallGraphicsQuality 5
 GstRender.PhotoSensitivityEnabled 0
 GstRender.PostProcessQuality 2
 GstRender.ReflectionQuality 2
-GstRender.ResolutionHeight 800
+GstRender.ResolutionHeight 1080
 GstRender.ResolutionScale 1.000000
-GstRender.ResolutionWidth 1280
+GstRender.ResolutionWidth 1920
 GstRender.ScreenSafeAreaHasBeenSet 1
 GstRender.ScreenSafeAreaHeight 1.000000
 GstRender.ScreenSafeAreaWidth 1.000000
@@ -48,5 +48,5 @@ GstRender.TerrainQuality 2
 GstRender.TextureFiltering 3
 GstRender.TextureQuality 3
 GstRender.UndergrowthQuality 2
-GstRender.VSyncEnabled 1
+GstRender.VSyncEnabled 0
 GstRender.WindowBordersEnable 1

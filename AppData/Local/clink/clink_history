@@ -174,7 +174,7 @@ docs
 |	time=1736520301
 |s
 |	time=1736520301
-lsd
+|sd
 |	time=1736520305
 |wsh
 |	time=1736520455
@@ -514,7 +514,7 @@ cd Desktop\te
 |	time=1740936319
 |d Desktop\test\
 |	time=1740936319
-ls
+|s
 |	time=1740936321
 |ir
 |	time=1740936327
@@ -534,8 +534,28 @@ curl -LJO https://bit.ly/jjvimjj
 |	time=1740936860
 tar -xf a.tar 
 |	time=1740936861
-dir
+|ir
 |	time=1740936865
 cat DES.java 
 |	time=1740936869
+|wsh
+|	time=1742719584
+|sd
+|	time=1742719585
+|sd
+|	time=1742719586
+|s
+|	time=1742719587
+|ir
+|	time=1742719588
+|sd
+|	time=1742718014
+choco upgrade all
+|	time=1742718020
 pwsh
+|	time=1742719606
+ls
+|	time=1742719607
+dir
+|	time=1742719608
+lsd

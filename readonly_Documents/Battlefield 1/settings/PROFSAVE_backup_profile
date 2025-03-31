@@ -17,13 +17,13 @@ GstAudio.VoipOn 1
 GstAudio.VoipVolumeReduce 1
 GstAudio.Volume 1.000000
 GstAudio.YourSoundSystem 4
-GstRender.AmbientOcclusion 1
+GstRender.AmbientOcclusion 2
 GstRender.AnisotropicFilter 4
 GstRender.AntiAliasingDeferred 2
 GstRender.AntiAliasingPost 3
-GstRender.Brightness 0.510000
-GstRender.ChromaticAberration 1
-GstRender.ClampGpuMemory 0
+GstRender.Brightness 0.500000
+GstRender.ChromaticAberration 0
+GstRender.ClampGpuMemory 1
 GstRender.ColorBlindCustomColorEnemy 189/54/49/255/2.0/0.58297/0.46998/1.0
 GstRender.ColorBlindCustomColorNeutral 197/197/197/255/0.0/0.0/0.77300/1.0
 GstRender.ColorBlindCustomColorSquad 74/155/44/255/104.0/0.55100/0.39197/1.0
@@ -41,7 +41,7 @@ GstRender.Enlighten 1
 GstRender.FieldOfViewScaleADS 0
 GstRender.FieldOfViewVertical 99.000000
 GstRender.FieldOfViewVerticalVehicle 92.000000
-GstRender.FilmGrain 1
+GstRender.FilmGrain 0
 GstRender.FullscreenEnabled 1
 GstRender.FullscreenMode 0
 GstRender.FullscreenRefreshRate 100.000000
@@ -49,8 +49,8 @@ GstRender.FullscreenScreen 0
 GstRender.HighDynamicRange 0
 GstRender.HighDynamicRangeMode 0
 GstRender.HighResUIScaleFactor 0.500000
-GstRender.LensDistortion 1
-GstRender.LightingQuality 2
+GstRender.LensDistortion 0
+GstRender.LightingQuality 0
 GstRender.MaxVariableFps 2
 GstRender.MeshQuality 3
 GstRender.MotionBlur 0.000000
