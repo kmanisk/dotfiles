@@ -19,7 +19,7 @@ GstAudio.VoiceNarration 1
 GstAudio.Voip 1
 GstAudio.VoipCategory 1
 GstAudio.VoipVolume 1.000000
-GstRender.AmbientOcclusion 2
+GstRender.AmbientOcclusion 4
 GstRender.AnisotropicFilter 4
 GstRender.AntiAliasingPost 2
 GstRender.Brightness 0.500000
@@ -35,7 +35,7 @@ GstRender.MeshQuality 2
 GstRender.MotionBlurEnabled 1
 GstRender.OverallGraphicsQuality 5
 GstRender.PhotoSensitivityEnabled 0
-GstRender.PostProcessQuality 2
+GstRender.PostProcessQuality 0
 GstRender.ReflectionQuality 2
 GstRender.ResolutionHeight 1080
 GstRender.ResolutionScale 1.000000
@@ -44,9 +44,9 @@ GstRender.ScreenSafeAreaHasBeenSet 1
 GstRender.ScreenSafeAreaHeight 1.000000
 GstRender.ScreenSafeAreaWidth 1.000000
 GstRender.ShadowQuality 2
-GstRender.TerrainQuality 2
+GstRender.TerrainQuality 3
 GstRender.TextureFiltering 3
 GstRender.TextureQuality 3
-GstRender.UndergrowthQuality 2
-GstRender.VSyncEnabled 0
+GstRender.UndergrowthQuality 3
+GstRender.VSyncEnabled 1
 GstRender.WindowBordersEnable 1

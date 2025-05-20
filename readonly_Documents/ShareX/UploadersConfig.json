@@ -30,10 +30,6 @@
   },
   "PhotobucketOAuthInfo": null,
   "PhotobucketAccountInfo": null,
-  "GooglePhotosOAuth2Info": null,
-  "GooglePhotosUserInfo": null,
-  "GooglePhotosAlbumID": "",
-  "GooglePhotosIsPublic": false,
   "CheveretoUploader": {
     "UploadURL": null,
     "APIKey": null
@@ -239,8 +235,6 @@
   "YourlsSignature": "",
   "YourlsUsername": "",
   "YourlsPassword": "",
-  "AdFlyAPIUID": "",
-  "AdFlyAPIKEY": "",
   "PolrAPIHostname": "",
   "PolrAPIKey": "",
   "PolrIsSecret": false,
@@ -267,5 +261,5 @@
   "CustomFileUploaderSelected": 0,
   "CustomURLShortenerSelected": 0,
   "CustomURLSharingServiceSelected": 0,
-  "ApplicationVersion": "16.1.0"
+  "ApplicationVersion": "17.0.0"
 }

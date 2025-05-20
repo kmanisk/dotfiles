@@ -33,6 +33,14 @@
         {
             "command": 
             {
+                "action": "adjustFontSize",
+                "delta": -1
+            },
+            "id": "User.adjustFontSize.E2698FAA"
+        },
+        {
+            "command": 
+            {
                 "action": "moveFocus",
                 "direction": "right"
             },
@@ -52,6 +60,13 @@
                 "index": 2
             },
             "id": "User.newTab.CCE909E3"
+        },
+        {
+            "command": 
+            {
+                "action": "scrollUp"
+            },
+            "id": "User.scrollUp.0"
         },
         {
             "command": 
@@ -100,6 +115,14 @@
             "command": 
             {
                 "action": "moveFocus",
+                "direction": "left"
+            },
+            "id": "User.moveFocus.2A0DA8E0"
+        },
+        {
+            "command": 
+            {
+                "action": "moveFocus",
                 "direction": "up"
             },
             "id": "User.moveFocus.6CD791B"
@@ -111,6 +134,15 @@
                 "index": 4
             },
             "id": "User.newTab.F4C304FB"
+        },
+        {
+            "command": 
+            {
+                "action": "splitPane",
+                "split": "down",
+                "splitMode": "duplicate"
+            },
+            "id": "User.splitPane.10B260D2"
         },
         {
             "command": 
@@ -136,34 +168,9 @@
         {
             "command": 
             {
-                "action": "moveFocus",
-                "direction": "left"
-            },
-            "id": "User.moveFocus.2A0DA8E0"
-        },
-        {
-            "command": 
-            {
                 "action": "nextTab"
             },
             "id": "User.nextTab.0"
-        },
-        {
-            "command": 
-            {
-                "action": "splitPane",
-                "split": "down",
-                "splitMode": "duplicate"
-            },
-            "id": "User.splitPane.10B260D2"
-        },
-        {
-            "command": 
-            {
-                "action": "adjustFontSize",
-                "delta": -1
-            },
-            "id": "User.adjustFontSize.E2698FAA"
         },
         {
             "command": 
@@ -172,13 +179,6 @@
                 "delta": 1
             },
             "id": "User.adjustFontSize.E04D5229"
-        },
-        {
-            "command": 
-            {
-                "action": "scrollUp"
-            },
-            "id": "User.scrollUp.0"
         },
         {
             "command": 
@@ -249,11 +249,11 @@
         },
         {
             "id": null,
-            "keys": "alt+shift+plus"
+            "keys": "ctrl+shift+t"
         },
         {
             "id": null,
-            "keys": "alt+space"
+            "keys": "alt+down"
         },
         {
             "id": null,
@@ -265,15 +265,15 @@
         },
         {
             "id": null,
-            "keys": "alt+down"
-        },
-        {
-            "id": null,
-            "keys": "ctrl+shift+t"
-        },
-        {
-            "id": null,
             "keys": "ctrl+shift+4"
+        },
+        {
+            "id": null,
+            "keys": "alt+space"
+        },
+        {
+            "id": null,
+            "keys": "alt+shift+plus"
         },
         {
             "id": "User.splitPane.10B260D2",
@@ -520,7 +520,7 @@
                 "antialiasingMode": "grayscale",
                 "autoMarkPrompts": true,
                 "bellStyle": "none",
-                "colorScheme": "GruvboxDark",
+                "colorScheme": "Sonokai Shusia",
                 "experimental.retroTerminalEffect": false,
                 "experimental.rightClickContextMenu": false,
                 "font": 

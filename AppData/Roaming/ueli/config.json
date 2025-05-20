@@ -196,7 +196,7 @@
 				},
 				{
 					"description": "",
-					"executionArgument": "D:\\Portable\\OpenHardwareMonitor\\OpenHardwareMonitor.exe",
+					"executionArgument": "E:\\Portable\\OpenHardwareMonitor\\OpenHardwareMonitor.exe",
 					"icon": {
 						"parameter": "",
 						"type": "URL"
@@ -448,7 +448,7 @@
 				},
 				{
 					"description": "",
-					"executionArgument": "D:\\Portable\\Win10_BrightnessSlider.exe",
+					"executionArgument": "E:\\Portable\\Win10_BrightnessSlider.exe",
 					"icon": {
 						"parameter": "",
 						"type": "URL"
@@ -472,7 +472,7 @@
 				},
 				{
 					"description": "",
-					"executionArgument": "C:\\Users\\Manisk\\AppData",
+					"executionArgument": "C:\\Users\\Administrator\\AppData",
 					"icon": {
 						"parameter": "",
 						"type": "URL"
@@ -532,7 +532,7 @@
 				},
 				{
 					"description": "",
-					"executionArgument": "D:\\Portable\\Telegram\\Telegram.exe",
+					"executionArgument": "E:\\Portable\\Telegram\\Telegram.exe",
 					"icon": {
 						"parameter": "",
 						"type": "URL"
@@ -568,7 +568,7 @@
 				},
 				{
 					"description": "",
-					"executionArgument": "Z:\\Portable",
+					"executionArgument": "E:\\Portable",
 					"icon": {
 						"parameter": "",
 						"type": "URL"
@@ -772,7 +772,7 @@
 				},
 				{
 					"description": "",
-					"executionArgument": "C:\\Users\\Manisk\\AppData\\Roaming\\Spotify\\Spotify.exe",
+					"executionArgument": "C:\\Users\\Administrator\\AppData\\Roaming\\Spotify\\Spotify.exe",
 					"icon": {
 						"parameter": "",
 						"type": "URL"
