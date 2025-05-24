@@ -21,7 +21,7 @@ GstRender.AmbientOcclusion 1
 GstRender.AnisotropicFilter 4
 GstRender.AntiAliasingDeferred 2
 GstRender.AntiAliasingPost 3
-GstRender.Brightness 0.950000
+GstRender.Brightness 0.500000
 GstRender.ChromaticAberration 0
 GstRender.ClampGpuMemory 1
 GstRender.ColorBlindCustomColorEnemy 189/54/49/255/2.0/0.58297/0.46998/1.0

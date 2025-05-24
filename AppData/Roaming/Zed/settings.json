@@ -60,7 +60,7 @@
   "theme": {
     "mode": "system",
     "light": "One Light",
-    "dark": "Github Dark Tritanopia"
+    "dark": "Gruvbox Dark"
   },
   "relative_line_numbers": true,
   "buffer_font_family": "JetBrainsMono NF",
