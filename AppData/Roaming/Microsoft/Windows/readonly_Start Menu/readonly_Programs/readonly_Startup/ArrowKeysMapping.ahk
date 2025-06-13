@@ -1,6 +1,4 @@
-﻿#KeyHistory 0  ; Disables key history to save performance.
-
-; Disable Caps Lock and map it to Escape
+﻿; Disable Caps Lock and map it to Escape
 CapsLock::
     SetCapsLockState, AlwaysOff  ; Ensure Caps Lock is always off
     Send, {Esc}
@@ -149,40 +147,3 @@ CapsLock & [::
 CapsLock & '::
     Send, {PgDn}
     return
-
-::this;::thisismytestmail123@gmail.com
-::niko;::nikobellicmanisk@gmail.com
-::mgau;::maniskgaurav@gmail.com
-::kumar;::kumarmanisk991@gmail.com
-::mathew;::mathewmanisk699@gmail.com
-::rlk;::rlkumar452@gmail.com
-::fname;::Kumar Manisk Gaurav
-
-
-ScrollLock::CapsLock
-
-
-; Map Caps Lock + Right Alt to Enter
-;CapsLock & RAlt::Send {Enter}
-
-; Map CapsLock + IJKL to Arrow Keys
-;CapsLock & i::
-;    Send {Up}
-;return
-;
-;CapsLock & k::
-;    Send {Down}
-;return
-;
-;CapsLock & j::
-;    Send {Left}
-;return
-;
-;CapsLock & h::
-;    Send {Left}
-;return
-;
-;CapsLock & l::
-;    Send {Right}
-;return
-

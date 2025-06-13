@@ -656,7 +656,6 @@
   "AutoCheckUpdate": true,
   "UpdateChannel": "Release",
   "CheckPreReleaseUpdates": false,
-  "UseCustomTheme": true,
   "Themes": [
     {
       "Name": "Dark",
@@ -875,30 +874,6 @@
   "HistoryCheckURL": false,
   "RecentTasks": [
     {
-      "FilePath": "C:\\Users\\Manisk\\Nox_share\\Download\\DCIM\\2024-12\\QFMedpFAmj.png",
-      "URL": null,
-      "ThumbnailURL": null,
-      "DeletionURL": null,
-      "ShortenedURL": null,
-      "Time": "2024-12-10T15:44:54.0661905Z"
-    },
-    {
-      "FilePath": "C:\\Users\\Manisk\\Nox_share\\Download\\DCIM\\2024-12\\cs2_SpyRDsLtcs.png",
-      "URL": null,
-      "ThumbnailURL": null,
-      "DeletionURL": null,
-      "ShortenedURL": null,
-      "Time": "2024-12-10T15:44:57.7270622Z"
-    },
-    {
-      "FilePath": "C:\\Users\\Manisk\\Nox_share\\Download\\DCIM\\2024-12\\cs2_vmrCFwdUlp.jpg",
-      "URL": null,
-      "ThumbnailURL": null,
-      "DeletionURL": null,
-      "ShortenedURL": null,
-      "Time": "2024-12-10T15:45:19.2062182Z"
-    },
-    {
       "FilePath": "C:\\Users\\Manisk\\Nox_share\\Download\\DCIM\\2024-12\\cs2_eMhtU4I7Vz.jpg",
       "URL": null,
       "ThumbnailURL": null,
@@ -953,6 +928,30 @@
       "DeletionURL": null,
       "ShortenedURL": null,
       "Time": "2024-12-13T11:57:25.9218524Z"
+    },
+    {
+      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-05\\thorium_2rHUyTI6jO.png",
+      "URL": null,
+      "ThumbnailURL": null,
+      "DeletionURL": null,
+      "ShortenedURL": null,
+      "Time": "2025-05-28T07:42:29.6439799Z"
+    },
+    {
+      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-05\\thorium_43INLYaAVr.png",
+      "URL": null,
+      "ThumbnailURL": null,
+      "DeletionURL": null,
+      "ShortenedURL": null,
+      "Time": "2025-05-28T07:46:34.4617316Z"
+    },
+    {
+      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-06\\brave_qzjDBSh8kQ.png",
+      "URL": null,
+      "ThumbnailURL": null,
+      "DeletionURL": null,
+      "ShortenedURL": null,
+      "Time": "2025-06-09T13:09:51.9658795Z"
     }
   ],
   "RecentTasksSave": true,
@@ -1050,5 +1049,5 @@
   "DropAlignment": "BottomRight",
   "DropOpacity": 100,
   "DropHoverOpacity": 255,
-  "ApplicationVersion": "17.0.0"
+  "ApplicationVersion": "17.1.0"
 }

@@ -628,7 +628,7 @@
 				},
 				{
 					"description": "",
-					"executionArgument": "C:\\Program Files\\VSCodium\\VSCodium.exe",
+					"executionArgument": "C:\\Users\\Administrator\\scoop\\apps\\vscodium\\current\\VSCodium.exe",
 					"icon": {
 						"parameter": "",
 						"type": "URL"
