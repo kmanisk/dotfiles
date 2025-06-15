@@ -1,7 +1,7 @@
 // Place your key bindings in this file to override the defaults
 [
 	{
-		"key": "alt+x",
+		"key": "alt+shift+x",
 		"command": "workbench.view.extensions",
 		"when": "editorTextFocus"
 	},
