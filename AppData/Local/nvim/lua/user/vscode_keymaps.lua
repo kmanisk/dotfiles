@@ -221,7 +221,7 @@ map("n", "<leader>da", 'ggVG"_d', opts) -- Delete all and store in black hole re
 
 -- Yank all content to system clipboard
 map("n", "<leader>ya", 'ggVG"+y', opts) -- Yank all to system clipboard
-
+map('n', 'cw', 'ciw', opts)
 map("n", "gft", [[:execute "normal! f".nr2char(getchar())."a"<CR>]], opts)
 map("n", "<leader>d;", ":s/;$//<CR>", opts)
 map("n", "<leader>d,", ":s/,$//<CR>", opts)

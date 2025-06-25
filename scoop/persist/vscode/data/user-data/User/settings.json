@@ -269,7 +269,7 @@
 			"param": "-g '*.$1'"
 		}
 	],
-	"workbench.colorTheme": "Github Catppuccin Dark",
+	"workbench.colorTheme": "PyCharm Night Theme",
 	"window.menuBarVisibility": "compact",
 	"workbench.iconTheme": "material-icon-theme",
 	"extensions.ignoreRecommendations": true,
@@ -284,5 +284,11 @@
 		}
 	},
 	"terminal.integrated.defaultProfile.windows": "New Powershell",
-	"github.copilot.editor.enableAutoCompletions": false
+	"github.copilot.editor.enableAutoCompletions": false,
+	"github.copilot.enable": {
+		"*": false,
+		"plaintext": false,
+		"markdown": false,
+		"scminput": false
+	}
 }

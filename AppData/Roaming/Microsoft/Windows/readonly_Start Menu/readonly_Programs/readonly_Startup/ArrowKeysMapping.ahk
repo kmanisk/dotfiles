@@ -147,3 +147,13 @@ CapsLock & [::
 CapsLock & '::
     Send, {PgDn}
     return
+
+; Scroll down
+!+j::
+Send, {WheelDown}
+return
+
+; Scroll up
+!+k::
+Send, {WheelUp}
+return
