@@ -149,11 +149,12 @@ CapsLock & '::
     return
 
 ; Scroll down
-!+j::
-Send, {WheelDown}
-return
+;!+j::
+;Send, {WheelDown}
+;return
 
 ; Scroll up
-!+k::
-Send, {WheelUp}
-return
+;!+k::
+;Send, {WheelUp}
+;return
+

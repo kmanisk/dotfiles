@@ -552,10 +552,46 @@ cat DES.java
 |	time=1742718014
 choco upgrade all
 |	time=1742718020
-pwsh
+|wsh
 |	time=1742719606
 ls
 |	time=1742719607
 dir
 |	time=1742719608
 lsd
+|	time=1751896126
+scoop install scoop install BinToss_scoop-bucket/specialk
+|	time=1751896138
+scoop install BinToss_scoop-bucket/specialk
+|	time=1753281291
+scoop install gpu-z
+|	time=1753346138
+|coop
+|	time=1753346140
+choco
+|	time=1753346144
+scoop
+|	time=1753346178
+|coop update pwsh
+|	time=1753346179
+scoop update pwsh
+|	time=1753346575
+pwsh
+|	time=1753346633
+winget search Microsoft.PowerShell
+|	time=1753346649
+winget install --id Microsoft.PowerShell --source winget
+|	time=1753346869
+nvim
+|	time=1753346133
+scoop
+|	time=1753346352
+scoop update dotnet
+|	time=1753346355
+pwsh
+|	time=1753346357
+powershell
+|	time=1753346833
+scoop 
+|	time=1753346836
+powershell

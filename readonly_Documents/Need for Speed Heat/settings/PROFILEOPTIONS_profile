@@ -35,7 +35,7 @@ GstRender.MeshQuality 2
 GstRender.MotionBlurEnabled 1
 GstRender.OverallGraphicsQuality 5
 GstRender.PhotoSensitivityEnabled 0
-GstRender.PostProcessQuality 0
+GstRender.PostProcessQuality 2
 GstRender.ReflectionQuality 2
 GstRender.ResolutionHeight 1080
 GstRender.ResolutionScale 1.000000
