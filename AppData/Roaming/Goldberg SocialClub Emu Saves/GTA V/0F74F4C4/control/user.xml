@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<rage__ControlInput__ControlSettings>
+  <Mappings>
+    <Item>
+      <Input>INPUT_VEH_AIM</Input>
+      <Source>IOMS_KEYBOARD</Source>
+      <Parameters>
+        <Item>KEY_NUMPAD0</Item>
+      </Parameters>
+    </Item>
+  </Mappings>
+</rage__ControlInput__ControlSettings>
