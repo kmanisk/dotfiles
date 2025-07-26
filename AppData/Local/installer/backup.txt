@@ -25,3 +25,6 @@ scoop config:
 font:
     winget(jetbrains) : JetBrainsMono Nerd Font (name)
     scoop (nerdfont) : JetBrainsMono Nerd Font Mono (name)
+
+pwsh:
+     [Environment]::SetEnvironmentVariable('POWERSHELL_UPDATECHECK', 'Off', 'Machine')
