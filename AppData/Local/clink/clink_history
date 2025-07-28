@@ -590,8 +590,10 @@ scoop update dotnet
 |	time=1753346355
 pwsh
 |	time=1753346357
-powershell
+|owershell
 |	time=1753346833
 scoop 
 |	time=1753346836
+|owershell
+|	time=1753347112
 powershell
