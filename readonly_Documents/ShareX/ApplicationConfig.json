@@ -647,7 +647,7 @@
   "TaskbarProgressEnabled": true,
   "UseWhiteShareXIcon": false,
   "RememberMainFormPosition": false,
-  "MainFormPosition": "795, 285",
+  "MainFormPosition": "530, 270",
   "RememberMainFormSize": false,
   "MainFormSize": "860, 525",
   "TrayLeftClickAction": "RectangleRegion",
@@ -874,30 +874,6 @@
   "HistoryCheckURL": false,
   "RecentTasks": [
     {
-      "FilePath": "C:\\Users\\Manisk\\Nox_share\\Download\\DCIM\\2024-12\\cs2_eMhtU4I7Vz.jpg",
-      "URL": null,
-      "ThumbnailURL": null,
-      "DeletionURL": null,
-      "ShortenedURL": null,
-      "Time": "2024-12-10T15:52:20.5383849Z"
-    },
-    {
-      "FilePath": "C:\\Users\\Manisk\\Nox_share\\Download\\DCIM\\2024-12\\cs2_zv7KdeU5O9.jpg",
-      "URL": null,
-      "ThumbnailURL": null,
-      "DeletionURL": null,
-      "ShortenedURL": null,
-      "Time": "2024-12-10T15:52:22.7752675Z"
-    },
-    {
-      "FilePath": "C:\\Users\\Manisk\\Nox_share\\Download\\DCIM\\2024-12\\cs2_39MOezdHt3.jpg",
-      "URL": null,
-      "ThumbnailURL": null,
-      "DeletionURL": null,
-      "ShortenedURL": null,
-      "Time": "2024-12-10T16:57:47.6813694Z"
-    },
-    {
       "FilePath": "C:\\Users\\Manisk\\Nox_share\\Download\\DCIM\\2024-12\\cs2_pTT4MGyAHl.jpg",
       "URL": null,
       "ThumbnailURL": null,
@@ -952,6 +928,30 @@
       "DeletionURL": null,
       "ShortenedURL": null,
       "Time": "2025-06-09T13:09:51.9658795Z"
+    },
+    {
+      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-07\\brave_E79K5x7wgD.png",
+      "URL": null,
+      "ThumbnailURL": null,
+      "DeletionURL": null,
+      "ShortenedURL": null,
+      "Time": "2025-07-31T13:13:29.0769926Z"
+    },
+    {
+      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-07\\brave_Li7Dr7Ma0x.png",
+      "URL": null,
+      "ThumbnailURL": null,
+      "DeletionURL": null,
+      "ShortenedURL": null,
+      "Time": "2025-07-31T13:13:49.069326Z"
+    },
+    {
+      "FilePath": "C:\\Users\\Administrator\\Nox_share\\Download\\DCIM\\2025-07\\brave_ixLNs8h18w.png",
+      "URL": null,
+      "ThumbnailURL": null,
+      "DeletionURL": null,
+      "ShortenedURL": null,
+      "Time": "2025-07-31T14:12:40.145563Z"
     }
   ],
   "RecentTasksSave": true,

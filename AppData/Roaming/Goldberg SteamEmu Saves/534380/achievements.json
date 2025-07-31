@@ -256,7 +256,7 @@
     "earned_time": 0
   },
   "ACH_9": {
-    "earned": false,
-    "earned_time": 0
+    "earned": true,
+    "earned_time": 1753830320
   }
 }
