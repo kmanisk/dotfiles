@@ -14,6 +14,7 @@
     "full": [
       "7zip",
       "teracopy-np",
+      "extras/autohotkey",
       "fzf",
       "psfzf",
       "less",
@@ -57,7 +58,7 @@
     ]
   },
   "choco": {
-    "mini": ["7zip", "autohotkey", "zoxide --version=0.9.0","oh-my-posh"],
+    "mini": ["7zip", "zoxide --version=0.9.0","oh-my-posh"],
     "full": [
       "7zip",
       "f.lux",
@@ -71,7 +72,6 @@
       "everything",
       "vlc",
       "tldr-plusplus",
-      "autohotkey",
       "zoxide --version=0.9.0",
       "irfanview"
     ]
