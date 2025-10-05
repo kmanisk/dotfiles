@@ -13,7 +13,7 @@
     "TextFileDestination": "Dropbox",
     "FileDestination": "Dropbox",
     "URLShortenerDestination": "BITLY",
-    "URLSharingServiceDestination": "Twitter",
+    "URLSharingServiceDestination": "Email",
     "OverrideFTP": false,
     "FTPIndex": 0,
     "OverrideCustomUploader": false,
@@ -129,6 +129,7 @@
       "CaptureShadowOffset": 100,
       "CaptureClientArea": false,
       "CaptureAutoHideTaskbar": false,
+      "CaptureAutoHideDesktopIcons": false,
       "CaptureCustomRegion": "0, 0, 0, 0",
       "CaptureCustomWindow": "",
       "SurfaceOptions": {
@@ -217,7 +218,7 @@
             "AlignmentHorizontal": "Center",
             "AlignmentVertical": "Center",
             "Gradient": false,
-            "Color2": "240, 240, 240",
+            "Color2": "ButtonFace",
             "GradientMode": "Vertical",
             "EnterKeyNewLine": false
           },
@@ -233,7 +234,7 @@
             "AlignmentHorizontal": "Center",
             "AlignmentVertical": "Center",
             "Gradient": false,
-            "Color2": "240, 240, 240",
+            "Color2": "ButtonFace",
             "GradientMode": "Vertical",
             "EnterKeyNewLine": false
           },
@@ -327,6 +328,7 @@
         "StartDelay": 300,
         "AutoScrollTop": false,
         "ScrollDelay": 300,
+        "ScrollMethod": "MouseWheel",
         "ScrollAmount": 2,
         "AutoIgnoreBottomEdge": true,
         "AutoUpload": false,
@@ -818,7 +820,6 @@
     "ImageShack",
     "Flickr",
     "Photobucket",
-    "Twitter",
     "Chevereto",
     "Vgyme",
     "CustomImageUploader",
@@ -854,7 +855,6 @@
     "Pushbullet",
     "SendSpace",
     "Localhostr",
-    "Jira",
     "Lambda",
     "Pomf",
     "Uguu",
@@ -968,7 +968,8 @@
     },
     "SplitterDistance": 550,
     "RememberSearchText": false,
-    "SearchText": ""
+    "SearchText": "",
+    "Favorites": false
   },
   "ImageHistorySettings": {
     "RememberWindowState": true,
@@ -980,8 +981,10 @@
     "ThumbnailSize": "150, 150",
     "MaxItemCount": 250,
     "FilterMissingFiles": false,
+    "ImageOnly": true,
     "RememberSearchText": false,
-    "SearchText": ""
+    "SearchText": "",
+    "Favorites": false
   },
   "DontShowPrintSettingsDialog": false,
   "PrintSettings": {
@@ -1036,7 +1039,6 @@
   "RotateImageByExifOrientationData": true,
   "PNGStripColorSpaceInformation": false,
   "DisableUpload": false,
-  "AcceptInvalidSSLCertificates": false,
   "URLEncodeIgnoreEmoji": true,
   "ShowUploadWarning": false,
   "ShowMultiUploadWarning": true,
@@ -1049,5 +1051,5 @@
   "DropAlignment": "BottomRight",
   "DropOpacity": 100,
   "DropHoverOpacity": 255,
-  "ApplicationVersion": "17.1.0"
+  "ApplicationVersion": "18.0.1"
 }

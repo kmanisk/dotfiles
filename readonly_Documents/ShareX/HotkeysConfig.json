@@ -19,7 +19,7 @@
         "TextFileDestination": "Dropbox",
         "FileDestination": "Dropbox",
         "URLShortenerDestination": "BITLY",
-        "URLSharingServiceDestination": "Twitter",
+        "URLSharingServiceDestination": "Email",
         "OverrideFTP": false,
         "FTPIndex": 0,
         "OverrideCustomUploader": false,
@@ -63,7 +63,7 @@
         "TextFileDestination": "Dropbox",
         "FileDestination": "Dropbox",
         "URLShortenerDestination": "BITLY",
-        "URLSharingServiceDestination": "Twitter",
+        "URLSharingServiceDestination": "Email",
         "OverrideFTP": false,
         "FTPIndex": 0,
         "OverrideCustomUploader": false,
@@ -107,7 +107,7 @@
         "TextFileDestination": "Dropbox",
         "FileDestination": "Dropbox",
         "URLShortenerDestination": "BITLY",
-        "URLSharingServiceDestination": "Twitter",
+        "URLSharingServiceDestination": "Email",
         "OverrideFTP": false,
         "FTPIndex": 0,
         "OverrideCustomUploader": false,
@@ -151,7 +151,7 @@
         "TextFileDestination": "Dropbox",
         "FileDestination": "Dropbox",
         "URLShortenerDestination": "BITLY",
-        "URLSharingServiceDestination": "Twitter",
+        "URLSharingServiceDestination": "Email",
         "OverrideFTP": false,
         "FTPIndex": 0,
         "OverrideCustomUploader": false,
@@ -195,7 +195,7 @@
         "TextFileDestination": "Dropbox",
         "FileDestination": "Dropbox",
         "URLShortenerDestination": "BITLY",
-        "URLSharingServiceDestination": "Twitter",
+        "URLSharingServiceDestination": "Email",
         "OverrideFTP": false,
         "FTPIndex": 0,
         "OverrideCustomUploader": false,
@@ -221,5 +221,5 @@
       }
     }
   ],
-  "ApplicationVersion": "17.1.0"
+  "ApplicationVersion": "18.0.1"
 }

@@ -119,9 +119,6 @@
   "EmailDefaultBody": "Screenshot is attached.",
   "EmailAutomaticSend": false,
   "EmailAutomaticSendTo": "",
-  "JiraHost": "http://",
-  "JiraIssuePrefix": "PROJECT-",
-  "JiraOAuthInfo": null,
   "MegaAuthInfos": null,
   "MegaParentNodeId": null,
   "AmazonS3Settings": {
@@ -181,7 +178,6 @@
   "SeafileEncryptedLibraryPassword": "",
   "SeafileCreateShareableURL": true,
   "SeafileCreateShareableURLRaw": false,
-  "SeafileIgnoreInvalidCert": false,
   "SeafileShareDaysToExpire": 0,
   "SeafileSharePassword": "",
   "SeafileAccInfoEmail": "",
@@ -251,15 +247,11 @@
   },
   "ZeroWidthShortenerURL": "https://api.zws.im",
   "ZeroWidthShortenerToken": "",
-  "TwitterOAuthInfoList": [],
-  "TwitterSelectedAccount": -1,
-  "TwitterSkipMessageBox": false,
-  "TwitterDefaultMessage": "",
   "CustomUploadersList": [],
   "CustomImageUploaderSelected": 0,
   "CustomTextUploaderSelected": 0,
   "CustomFileUploaderSelected": 0,
   "CustomURLShortenerSelected": 0,
   "CustomURLSharingServiceSelected": 0,
-  "ApplicationVersion": "17.1.0"
+  "ApplicationVersion": "18.0.1"
 }

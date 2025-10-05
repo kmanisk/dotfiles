@@ -777,7 +777,16 @@ function unzip ($file) {
     $fullFile = Get-ChildItem -Path $pwd -Filter $file | ForEach-Object { $_.FullName }
     Expand-Archive -Path $fullFile -DestinationPath $pwd
 }
-
+function isadmin{
+$isAdmin = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+if($isAdmin)
+{
+    Write-Host "Yes" -ForegroundColor Green
+}
+else{
+    Write-Host "No" -ForegroundColor Red
+}
+}
 # Open WinUtil full-release
 function winutil {
     irm https://christitus.com/win | iex
