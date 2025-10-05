@@ -22,7 +22,9 @@ if ($PSVersionTable.PSVersion.Major -ge 7) {
     }
     Import-Module -Name Terminal-Icons -ErrorAction SilentlyContinue
 }
-
+function showpack{
+    nvim "$HOMEA\AppData\Local\installer\packages.json"
+}
 # For PSReadLine
 if ($PSVersionTable.PSVersion.Major -ge 7) {
     if (!(Get-Module -ListAvailable -Name PSReadLine)) {

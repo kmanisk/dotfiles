@@ -46,7 +46,8 @@
       "chawyehsu_dorado/powershell",
       "extras/revouninstaller"
     ],
-    "global": ["nerd-fonts/JetBrainsMono-NF"]
+    "global": ["nerd-fonts/JetBrainsMono-NF",
+    "nerd-fonts/Iosevka-NF-Mono"]
   },
   "winget": {
     "mini": ["chrisant996.Clink"],
