@@ -114,3 +114,5 @@ CapsLock & '::Send("{PgDn}")
 
 ; --- Deletes a file or a single char ---
 CapsLock & d::Send "{Delete}"
+
+!Backspace::Send("!{Left}")   ; Alt + Backspace → Alt + Left Arrow

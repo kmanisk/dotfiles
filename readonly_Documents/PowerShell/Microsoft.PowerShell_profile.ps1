@@ -413,7 +413,7 @@ else {
 # Alias zi to cdi
 #Set-Alias -Name zi -Value cdi
 #Set-Alias -Name z -Value cd
-
+Set-Alias ng "C:\Users\Manisk\scoop\shims\neovide.exe"
 Set-Alias -Name vim -Value nvim
 Set-Alias -Name nivm -Value nvim
 Set-Alias -Name vi -Value nvim
