@@ -1153,6 +1153,18 @@
 					"prefix": "vs/",
 					"priority": 0,
 					"url": "https://marketplace.visualstudio.com/search?term={{query}}&target=VSCode&category=All%20categories&sortBy=Relevance"
+				},
+				{
+					"encodeSearchTerm": true,
+					"icon": {
+						"parameter": "https://dodi-repacks.site/favicon.ico",
+						"type": "URL"
+					},
+					"isFallback": false,
+					"name": "Dodi Repacks ",
+					"prefix": "dodi/",
+					"priority": 0,
+					"url": "https://dodi-repacks.site/?s={{query}}"
 				}
 			]
 		},

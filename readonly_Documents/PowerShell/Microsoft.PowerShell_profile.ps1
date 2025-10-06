@@ -817,6 +817,7 @@ function mkcd { param($dir) mkdir $dir -Force; Set-Location $dir }
 
 Set-Alias -Name ':q' -Value exit
 #function lab {cd "c:\new"}
+#edited here
 Set-PSReadLineOption -EditMode Vi
 function edit { cd "C:\Users\Manisk\AppData\Local\nvim" }
 Set-Alias -Name gna -Value Get-NetAdapter

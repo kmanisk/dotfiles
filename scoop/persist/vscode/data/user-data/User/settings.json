@@ -20,17 +20,31 @@
 	"editor.showFoldingControls": "always",
 	"editor.tabSize": 4,
 	"workbench.sideBar.location": "right",
-	"editor.fontSize": 17,
-	"editor.lineHeight": 26,
+	// "editor.fontSize": 17, jetbrains
+	// new is Iosevka
+	"editor.fontSize": 21,
+	"editor.lineHeight": 35,
+	// original linehieght 26 for jetbrains 
 	"breadcrumbs.enabled": false,
-	"editor.fontFamily": "JetBrainsMono NF,Josefin Sans",
+	"editor.fontFamily": "Iosevka Nerd Font",
+	// "editor.fontFamily": "JetBrainsMono NF,Josefin Sans",
 	// "editor.fontFamily": "JetbrainsMono NF,JetBrainsMono Nerd Font, FiraCode Nerd Font",
 	// "editor.fontFamily": "'FiraCode Nerd Font Mono','JetBrainsMonoNL Nerd Font Mono','JetBrainsMono Nerd Font Mono','JetBrainsMono Nerd Font', monospace",
 	// "editor.fontFamily": "'Hack Nerd Font Mono', 'Hack Nerd Font', 'JetBrainsMonoNL Nerd Font Mono', 'JetBrainsMono Nerd Font Mono', 'JetBrainsMono Nerd Font', monospace",
-	// Terminal
-	"terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font', 'monospace', monospace",
+	// Terminal Old 
+	// "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font', 'monospace', monospace",
+	// "screencastMode.fontSize": 36,
+	// "terminal.integrated.fontSize": 16,
+	// "screencastMode.verticalOffset": 1,
+	// "editor.fontLigatures": true,
+	// "editor.wordWrap": "on",
+	// "editor.wrappingIndent": "same",
+	// "editor.lineNumbers": "relative",
+	// "editor.wordWrapColumn": 60,
+	// Terminal New
+	"terminal.integrated.fontFamily": "Iosevka Nerd Font",
 	"screencastMode.fontSize": 36,
-	"terminal.integrated.fontSize": 16,
+	"terminal.integrated.fontSize": 19,
 	"screencastMode.verticalOffset": 1,
 	"editor.fontLigatures": true,
 	"editor.wordWrap": "on",
@@ -269,7 +283,7 @@
 			"param": "-g '*.$1'"
 		}
 	],
-	"workbench.colorTheme": "PyCharm Night Theme",
+	"workbench.colorTheme": "One Dark Pro Darker",
 	"window.menuBarVisibility": "compact",
 	"workbench.iconTheme": "material-icon-theme",
 	"extensions.ignoreRecommendations": true,

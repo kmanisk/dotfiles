@@ -622,4 +622,8 @@ dir
 |	time=1759590148
 nvim settings.json 
 |	time=1759660754
+|inget uninstall --id Microsoft.WindowsTerminal
+|	time=1759660773
+wingwinget uninstall --id Microsoft.WindowsTerminal
+|	time=1759660776
 winget uninstall --id Microsoft.WindowsTerminal

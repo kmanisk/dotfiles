@@ -1,159 +1,116 @@
-﻿; Disable Caps Lock and map it to Escape
-CapsLock::
-    SetCapsLockState, AlwaysOff  ; Ensure Caps Lock is always off
-    Send, {Esc}
-return
+﻿#Requires AutoHotkey v2.0
+#SingleInstance Force
 
-; windows and d to do the minimize all
-; CapsLock & Space::Send #d
-
-; Remap Caps Lock + N to Enter
-CapsLock & n::Send, {Enter}
-
-; Map CapsLock + ; to send End and Enter
-CapsLock & `;::
-Send, {End}  ; Send the End key
-Send, {Enter}  ; Send the Enter key
-Return
-
-CapsLock & i::
-Send, ^a  ; Send Ctrl + A
-Send, {Backspace}  ; Send Backspace to delete all characters
-Return
-
-^+`;::  ; Ctrl + Shift + ;
-    ; Set the full path to the program
-    progToRun := "C:\Program Files\ueli\ueli.exe"
-    progName := "ueli.exe"  ; Use just the executable name to identify the process
-
-    ; Check if the program is already running by process name
-    Process, Exist, %progName%
-    if (ErrorLevel)
-    {
-        ; If the process is running, close it
-        Process, Close, %ErrorLevel%
-    }
-    else
-    {
-        ; If the process is not running, start it
-        Run, %progToRun%
-    }
-return
-
-; This triggers on Ctrl+Shift+[
-^+[::
-    Run, "wt.exe"
-return
-
-CapsLock & g::
-{
-    Send, ^a  ; Send Ctrl + A (Select All)
-    Send, ^c  ; Send Ctrl + C (Copy)
-    Send, {Right}  ; Send Right Arrow key
-    Return
+; --- Admin auto-elevate (optional) ---
+if !A_IsAdmin {
+    Run '*RunAs "' A_ScriptFullPath '"'
+    ExitApp
 }
 
+; --- Disable Caps Lock and map it to Escape ---
+CapsLock::
+{
+    SetCapsLockState("AlwaysOff")
+    Send("{Esc}")
+}
 
-; Vim-Like Navigation with CapsLock + H, J, K, L
-CapsLock & h::Send {Left}    ; Move cursor left
-CapsLock & j::Send {Down}    ; Move cursor down
-CapsLock & k::Send {Up}      ; Move cursor up
-CapsLock & l::Send {Right}   ; Move cursor right
-return
+; --- Remap CapsLock + N to Enter ---
+CapsLock & n::Send("{Enter}")
 
-; Map CapsLock + Y to Ctrl + Z (Undo)
-CapsLock & y::Send, ^z  ; Send Ctrl + Z for Undo
-return
+; --- Map CapsLock + ; to send End and Enter ---
+CapsLock & `;::
+{
+    Send("{End}")
+    Send("{Enter}")
+}
 
+; --- CapsLock + i: Select all and delete ---
+CapsLock & i::
+{
+    Send("^a")
+    Send("{Backspace}")
+}
 
-; Map CapsLock + / to Alt + F4
-CapsLock & /::Send !{F4}
+; --- Ctrl + Shift + ;  toggle Ueli ---
+^+`;::
+{
+    progToRun := "C:\Program Files\ueli\ueli.exe"
+    progName := "ueli.exe"
 
-; Map CapsLock + O/P for word movement (Ctrl + Arrow)
-CapsLock & o::
-    Send ^{Left}  ; Move left by word
-return
+    if ProcessExist(progName)
+        ProcessClose(progName)
+    else
+        Run(progToRun)
+}
 
-CapsLock & p::
-    Send ^{Right} ; Move right by word
-return
+; --- Ctrl + Shift + [  opens Windows Terminal ---
+^+[::
+{
+    Run("wt.exe")
+}
 
-; Map CapsLock + M to delete the character to the left (normal Backspace)
-CapsLock & m::
-    Send {Backspace}  ; Delete character to the left
-return
+; --- CapsLock + g: Copy all and move right ---
+CapsLock & g::
+{
+    Send("^a")
+    Send("^c")
+    Send("{Right}")
+}
 
-; Map CapsLock + u to delete the previous word (like Ctrl + Backspace)
-CapsLock & u::
-    Send ^{Backspace}  ; Delete previous word
-return
+; --- Vim-like navigation ---
+CapsLock & h::Send("{Left}")
+CapsLock & j::Send("{Down}")
+CapsLock & k::Send("{Up}")
+CapsLock & l::Send("{Right}")
 
-;CapsLock & v::
-;    MsgBox, Current AutoHotkey version: %A_AhkVersion%
-;Return
+; --- Undo ---
+CapsLock & y::Send("^z")
 
+; --- Close window ---
+CapsLock & /::Send("!{F4}")
 
-; Map CapsLock + Number Row to Function Keys (F1 - F10)
-CapsLock & 1::Send {F1}
-CapsLock & 2::Send {F2}
-CapsLock & 3::Send {F3}
-CapsLock & 4::Send {F4}
-CapsLock & 5::Send {F5}
-CapsLock & 6::Send {F6}
-CapsLock & 7::Send {F7}
-CapsLock & 8::Send {F8}
-CapsLock & 9::Send {F9}
-CapsLock & 0::Send {F10}
-CapsLock & -::Send {F11}
-CapsLock & =::Send {F12}
+; --- Word navigation ---
+CapsLock & o::Send("^{Left}")
+CapsLock & p::Send("^{Right}")
 
-; For non-bound letter keys, send the lowercase character
-CapsLock & a::Send a
-CapsLock & b::Send b
-CapsLock & c::Send c
-CapsLock & d::Send d
-CapsLock & e::Send e
-CapsLock & f::Send f
-;CapsLock & g::Send g
-CapsLock & q::Send q
-CapsLock & s::Send s
-CapsLock & t::Send t
-CapsLock & v::Send v
-CapsLock & w::Send w
-CapsLock & x::Send x
-CapsLock & z::Send z
+; --- Delete character ---
+CapsLock & m::Send("{Backspace}")
 
-; Map CapsLock + , (Comma) to Ctrl + C (Copy)
-CapsLock & ,::Send, ^c  ; Send Ctrl + C for Copy
+; --- Delete previous word ---
+CapsLock & u::Send("^{Backspace}")
 
-; Map CapsLock + . (Period) to Ctrl + V (Paste)
-CapsLock & .::Send, ^v  ; Send Ctrl + V for Paste
-return
+; --- Function key mappings ---
+CapsLock & 1::Send("{F1}")
+CapsLock & 2::Send("{F2}")
+CapsLock & 3::Send("{F3}")
+CapsLock & 4::Send("{F4}")
+CapsLock & 5::Send("{F5}")
+CapsLock & 6::Send("{F6}")
+CapsLock & 7::Send("{F7}")
+CapsLock & 8::Send("{F8}")
+CapsLock & 9::Send("{F9}")
+CapsLock & 0::Send("{F10}")
+CapsLock & -::Send("{F11}")
+CapsLock & =::Send("{F12}")
 
+; --- Letter passthrough ---
+for key in ["a","b","c","d","e","f","q","s","t","v","w","x","z"]
+    Hotkey("CapsLock & " key, (*) => Send(key))
 
-; Map Alt + Caps Lock to Alt + F4
-;!CapsLock:: 
-;{
-;    Send, !{F4}
-;    return
-;}
+; --- Copy/Paste shortcuts ---
+; CapsLock & ,::Send("^c")
+CapsLock & .::Send("^v")
 
-; Use Caps Lock + [ to Page Up
-CapsLock & [::
-    Send, {PgUp}
-    return
+; --- Copy all (Ctrl+A then Ctrl+C) ---
+CapsLock & ,::
+{
+    Send("^a")
+    Sleep(50)
+    Send("^c")
+}
+; --- Page Up / Down ---
+CapsLock & [::Send("{PgUp}")
+CapsLock & '::Send("{PgDn}")
 
-; Use Caps Lock + ' to Page Down
-CapsLock & '::
-    Send, {PgDn}
-    return
-
-; Scroll down
-;!+j::
-;Send, {WheelDown}
-;return
-
-; Scroll up
-;!+k::
-;Send, {WheelUp}
-;return
+; --- Deletes a file or a single char ---
+CapsLock & d::Send "{Delete}"
