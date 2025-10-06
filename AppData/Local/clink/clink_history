@@ -554,9 +554,9 @@ choco upgrade all
 |	time=1742718020
 |wsh
 |	time=1742719606
-ls
+|s
 |	time=1742719607
-dir
+|ir
 |	time=1742719608
 lsd
 |	time=1751896126
@@ -597,3 +597,29 @@ scoop
 |owershell
 |	time=1753347112
 powershell
+|	time=1759590115
+|i
+|	time=1759590116
+vifm
+|	time=1759590118
+vi
+|	time=1759590119
+vim 
+|	time=1759590121
+nvi 
+|	time=1759590122
+nvim 
+|	time=1759590135
+clear
+|	time=1759590137
+cls
+|	time=1759590140
+ls
+|	time=1759590141
+di
+|	time=1759590142
+dir
+|	time=1759590148
+nvim settings.json 
+|	time=1759660754
+winget uninstall --id Microsoft.WindowsTerminal

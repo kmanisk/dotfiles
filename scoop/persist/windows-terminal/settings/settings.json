@@ -240,12 +240,16 @@
             "keys": "ctrl+shift+f"
         },
         {
+            "id": null,
+            "keys": "ctrl+shift+w"
+        },
+        {
             "id": "User.newTab.F4C304FB",
             "keys": "alt+shift+c"
         },
         {
             "id": null,
-            "keys": "ctrl+shift+w"
+            "keys": "ctrl+alt+k"
         },
         {
             "id": null,
@@ -254,10 +258,6 @@
         {
             "id": null,
             "keys": "alt+down"
-        },
-        {
-            "id": null,
-            "keys": "ctrl+alt+k"
         },
         {
             "id": null,
@@ -281,11 +281,11 @@
         },
         {
             "id": null,
-            "keys": "ctrl+shift+2"
+            "keys": "ctrl+shift+5"
         },
         {
             "id": null,
-            "keys": "ctrl+shift+5"
+            "keys": "ctrl+shift+2"
         },
         {
             "id": null,
@@ -340,6 +340,10 @@
             "keys": "ctrl+alt+j"
         },
         {
+            "id": null,
+            "keys": "alt+n"
+        },
+        {
             "id": "User.splitPane.A6751878",
             "keys": "alt+shift+d"
         },
@@ -350,10 +354,6 @@
         {
             "id": null,
             "keys": "ctrl+minus"
-        },
-        {
-            "id": null,
-            "keys": "alt+n"
         },
         {
             "id": null,
@@ -486,6 +486,10 @@
         {
             "id": "User.scrollDown.0",
             "keys": "alt+shift+j"
+        },
+        {
+            "id": "User.paste",
+            "keys": "alt+shift+v"
         }
     ],
     "newTabMenu": 
@@ -502,12 +506,13 @@
             "backgroundImageOpacity": 0.07,
             "colorScheme": "GruvboxDarkHard",
             "cursorShape": "filledBox",
+            "elevate": true,
             "experimental.retroTerminalEffect": false,
             "font": 
             {
                 "builtinGlyphs": true,
-                "face": "JetBrainsMono Nerd Font",
-                "size": 14
+                "face": "Iosevka Nerd Font",
+                "size": 15
             },
             "icon": null,
             "opacity": 77,
@@ -522,16 +527,16 @@
                 "bellStyle": "none",
                 "colorScheme": "Sonokai Shusia",
                 "experimental.retroTerminalEffect": false,
-                "experimental.rightClickContextMenu": false,
                 "font": 
                 {
-                    "face": "JetBrainsMono Nerd Font"
+                    "face": "Iosevka Nerd Font"
                 },
                 "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
                 "hidden": false,
                 "name": "PowerShell",
                 "opacity": 100,
                 "padding": "8",
+                "rightClickContextMenu": false,
                 "scrollbarState": "hidden",
                 "source": "Windows.Terminal.PowershellCore",
                 "tabColor": "#09143A",
@@ -562,6 +567,12 @@
                 "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
                 "hidden": false,
                 "name": "Command Prompt"
+            },
+            {
+                "guid": "{957431f6-5d97-5a32-a21d-46bddac957ca}",
+                "hidden": false,
+                "name": "archlinux",
+                "source": "Microsoft.WSL"
             }
         ]
     },
