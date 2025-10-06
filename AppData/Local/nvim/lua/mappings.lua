@@ -141,9 +141,9 @@ function InputCommand()
     vim.cmd("!" .. command)
 end
 
--- map({ "n", "t" }, "<A-i>", function()
--- 	require("nvchad.term").toggle({ pos = "float", id = "floatTerm" })
--- end, { desc = "terminal toggle floating term" })
+map({ "n", "t" }, "<A-i>", function()
+    require("nvchad.term").toggle({ pos = "float", id = "floatTerm" })
+end, { desc = "terminal toggle floating term" })
 
 --
 --
