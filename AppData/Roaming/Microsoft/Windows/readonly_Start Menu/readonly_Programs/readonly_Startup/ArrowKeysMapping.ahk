@@ -94,7 +94,7 @@ CapsLock & -::Send("{F11}")
 CapsLock & =::Send("{F12}")
 
 ; --- Letter passthrough ---
-for key in ["a","b","c","d","e","f","q","s","t","v","w","x","z"]
+for key in ["a","b","c","d","e","q","s","t","v","w","x","z"]
     Hotkey("CapsLock & " key, (*) => Send(key))
 
 ; --- Copy/Paste shortcuts ---
@@ -114,5 +114,6 @@ CapsLock & '::Send("{PgDn}")
 
 ; --- Deletes a file or a single char ---
 CapsLock & d::Send "{Delete}"
-
+; --- CapsLock + f = Ctrl + f ---
+CapsLock & f::Send("^f")
 !Backspace::Send("!{Left}")   ; Alt + Backspace → Alt + Left Arrow
