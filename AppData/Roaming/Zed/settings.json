@@ -7,6 +7,7 @@
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
   //tab width
+  "ui_font_family": "Iosevka Nerd Font",
   "tabs": {
     // "file_icons": true,
     "git_status": true,
@@ -52,18 +53,18 @@
     "use_system_clipboard": "on_yank"
   },
   "vim_mode": true,
-  "ui_font_size": 18,
-  "buffer_font_size": 18,
+  "ui_font_size": 19.0,
+  "buffer_font_size": 19.0,
   "buffer_font_features": {
     "liga": true
   },
   "theme": {
     "mode": "system",
-    "light": "One Light",
+    "light": "Gruvbox Light",
     "dark": "Gruvbox Dark"
   },
   "relative_line_numbers": true,
-  "buffer_font_family": "JetBrainsMono NF",
+  "buffer_font_family": "Iosevka Nerd Font",
   "scrollbar": {
     "show": "never"
   },

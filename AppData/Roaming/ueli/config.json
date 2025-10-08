@@ -71,7 +71,7 @@
 		"commandlineOptions": {
 			"isEnabled": true,
 			"prefix": ":",
-			"shell": "Powershell in Windows Terminal"
+			"shell": "PowerShell Core"
 		},
 		"controlPanelOptions": {
 			"isEnabled": true
@@ -634,30 +634,6 @@
 						"type": "URL"
 					},
 					"name": "codium",
-					"needsUserConfirmationBeforeExecution": false,
-					"tags": [],
-					"type": "File path"
-				},
-				{
-					"description": "",
-					"executionArgument": "C:\\Program Files\\Microsoft VS Code\\Code.exe",
-					"icon": {
-						"parameter": "",
-						"type": "URL"
-					},
-					"name": "vscode",
-					"needsUserConfirmationBeforeExecution": false,
-					"tags": [],
-					"type": "File path"
-				},
-				{
-					"description": "",
-					"executionArgument": "C:\\Users\\Administrator\\Desktop\\LS\\this.cmd",
-					"icon": {
-						"parameter": "",
-						"type": "URL"
-					},
-					"name": "upgrade",
 					"needsUserConfirmationBeforeExecution": false,
 					"tags": [],
 					"type": "File path"
