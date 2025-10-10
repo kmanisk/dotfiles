@@ -2,14 +2,14 @@
 local M = {}
 -- UI Configuration
 M.ui = {
-    theme = "catppuccin", -- Set the theme for Neovim
+    theme = "vscode_dark", -- Set the theme for Neovim
     transparency = true, -- Enable transparency
     -- default/vscode/vscode_colored/minimal
     -- default/round/block/arrow separators work only for default statusline theme
     -- round and block will work for minimal theme only
     -- statusline configuration (if you want to use it)
     statusline = {
-        theme = "minimal", -- default/vscode/vscode_colored/minimal
+        theme = "vscode", -- default/vscode/vscode_colored/minimal
         separator_style = "round",
         order = nil,
         modules = nil,
@@ -34,12 +34,12 @@ M.ui = {
 }
 
 M.base46 = {
-    theme = "catppuccin", -- Change to your preferred base46 theme (e.g., 'tokyonight', 'gruvbox', etc.)
+    theme = "vscode_dark", -- Change to your preferred base46 theme (e.g., 'tokyonight', 'gruvbox', etc.)
     hl_add = {},
     hl_override = {},
     changed_themes = {},
     transparency = false,
-    theme_toggle = { "catppuccin", "one_light" },
+    theme_toggle = { "vscode_dark", "one_light" },
 }
 
 M.nvdash = {

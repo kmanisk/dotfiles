@@ -614,11 +614,11 @@ clear
 |	time=1759590137
 cls
 |	time=1759590140
-ls
+|s
 |	time=1759590141
 di
 |	time=1759590142
-dir
+|ir
 |	time=1759590148
 nvim settings.json 
 |	time=1759660754
@@ -627,3 +627,17 @@ nvim settings.json
 wingwinget uninstall --id Microsoft.WindowsTerminal
 |	time=1759660776
 winget uninstall --id Microsoft.WindowsTerminal
+|	time=1760087796
+|s
+|	time=1760087797
+|s
+|	time=1760087798
+|ir
+|	time=1760087799
+ls
+|	time=1760087799
+dir
+|	time=1760087808
+pwsh 
+|	time=1760088035
+lsdfsf

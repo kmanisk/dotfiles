@@ -46,6 +46,9 @@
                      "pkief.material-icon-theme",
                      "usernamehw.errorlens",
                      "bradlc.vscode-tailwindcss",
-                     "ms-azuretools.vscode-docker"
+                     "ms-azuretools.vscode-docker",
+                     "github.copilot-chat",
+                     "ms-python.vscode-python-envs",
+                     "tamasfe.even-better-toml"
                  ]
 }

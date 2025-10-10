@@ -222,6 +222,13 @@
                 "action": "adjustOpacity"
             },
             "id": "User.adjustOpacity.4C657714"
+        },
+        {
+            "command": 
+            {
+                "action": "closeTab"
+            },
+            "id": "User.closeTab.0"
         }
     ],
     "alwaysShowTabs": false,
@@ -490,6 +497,10 @@
         {
             "id": "User.paste",
             "keys": "alt+shift+v"
+        },
+        {
+            "id": "User.closeTab.0",
+            "keys": "alt+shift+q"
         }
     ],
     "newTabMenu": 
@@ -511,7 +522,7 @@
             "font": 
             {
                 "builtinGlyphs": true,
-                "face": "Iosevka Nerd Font",
+                "face": "Iosevka Nerd Font Mono",
                 "size": 15
             },
             "icon": null,
@@ -529,7 +540,7 @@
                 "experimental.retroTerminalEffect": false,
                 "font": 
                 {
-                    "face": "Iosevka Nerd Font",
+                    "face": "IosevkaTerm Nerd Font Mono",
                     "size": 16
                 },
                 "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
