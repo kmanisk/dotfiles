@@ -26,7 +26,7 @@
 	"editor.lineHeight": 35,
 	// original linehieght 26 for jetbrains 
 	"breadcrumbs.enabled": false,
-	"editor.fontFamily": "Iosevka Nerd Font",
+	"editor.fontFamily": "Iosevka Nerd Font Mono",
 	// "editor.fontFamily": "JetBrainsMono NF,Josefin Sans",
 	// "editor.fontFamily": "JetbrainsMono NF,JetBrainsMono Nerd Font, FiraCode Nerd Font",
 	// "editor.fontFamily": "'FiraCode Nerd Font Mono','JetBrainsMonoNL Nerd Font Mono','JetBrainsMono Nerd Font Mono','JetBrainsMono Nerd Font', monospace",
@@ -42,7 +42,8 @@
 	// "editor.lineNumbers": "relative",
 	// "editor.wordWrapColumn": 60,
 	// Terminal New
-	"terminal.integrated.fontFamily": "Iosevka Nerd Font",
+	"terminal.integrated.fontFamily": "IosevkaTerm Nerd Font Mono",
+	// "terminal.integrated.fontFamily": "Iosevka Nerd Font Mono",
 	"screencastMode.fontSize": 36,
 	"terminal.integrated.fontSize": 19,
 	"screencastMode.verticalOffset": 1,

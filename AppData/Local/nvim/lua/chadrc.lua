@@ -2,7 +2,7 @@
 local M = {}
 -- UI Configuration
 M.ui = {
-    theme = "vscode_dark", -- Set the theme for Neovim
+    theme = "chadracula", -- Set the theme for Neovim
     transparency = true, -- Enable transparency
     -- default/vscode/vscode_colored/minimal
     -- default/round/block/arrow separators work only for default statusline theme
@@ -34,12 +34,12 @@ M.ui = {
 }
 
 M.base46 = {
-    theme = "vscode_dark", -- Change to your preferred base46 theme (e.g., 'tokyonight', 'gruvbox', etc.)
+    theme = "chadracula", -- Change to your preferred base46 theme (e.g., 'tokyonight', 'gruvbox', etc.)
     hl_add = {},
     hl_override = {},
     changed_themes = {},
     transparency = false,
-    theme_toggle = { "vscode_dark", "one_light" },
+    theme_toggle = { "chadracula", "one_light" },
 }
 
 M.nvdash = {

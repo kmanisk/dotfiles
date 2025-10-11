@@ -218,7 +218,7 @@
             "AlignmentHorizontal": "Center",
             "AlignmentVertical": "Center",
             "Gradient": false,
-            "Color2": "240, 240, 240",
+            "Color2": "ButtonFace",
             "GradientMode": "Vertical",
             "EnterKeyNewLine": false
           },
@@ -234,7 +234,7 @@
             "AlignmentHorizontal": "Center",
             "AlignmentVertical": "Center",
             "Gradient": false,
-            "Color2": "240, 240, 240",
+            "Color2": "ButtonFace",
             "GradientMode": "Vertical",
             "EnterKeyNewLine": false
           },
