@@ -1,5 +1,4 @@
 # VSync logic for VSCode/VSCodium extensions
-
 function vsync {
     $vscodeInstalled = Get-Command code -ErrorAction SilentlyContinue
     $vscodiumInstalled = Get-Command codium -ErrorAction SilentlyContinue
@@ -29,10 +28,12 @@ function vsync {
 
         if ($updated) {
             $jsonContent | ConvertTo-Json -Depth 10 | Set-Content -Path $jsonFilePath
-        } else {
+        }
+        else {
             Write-Host "Extensions are already up to date in JSON file." -ForegroundColor Green
         }
-    } else {
+    }
+    else {
         Write-Host "Extensions JSON file not found at $jsonFilePath" -ForegroundColor Red
     }
 }
@@ -43,9 +44,9 @@ function Is-Admin {
     return $identity.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
 }
 
-    if (-not (Is-Admin)) {
-        Write-Host "Warning: This script is not running as administrator. Some operations may fail due to insufficient permissions." -ForegroundColor Yellow
-    }
+if (-not (Is-Admin)) {
+    Write-Host "Warning: This script is not running as administrator. Some operations may fail due to insufficient permissions." -ForegroundColor Yellow
+}
 function pipInstallEssential {
     Write-Host "Installing essential Python packages..."
     
@@ -191,7 +192,8 @@ function Install-Scoop {
         foreach ($bucket in $officialBuckets) {
             if ($existingBuckets -notcontains $bucket) {
                 scoop bucket add $bucket
-            } else {
+            }
+            else {
                 Write-Host "Bucket '$bucket' already exists."
             }
         }
@@ -200,7 +202,8 @@ function Install-Scoop {
         foreach ($bucket in $customBuckets.Keys) {
             if ($existingBuckets -notcontains $bucket) {
                 scoop bucket add $bucket $customBuckets[$bucket]
-            } else {
+            }
+            else {
                 Write-Host "Bucket '$bucket' already exists."
             }
         }
@@ -329,10 +332,12 @@ function Add-AdbToPath {
         try {
             [System.Environment]::SetEnvironmentVariable("Path", $systemPath + ";$adbPath", [System.EnvironmentVariableTarget]::Machine)
             Write-Host "ADB path added successfully." -ForegroundColor Green
-        } catch {
+        }
+        catch {
             Write-Host "Failed to add ADB path. You may need to run as administrator." -ForegroundColor Red
         }
-    } else {
+    }
+    else {
         Write-Host "ADB path is already in the system PATH variable." -ForegroundColor Blue
     }
 }
@@ -506,16 +511,19 @@ function disable-Clipboard {
         if ($currentValue -eq $disabledValue) {
             Write-Host "The cbdhsvc service is already disabled." -ForegroundColor Blue
             Write-Host "To enable it, set 'Start' to 2 in 'HKLM:\SYSTEM\CurrentControlSet\Services\cbdhsvc' via regedit."
-        } else {
+        }
+        else {
             try {
                 Set-ItemProperty -Path $registryPath -Name $valueName -Value $disabledValue -Force
                 Write-Host "The cbdhsvc service has been disabled successfully." -ForegroundColor Green
-            } catch {
+            }
+            catch {
                 Write-Host "Failed to disable cbdhsvc service. Try running as administrator." -ForegroundColor Red
                 Write-Host "To enable it, set 'Start' to 2 in 'HKLM:\SYSTEM\CurrentControlSet\Services\cbdhsvc' via regedit." -ForegroundColor Blue
             }
         }
-    } else {
+    }
+    else {
         Write-Host "The registry path does not exist. The service might not be available on this system."
     }
 
@@ -533,12 +541,14 @@ function disable-Clipboard {
     if ($currentClipboardValue -eq $valueData) {
         Write-Host "Clipboard History is already disabled." -ForegroundColor Blue
         Write-Host "To enable it, set 'AllowClipboardHistory' to 1 in 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\System' via regedit."
-    } else {
+    }
+    else {
         try {
             Set-ItemProperty -Path $registryPath -Name $valueName -Value $valueData -Type DWord
             Write-Host "Clipboard History has been disabled." -ForegroundColor Green
             Write-Host "To enable it, set 'AllowClipboardHistory' to 1 in 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\System' via regedit."
-        } catch {
+        }
+        catch {
             Write-Host "Failed to disable Clipboard History. Try running as administrator." -ForegroundColor Red
             Write-Host "To enable it, set 'AllowClipboardHistory' to 1 in 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\System' via regedit."
         }
@@ -877,7 +887,7 @@ function Set-PermanentMachine {
     Write-Host "Move config folder"
     Move-ConfigFolder
     Write-Host "=============================================================================================================================================="
-    Install-CodeExtensions
+    # ...existing code...
     Write-Host "=============================================================================================================================================="
     Set-Wsl
     Write-Host "=============================================================================================================================================="
@@ -911,8 +921,30 @@ switch ($choice.ToLower()) {
             else {
                 python "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopmini.py"
             }
-        } else {
-            Write-Host "Microsoft Store is NOT installed. Skipping Scoop Python package installation." -ForegroundColor Yellow
+        }
+        else {
+            Write-Host "Microsoft Store is NOT installed. Attempting to add Microsoft Store..." -ForegroundColor Yellow
+            $storeZipUrl = "https://github.com/QuangVNMC/LTSC-Add-Microsoft-Store/releases/download/Bruh/LTSC-Add-Microsoft-Store.zip"
+            $tempDir = [System.IO.Path]::GetTempPath()
+            $storeZipPath = Join-Path $tempDir "LTSC-Add-Microsoft-Store.zip"
+            $extractPath = Join-Path $tempDir "LTSC-Add-Microsoft-Store"
+            Write-Host "Downloading Microsoft Store installer zip to temp directory..." -ForegroundColor Cyan
+            Invoke-WebRequest -Uri $storeZipUrl -OutFile $storeZipPath
+            Write-Host "Extracting zip in temp directory..." -ForegroundColor Cyan
+            if (-not (Get-Command Expand-Archive -ErrorAction SilentlyContinue)) {
+                Write-Host "Expand-Archive not found. Please extract manually." -ForegroundColor Red
+            }
+            else {
+                Expand-Archive -Path $storeZipPath -DestinationPath $extractPath -Force
+                $cmdFile = Join-Path $extractPath "Add-Store.cmd"
+                if (Test-Path $cmdFile) {
+                    Write-Host "Running Add-Store.cmd to install Microsoft Store..." -ForegroundColor Green
+                    Start-Process -FilePath $cmdFile -Verb RunAs -Wait
+                }
+                else {
+                    Write-Host "Add-Store.cmd not found after extraction!" -ForegroundColor Red
+                }
+            }
         }
         Write-Host "=============================================================================================================================================="
         Install-WingetPackages -packages $config.winget.mini
@@ -932,7 +964,8 @@ switch ($choice.ToLower()) {
             else {
                 python "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopfull.py"
             }
-        } else {
+        }
+        else {
             Write-Host "Microsoft Store is NOT installed. Skipping Scoop Python package installation." -ForegroundColor Yellow
         }
         Write-Host "=============================================================================================================================================="
@@ -943,7 +976,7 @@ switch ($choice.ToLower()) {
         Install-ChocoPackages -packages $config.choco.full
         Write-Host "=============================================================================================================================================="
         Set-PermanentMachine
-		vsync
+        vsync
     }
 }
 Write-Host "Installation completed!" -ForegroundColor Green
@@ -995,7 +1028,8 @@ function Pin-WingetPackage {
             Write-Host "$packageId installed successfully. Pinning the package..."
             winget pin add --id $packageId
             Write-Host "$packageId has been pinned."
-        } catch {
+        }
+        catch {
             Write-Host "Failed to install $packageId. Skipping pinning." -ForegroundColor Red
         }
     }
