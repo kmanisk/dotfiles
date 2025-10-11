@@ -20,7 +20,20 @@
                    "robole.file-bunny",
                    "tamasfe.even-better-toml",
                    "zainchen.json",
-                   "zhuangtongfa.material-theme"
+                   "zhuangtongfa.material-theme",
+                   "ms-vscode.cmake-tools",
+                   "ms-vscode.cpptools",
+                   "ms-vscode.cpptools-extension-pack",
+                   "ms-vscode.cpptools-themes",
+                   "redhat.java",
+                   "visualstudioexptteam.intellicode-api-usage-examples",
+                   "visualstudioexptteam.vscodeintellicode",
+                   "vscjava.vscode-gradle",
+                   "vscjava.vscode-java-debug",
+                   "vscjava.vscode-java-dependency",
+                   "vscjava.vscode-java-pack",
+                   "vscjava.vscode-java-test",
+                   "vscjava.vscode-maven"
                ],
     "vscodium":  [
                      "asvetliakov.vscode-neovim",
@@ -49,6 +62,22 @@
                      "ms-azuretools.vscode-docker",
                      "github.copilot-chat",
                      "ms-python.vscode-python-envs",
-                     "tamasfe.even-better-toml"
+                     "tamasfe.even-better-toml",
+                     "ecmel.vscode-html-css",
+                     "github.copilot",
+                     "ms-vscode.cmake-tools",
+                     "ms-vscode.cpptools",
+                     "ms-vscode.cpptools-extension-pack",
+                     "ms-vscode.cpptools-themes",
+                     "redhat.java",
+                     "visualstudioexptteam.intellicode-api-usage-examples",
+                     "visualstudioexptteam.vscodeintellicode",
+                     "vscjava.vscode-gradle",
+                     "vscjava.vscode-java-debug",
+                     "vscjava.vscode-java-dependency",
+                     "vscjava.vscode-java-pack",
+                     "vscjava.vscode-java-test",
+                     "vscjava.vscode-maven",
+                     "zhuangtongfa.material-theme"
                  ]
 }
