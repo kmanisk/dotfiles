@@ -48,20 +48,29 @@
       "chawyehsu_dorado/powershell",
       "extras/revouninstaller"
     ],
-    "global": ["nerd-fonts/JetBrainsMono-NF",
-    "nerd-fonts/Iosevka-NF-Mono"]
+    "global": [
+      "nerd-fonts/JetBrainsMono-NF",
+      "nerd-fonts/Iosevka-NF-Mono"
+    ]
   },
   "winget": {
-    "mini": ["chrisant996.Clink"],
+    "mini": [
+      "chrisant996.Clink",
+      "JanDeDobbeleer.OhMyPosh"
+    ],
     "full": [
       "chrisant996.Clink",
       "AntibodySoftware.WizTree",
       "Notepad++.Notepad++",
-      "Valve.Steam"
+      "Valve.Steam",
+      "JanDeDobbeleer.OhMyPosh"
     ]
   },
   "choco": {
-    "mini": ["7zip", "zoxide --version=0.9.0","oh-my-posh"],
+    "mini": [
+      "7zip",
+      "zoxide --version=0.9.0"
+    ],
     "full": [
       "7zip",
       "f.lux",
