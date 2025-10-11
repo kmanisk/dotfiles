@@ -603,6 +603,7 @@ function spot {
     }
     else {
         Write-Host "Spotify is already installed at $spotifyPath" -ForegroundColor Green
+        Invoke-Expression "& { $(Invoke-WebRequest -useb 'https://raw.githubusercontent.com/SpotX-Official/spotx-official.github.io/main/run.ps1') } -new_theme"
     }
 }
 
