@@ -596,23 +596,14 @@ function MLWapp {
     Write-Host "MLWapp installation is deprecated and has been commented out." -ForegroundColor Yellow
 }
 function spot {
-    # Deprecated: Spotify installation blocked by antivirus
-    # $spotifyPath = Join-Path $HOME "AppData\Roaming\Spotify\spotify.exe"
-    # if (-not (Test-Path $spotifyPath)) {
-    #     $confirmation = Read-Host "Do you want to install Spotify? (y/n)"
-    #     
-    #     if ($confirmation -eq 'y') {
-    #         Write-Host "Installing Spotify..."
-    #         Invoke-Expression "& { $(Invoke-WebRequest -useb 'https://raw.githubusercontent.com/SpotX-Official/spotx-official.github.io/main/run.ps1') } -new_theme"
-    #     }
-    #     else {
-    #         Write-Host "Operation Skipped" -ForegroundColor DarkMagenta
-    #     }
-    # }
-    # else {
-    #     Write-Host "Spotify is already installed at $spotifyPath" -ForegroundColor Green
-    # }
-    Write-Host "Spotify installation is blocked or deprecated and has been commented out." -ForegroundColor Yellow
+    $spotifyPath = Join-Path $HOME "AppData\Roaming\Spotify\spotify.exe"
+    if (-not (Test-Path $spotifyPath)) {
+        Write-Host "Installing Spotify with SpotX..." -ForegroundColor Green
+        Invoke-Expression "& { $(Invoke-WebRequest -useb 'https://raw.githubusercontent.com/SpotX-Official/spotx-official.github.io/main/run.ps1') } -new_theme"
+    }
+    else {
+        Write-Host "Spotify is already installed at $spotifyPath" -ForegroundColor Green
+    }
 }
 
 function Update-VSCodeExtensions {
