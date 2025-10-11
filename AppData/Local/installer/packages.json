@@ -12,6 +12,7 @@
       "gcc"
     ],
     "full": [
+      "extras/ditto",
       "7zip",
       "extras/autohotkey",
       "vscode",

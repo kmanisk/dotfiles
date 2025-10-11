@@ -33,7 +33,15 @@
                    "vscjava.vscode-java-dependency",
                    "vscjava.vscode-java-pack",
                    "vscjava.vscode-java-test",
-                   "vscjava.vscode-maven"
+                   "vscjava.vscode-maven",
+                   "bradlc.vscode-tailwindcss",
+                   "bungcip.better-toml",
+                   "ms-azuretools.vscode-containers",
+                   "ms-azuretools.vscode-docker",
+                   "ms-python.vscode-python-envs",
+                   "pkief.material-icon-theme",
+                   "sourcegraph.cody-ai",
+                   "usernamehw.errorlens"
                ],
     "vscodium":  [
                      "asvetliakov.vscode-neovim",
@@ -78,6 +86,7 @@
                      "vscjava.vscode-java-pack",
                      "vscjava.vscode-java-test",
                      "vscjava.vscode-maven",
-                     "zhuangtongfa.material-theme"
+                     "zhuangtongfa.material-theme",
+                     "ms-azuretools.vscode-containers"
                  ]
 }
