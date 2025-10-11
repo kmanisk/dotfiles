@@ -1211,3 +1211,5 @@ else {
         Write-Error "Failed to install zoxide. Error: $_"
     }
 }
+# Scoop Advance Search 
+. ([ScriptBlock]::Create((& scoop-search --hook | Out-String)))

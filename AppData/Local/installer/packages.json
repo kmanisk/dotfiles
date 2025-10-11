@@ -22,6 +22,7 @@
       "less",
       "extras/windows-terminal",
       "bat",
+      "scoop-search",
       "neovim",
       "innounp",
       "dark",

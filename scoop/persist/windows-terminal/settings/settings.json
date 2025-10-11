@@ -256,15 +256,15 @@
         },
         {
             "id": null,
-            "keys": "ctrl+alt+l"
-        },
-        {
-            "id": null,
             "keys": "alt+down"
         },
         {
             "id": null,
-            "keys": "ctrl+shift+4"
+            "keys": "ctrl+alt+l"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+t"
         },
         {
             "id": null,
@@ -272,7 +272,7 @@
         },
         {
             "id": null,
-            "keys": "ctrl+shift+t"
+            "keys": "ctrl+shift+4"
         },
         {
             "id": null,
@@ -515,7 +515,7 @@
         {
             "backgroundImage": null,
             "backgroundImageOpacity": 0.07,
-            "colorScheme": "GruvboxDarkHard",
+            "colorScheme": "Catppuccin Mocha",
             "cursorShape": "filledBox",
             "elevate": true,
             "experimental.retroTerminalEffect": false,
@@ -536,7 +536,7 @@
                 "antialiasingMode": "grayscale",
                 "autoMarkPrompts": true,
                 "bellStyle": "none",
-                "colorScheme": "Sonokai Shusia",
+                "colorScheme": "Catppuccin Mocha",
                 "experimental.retroTerminalEffect": false,
                 "font": 
                 {
