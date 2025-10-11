@@ -45,7 +45,7 @@
 	"terminal.integrated.fontFamily": "IosevkaTerm Nerd Font Mono",
 	// "terminal.integrated.fontFamily": "Iosevka Nerd Font Mono",
 	"screencastMode.fontSize": 36,
-	"terminal.integrated.fontSize": 19,
+	"terminal.integrated.fontSize": 16,
 	"screencastMode.verticalOffset": 1,
 	"editor.fontLigatures": true,
 	"editor.wordWrap": "on",
@@ -284,7 +284,6 @@
 			"param": "-g '*.$1'"
 		}
 	],
-	"workbench.colorTheme": "One Dark Pro Darker",
 	"window.menuBarVisibility": "compact",
 	"workbench.iconTheme": "material-icon-theme",
 	"extensions.ignoreRecommendations": true,
@@ -305,5 +304,6 @@
 		"plaintext": false,
 		"markdown": false,
 		"scminput": false
-	}
+	},
+	"workbench.colorTheme": "One Dark Pro Darker"
 }

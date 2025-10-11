@@ -1,4 +1,74 @@
+function vsync {
+    $vscodeInstalled = Get-Command code -ErrorAction SilentlyContinue
+    $vscodiumInstalled = Get-Command codium -ErrorAction SilentlyContinue
+    $jsonFilePath = Join-Path $HOME ".local\share\chezmoi\AppData\Local\installer\vscode.json"
 
+    if (Test-Path $jsonFilePath) {
+        $jsonContent = Get-Content -Path $jsonFilePath -Raw | ConvertFrom-Json
+        $desiredVSCodeExtensions = $jsonContent.vscode
+        $desiredVSCodiumExtensions = $jsonContent.vscodium
+
+        if ($vscodeInstalled) {
+            $currentVSCodeExtensions = & code --list-extensions
+            $toAddVSCode = $desiredVSCodeExtensions | Where-Object { $currentVSCodeExtensions -notcontains $_ }
+            $toRemoveVSCode = $currentVSCodeExtensions | Where-Object { $desiredVSCodeExtensions -notcontains $_ }
+
+            if ($toAddVSCode -or $toRemoveVSCode) {
+                Write-Host "\nVSCode Extensions to Add (in JSON, not installed):" -ForegroundColor Green
+                $toAddVSCode | ForEach-Object { Write-Host "  + $_" }
+                Write-Host "\nVSCode Extensions to Remove (installed, not in JSON):" -ForegroundColor Red
+                $toRemoveVSCode | ForEach-Object { Write-Host "  - $_" }
+
+                $choiceVSCode = Read-Host "Do you want to update the JSON file to reflect the current VSCode extensions? (y/n)"
+                if ($choiceVSCode -eq 'y') {
+                    $jsonContent.vscode = $currentVSCodeExtensions
+                    $jsonContent | ConvertTo-Json -Depth 10 | Set-Content -Path $jsonFilePath
+                    Write-Host "JSON file updated with current VSCode extensions." -ForegroundColor Green
+                } else {
+                    Write-Host "No changes made to JSON file for VSCode." -ForegroundColor Yellow
+                }
+            } else {
+                Write-Host "VSCode extensions are already in sync with the JSON file." -ForegroundColor Green
+            }
+        }
+
+        if ($vscodiumInstalled) {
+            $currentVSCodiumExtensions = & codium --list-extensions
+            $toAdd = $desiredVSCodiumExtensions | Where-Object { $currentVSCodiumExtensions -notcontains $_ }
+            $toRemove = $currentVSCodiumExtensions | Where-Object { $desiredVSCodiumExtensions -notcontains $_ }
+
+            if ($toAdd -or $toRemove) {
+                Write-Host "\nVSCodium Extensions to Add (in JSON, not installed):" -ForegroundColor Green
+                $toAdd | ForEach-Object { Write-Host "  + $_" }
+                Write-Host "\nVSCodium Extensions to Remove (installed, not in JSON):" -ForegroundColor Red
+                $toRemove | ForEach-Object { Write-Host "  - $_" }
+
+                $choice = Read-Host "Do you want to update the JSON file to reflect the current VSCodium extensions? (y/n)"
+                if ($choice -eq 'y') {
+                    $jsonContent.vscodium = $currentVSCodiumExtensions
+                    $jsonContent | ConvertTo-Json -Depth 10 | Set-Content -Path $jsonFilePath
+                    Write-Host "JSON file updated with current VSCodium extensions." -ForegroundColor Green
+                } else {
+                    Write-Host "No changes made to JSON file for VSCodium." -ForegroundColor Yellow
+                }
+            } else {
+                Write-Host "VSCodium extensions are already in sync with the JSON file." -ForegroundColor Green
+            }
+        }
+    } else {
+        Write-Host "Extensions JSON file not found at $jsonFilePath" -ForegroundColor Red
+    }
+}
+
+# Check if running as administrator
+function Is-Admin {
+    $identity = [Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()
+    return $identity.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+}
+
+    if (-not (Is-Admin)) {
+        Write-Host "Warning: This script is not running as administrator. Some operations may fail due to insufficient permissions." -ForegroundColor Yellow
+    }
 function pipInstallEssential {
     Write-Host "Installing essential Python packages..."
     
@@ -124,7 +194,6 @@ function Install-Scoop {
 
         # Official buckets (no URL required)
         $officialBuckets = @(
-            'main'
             'extras'
             'java'
             'versions'
@@ -275,17 +344,18 @@ function Install-WingetPackages {
 
 function Add-AdbToPath {
     $adbPath = Join-Path $HOME "AppData\Local\installer\adbdrivers"
-    
-    # Check if the path is already in the PATH environment variable
-    if ($env:Path -notlike "*$adbPath*") {
+    $systemPath = [System.Environment]::GetEnvironmentVariable("Path", [System.EnvironmentVariableTarget]::Machine)
+
+    # Check if the path is already in the SYSTEM PATH variable
+    if ($systemPath -notlike "*$adbPath*") {
         Write-Host "Adding ADB path to the system PATH variable..."
-        
-        # Add the ADB path to the system PATH variable
-        [System.Environment]::SetEnvironmentVariable("Path", $env:Path + ";$adbPath", [System.EnvironmentVariableTarget]::Machine)
-        
-        Write-Host "ADB path added successfully." -ForegroundColor Green
-    }
-    else {
+        try {
+            [System.Environment]::SetEnvironmentVariable("Path", $systemPath + ";$adbPath", [System.EnvironmentVariableTarget]::Machine)
+            Write-Host "ADB path added successfully." -ForegroundColor Green
+        } catch {
+            Write-Host "Failed to add ADB path. You may need to run as administrator." -ForegroundColor Red
+        }
+    } else {
         Write-Host "ADB path is already in the system PATH variable." -ForegroundColor Blue
     }
 }
@@ -438,20 +508,21 @@ function Install-CodeExtensions {
         Write-Host "JSON file updated successfully!" -ForegroundColor Green
         return
     }
+
     $vscodeInstalled = Get-Command code -ErrorAction SilentlyContinue
     $vscodiumInstalled = Get-Command codium -ErrorAction SilentlyContinue
 
     if (-not $vscodeInstalled) {
-        Write-Host "VSCode is not installed. Installing via Chocolatey..."
-        choco install vscode -y
+        Write-Host "VSCode is not installed. Installing via Scoop..."
+        scoop install vscode
     }
     else {
         Write-Host "VSCode is already installed."
     }
 
     if (-not $vscodiumInstalled) {
-        Write-Host "VSCodium is not installed. Installing via Chocolatey..."
-        choco install vscodium -y
+        Write-Host "VSCodium is not installed. Installing via Scoop..."
+        scoop install vscodium
     }
     else {
         Write-Host "VSCodium is already installed."
@@ -591,11 +662,20 @@ function disable-Clipboard {
     $disabledValue = 4
     # Check if the registry path exists
     if (Test-Path $registryPath) {
-        # Set the Start value to 4 (disabled)
-        Set-ItemProperty -Path $registryPath -Name $valueName -Value $disabledValue -Force
-        Write-Host "The cbdhsvc service has been disabled successfully."
-    }
-    else {
+        $currentValue = (Get-ItemProperty -Path $registryPath -Name $valueName -ErrorAction SilentlyContinue).$valueName
+        if ($currentValue -eq $disabledValue) {
+            Write-Host "The cbdhsvc service is already disabled." -ForegroundColor Blue
+            Write-Host "To enable it, set 'Start' to 2 in 'HKLM:\SYSTEM\CurrentControlSet\Services\cbdhsvc' via regedit."
+        } else {
+            try {
+                Set-ItemProperty -Path $registryPath -Name $valueName -Value $disabledValue -Force
+                Write-Host "The cbdhsvc service has been disabled successfully." -ForegroundColor Green
+            } catch {
+                Write-Host "Failed to disable cbdhsvc service. Try running as administrator." -ForegroundColor Red
+                Write-Host "To enable it, set 'Start' to 2 in 'HKLM:\SYSTEM\CurrentControlSet\Services\cbdhsvc' via regedit." -ForegroundColor Blue
+            }
+        }
+    } else {
         Write-Host "The registry path does not exist. The service might not be available on this system."
     }
 
@@ -609,11 +689,20 @@ function disable-Clipboard {
         New-Item -Path $registryPath -Force | Out-Null
     }
 
-    # Set the registry value to disable Clipboard History
-    Set-ItemProperty -Path $registryPath -Name $valueName -Value $valueData -Type DWord
-
-    # Output the result
-    Write-Output "Clipboard History has been disabled."
+    $currentClipboardValue = (Get-ItemProperty -Path $registryPath -Name $valueName -ErrorAction SilentlyContinue).$valueName
+    if ($currentClipboardValue -eq $valueData) {
+        Write-Host "Clipboard History is already disabled." -ForegroundColor Blue
+        Write-Host "To enable it, set 'AllowClipboardHistory' to 1 in 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\System' via regedit."
+    } else {
+        try {
+            Set-ItemProperty -Path $registryPath -Name $valueName -Value $valueData -Type DWord
+            Write-Host "Clipboard History has been disabled." -ForegroundColor Green
+            Write-Host "To enable it, set 'AllowClipboardHistory' to 1 in 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\System' via regedit."
+        } catch {
+            Write-Host "Failed to disable Clipboard History. Try running as administrator." -ForegroundColor Red
+            Write-Host "To enable it, set 'AllowClipboardHistory' to 1 in 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\System' via regedit."
+        }
+    }
 
 }
 
@@ -637,39 +726,43 @@ function ClinkSetup {
 
 function MLWapp {
     
-    $installerDir = Join-Path $HOME "AppData\Local\installer"
-    $mlwappInstaller = Get-ChildItem -Path $installerDir -Filter "MLWapp*.exe" | Select-Object -First 1
-    $mlwappInstalled = Test-Path "C:\Program Files\MLWapp\MLWapp.exe"
+    # Deprecated: MLWapp installation logic
+    # $installerDir = Join-Path $HOME "AppData\Local\installer"
+    # $mlwappInstaller = Get-ChildItem -Path $installerDir -Filter "MLWapp*.exe" | Select-Object -First 1
+    # $mlwappInstalled = Test-Path "C:\Program Files\MLWapp\MLWapp.exe"
 
-    if (-not $mlwappInstalled) {
-        if ($mlwappInstaller) {
-            Write-Host "Installing MLWapp..."
-            Start-Process -FilePath $mlwappInstaller.FullName -ArgumentList "/S" -NoNewWindow -Wait
-        }
-        else {
-            Write-Host "MLWapp installer not found in $installerDir." -ForegroundColor Red
-        }
-    }
-    else {
-        Write-Host "MLWapp is already installed."
-    }
+    # if (-not $mlwappInstalled) {
+    #     if ($mlwappInstaller) {
+    #         Write-Host "Installing MLWapp..."
+    #         Start-Process -FilePath $mlwappInstaller.FullName -ArgumentList "/S" -NoNewWindow -Wait
+    #     }
+    #     else {
+    #         Write-Host "MLWapp installer not found in $installerDir." -ForegroundColor Red
+    #     }
+    # }
+    # else {
+    #     Write-Host "MLWapp is already installed."
+    # }
+    Write-Host "MLWapp installation is deprecated and has been commented out." -ForegroundColor Yellow
 }
 function spot {
-    $spotifyPath = Join-Path $HOME "AppData\Roaming\Spotify\spotify.exe"
-    if (-not (Test-Path $spotifyPath)) {
-        $confirmation = Read-Host "Do you want to install Spotify? (y/n)"
-        
-        if ($confirmation -eq 'y') {
-            Write-Host "Installing Spotify..."
-            Invoke-Expression "& { $(Invoke-WebRequest -useb 'https://raw.githubusercontent.com/SpotX-Official/spotx-official.github.io/main/run.ps1') } -new_theme"
-        }
-        else {
-            Write-Host "Operation Skipped" -ForegroundColor DarkMagenta
-        }
-    }
-    else {
-        Write-Host "Spotify is already installed at $spotifyPath" -ForegroundColor Green
-    }
+    # Deprecated: Spotify installation blocked by antivirus
+    # $spotifyPath = Join-Path $HOME "AppData\Roaming\Spotify\spotify.exe"
+    # if (-not (Test-Path $spotifyPath)) {
+    #     $confirmation = Read-Host "Do you want to install Spotify? (y/n)"
+    #     
+    #     if ($confirmation -eq 'y') {
+    #         Write-Host "Installing Spotify..."
+    #         Invoke-Expression "& { $(Invoke-WebRequest -useb 'https://raw.githubusercontent.com/SpotX-Official/spotx-official.github.io/main/run.ps1') } -new_theme"
+    #     }
+    #     else {
+    #         Write-Host "Operation Skipped" -ForegroundColor DarkMagenta
+    #     }
+    # }
+    # else {
+    #     Write-Host "Spotify is already installed at $spotifyPath" -ForegroundColor Green
+    # }
+    Write-Host "Spotify installation is blocked or deprecated and has been commented out." -ForegroundColor Yellow
 }
 
 function Update-VSCodeExtensions {
@@ -787,37 +880,39 @@ function install-Curls {
         pip install gdown
     }
 
-    $documentsPath = [Environment]::GetFolderPath("MyDocuments")
-    $curlsFolder = Join-Path $documentsPath "curls"
-    $zipPath = Join-Path $curlsFolder "mouse.zip"
-    
-    if (-not (Test-Path $curlsFolder)) {
-        Write-Host "Creating curls directory at $curlsFolder..."
-        New-Item -Path $curlsFolder -ItemType Directory | Out-Null
-    }
-    
-    Set-Location $curlsFolder
+    # Deprecated: mouse.zip logic
+    # $documentsPath = [Environment]::GetFolderPath("MyDocuments")
+    # $curlsFolder = Join-Path $documentsPath "curls"
+    # $zipPath = Join-Path $curlsFolder "mouse.zip"
+    # 
+    # if (-not (Test-Path $curlsFolder)) {
+    #     Write-Host "Creating curls directory at $curlsFolder..."
+    #     New-Item -Path $curlsFolder -ItemType Directory | Out-Null
+    # }
+    # 
+    # Set-Location $curlsFolder
     # mouse software gm320 
-    if (-not (Test-Path $zipPath)) {
-        Write-Host "Downloading mouse.zip using gdown..."
-        gdown "https://drive.google.com/uc?export=download&id=1pa2ryQyBDNiS4aOOYjiOqweFybOrtO3f"
-    }
-    
-    Write-Host "Extracting files..."
-    $sevenZipPath = "7z"
-    & $sevenZipPath x $zipPath -o$curlsFolder | Out-Null
-    
-    Write-Host "Searching for .exe or .msi files..."
-    $executables = Get-ChildItem -Path $curlsFolder -Recurse -File | Where-Object { $_.Extension -in @(".exe", ".msi") }
-    if ($executables) {
-        foreach ($file in $executables) {
-            Write-Host "Running $($file.Name)..."
-            Start-Process -FilePath $file.FullName -NoNewWindow -Wait
-        }
-    }
-    else {
-        Write-Host "No .exe or .msi files found!"
-    }
+    # if (-not (Test-Path $zipPath)) {
+    #     Write-Host "Downloading mouse.zip using gdown..."
+    #     gdown "https://drive.google.com/uc?export=download&id=1pa2ryQyBDNiS4aOOYjiOqweFybOrtO3f"
+    # }
+    # 
+    # Write-Host "Extracting files..."
+    # $sevenZipPath = "7z"
+    # & $sevenZipPath x $zipPath -o$curlsFolder | Out-Null
+    # 
+    # Write-Host "Searching for .exe or .msi files..."
+    # $executables = Get-ChildItem -Path $curlsFolder -Recurse -File | Where-Object { $_.Extension -in @(".exe", ".msi") }
+    # if ($executables) {
+    #     foreach ($file in $executables) {
+    #         Write-Host "Running $($file.Name)..."
+    #         Start-Process -FilePath $file.FullName -NoNewWindow -Wait
+    #     }
+    # }
+    # else {
+    #     Write-Host "No .exe or .msi files found!"
+    # }
+    Write-Host "Mouse.zip logic is deprecated and has been commented out." -ForegroundColor Yellow
 }
 
 function Set-RegistryValue {
@@ -966,12 +1061,18 @@ $config = Get-Content -Path $configPath | ConvertFrom-Json
 $choice = Read-Host "Choose installation type (mini/full)"
 switch ($choice.ToLower()) {
     { $_ -in "mini", "m" } {
-        # old method get-filehash issue # Install-ScoopPackages -packages $config.scoop.mini
-        if (Test-Path "$HOME\scoop\apps\python\current\python.exe") {
-            & "$HOME\scoop\apps\python\current\python.exe" "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopmini.py"
-        }
-        else {
-            python "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopmini.py"
+        # Check if Microsoft Store is installed
+        $msstoreInstalled = Get-AppxPackage -Name "Microsoft.WindowsStore" -ErrorAction SilentlyContinue
+        if ($msstoreInstalled) {
+            Write-Host "Microsoft Store is installed. Proceeding with Scoop Python package installation."
+            if (Test-Path "$HOME\scoop\apps\python\current\python.exe") {
+                & "$HOME\scoop\apps\python\current\python.exe" "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopmini.py"
+            }
+            else {
+                python "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopmini.py"
+            }
+        } else {
+            Write-Host "Microsoft Store is NOT installed. Skipping Scoop Python package installation." -ForegroundColor Yellow
         }
         Write-Host "=============================================================================================================================================="
         Install-WingetPackages -packages $config.winget.mini
@@ -981,12 +1082,18 @@ switch ($choice.ToLower()) {
     }
     { $_ -in "full", "f" } {
         Write-Host "=============================================================================================================================================="
-        ## Try scoop python first, fallback to regular python if not available
-        if (Test-Path "$HOME\scoop\apps\python\current\python.exe") {
-            & "$HOME\scoop\apps\python\current\python.exe" "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopfull.py"
-        }
-        else {
-            python "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopfull.py"
+        # Check if Microsoft Store is installed
+        $msstoreInstalled = Get-AppxPackage -Name "Microsoft.WindowsStore" -ErrorAction SilentlyContinue
+        if ($msstoreInstalled) {
+            Write-Host "Microsoft Store is installed. Proceeding with Scoop Python package installation."
+            if (Test-Path "$HOME\scoop\apps\python\current\python.exe") {
+                & "$HOME\scoop\apps\python\current\python.exe" "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopfull.py"
+            }
+            else {
+                python "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopfull.py"
+            }
+        } else {
+            Write-Host "Microsoft Store is NOT installed. Skipping Scoop Python package installation." -ForegroundColor Yellow
         }
         Write-Host "=============================================================================================================================================="
         pipInstallEssential
@@ -996,6 +1103,7 @@ switch ($choice.ToLower()) {
         Install-ChocoPackages -packages $config.choco.full
         Write-Host "=============================================================================================================================================="
         Set-PermanentMachine
+		vsync
     }
 }
 Write-Host "Installation completed!" -ForegroundColor Green
@@ -1041,34 +1149,42 @@ function Pin-WingetPackage {
         Write-Host "$packageId has been pinned."
     }
     else {
-        Write-Host "$packageId is not installed. Skipping pinning."
+        Write-Host "$packageId is not installed. Installing now..." -ForegroundColor Yellow
+        try {
+            winget install --id $packageId --source winget
+            Write-Host "$packageId installed successfully. Pinning the package..."
+            winget pin add --id $packageId
+            Write-Host "$packageId has been pinned."
+        } catch {
+            Write-Host "Failed to install $packageId. Skipping pinning." -ForegroundColor Red
+        }
     }
 }
 
-# Define packages to pin
+Write-Host "=============================================================================================================================="
+
+
+# Pin only specified Chocolatey packages
+Write-Host "Pinning selected Chocolatey packages..." -ForegroundColor Green
 $chocoPackagesToPin = @(
     "zoxide",
     "autohotkey"
 )
-
-$wingetPackagesToPin = @(
-    "AutoHotkey.AutoHotkey",
-    "Spotify.Spotify",
-    "OliverSchwendener.ueli"
-)
-
-Write-Host "=============================================================================================================================="
-# Pin Chocolatey packages
-Write-Host "Pinning Chocolatey packages..." -ForegroundColor Green
 $chocoPackagesToPin | ForEach-Object {
     Pin-ChocoPackage -packageName $_
 }
 
 Write-Host "=============================================================================================================================="
-# Pin Winget packages
-Write-Host "Pinning Winget packages..." -ForegroundColor Green
+# Pin only specified Winget packages
+Write-Host "Pinning selected Winget packages..." -ForegroundColor Green
+$wingetPackagesToPin = @(
+    "AutoHotkey.AutoHotkey",
+    "Spotify.Spotify",
+    "OliverSchwendener.ueli"
+)
 $wingetPackagesToPin | ForEach-Object {
     Pin-WingetPackage -packageId $_
 }
 
 Write-Host "=============================================================================================================================="
+

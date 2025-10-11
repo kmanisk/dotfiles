@@ -2,14 +2,14 @@
   "Hotkeys": [
     {
       "HotkeyInfo": {
-        "Hotkey": "PrintScreen, Control",
+        "Hotkey": "F2, Control",
         "Win": false
       },
       "TaskSettings": {
         "Description": "",
         "Job": "RectangleRegion",
         "UseDefaultAfterCaptureJob": true,
-        "AfterCaptureJob": "CopyImageToClipboard, SaveImageToFile, UploadImageToHost",
+        "AfterCaptureJob": "CopyImageToClipboard, SaveImageToFile",
         "UseDefaultAfterUploadJob": true,
         "AfterUploadJob": "CopyURLToClipboard",
         "UseDefaultDestinations": true,
@@ -46,14 +46,14 @@
     },
     {
       "HotkeyInfo": {
-        "Hotkey": "PrintScreen",
+        "Hotkey": "F1, Control",
         "Win": false
       },
       "TaskSettings": {
         "Description": "",
         "Job": "PrintScreen",
         "UseDefaultAfterCaptureJob": true,
-        "AfterCaptureJob": "CopyImageToClipboard, SaveImageToFile, UploadImageToHost",
+        "AfterCaptureJob": "CopyImageToClipboard, SaveImageToFile",
         "UseDefaultAfterUploadJob": true,
         "AfterUploadJob": "CopyURLToClipboard",
         "UseDefaultDestinations": true,
@@ -97,7 +97,7 @@
         "Description": "",
         "Job": "ActiveWindow",
         "UseDefaultAfterCaptureJob": true,
-        "AfterCaptureJob": "CopyImageToClipboard, SaveImageToFile, UploadImageToHost",
+        "AfterCaptureJob": "CopyImageToClipboard, SaveImageToFile",
         "UseDefaultAfterUploadJob": true,
         "AfterUploadJob": "CopyURLToClipboard",
         "UseDefaultDestinations": true,
@@ -141,7 +141,7 @@
         "Description": "",
         "Job": "ScreenRecorder",
         "UseDefaultAfterCaptureJob": true,
-        "AfterCaptureJob": "CopyImageToClipboard, SaveImageToFile, UploadImageToHost",
+        "AfterCaptureJob": "CopyImageToClipboard, SaveImageToFile",
         "UseDefaultAfterUploadJob": true,
         "AfterUploadJob": "CopyURLToClipboard",
         "UseDefaultDestinations": true,
@@ -185,7 +185,7 @@
         "Description": "",
         "Job": "ScreenRecorderGIF",
         "UseDefaultAfterCaptureJob": true,
-        "AfterCaptureJob": "CopyImageToClipboard, SaveImageToFile, UploadImageToHost",
+        "AfterCaptureJob": "CopyImageToClipboard, SaveImageToFile",
         "UseDefaultAfterUploadJob": true,
         "AfterUploadJob": "CopyURLToClipboard",
         "UseDefaultDestinations": true,
