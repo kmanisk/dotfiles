@@ -165,7 +165,7 @@ function Install-Scoop {
     }
     else {
         Write-Host "======================================================================================================================="
-        Write-Host "Scoop is already installed."
+        Write-Host "Scoop is already installed." -ForegroundColor Green
 
         # Get a list of currently added buckets
         $existingBuckets = scoop bucket list | ForEach-Object { ($_ -split '\s+')[0] }
@@ -204,7 +204,7 @@ function Install-Scoop {
                 scoop bucket add $bucket $customBuckets[$bucket]
             }
             else {
-                Write-Host "Bucket '$bucket' already exists."
+                Write-Host "Bucket '$bucket' already exists." -ForegroundColor Cyan
             }
         }
     }
@@ -221,7 +221,7 @@ function Install-Chocolatey {
         $env:Path = [System.Environment]::GetEnvironmentVariable('Path', 'Machine')
     }
     else {
-        Write-Host "Chocolatey is already installed."
+        Write-Host "Chocolatey is already installed." -ForegroundColor Green
     }
 
 }
@@ -233,7 +233,7 @@ function Install-Winget {
         winget-install -Force
     }
     else {
-        Write-Host "Winget is already installed."
+        Write-Host "Winget is already installed." -ForegroundColor Green
     }
 }
 
@@ -861,11 +861,8 @@ function Set-TimeZone {
 
 # Start OF THE SCRIPTS FIRST INSTALLING PACKAGE MANAGERS
 Install-Scoop
-Write-Host "=============================================================================================================================================="
 Install-Chocolatey
-Write-Host "=============================================================================================================================================="
 Install-Winget
-Write-Host "=============================================================================================================================================="
 function Set-PermanentMachine {
     Write-Host "Disabling Clipboard"
     disable-Clipboard
