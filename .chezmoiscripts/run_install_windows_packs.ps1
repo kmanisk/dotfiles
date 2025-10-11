@@ -165,7 +165,7 @@ function Install-Scoop {
     }
     else {
         Write-Host "======================================================================================================================="
-        Write-Host "Scoop is already installed." -ForegroundColor Green
+        Write-Host "Scoop is already installed." -ForegroundColor Cyan
 
         # Get a list of currently added buckets
         $existingBuckets = scoop bucket list | ForEach-Object { ($_ -split '\s+')[0] }
@@ -221,7 +221,7 @@ function Install-Chocolatey {
         $env:Path = [System.Environment]::GetEnvironmentVariable('Path', 'Machine')
     }
     else {
-        Write-Host "Chocolatey is already installed." -ForegroundColor Green
+        Write-Host "Chocolatey is already installed." -ForegroundColor Cyan
     }
 
 }
@@ -233,7 +233,7 @@ function Install-Winget {
         winget-install -Force
     }
     else {
-        Write-Host "Winget is already installed." -ForegroundColor Green
+        Write-Host "Winget is already installed." -ForegroundColor Cyan
     }
 }
 
