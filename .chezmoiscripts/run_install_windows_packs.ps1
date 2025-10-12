@@ -224,6 +224,11 @@ function Install-Chocolatey {
     }
     else {
         Write-Host "Chocolatey is already installed." -ForegroundColor Cyan
+        # Write-Host "`n[ERROR] Chocolatey is not installed!" -ForegroundColor Red
+        # Write-Host "Please delete the current setup folder and re-run the installer script to reinstall Chocolatey." -ForegroundColor Red
+        # Write-Host "`nExpected location: $chocoPath" -ForegroundColor DarkGray
+        # Write-Host "`nExiting..." -ForegroundColor Yellow
+
     }
 
 }

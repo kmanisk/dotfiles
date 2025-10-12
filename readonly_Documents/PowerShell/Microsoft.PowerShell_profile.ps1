@@ -32,6 +32,13 @@ if ($PSVersionTable.PSVersion.Major -ge 7) {
     }
     Import-Module PSReadLine
 }
+function editdot(){
+     nvim "$Home\.local\share\chezmoi\.chezmoiscripts\run_install_windows_packs.ps1"
+}
+
+# function editdot() {
+#     nvim "$HOME\.local\share\chezmoi\.chezmoiscripts\run_install_windows_packs.ps1"
+# }
 function cha {
     param(
         [Parameter(Mandatory=$true)]
