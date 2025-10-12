@@ -634,12 +634,18 @@ winget uninstall --id Microsoft.WindowsTerminal
 |	time=1760087798
 |ir
 |	time=1760087799
-ls
+|s
 |	time=1760087799
-dir
+|ir
 |	time=1760087808
 pwsh 
 |	time=1760088035
 lsdfsf
 |	time=1760161474
 net user
+|	time=1760207211
+ls
+|	time=1760207211
+|ir
+|	time=1760207212
+dir

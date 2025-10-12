@@ -555,5 +555,9 @@
 		"key": "ctrl+shift+g",
 		"command": "-workbench.view.scm",
 		"when": "workbench.scm.active"
+	},
+	{
+		"key": "shift+alt+l",
+		"command": "workbench.view.extension.blackbox"
 	}
 ]

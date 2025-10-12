@@ -59,7 +59,7 @@ Version=0000000A
 D3D12Core.DLL=0026FC80 EF607AC4
 IDXGISwapChain1::m_pCommandQueue=00000138
 [Shared]
-Flags=00000001
+Flags=00000000
 [Settings]
 UpdateCheckingPeriod=3
 Language=

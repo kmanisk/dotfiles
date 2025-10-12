@@ -335,7 +335,7 @@
         "ShowRegion": true
       },
       "OCROptions": {
-        "Language": "en",
+        "Language": "en-US",
         "ScaleFactor": 2.0,
         "SingleLine": false,
         "Silent": false,
@@ -638,7 +638,7 @@
   "TaskbarProgressEnabled": true,
   "UseWhiteShareXIcon": false,
   "RememberMainFormPosition": false,
-  "MainFormPosition": "365, 199",
+  "MainFormPosition": "738, 339",
   "RememberMainFormSize": false,
   "MainFormSize": "1190, 721",
   "TrayLeftClickAction": "RectangleRegion",

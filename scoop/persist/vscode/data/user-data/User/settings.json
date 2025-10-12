@@ -42,10 +42,11 @@
 	// "editor.lineNumbers": "relative",
 	// "editor.wordWrapColumn": 60,
 	// Terminal New
-	"terminal.integrated.fontFamily": "IosevkaTerm Nerd Font Mono",
+	"terminal.integrated.fontFamily": "JetBrainsMonoNL Nerd Font",
 	// "terminal.integrated.fontFamily": "Iosevka Nerd Font Mono",
 	"screencastMode.fontSize": 36,
-	"terminal.integrated.fontSize": 15,
+	"terminal.integrated.fontSize": 17,
+	"terminal.integrated.fontLigatures.enabled": true,
 	"screencastMode.verticalOffset": 1,
 	"editor.fontLigatures": true,
 	"editor.wordWrap": "on",
@@ -304,5 +305,7 @@
 		"plaintext": false,
 		"markdown": false,
 		"scminput": false
-	}
+	},
+	"workbench.colorTheme": "Gruvbox Dark Hard",
+	"workbench.editor.empty.hint": "hidden"
 }
