@@ -644,8 +644,20 @@ lsdfsf
 |	time=1760161474
 net user
 |	time=1760207211
-ls
+|s
 |	time=1760207211
 |ir
 |	time=1760207212
+|ir
+|	time=1760287645
+|s
+|	time=1760287675
+|s
+|	time=1760287682
+cd .local\share\chezmoi\
+|	time=1760287684
+ls
+|	time=1760287684
+disr
+|	time=1760287685
 dir

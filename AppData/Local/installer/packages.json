@@ -17,6 +17,7 @@
       "extras/autohotkey",
       "vscode",
       "vscodium",
+      "fastfetch",
       "fzf",
       "psfzf",
       "less",
