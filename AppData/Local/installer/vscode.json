@@ -1,6 +1,9 @@
 {
     "vscode":  [
                    "asvetliakov.vscode-neovim",
+                   "blackboxapp.blackbox",
+                   "blackboxapp.blackboxagent",
+                   "catppuccin.catppuccin-vsc",
                    "devgauravjatt.github-catppuccin-dark",
                    "dsznajder.es7-react-js-snippets",
                    "ecmel.vscode-html-css",
@@ -18,9 +21,18 @@
                    "ms-vscode.live-server",
                    "ms-vscode.powershell",
                    "pkief.material-icon-theme",
+                   "redhat.java",
                    "robole.file-bunny",
                    "tamasfe.even-better-toml",
-                   "usernamehw.errorlens"
+                   "usernamehw.errorlens",
+                   "visualstudioexptteam.intellicode-api-usage-examples",
+                   "visualstudioexptteam.vscodeintellicode",
+                   "vscjava.vscode-gradle",
+                   "vscjava.vscode-java-debug",
+                   "vscjava.vscode-java-dependency",
+                   "vscjava.vscode-java-pack",
+                   "vscjava.vscode-java-test",
+                   "vscjava.vscode-maven"
                ],
     "vscodium":  [
                      "asvetliakov.vscode-neovim",

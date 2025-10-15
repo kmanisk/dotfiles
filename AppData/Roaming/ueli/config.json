@@ -85,7 +85,7 @@
 			"debounceDelay": 250,
 			"isEnabled": true,
 			"minSearchTermLength": 3,
-			"prefix": "dic?"
+			"prefix": "dic/"
 		},
 		"emailOptions": {
 			"isEnabled": true
