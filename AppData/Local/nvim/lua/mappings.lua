@@ -306,7 +306,7 @@ local builtin = require("telescope.builtin")
 -- Set the keymap for searching Neovim configuration files
 map("n", "<leader>oc", function()
     builtin.find_files({ cwd = vim.fn.stdpath("config") })
-end, { desc = "[S]earch [N]eovim files" })
+end, { desc = "[S]earch [N]eovim files Open Config " })
 
 map("n", "<leader>ss", function()
     require("telescope.builtin").live_grep({
@@ -381,3 +381,7 @@ map("v", "C", '"_C', opts)
 map("n", "c", '"_c', opts)
 map("n", "C", '"_C', opts)
 map("n", "x", '"_x')
+
+map("n", "<leader>fk", function()
+    print("hello world")
+end)
