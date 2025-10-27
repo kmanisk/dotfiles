@@ -814,7 +814,7 @@
 		},
 		"translationOptions": {
 			"debounceDelay": 250,
-			"enabled": false,
+			"enabled": true,
 			"minSearchTermLength": 3,
 			"prefix": "t?",
 			"sourceLanguage": "de",
@@ -1145,7 +1145,7 @@
 			]
 		},
 		"workflowOptions": {
-			"isEnabled": false,
+			"isEnabled": true,
 			"workflows": []
 		},
 		"loremIpsumOptions": {

@@ -306,6 +306,6 @@
 		"markdown": false,
 		"scminput": false
 	},
-	"workbench.colorTheme": "Gruvbox Dark Hard",
+	"workbench.colorTheme": "Gruvbox Light Soft",
 	"workbench.editor.empty.hint": "hidden"
 }

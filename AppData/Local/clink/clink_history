@@ -576,7 +576,7 @@ scoop
 |	time=1753346179
 scoop update pwsh
 |	time=1753346575
-pwsh
+|wsh
 |	time=1753346633
 winget search Microsoft.PowerShell
 |	time=1753346649
@@ -588,7 +588,7 @@ scoop
 |	time=1753346352
 scoop update dotnet
 |	time=1753346355
-pwsh
+|wsh
 |	time=1753346357
 |owershell
 |	time=1753346833
@@ -661,3 +661,35 @@ ls
 disr
 |	time=1760287685
 dir
+|	time=1760462567
+uall
+|	time=1760462569
+|wsh
+|	time=1761379913
+|coop update *
+|	time=1761379938
+ntop
+|	time=1761379952
+|coop update *
+|	time=1761379962
+pkill pwsh
+|	time=1761379974
+processlist
+|	time=1761379977
+plist
+|	time=1761379979
+|coop update *
+|	time=1761380024
+|coop update *
+|	time=1761473213
+|coop update *
+|	time=1761473232
+|wsh
+|	time=1761473239
+plist 
+|	time=1761473247
+pwsh
+|	time=1761473344
+|coop update *
+|	time=1761473435
+scoop update *

@@ -35,6 +35,7 @@
       "ripgrep",
       "java/openjdk",
       "extras/nexusfont",
+      "vlc",
       "extras/crystaldiskinfo",
       "extras/winaero-tweaker",
       "extras/nvcleanstall",
@@ -78,7 +79,6 @@
       "sharex",
       "ueli",
       "everything",
-      "vlc",
       "zoxide --version=0.9.0",
       "irfanview"
     ]
