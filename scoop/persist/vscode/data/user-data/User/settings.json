@@ -23,7 +23,8 @@
 	// "editor.fontSize": 17, jetbrains
 	// new is Iosevka
 	"editor.fontSize": 21,
-	"editor.lineHeight": 35,
+	"editor.lineHeight": 30,
+	// previous 35 line height IOSEVKA 
 	// original linehieght 26 for jetbrains 
 	"breadcrumbs.enabled": false,
 	"editor.fontFamily": "Iosevka Nerd Font Mono",
@@ -306,6 +307,6 @@
 		"markdown": false,
 		"scminput": false
 	},
-	"workbench.colorTheme": "Gruvbox Light Soft",
+	"workbench.colorTheme": "Gruvbox Dark Hard",
 	"workbench.editor.empty.hint": "hidden"
 }
