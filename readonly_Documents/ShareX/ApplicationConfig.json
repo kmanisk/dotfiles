@@ -286,12 +286,12 @@
         "OverrideCLIPath": false,
         "CLIPath": "",
         "VideoSource": "gdigrab",
-        "AudioSource": "",
+        "AudioSource": "Microphone (Realtek(R) Audio)",
         "VideoCodec": "libx264",
         "AudioCodec": "libvoaacenc",
         "UserArgs": "",
         "UseCustomCommands": false,
-        "CustomCommands": "",
+        "CustomCommands": "-f dshow -thread_queue_size 1024 -rtbufsize 256M -audio_buffer_size 80 -i audio=\"Microphone (Realtek(R) Audio)\" -f gdigrab -thread_queue_size 1024 -rtbufsize 256M -framerate 30 -offset_x 0 -offset_y 0 -video_size 1920x1200 -draw_mouse 1 -i desktop -c:v libx264 -r 30 -preset ultrafast -tune zerolatency -crf 28 -pix_fmt yuv420p -movflags +faststart -c:a aac -ac 2 -b:a 128k -y \"output.mp4\"",
         "x264_Preset": "ultrafast",
         "x264_CRF": 28,
         "x264_Use_Bitrate": false,
@@ -396,7 +396,18 @@
       "UploaderFilters": []
     },
     "UseDefaultActions": true,
-    "ExternalPrograms": [],
+    "ExternalPrograms": [
+      {
+        "IsActive": false,
+        "Name": "Paint",
+        "Path": "C:\\Windows\\system32\\mspaint.exe",
+        "Args": "\"$input\"",
+        "OutputExtension": null,
+        "Extensions": null,
+        "HiddenWindow": false,
+        "DeleteInputFile": false
+      }
+    ],
     "UseDefaultToolsSettings": true,
     "ToolsSettings": {
       "ScreenColorPickerFormat": "$hex",
@@ -638,7 +649,7 @@
   "TaskbarProgressEnabled": true,
   "UseWhiteShareXIcon": false,
   "RememberMainFormPosition": false,
-  "MainFormPosition": "365, 199",
+  "MainFormPosition": "517, 245",
   "RememberMainFormSize": false,
   "MainFormSize": "1190, 721",
   "TrayLeftClickAction": "RectangleRegion",
@@ -914,7 +925,7 @@
   "AutoCaptureRepeatTime": 60.0,
   "AutoCaptureMinimizeToTray": true,
   "AutoCaptureWaitUpload": true,
-  "ScreenRecordRegion": "0, 0, 0, 0",
+  "ScreenRecordRegion": "0, 0, 1920, 1140",
   "ActionsToolbarList": [
     "RectangleRegion",
     "PrintScreen",

@@ -692,4 +692,10 @@ pwsh
 |	time=1761473344
 |coop update *
 |	time=1761473435
+|coop update *
+|	time=1761473574
 scoop update *
+|	time=1761473598
+Get-Process pwsh | Stop-Process -Force
+|	time=1761473642
+scoop update powershell 

@@ -1,5 +1,6 @@
 {
-	"security.workspace.trust.enabled": false,
+
+	"security.workspace.trust.enabled": true,
 	//test extension multi command
 	"vscode-neovim.highlightGroups.highlights": {
 		"HoverWidgetBackground": {
