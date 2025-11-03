@@ -160,7 +160,7 @@
     "context": "EmptyPane || SharedScreen",
     "bindings": {
       // Open file finder
-      "space space": "file_finder::Toggle",
+      // "space space": "file_finder::Toggle",
       // Open recent project
       "space f p": "projects::OpenRecent"
     }
