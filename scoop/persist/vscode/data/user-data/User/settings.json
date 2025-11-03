@@ -1,5 +1,4 @@
 {
-
 	"security.workspace.trust.enabled": true,
 	//test extension multi command
 	"vscode-neovim.highlightGroups.highlights": {
@@ -309,5 +308,7 @@
 		"scminput": false
 	},
 	"workbench.colorTheme": "Gruvbox Dark Hard",
-	"workbench.editor.empty.hint": "hidden"
+	"workbench.editor.empty.hint": "hidden",
+	"editor.smoothScrolling": true,
+	"terminal.integrated.smoothScrolling": true
 }
