@@ -698,4 +698,26 @@ scoop update *
 |	time=1761473598
 Get-Process pwsh | Stop-Process -Force
 |	time=1761473642
+|coop update powershell 
+|	time=1762004610
+reg import "C:\Users\Manisk\scoop\apps\stremio\current\install-context.reg
+|	time=1762184796
+taskkill /im powershell /f
+|	time=1762184800
+|coop update powershell 
+|	time=1762184823
+taskkill /im pwsh/f
+|	time=1762184825
+taskkill /im pwsh /f
+|	time=1762184831
+tasklist 
+|	time=1762184917
+wmic process where "name='pwsh.exe'" get ProcessId,CommandLine
+|	time=1762184919
+wmic
+|	time=1762184921
+wmic 
+|	time=1762184933
+scoop cache rm powershell
+|	time=1762184937
 scoop update powershell 

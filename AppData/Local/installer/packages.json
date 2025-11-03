@@ -48,7 +48,6 @@
       "extras/rtss",
       "main/sudo",
       "main/gh",
-      "chawyehsu_dorado/powershell",
       "extras/revouninstaller"
     ],
     "global": [
@@ -66,8 +65,9 @@
       "AntibodySoftware.WizTree",
       "Notepad++.Notepad++",
       "Valve.Steam",
-      "JanDeDobbeleer.OhMyPosh"
-    ]
+      "JanDeDobbeleer.OhMyPosh",
+      "Microsoft.PowerShell"
+   ]
   },
   "choco": {
     "mini": [
