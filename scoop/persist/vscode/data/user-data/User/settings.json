@@ -222,7 +222,6 @@
 		"pkl": "cd $dir && pkl eval -f yaml $fileName -o $fileNameWithoutExt.yaml",
 		"gleam": "gleam run -m $fileNameWithoutExt"
 	},
-	"files.autoSave": "afterDelay",
 	"editor.inlineSuggest.suppressSuggestions": true,
 	"workbench.activityBar.location": "hidden",
 	"prettier.requireConfig": true,
@@ -307,11 +306,12 @@
 		"markdown": false,
 		"scminput": false
 	},
-	"workbench.colorTheme": "Gruvbox Dark Hard",
 	"workbench.editor.empty.hint": "hidden",
 	"editor.smoothScrolling": true,
 	"terminal.integrated.smoothScrolling": true,
 	"telemetry.editStats.enabled": false,
 	"telemetry.feedback.enabled": false,
-	"telemetry.telemetryLevel": "off"
+	"telemetry.telemetryLevel": "off",
+	"workbench.colorTheme": "Gruvbox Dark Hard",
+	"files.autoSave": "afterDelay"
 }

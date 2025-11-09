@@ -580,7 +580,7 @@ scoop update pwsh
 |	time=1753346633
 winget search Microsoft.PowerShell
 |	time=1753346649
-winget install --id Microsoft.PowerShell --source winget
+|inget install --id Microsoft.PowerShell --source winget
 |	time=1753346869
 nvim
 |	time=1753346133
@@ -721,3 +721,15 @@ wmic
 scoop cache rm powershell
 |	time=1762184937
 scoop update powershell 
+|	time=1762185153
+|coop uninsatll pwsh
+|	time=1762185159
+scoop uninsatll pwsh
+|	time=1762185165
+scoop uninstall pwsh
+|	time=1762185169
+scoop uninstall powershell
+|	time=1762185214
+winget search powershell
+|	time=1762185238
+winget install --id Microsoft.PowerShell --source winget
