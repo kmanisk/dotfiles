@@ -628,7 +628,7 @@
 				},
 				{
 					"description": "",
-					"executionArgument": "C:\\Users\\Administrator\\scoop\\apps\\vscodium\\current\\VSCodium.exe",
+					"executionArgument": "C:\\Users\\Manisk\\scoop\\apps\\vscodium\\current\\VSCodium.exe",
 					"icon": {
 						"parameter": "",
 						"type": "URL"
@@ -793,6 +793,18 @@
 					"needsUserConfirmationBeforeExecution": false,
 					"tags": [],
 					"type": "URL"
+				},
+				{
+					"description": "",
+					"executionArgument": "C:\\Users\\Manisk\\scoop\\apps\\vscode\\current\\Code.exe",
+					"icon": {
+						"parameter": "",
+						"type": "URL"
+					},
+					"name": "vscode",
+					"needsUserConfirmationBeforeExecution": false,
+					"tags": [],
+					"type": "File path"
 				}
 			]
 		},

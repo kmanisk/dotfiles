@@ -312,6 +312,5 @@
 	"telemetry.editStats.enabled": false,
 	"telemetry.feedback.enabled": false,
 	"telemetry.telemetryLevel": "off",
-	"workbench.colorTheme": "Gruvbox Dark Hard",
-	"files.autoSave": "afterDelay"
+	"workbench.colorTheme": "gruvboxConcoctis dark soft"
 }

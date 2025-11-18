@@ -714,7 +714,7 @@ tasklist
 |	time=1762184917
 wmic process where "name='pwsh.exe'" get ProcessId,CommandLine
 |	time=1762184919
-wmic
+|mic
 |	time=1762184921
 wmic 
 |	time=1762184933
@@ -733,3 +733,5 @@ scoop uninstall powershell
 winget search powershell
 |	time=1762185238
 winget install --id Microsoft.PowerShell --source winget
+|	time=1762863223
+wmic
