@@ -660,7 +660,7 @@ ls
 |	time=1760287684
 disr
 |	time=1760287685
-dir
+|ir
 |	time=1760462567
 uall
 |	time=1760462569
@@ -735,3 +735,17 @@ winget search powershell
 winget install --id Microsoft.PowerShell --source winget
 |	time=1762863223
 wmic
+|	time=1763470545
+ipconfig
+|	time=1763528950
+manage-bde.exe  status
+|	time=1763528954
+manage-bde.exe
+|	time=1763528957
+manage-bde.exe -status
+|	time=1763529691
+cd X:
+|	time=1763529694
+dir
+|	time=1763529705
+X:
