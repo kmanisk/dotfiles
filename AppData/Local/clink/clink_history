@@ -452,7 +452,7 @@ curl -LJO https://bit.ly/jkvimjk
 |	time=1740842196
 |xplorer.exe  .
 |	time=1740842813
-q
+|
 |	time=1740922338
 rmdir /s /q 
 |	time=1740922342
@@ -600,7 +600,7 @@ powershell
 |	time=1759590115
 |i
 |	time=1759590116
-vifm
+|ifm
 |	time=1759590118
 vi
 |	time=1759590119
@@ -656,7 +656,7 @@ net user
 |	time=1760287682
 cd .local\share\chezmoi\
 |	time=1760287684
-ls
+|s
 |	time=1760287684
 disr
 |	time=1760287685
@@ -746,6 +746,40 @@ manage-bde.exe -status
 |	time=1763529691
 cd X:
 |	time=1763529694
-dir
+|ir
 |	time=1763529705
+|:
+|	time=1763529713
 X:
+|	time=1763529714
+|ir
+|	time=1763529597
+diskpart 
+|	time=1764074847
+rmdir
+|	time=1764074852
+rmdir "New folder *
+|	time=1764074853
+ls
+|	time=1764074854
+dir
+|	time=1764074858
+vifm
+|	time=1764074870
+q
+|	time=1764142851
+curl ascii.live/forecast
+|	time=1764142870
+|url ascii.live/forrest
+|	time=1764142898
+color 3
+|	time=1764142901
+color 2
+|	time=1764142909
+curl ascii.live/forrest
+|	time=1764154219
+curl -X POST http://localhost:3000/api/compile \
+|	time=1764154219
+-H "Content-Type: application/json" \
+|	time=1764154219
+-d "{\"code\":\"#include \\\"graphics.h\\\"\\nint main(){return 0;}\"}"

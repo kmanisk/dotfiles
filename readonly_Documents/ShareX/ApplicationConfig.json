@@ -649,7 +649,7 @@
   "TaskbarProgressEnabled": true,
   "UseWhiteShareXIcon": false,
   "RememberMainFormPosition": false,
-  "MainFormPosition": "365, 199",
+  "MainFormPosition": "262, 214",
   "RememberMainFormSize": false,
   "MainFormSize": "1190, 721",
   "TrayLeftClickAction": "RectangleRegion",
@@ -925,7 +925,7 @@
   "AutoCaptureRepeatTime": 60.0,
   "AutoCaptureMinimizeToTray": true,
   "AutoCaptureWaitUpload": true,
-  "ScreenRecordRegion": "0, 0, 1920, 1140",
+  "ScreenRecordRegion": "0, 101, 1920, 1039",
   "ActionsToolbarList": [
     "RectangleRegion",
     "PrintScreen",

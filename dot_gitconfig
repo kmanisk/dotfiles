@@ -1,9 +1,14 @@
 [user]
 	email = mathewmanisk699@gmail.com
-	name = kmanisk
+	name = Kumar Manisk
 [credential "helperselector"]
 	selected = manager
 [credential]
 	helper = manager
 [init]
 	defaultBranch = main
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

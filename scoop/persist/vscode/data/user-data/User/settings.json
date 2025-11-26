@@ -312,5 +312,6 @@
 	"telemetry.editStats.enabled": false,
 	"telemetry.feedback.enabled": false,
 	"telemetry.telemetryLevel": "off",
-	"workbench.colorTheme": "Solarized Light"
+	"workbench.colorTheme": "Darcula Stormy",
+	"svelte.enable-ts-plugin": true,
 }
