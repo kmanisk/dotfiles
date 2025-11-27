@@ -314,4 +314,5 @@
 	"telemetry.telemetryLevel": "off",
 	"workbench.colorTheme": "Darcula Stormy",
 	"svelte.enable-ts-plugin": true,
+	"liveServer.settings.donotVerifyTags": true,
 }

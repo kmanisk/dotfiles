@@ -1220,3 +1220,14 @@ else {
 }
 # Scoop Advance Search 
 . ([ScriptBlock]::Create((& scoop-search --hook | Out-String)))
+
+function cdf {
+    $sel = ff | fzf
+    if (-not $sel) { return }
+
+    if (Test-Path $sel -PathType Container) {
+        Set-Location $sel
+    } else {
+        Set-Location (Split-Path $sel)
+    }
+}
