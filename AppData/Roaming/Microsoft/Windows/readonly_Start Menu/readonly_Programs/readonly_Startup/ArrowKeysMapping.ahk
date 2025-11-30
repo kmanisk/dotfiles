@@ -117,3 +117,6 @@ CapsLock & d::Send "{Delete}"
 ; --- CapsLock + f = Ctrl + f ---
 CapsLock & f::Send("^f")
 !Backspace::Send("!{Left}")   ; Alt + Backspace → Alt + Left Arrow
+
+PgUp::Send("{Home}")
+;Send("{Right}")

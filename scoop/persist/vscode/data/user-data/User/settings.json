@@ -315,4 +315,5 @@
 	"workbench.colorTheme": "Darcula Stormy",
 	"svelte.enable-ts-plugin": true,
 	"liveServer.settings.donotVerifyTags": true,
+	"editor.unicodeHighlight.invisibleCharacters": false,
 }

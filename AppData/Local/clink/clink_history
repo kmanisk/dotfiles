@@ -688,7 +688,7 @@ plist
 |	time=1761473239
 plist 
 |	time=1761473247
-pwsh
+|wsh
 |	time=1761473344
 |coop update *
 |	time=1761473435
@@ -783,3 +783,7 @@ curl -X POST http://localhost:3000/api/compile \
 -H "Content-Type: application/json" \
 |	time=1764154219
 -d "{\"code\":\"#include \\\"graphics.h\\\"\\nint main(){return 0;}\"}"
+|	time=1764172858
+|wsh
+|	time=1764172862
+pwsh
