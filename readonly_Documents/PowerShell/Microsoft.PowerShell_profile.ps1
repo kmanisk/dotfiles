@@ -1047,13 +1047,13 @@ function k9 { Stop-Process -Name $args[0] }
 function la { Get-ChildItem -Path . -Force | Format-Table -AutoSize }
 function ll { Get-ChildItem -Path . -Force -Hidden | Format-Table -AutoSize }
 
-function grep($regex, $dir) {
-    if ( $dir ) {
-        Get-ChildItem $dir | select-string $regex
-        return
-    }
-    $input | select-string $regex
-}
+# function grep($regex, $dir) {
+#     if ( $dir ) {
+#         Get-ChildItem $dir | select-string $regex
+#         return
+#     }
+#     $input | select-string $regex
+# }
 function head {
     param($Path, $n = 10)
     Get-Content $Path -Head $n

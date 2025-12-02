@@ -786,4 +786,8 @@ curl -X POST http://localhost:3000/api/compile \
 |	time=1764172858
 |wsh
 |	time=1764172862
+|wsh
+|	time=1764262734
+emsdk help
+|	time=1764262742
 pwsh
