@@ -257,15 +257,11 @@
         },
         {
             "id": null,
-            "keys": "alt+down"
-        },
-        {
-            "id": null,
             "keys": "ctrl+alt+l"
         },
         {
             "id": null,
-            "keys": "ctrl+shift+4"
+            "keys": "alt+down"
         },
         {
             "id": null,
@@ -274,6 +270,10 @@
         {
             "id": null,
             "keys": "ctrl+shift+t"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+4"
         },
         {
             "id": null,
@@ -519,12 +519,12 @@
             "colorScheme": "Catppuccin Mocha",
             "cursorShape": "filledBox",
             "elevate": true,
-            "experimental.retroTerminalEffect": false,
+            "experimental.retroTerminalEffect": true,
             "font": 
             {
                 "builtinGlyphs": true,
                 "face": "Iosevka Nerd Font Mono",
-                "size": 15
+                "size": 14
             },
             "icon": null,
             "opacity": 77,
@@ -534,6 +534,7 @@
         "list": 
         [
             {
+                "adjustIndistinguishableColors": "never",
                 "antialiasingMode": "grayscale",
                 "autoMarkPrompts": true,
                 "bellStyle": "none",
@@ -542,12 +543,12 @@
                 "font": 
                 {
                     "face": "IosevkaTerm Nerd Font Mono",
-                    "size": 16
+                    "size": 15
                 },
                 "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
                 "hidden": false,
                 "name": "PowerShell",
-                "opacity": 100,
+                "opacity": 70,
                 "padding": "8",
                 "rightClickContextMenu": false,
                 "scrollbarState": "hidden",
@@ -814,7 +815,7 @@
     "showTabsInTitlebar": false,
     "showTerminalTitleInTitlebar": false,
     "tabWidthMode": "equal",
-    "theme": "legacyDark",
+    "theme": "dark",
     "themes": 
     [
         {
