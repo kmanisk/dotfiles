@@ -760,9 +760,9 @@ rmdir
 |	time=1764074852
 rmdir "New folder *
 |	time=1764074853
-ls
+|s
 |	time=1764074854
-dir
+|ir
 |	time=1764074858
 vifm
 |	time=1764074870
@@ -791,3 +791,23 @@ curl -X POST http://localhost:3000/api/compile \
 emsdk help
 |	time=1764262742
 pwsh
+|	time=1764672679
+cd Downloads\
+|	time=1764672679
+ls
+|	time=1764672680
+dir
+|	time=1764672688
+grep "MCA Scheme and Syllabus.doc" 
+|	time=1764672736
+grep "MCA Scheme and Syllabus.pdf" 
+|	time=1764672745
+grep "MCA Scheme and Syllabus.pdf"  asdf
+|	time=1764672748
+grep "MCA Scheme and Syllabus.pdf"  data
+|	time=1764672753
+grep data "MCA Scheme and Syllabus.pdf"
+|	time=1764672758
+grep -h
+|	time=1764672763
+grep --help
