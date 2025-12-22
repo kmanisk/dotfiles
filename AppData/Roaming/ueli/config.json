@@ -71,7 +71,7 @@
 		"commandlineOptions": {
 			"isEnabled": true,
 			"prefix": ":",
-			"shell": "PowerShell Core"
+			"shell": "Powershell"
 		},
 		"controlPanelOptions": {
 			"isEnabled": true

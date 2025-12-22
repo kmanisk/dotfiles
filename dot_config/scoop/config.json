@@ -1,8 +1,8 @@
 {
-  "last_update": "2025-12-13T04:10:12.0751842+05:30",
-  "scoop_repo": "https://github.com/ScoopInstaller/Scoop",
-  "scoop_branch": "master",
-  "aria2-warning-enabled": false,
-  "aria2-enabled": true,
-  "cat_style": "auto"
+    "last_update":  "2025-12-22T23:00:47.2686751+05:30",
+    "scoop_repo":  "https://github.com/ScoopInstaller/Scoop",
+    "scoop_branch":  "master",
+    "aria2-warning-enabled":  false,
+    "aria2-enabled":  true,
+    "cat_style":  "auto"
 }

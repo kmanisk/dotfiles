@@ -89,51 +89,87 @@ function imginfo{
     Write-Output ("Total Media Size: {0:N2} GB" -f $totalSize)
 }
 
+
 function find {
     param (
-        [string]$query
+        [Parameter(Mandatory)]
+        [string]$Query
     )
 
-    $results = @{}
+    Clear-Host
 
-    # Search in Scoop
-    try {
-        $scoopResult = scoop search $query
-        $results['scoop'] = $scoopResult
-    } catch {
-        $results['scoop'] = "Error: Unable to search using scoop for $query"
+    function Section($title, $color) {
+        Write-Host "`n== $title ==" -ForegroundColor $color
+        Write-Host ("-" * (6 + $title.Length)) -ForegroundColor DarkGray
     }
 
-    # Search in Winget
+    # ================= SCOOP =================
+    Section "SCOOP (bucket-aware)" Cyan
     try {
-        $wingetResult = winget search $query
-        $results['winget'] = $wingetResult
+        $currentBucket = ""
+
+        scoop search $Query 2>$null |
+        ForEach-Object {
+            if ($_ -match "^'.+?' bucket:") {
+                $currentBucket = ($_ -replace " bucket:", "").Trim("'")
+            }
+            elseif ($_ -match '^\s+(\S+)\s+\(([^)]+)\)') {
+                [PSCustomObject]@{
+                    Source  = "Scoop"
+                    Name    = $matches[1]
+                    Version = $matches[2]
+                    Bucket  = $currentBucket
+                }
+            }
+        } |
+        Sort-Object Name, Bucket, Version -Descending |
+        Group-Object Name, Bucket |
+        ForEach-Object { $_.Group | Select-Object -First 1 } |
+        Format-Table Name, Version, Bucket -AutoSize
     } catch {
-        $results['winget'] = "Error: Unable to search using winget for $query"
+        Write-Host "Scoop search failed" -ForegroundColor Red
     }
 
-    # Search in Chocolatey (choco)
+    # ================= WINGET =================
+    Section "WINGET" Green
     try {
-        $chocoResult = choco search $query
-        $results['choco'] = $chocoResult
+        winget search $Query --accept-source-agreements |
+        Select-Object -Skip 2 |
+        ForEach-Object {
+            if ($_ -match '(.+?)\s{2,}(\S+)\s{2,}(\S+)') {
+                [PSCustomObject]@{
+                    Source  = "Winget"
+                    Name    = $matches[1].Trim()
+                    Version = $matches[3]
+                }
+            }
+        } |
+        Sort-Object Name -Unique |
+        Format-Table Name, Version -AutoSize
     } catch {
-        $results['choco'] = "Error: Unable to search using choco for $query"
+        Write-Host "Winget search failed" -ForegroundColor Red
     }
 
-    # Print results for each tool
-    foreach ($tool in $results.Keys) {
-        Write-Host "`nResults from ${tool}:`n$($results[$tool])`n----------------------------"
+    # ================= CHOCO =================
+    Section "CHOCOLATEY" Magenta
+    try {
+        choco search $Query --limit-output |
+        ForEach-Object {
+            if ($_ -match '^([^|]+)\|(.+)$') {
+                [PSCustomObject]@{
+                    Source  = "Choco"
+                    Name    = $matches[1]
+                    Version = $matches[2]
+                }
+            }
+        } |
+        Sort-Object Name -Unique |
+        Format-Table Name, Version -AutoSize
+    } catch {
+        Write-Host "Choco search failed" -ForegroundColor Red
     }
 }
-# Archive module is built into PS7, so this check isn't needed
-# Remove or comment out this section
-# if (-not (Get-Command Expand-Archive -ErrorAction SilentlyContinue)) {
-#     Import-Module Microsoft.PowerShell.Archive
-# }
-#if (!(Get-Module -ListAvailable -Name PowerType)) {
-#Install-Module PowerType -AllowPrerelease
-#Enable-PowerType
-#}
+
 
 function cdwhich {
     param (
@@ -668,27 +704,58 @@ function dp {
 }
 
 function dall {
+    param(
+        [string]$CommitMsg
+    )
+
     Write-Host "Changes Done..."
     st
-    Write-Host ""  # Add an empty line for new line
+    Write-Host ""
+
     Write-Host "Adding all the changes to dot repo"
 
-    # Check for 'DA' elements and call dfor if there are any
     $deletedFiles = chezmoi status | Where-Object { $_ -match '^DA' }
     if ($deletedFiles.Count -gt 0) {
         Write-Host "Deleting any file removed from the Home Directory if any:"
         dfor
-        Write-Host ""  # Add an empty line for new line
+        Write-Host ""
     }
 
     madd
-    Write-Host ""  # Add an empty line for new line
+    Write-Host ""
+
+    if ([string]::IsNullOrWhiteSpace($CommitMsg)) {
+        $CommitMsg = "automated dotfiles update"
+    }
+
     Write-Host "Pushing Everything" -ForegroundColor Green
-    dp
-    Write-Host ""  # Add an empty line for new line
+    dp -CommitMsg $CommitMsg
+
+    Write-Host ""
     Set-Location -Path $HOME
 }
-
+# function dall {
+#     Write-Host "Changes Done..."
+#     st
+#     Write-Host ""  # Add an empty line for new line
+#     Write-Host "Adding all the changes to dot repo"
+#
+#     # Check for 'DA' elements and call dfor if there are any
+#     $deletedFiles = chezmoi status | Where-Object { $_ -match '^DA' }
+#     if ($deletedFiles.Count -gt 0) {
+#         Write-Host "Deleting any file removed from the Home Directory if any:"
+#         dfor
+#         Write-Host ""  # Add an empty line for new line
+#     }
+#
+#     madd
+#     Write-Host ""  # Add an empty line for new line
+#     Write-Host "Pushing Everything" -ForegroundColor Green
+#     dp
+#     Write-Host ""  # Add an empty line for new line
+#     Set-Location -Path $HOME
+# }
+#
 function gall {
     Set-Location -Path "$HOME\.local\share\chezmoi"
     git add .
