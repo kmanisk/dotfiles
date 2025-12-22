@@ -725,11 +725,13 @@ function dall {
     Write-Host ""
 
     if ([string]::IsNullOrWhiteSpace($CommitMsg)) {
-        $CommitMsg = "automated dotfiles update"
+        dp
+    } else {
+        Set-Location -Path "$HOME\.local\share\chezmoi"
+        git add .
+        git commit -m "$CommitMsg"
+        git push -u origin master
     }
-
-    Write-Host "Pushing Everything" -ForegroundColor Green
-    dp -CommitMsg $CommitMsg
 
     Write-Host ""
     Set-Location -Path $HOME
