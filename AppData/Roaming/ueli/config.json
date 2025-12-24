@@ -805,6 +805,18 @@
 					"needsUserConfirmationBeforeExecution": false,
 					"tags": [],
 					"type": "File path"
+				},
+				{
+					"description": "",
+					"executionArgument": "wt.exe",
+					"icon": {
+						"parameter": "",
+						"type": "URL"
+					},
+					"name": "WT Windows Terminal",
+					"needsUserConfirmationBeforeExecution": false,
+					"tags": [],
+					"type": "Commandline tool"
 				}
 			]
 		},
