@@ -46,7 +46,6 @@
 	"terminal.integrated.fontFamily": "JetBrainsMonoNL Nerd Font",
 	// "terminal.integrated.fontFamily": "Iosevka Nerd Font Mono",
 	"screencastMode.fontSize": 36,
-	"terminal.integrated.fontSize": 17,
 	"terminal.integrated.fontLigatures.enabled": true,
 	"screencastMode.verticalOffset": 1,
 	"editor.fontLigatures": true,
@@ -74,7 +73,7 @@
 	"editor.occurrencesHighlight": "off",
 	//changed now
 	"editor.parameterHints.enabled": true,
-	"editor.hover.enabled": true,
+	"editor.hover.enabled": "on",
 	//java autocomplete off :
 	"editor.selectionHighlight": false,
 	"zenMode.silentNotifications": false,
@@ -312,7 +311,7 @@
 	"telemetry.editStats.enabled": false,
 	"telemetry.feedback.enabled": false,
 	"telemetry.telemetryLevel": "off",
-	"workbench.colorTheme": "Darcula Stormy",
+	"workbench.colorTheme": "Gruvbox Dark Medium",
 	"svelte.enable-ts-plugin": true,
 	"liveServer.settings.donotVerifyTags": true,
 	"editor.unicodeHighlight.invisibleCharacters": false,

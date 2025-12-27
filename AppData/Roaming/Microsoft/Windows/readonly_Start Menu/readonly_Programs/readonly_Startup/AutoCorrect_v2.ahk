@@ -1,50 +1,10 @@
+ï»¿#SingleInstance
+#Requires AutoHotkey v2.0
 ;------------------------------------------------------------------------------
-; CHANGELOG:
-; 
-; Sep 13 2007: Added more misspellings.
-;              Added fix for -ign -> -ing that ignores words like "sign".
-;              Added word beginnings/endings sections to cover more options.
-;              Added auto-accents section for words like fiancée, naïve, etc.
-; Feb 28 2007: Added other common misspellings based on MS Word AutoCorrect.
-;              Added optional auto-correction of 2 consecutive capital letters.
-; Sep 24 2006: Initial release by Jim Biancolo (http://www.biancolo.com)
-; 
-; INTRODUCTION
-; 
-; This is an AutoHotKey script that implements AutoCorrect against several
-; "Lists of common misspellings":
-; 
-; This does not replace a proper spellchecker such as in Firefox, Word, etc.
-; It is usually better to have uncertain typos highlighted by a spellchecker
-; than to "correct" them incorrectly so that they are no longer even caught by
-; a spellchecker: it is not the job of an autocorrector to correct *all*
-; misspellings, but only those which are very obviously incorrect.
-; 
-; From a suggestion by Tara Gibb, you can add your own corrections to any
-; highlighted word by hitting Win+H. These will be added to a separate file,
-; so that you can safely update this file without overwriting your changes.
-; 
-; Some entries have more than one possible resolution (achive->achieve/archive)
-; or are clearly a matter of deliberate personal writing style (wanna, colour)
-; 
-; These have been placed at the end of this file and commented out, so you can
-; easily edit and add them back in as you like, tailored to your preferences.
-; 
-; SOURCES
-; 
-; http://en.wikipedia.org/wiki/Wikipedia:Lists_of_common_misspellings
-; http://en.wikipedia.org/wiki/Wikipedia:Typo
-; Microsoft Office autocorrect list
-; Script by jaco0646 http://www.autohotkey.com/forum/topic8057.html
-; OpenOffice autocorrect list
-; TextTrust press release
-; User suggestions.
-; 
 ; CONTENTS
-; 
-;   Settings
-;   AUto-COrrect TWo COnsecutive CApitals (commented out by default)
-;   Win+H code
+;	Discussion
+;   AUto-COrrect TWo COnsecutive CApitals
+;   Hotstring Helper -- Multi Line
 ;   Fix for -ign instead of -ing
 ;   Word endings
 ;   Word beginnings
@@ -54,83 +14,391 @@
 ;------------------------------------------------------------------------------
 
 ;------------------------------------------------------------------------------
-; Settings
+;   Disussion
+;   This is based on the excellent 2007 AutoCorrect.ahk script by Jim Biancolo
+;   and Wikipedia's Lists of Common Misspellings.  Please find download link
+;   here https://www.autohotkey.com/docs/v2/Hotstrings.htm#AutoCorrect
+;   The original script has additional discussion and information.
+;   See also, discussion here: https://www.autohotkey.com/boards/viewtopic.php?f=83&t=120220
 ;------------------------------------------------------------------------------
-#NoEnv ; For security
-#SingleInstance force
 
 ;------------------------------------------------------------------------------
-; AUto-COrrect TWo COnsecutive CApitals.
-; Disabled by default to prevent unwanted corrections such as IfEqual->Ifequal.
-; To enable it, remove the /*..*/ symbols around it.
-; From Laszlo's script at http://www.autohotkey.com/forum/topic9689.html
+;       AUto-COrrect TWo COnsecutive CApitals
+; This version by forum user Ntepa. Updated 8-7-2023.
+; https://www.autohotkey.com/boards/viewtopic.php?p=533067#p533067
 ;------------------------------------------------------------------------------
-/*
-; The first line of code below is the set of letters, digits, and/or symbols
-; that are eligible for this type of correction.  Customize if you wish:
-keys = abcdefghijklmnopqrstuvwxyz
-Loop Parse, keys
-    HotKey ~+%A_LoopField%, Hoty
-Hoty:
-    CapCount := SubStr(A_PriorHotKey,2,1)="+" && A_TimeSincePriorHotkey<999 ? CapCount+1 : 1
-    if CapCount = 2
-        SendInput % "{BS}" . SubStr(A_ThisHotKey,3,1)
-    else if CapCount = 3
-        SendInput % "{Left}{BS}+" . SubStr(A_PriorHotKey,3,1) . "{Right}"
-Return
-*/
 
+fix_consecutive_caps()
+fix_consecutive_caps() {
+    ; Hotstring only works if CapsLock is off.
+    HotIf (*) => !GetKeyState("CapsLock", "T")
+    loop 26 {
+        char1 := Chr(A_Index + 64)
+        loop 26 {
+            char2 := Chr(A_Index + 64)
+            ; Create hotstring for every possible combination of two letter capital letters.
+            Hotstring(":*?CXB0:" char1 char2, fix.Bind(char1, char2))
+        }
+    }
+    HotIf
+
+    ; Third letter is checked using InputHook.
+    fix(char1, char2, *) {
+        ih := InputHook("V I101 L1 T.4")
+        ih.OnEnd := OnEnd
+        ih.Start()
+        OnEnd(ih) {
+            char3 := ih.Input
+            if (char3 ~= "[a-z]") ; If char is lowercase alpha.
+            || (char3 = A_Space && char1 char2 ~= "OF|TO|IN|IT|IS|AS|AT|WE|HE|BY|ON|BE|NO") ; Fix two letter words.
+                Send("{BS 2}" StrLower(char2) char3)
+        }
+    }
+}
 
 ;------------------------------------------------------------------------------
-; Win+H to enter misspelling correction.  It will be added to this script.
+;       Hotstring Helper - Multi line
+; By Kunkel321, with much help from forum members and others. Version 8-7-2023
+; https://www.autohotkey.com/boards/viewtopic.php?f=6&t=114688
+; A version of Hotstring Helper that will support block multi-line replacements.
+; Customization options are present throughout, and are flagged as such.
+; Needs AHK v2. Partly auto-converted from v1, partly rewritten.
+; Please get a copy of AutoHotkey.exe (v2) and rename it to match the name of this
+; script file, so that the .exe and the .ahk have the same name, in the same folder.
+; DO NOT COMPILE, or the Append command won't work. The Gui stays in RAM, but gets
+; repopulated upon hotkey press. HotStrings will be appended (added) by the
+; script at the bottom.Remove these comments as desired.
 ;------------------------------------------------------------------------------
-#h::
-; Get the selected text. The clipboard is used instead of "ControlGet Selected"
-; as it works in more editors and word processors, java apps, etc. Save the
-; current clipboard contents to be restored later.
-AutoTrim Off  ; Retain any leading and trailing whitespace on the clipboard.
-ClipboardOld = %ClipboardAll%
-Clipboard =  ; Must start off blank for detection to work.
-Send ^c
-ClipWait 1
-if ErrorLevel  ; ClipWait timed out.
+
+;==Change=colors=as=desired========================
+GuiColor := "F0F8FF" ; "F0F8FF" is light blue
+FontColor := "003366" ; "003366" is dark blue
+;==================================================
+
+Global hFactor := 0 ; Don't change size here.  Change in TogSize() function, below.
+Global wFactor := 0 ; Don't change here.  Change in TogSize() function.
+FormName := "Hotstring Helper -- Muli-Line" ; Change here, if desired.
+
+hh := Gui('', FormName)
+hh.Opt("-MinimizeBox +alwaysOnTop")
+hh.BackColor := GuiColor
+hh.SetFont("s11 c" . FontColor)
+; -----  Trigger string parts
+hh.AddText('y4 w30', 'Options')
+hh.AddText('vTrigStrLbl x+20 w250', 'Trigger String')
+hh.AddEdit('vMyDefaultOpts yp+20 xm+10 w30 h24')
+DefHotStr := hh.AddEdit('vDefHotStr x+28 w' . wFactor + 250, '')
+; ----- Replacement string parts
+hh.AddText('xm', 'Enter Replacement String')
+hh.SetFont('s9')
+hh.AddButton('vSizeTog x+5 yp-5 h8 +notab', 'Make Bigger').OnEvent("Click", TogSize)
+hh.AddButton('vSymTog x+5 h8 +notab', '+ Symbols').OnEvent("Click", TogSym)
+hh.SetFont('s11')
+;RepStr := hh.AddEdit('vRepStr +Wrap yp+25 xs h' . hFactor + 100 . ' w' . wFactor + 320, '')
+RepStr := hh.AddEdit('vRepStr +Wrap y+1 xs h' . hFactor + 100 . ' w' . wFactor + 320, '')
+ComLbl := hh.AddText('xm y' . hFactor + 182, 'Enter Comment')
+hh.SetFont("s11 cGreen")
+ComStr := hh.AddEdit('vComStr xs y' . hFactor + 200 . ' w' . wFactor + 315)
+; ---- Buttons
+(ButApp := hh.AddButton('xm y' . hFactor + 234, '&Append')).OnEvent("Click", hhButtonAppend)
+(ButVal := hh.AddButton('+notab x+5 y' . hFactor + 234, '&Validate')).OnEvent("Click", hhButtonValidate)
+(ButSpell := hh.AddButton('+notab x+5 y' . hFactor + 234, '&Spell')).OnEvent("Click", hhButtonSpell)
+(ButOpen := hh.AddButton('+notab x+5 y' . hFactor + 234, '&Open')).OnEvent("Click", hhButtonOpen)
+(ButCancel := hh.AddButton('+notab x+5 y' . hFactor + 234, '&Cancel')).OnEvent("Click", hhButtonCancel)
+
+#h::   ; HotString Helper activation hotkey-combo (not string) is Win+h. Change if desired.
+{ MyDefaultOpts := ""
+  DefaultHotStr := ""
+  Global myPrefix := ""
+  Global mySuffix := ""
+  Global ClipboardOld := ClipboardAll() ; Save and put back later.
+  A_Clipboard := ""  ; Must start off blank for detection to work.
+  Send("^c") ; Copy selected text.
+  Errorlevel := !ClipWait(0.3) ; Wait for clipboard to contain text.
+  If !InStr(A_Clipboard, "`n") ; Only trim NON multi line text strings.
+    A_Clipboard := Trim(A_Clipboard) ; Because MS Word keeps leaving spaces.
+
+  ; If white space present in selected text, probably not an Autocorrect entry.
+  If (InStr(A_Clipboard, " ") || InStr(A_Clipboard, "`n"))
+  {
+   ;=======Change=options=for=MULTI=word=entry=options=and=trigger=strings=as=desired==============
+   MyDefaultOpts := ""    ; PreEnter these multi-word hotstring options; "*" = end char not needed, etc.
+   myPrefix := ";"        ; Optional character that you want suggested at the beginning of each hotstring.
+   addFirstLetters := 5   ; Add first letter of this many words. (5 recommended; 0 = don't use feature.)
+    tooSmallLen := 2      ; Only first letters from words longer than this. (Moot if addFirstLetters = 0)
+   mySuffix := ""         ; An empty string "" means don't use feature.
+  ;===========================================================one=more=below=======================
+    If (addFirstLetters > 0)
+    { LBLhotstring := "Edit trigger string as needed"
+      initials := "" ; Initials will be the first letter of each word as a hotstring suggestion.
+      HotStrSug := StrReplace(A_Clipboard, "`n", " ") ; Unwrap, but only for hotstr suggestion.
+      Loop Parse, HotStrSug, A_Space
+      { If (Strlen(A_LoopField) > tooSmallLen) ; Check length of each word, ignore if N letters.
+           initials :=initials . SubStr(A_LoopField, ("1")<1 ? ("1")-1 : ("1"), "1")
+        If (StrLen(initials) = addFirstLetters) ; stop looping if hotstring is N chars long.
+           break
+      }
+      initials := StrLower(initials)
+      DefaultHotStr := myPrefix . initials . mySuffix ; Append preferred prefix or suffix, as defined above, to initials.
+    }
+    else
+    {LBLhotstring := "Add a trigger string"
+     DefaultHotStr := myPrefix . mySuffix ; Use prefix and/or suffix as needed, but no initials.
+    }
+  }
+  Else If (A_Clipboard = "")
+      LBLhotstring := "Add a trigger string"
+  else
+  { LBLhotstring := "Add misspelled word"
+    DefaultHotStr := A_Clipboard ; No spaces found so assume it's a mispelling autocorrect entry: no pre/suffix.
+    ;===============Change=options=AUTOCORRECT=words=as=desired======================================
+    myDefaultOpts := ""    ; PreEnter these (single-word) autocorrect options; "T" = raw text mode, etc.
+    ;================================================================================================
+  }
+  hh['MyDefaultOpts'].value := MyDefaultOpts
+  hh['TrigStrLbl'].value := LBLhotstring
+  hh['DefHotStr'].value := DefaultHotStr
+  hh['RepStr'].value := A_Clipboard
+  hh['RepStr'].Opt("-Readonly")
+  ButApp.Enabled := true
+  hh.Show('Autosize')
+} ; bottom of hotkey function
+
+TogSize(*)
+{   If (hh['SizeTog'].text = "Make Bigger") {
+    hh['SizeTog'].text := "Make Smaller"
+    ; ======Change=size=of=GUI=when="Make Bigger"=is=envoked========
+    hFactor := 200 ; Height of Replacement box, Y pos of things below it.
+    wFactor := 200 ; Width of 3 of the edit boxes.
+    ;===============================================================
+    SubTogSize(hFactor, wFactor)
+    hh.Show('Autosize Center')
     return
-; Replace CRLF and/or LF with `n for use in a "send-raw" hotstring:
-; The same is done for any other characters that might otherwise
-; be a problem in raw mode:
-StringReplace, Hotstring, Clipboard, ``, ````, All  ; Do this replacement first to avoid interfering with the others below.
-StringReplace, Hotstring, Hotstring, `r`n, ``r, All  ; Using `r works better than `n in MS Word, etc.
-StringReplace, Hotstring, Hotstring, `n, ``r, All
-StringReplace, Hotstring, Hotstring, %A_Tab%, ``t, All
-StringReplace, Hotstring, Hotstring, `;, ```;, All
-Clipboard = %ClipboardOld%  ; Restore previous contents of clipboard.
-; This will move the InputBox's caret to a more friendly position:
-SetTimer, MoveCaret, 10
-; Show the InputBox, providing the default hotstring:
-InputBox, Hotstring, New Hotstring, Provide the corrected word on the right side. You can also edit the left side if you wish.`n`nExample entry:`n::teh::the,,,,,,,, ::%Hotstring%::%Hotstring%
-
-if ErrorLevel <> 0  ; The user pressed Cancel.
+  }
+  If (hh['SizeTog'].text = "Make Smaller") {
+    hh['SizeTog'].text := "Make Bigger"
+    SubTogSize(0, 0)
+    hh.Show('Autosize')
     return
-; Otherwise, add the hotstring and reload the script:
-FileAppend, `n%Hotstring%, %A_ScriptFullPath%  ; Put a `n at the beginning in case file lacks a blank line at its end.
-Reload
-Sleep 200 ; If successful, the reload will close this instance during the Sleep, so the line below will never be reached.
-MsgBox, 4,, The hotstring just added appears to be improperly formatted.  Would you like to open the script for editing? Note that the bad hotstring is at the bottom of the script.
-IfMsgBox, Yes, Edit
-return
+  }
+  SubTogSize(hFactor, wFactor)
+  {
+    DefHotStr.Move(,, wFactor + 250,)
+    RepStr.Move(,, wFactor + 320, hFactor + 100)
+    ComLbl.Move(, hFactor + 182,,)
+    ComStr.move(, hFactor + 200, wFactor + 315,)
+    ButApp.Move(, hFactor + 234,,)
+    ButVal.Move(, hFactor + 234,,)
+    ButSpell.Move(, hFactor + 234,,)
+    ButOpen.Move(, hFactor + 234,,)
+    ButCancel.Move(, hFactor + 234,,)
+  }
+}
 
-MoveCaret:
-IfWinNotActive, New Hotstring
+TogSym(*)
+{ ;====assign=symbolss=for="show symb"=button=================================
+  myPilcrow := "Â¶"    ; Okay to change symb here if desired.
+  myDot := "â€¢ "       ; adding a space allows more natural wrapping.
+  myTab := " -> "
+  ;===========================================================================
+  If (hh['SymTog'].text = "+ Symbols") {
+     hh['SymTog'].text := "- Symbols"
+     RepStr := hh['RepStr'].text
+     RepStr := StrReplace(StrReplace(RepStr, "`r`n", "`n"), "`n", myPilcrow . "`n") ; Pilcrow for Enter
+     RepStr := StrReplace(RepStr, A_Space, myDot) ; middle dot for Space
+     RepStr := StrReplace(RepStr, A_Tab, myTab) ; space arrow space for Tab
+     hh['RepStr'].value := RepStr
+     hh['RepStr'].Opt("+Readonly")
+     ButApp.Enabled := false
+     hh.Show('Autosize')
+     return
+  }
+  If (hh['SymTog'].text = "- Symbols") {
+    hh['SymTog'].text := "+ Symbols"
+    RepStr := hh['RepStr'].text
+    RepStr := StrReplace(RepStr, myPilcrow . "`r", "`r") ; Have to use `r ... weird.
+	RepStr := StrReplace(RepStr, myDot, A_Space)
+	RepStr := StrReplace(RepStr, myTab, A_Tab)
+    hh['RepStr'].value := RepStr
+    hh['RepStr'].Opt("-Readonly")
+    ButApp.Enabled := true
+    hh.Show('Autosize')
     return
-; Otherwise, move the InputBox's insertion point to where the user will type the abbreviation.
-Send {HOME}
-Loop % StrLen(Hotstring) + 4
-    SendInput {Right}
-SetTimer, MoveCaret, Off
-return
+  }
+}
 
+#HotIf WinActive(FormName, ) ; Allows window-specific hotkeys.
+{
+$Enter:: ; When Enter is pressed, but only in this GUI. "$" prevents accidental Enter key loop.
+  { If (hh['SymTog'].text = "Hide Symb")
+      return
+    Else if RepStr.Focused {
+      Send("{Enter}") ; Just normal typing; Enter yields Enter key press.
+      Return
+    }
+    Else {
+      hhButtonAppend() ; Replacement box not focused, so press Append button.
+      return
+    }
+  }
+  Esc::
+  { hh.Hide()
+    A_Clipboard := ClipboardOld
+  }
+}
+#HotIf ; Turn off window-specific behavior.
+
+hhButtonAppend(*)
+{ tMyDefaultOpts := hh['MyDefaultOpts'].text
+  tDefHotStr := hh['DefHotStr'].text
+  tRepStr := hh['RepStr'].text
+  ValidationFunction(tMyDefaultOpts, tDefHotStr, tRepStr)
+  If Not InStr(CombinedValidMsg, "-Okay.",,, 3)
+  {    ; Msg doesn't have three occurrences of "-Okay."
+    msgResult := MsgBox(CombinedValidMsg "`n`n####################`nContinue Anyway?", "VALIDATION", "OC 4096" )
+    if (msgResult = "OK") {
+       Appendit(tMyDefaultOpts, tDefHotStr, tRepStr) ; not valid, but user chose to continue anyway
+       return
+     }
+    else
+       return ; not valid, and user cancelled
+  }
+  else { ; no validation problems found
+    Appendit(tMyDefaultOpts, tDefHotStr, tRepStr)
+    return
+ }
+}
+
+hhButtonValidate(*)
+{ tMyDefaultOpts := hh['MyDefaultOpts'].text
+  tDefHotStr := hh['DefHotStr'].text
+  tRepStr := hh['RepStr'].text
+  ValidationFunction(tMyDefaultOpts, tDefHotStr, tRepStr)
+  MsgBox("Validation Results`n#################`n" . CombinedValidMsg,, 4096)
+  Return
+}
+
+ValidationFunction(tMyDefaultOpts, tDefHotStr, tRepStr)
+{ Global CombinedValidMsg
+  ThisFile := Fileread(A_ScriptName) ; Save these contents to variable 'ThisFile'.
+ ; ThisFile := Fileread("S:\AutoHotkey\MasterScript\MasterScript.ahk") ; <---- CHANGE later
+  If (tMyDefaultOpts = "") ; If options box is empty, skip regxex check.
+    validOpts := "Okay."
+  else { ;===== Make sure hotstring options are valid ========
+   NeedleRegEx := "(\*|B0|\?|SI|C|K[0-9]{1,3}|SE|X|SP|O|R|T)" ; These are in the AHK docs I swear!!!
+   WithNeedlesRemoved := RegExReplace(tMyDefaultOpts, NeedleRegEx, "") ; Remove all valid options from var.
+
+  If(WithNeedlesRemoved = "") ; If they were all removed...
+     validOpts := "Okay."
+   else { ; Some characters from the Options box were not recognized.
+     OptTips := " ; Just a block text assignement to var
+       (
+  Don't include the colons.
+  ..from AHK v1 docs...
+   * - ending char not needed
+   ? - trigger inside other words
+   B0 - no backspacing
+   SI - send input mode
+   C - case-sensitive
+   K(n) - set key delay
+   SE - send event mode
+   X - execute command
+   SP - send play mode
+   O - omit end char
+   R - send raw
+   T - super raw
+      )"
+     validOpts := "Invalid Hotsring Options found.`n---> " . WithNeedlesRemoved . "`n`n`tTips:`n" . OptTips
+   }
+  }
+    ;==== Make sure hotstring box content is valid ========
+  validHot := "" ; Reset to empty each time.
+  If (tDefHotStr = "") || (tDefHotStr = myPrefix) || (tDefHotStr = mySuffix) || InStr(tDefHotStr, ":")
+      validHot := "HotString box should not be empty.`n-Don't include colons."
+  else ; No colons, and not empty. Good. Now check for duplicates.
+     Loop Parse, ThisFile, "`n", "`r" ; Check line-by-line.
+      If instr(A_LoopField, ":" . tDefHotStr . "::") { ; If line contains tDefHotStr...
+           validHot := "DUPLICATE FOUND`nAt Line " . A_Index . ":`n " . A_LoopField
+           break
+         }
+   If (validHot = "") ; If variable didn't get set in loop, then no duplicates found
+       validHot := "Okay."
+  ;==== Make sure replacement string box content is valid ===========
+  If (tRepStr = "") || (SubStr(tRepStr, ("1")<1 ? ("1")-1 : ("1"), "1")==":") ; If Replacement box empty, or first char is ":"
+      validRep := "Replacement string box should not be empty.`n-Don't include the colons."
+  else
+      validRep := "Okay."
+  ; Concatenate the three above validity checks.
+  CombinedValidMsg := "OPTIONS BOX `n-" . validOpts . "`n`nHOTSTRING BOX `n-" . validHot . "`n`nREPLACEMENT BOX `n-" . validRep
+  Return CombinedValidMsg ; return result for use is Append or Validation functions.
+} ; end of validation func
+
+Appendit(tMyDefaultOpts, tDefHotStr, tRepStr)
+{ WholeStr := ""
+  tMyDefaultOpts := hh['MyDefaultOpts'].text
+  tDefHotStr := hh['DefHotStr'].text
+  tRepStr := hh['RepStr'].text
+  tComStr := hh['ComStr'].text
+  If (tComStr != "")
+    tComStr := " `; " . tComStr
+  If InStr(tRepStr, "`n") {
+    WholeStr :=  ":" . tMyDefaultOpts . ":" . tDefHotStr . "::" . tComStr . "`n(`n" . tRepStr . "`n)"
+  }
+  Else {
+    WholeStr :=  ":" . tMyDefaultOpts . ":" . tDefHotStr . "::" . tRepStr . tComStr
+  }
+  FileAppend("`n" WholeStr, A_ScriptFullPath) ; 'n makes sure it goes on a new line.
+  Reload() ; relaod the script so the new hotstring will be ready for use.
+}
+
+hhButtonSpell(*) ; Called is "Spell" because "Spell Check" is too long.
+{ tRepStr := hh['RepStr'].text
+  If (tRepStr = "")
+    MsgBox("Replacement Text not found.",, 4096)
+  else {
+    googleSugg := GoogleAutoCorrect(tRepStr) ; Calls below function
+    If (googleSugg = "")
+        MsgBox("No suggestions found.",, 4096)
+    Else {
+      msgResult := MsgBox(googleSugg "`n`n######################`nChange Replacement Text?", "Google Suggestion", "OC 4096")
+      if (msgResult = "OK")
+        hh['RepStr'].value := googleSugg
+      else
+      return
+    }
+  }
+}
+
+GoogleAutoCorrect(word)
+{ ; Original by TheDewd, converted to v2 by Mikeyww.
+  ; autohotkey.com/boards/viewtopic.php?f=82&t=120143
+ objReq := ComObject('WinHttp.WinHttpRequest.5.1')
+ objReq.Open('GET', 'https://www.google.com/search?q=' word)
+ objReq.SetRequestHeader('User-Agent'
+  , 'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)')
+ objReq.Send(), HTML := objReq.ResponseText
+ If RegExMatch(HTML, 'value="(.*?)"', &A)
+ If RegExMatch(HTML, ';spell=1.*?>(.*?)<\/a>', &B)
+ Return B[1] || A[1]
+}
+
+hhButtonOpen(*)
+{  ; Open this file and go to the bottom so you can see your Hotstrings.
+  hh.Hide()
+  A_Clipboard := ClipboardOld  ; Restore previous contents of clipboard.
+  Edit()
+  WinWaitActive(A_ScriptName) ; Wait for the script to be open in text editor.
+  Sleep(250)
+  Send("{Ctrl Down}{End}{Ctrl Up}{Home}") ; Navigate to the bottom.
+}
+
+hhButtonCancel(*)
+{ hh.Hide()
+  A_Clipboard := ClipboardOld  ; Restore previous contents of clipboard.
+}
+
+;######## Below parts are from original AutoCorrect 2007 ##################
 #Hotstring R  ; Set the default to be "raw mode" (might not actually be relied upon by anything yet).
-
 
 ;------------------------------------------------------------------------------
 ; Fix for -ign instead of -ing.
@@ -175,7 +443,9 @@ return
 ::sovereign::
 ::unbenign::
 ::verisign::
+{
 return  ; This makes the above hotstrings do nothing so that they override the ign->ing rule below.
+}
 
 #Hotstring B  ; Turn back on automatic backspacing for all subsequent hotstrings.
 :?:ign::ing
@@ -259,14 +529,6 @@ return  ; This makes the above hotstrings do nothing so that they override the i
 :*:indenpenden::independen
 :*:indisputib::indisputab
 :*:isntall::install
-:*:insatll::install
-:*:chooc::choco 
-:*:chocc::choco 
-:*:unisntall::uninstall 
-:*:vonfig:config
-;:*:ot::to
-:*:sue::use
-:*:delte::delete
 :*:insitut::institut
 :*:knwo::know
 :*:lsit::list
@@ -308,296 +570,213 @@ return  ; This makes the above hotstrings do nothing so that they override the i
 ; Accented English words, from, amongst others,
 ; http://en.wikipedia.org/wiki/List_of_English_words_with_diacritics
 ; I have included all the ones compatible with reasonable codepages, and placed
-; those that may often not be accented either from a clash with an unaccented 
+; those that may often not be accented either from a clash with an unaccented
 ; word (resume), or because the unaccented version is now common (cafe).
+; 2023: Most of the definitions are from https://www.easydefine.com/ or from the WordWeb application.
+; 2023: Several are converted to word endings to accommodate verb tenses, plural, etc.
 ;------------------------------------------------------------------------------
-::aesop::Æsop
-::a bas::à bas
-::a la::à la
-::ancien regime::Ancien Régime
-::angstrom::Ångström
-::angstroms::Ångströms
-::anime::animé
-::animes::animés
-::ao dai::ào dái
-::apertif::apértif
-::apertifs::apértifs
-::applique::appliqué
-::appliques::appliqués
-::apres::après
-::arete::arête
-::attache::attaché
-::attaches::attachés
-::auto-da-fe::auto-da-fé
-::belle epoque::belle époque
-::bete noire::bête noire
-::betise::bêtise
-::Bjorn::Bjørn
-::blase::blasé
-::boite::boîte
-::boutonniere::boutonnière
-::canape::canapé
-::canapes::canapés
-::celebre::célèbre
-::celebres::célèbres
-::chaines::chaînés
-::cinema verite::cinéma vérité
-::cinemas verite::cinémas vérité
-::cinema verites::cinéma vérités
-::champs-elysees::Champs-Élysées
-::charge d'affaires::chargé d'affaires
-::chateau::château
-::chateaux::châteaux
-::chateaus::châteaus
-::cliche::cliché
-::cliched::clichéd
-::cliches::clichés
-::cloisonne::cloisonné
-::consomme::consommé
-::consommes::consommés
-::communique::communiqué
-::communiques::communiqués
-::confrere::confrère
-::confreres::confrères
-::cortege::cortège
-::corteges::cortèges
-::coup d'etat::coup d'état
-::coup d'etats::coup d'états
-::coup de tat::coup d'état
-::coup de tats::coup d'états
-::coup de grace::coup de grâce
-::creche::crèche
-::creches::crèches
-::coulee::coulée
-::coulees::coulées
-::creme brulee::crème brûlée
-::creme brulees::crème brûlées
-::creme caramel::crème caramel
-::creme caramels::crème caramels
-::creme de cacao::crème de cacao
-::creme de menthe::crème de menthe
-::crepe::crêpe
-::crepes::crêpes
-::creusa::Creüsa
-::crouton::croûton
-::croutons::croûtons
-::crudites::crudités
-::curacao::curaçao
-::dais::daïs
-::daises::daïses
-::debacle::débâcle
-::debacles::débâcles
-::debutante::débutante
-::debutants::débutants
-::declasse::déclassé
-::decolletage::décolletage
-::decollete::décolleté
-::decor::décor
-::decors::décors
-::decoupage::découpage
-::degage::dégagé
-::deja vu::déjà vu
-::demode::démodé
-::denoument::dénoument
-::derailleur::dérailleur
-::derriere::derrière
-::deshabille::déshabillé
-::detente::détente
-::diamante::diamanté
-::discotheque::discothèque
-::discotheques::discothèques
-::divorcee::divorcée
-::divorcees::divorcées
-::doppelganger::doppelgänger
-::doppelgangers::doppelgängers
-::eclair::éclair
-::eclairs::éclairs
-::eclat::éclat
-::el nino::El Niño
-::elan::élan
-::emigre::émigré
-::emigres::émigrés
-::entree::entrée
-::entrees::entrées
-::entrepot::entrepôt
-::entrecote::entrecôte
-::epee::épée
-::epees::épées
-::etouffee::étouffée
-::facade::façade
-::facades::façades
-::fete::fête
-::fetes::fêtes
-::faience::faïence
-::fiance::fiancé
-::fiances::fiancés
-::fiancee::fiancée
-::fiancees::fiancées
-::filmjolk::filmjölk
-::fin de siecle::fin de siècle
-::flambe::flambé
-::flambes::flambés
-::fleche::flèche
-::Fohn wind::Föhn wind
-::folie a deux::folie à deux
-::folies a deux::folies à deux
-::fouette::fouetté
-::frappe::frappé
-::frappes::frappés
-:?*:fraulein::fräulein
-:?*:fuhrer::Führer
-::garcon::garçon
-::garcons::garçons
-::gateau::gâteau
-::gateaus::gâteaus
-::gateaux::gâteaux
-::gemutlichkeit::gemütlichkeit
-::glace::glacé
-::glogg::glögg
-::gewurztraminer::Gewürztraminer
-::gotterdammerung::Götterdämmerung
-::grafenberg spot::Gräfenberg spot
-::habitue::habitué
-::ingenue::ingénue
-::jager::jäger
-::jalapeno::jalapeño
-::jalapenos::jalapeños
-::jardiniere::jardinière
-::krouzek::kroužek
-::kummel::kümmel
-::kaldolmar::kåldolmar
-::landler::ländler
-::langue d'oil::langue d'oïl
-::la nina::La Niña
-::litterateur::littérateur
-::lycee::lycée
-::macedoine::macédoine
-::macrame::macramé
-::maitre d'hotel::maître d'hôtel
-::malaguena::malagueña
-::manana::mañana
-::manege::manège
-::manque::manqué
-::materiel::matériel
-::matinee::matinée
-::matinees::matinées
-::melange::mélange
-::melee::mêlée
-::melees::mêlées
-::menage a trois::ménage à trois
-::menages a trois::ménages à trois
-::mesalliance::mésalliance
-::metier::métier
-::minaudiere::minaudière
-::mobius strip::Möbius strip
-::mobius strips::Möbius strips
-::moire::moiré
-::moireing::moiréing
-::moires::moirés
-::motley crue::Mötley Crüe
-::motorhead::Motörhead
-::naif::naïf
-::naifs::naïfs
-::naive::naïve
-::naiver::naïver
-::naives::naïves
-::naivete::naïveté
-::nee::née
-::negligee::negligée
-::negligees::negligées
-::neufchatel cheese::Neufchâtel cheese
-::nez perce::Nez Percé
-::noël::Noël
-::noëls::Noëls
-::número uno::número uno
-::objet trouve::objet trouvé
-::objets trouve::objets trouvé
-::ombre::ombré
-::ombres::ombrés
-::omerta::omertà
-::opera bouffe::opéra bouffe
-::operas bouffe::opéras bouffe
-::opera comique::opéra comique
-::operas comique::opéras comique
-::outre::outré
-::papier-mache::papier-mâché
-::passe::passé
-::piece de resistance::pièce de résistance
-::pied-a-terre::pied-à-terre
-::plisse::plissé
-::pina colada::Piña Colada
-::pina coladas::Piña Coladas
-::pinata::piñata
-::pinatas::piñatas
-::pinon::piñon
-::pinons::piñons
-::pirana::piraña
-::pique::piqué
-::piqued::piquéd
-::più::più
-::plie::plié
-::precis::précis
-::polsa::pölsa
-::pret-a-porter::prêt-à-porter
-::protoge::protégé
-::protege::protégé
-::proteged::protégéd
-::proteges::protégés
-::protegee::protégée
-::protegees::protégées
-::protegeed::protégéed
-::puree::purée
-::pureed::puréed
-::purees::purées
-::Quebecois::Québécois
-::raison d'etre::raison d'être
-::recherche::recherché
-::reclame::réclame
-::résume::résumé
-::resumé::résumé
-::résumes::résumés
-::resumés::résumés
-::retrousse::retroussé
-::risque::risqué
-::riviere::rivière
-::roman a clef::roman à clef
-::roue::roué
-::saute::sauté
-::sauted::sautéd
-::seance::séance
-::seances::séances
-::senor::señor
-::senors::señors
-::senora::señora
-::senoras::señoras
-::senorita::señorita
-::senoritas::señoritas
-::sinn fein::Sinn Féin
-::smorgasbord::smörgåsbord
-::smorgasbords::smörgåsbords
-::smorgastarta::smörgåstårta
-::soigne::soigné
-::soiree::soirée
-::soireed::soiréed
-::soirees::soirées
-::souffle::soufflé
-::souffles::soufflés
-::soupcon::soupçon
-::soupcons::soupçons
-::surstromming::surströmming
-::tete-a-tete::tête-à-tête
-::tete-a-tetes::tête-à-têtes
-::touche::touché
-::tourtiere::tourtière
-::ubermensch::Übermensch
-::ubermensches::Übermensches
-::ventre a terre::ventre à terre
-::vicuna::vicuña
-::vin rose::vin rosé
-::vins rose::vins rosé
-::vis a vis::vis à vis
-::vis-a-vis::vis-à-vis
-::voila::voilà 
+::aesop::Ã†sop ; noun Greek author of fables (circa 620-560 BC)
+::a bas::Ã  bas ; French: Down with -- To the bottom.  A type of clothing.
+::a la::Ã  la ; In the manner of...
+::ancien regime::Ancien RÃ©gime ; noun a political and social system that no longer governs (especially the system that existed in France before the French Revolution)
+:*:angstrom::Ã…ngstrÃ¶m ; noun a metric unit of length equal to one ten billionth of a meter (or 0.0001 micron); used to specify wavelengths of electromagnetic radiation
+:*:anime::animÃ© ; noun any of various resins or oleoresins; a hard copal derived from an African tree
+::ao dai::Ã o dÃ¡i  ; noun the traditional dress of Vietnamese women consisting of a tunic with long sleeves and panels front and back; the tunic is worn over trousers
+:*:apertif::apÃ©rtif ; noun an alcoholic drink that is taken as an appetizer before a meal
+:*:applique::appliquÃ© ; noun a decorative design made of one material sewn over another; verb sew on as a decoration
+::apres::aprÃ¨s ; French:  Too late.  After the event.
+::arete::arÃªte ; noun a sharp narrow ridge found in rugged mountains
+::attache::attachÃ© ; noun a specialist assigned to the staff of a diplomatic mission; a shallow and rectangular briefcase
+::auto-da-fe::auto-da-fÃ© ; noun the burning to death of heretics (as during the Spanish Inquisition)
+::belle epoque::belle Ã©poque ; French: Fine period.   noun the period of settled and comfortable life preceding World War I
+::bete noire::bÃªte noire ; noun a detested person
+::betise::bÃªtise ; noun a stupid mistake
+::Bjorn::BjÃ¸rn ; An old norse name.  Means "Bear."
+::blase::blasÃ© ; adj. nonchalantly unconcerned; uninterested because of frequent exposure or indulgence; very sophisticated especially because of surfeit; versed in the ways of the world
+:*:boite::boÃ®te ; French: "Box."  a small restaurant or nightclub.
+::boutonniere::boutonniÃ¨re ; noun a flower that is worn in a buttonhole.
+:*:canape::canapÃ©  ; noun an appetizer consisting usually of a thin slice of bread or toast spread with caviar or cheese or other savory food
+:*:celebre::cÃ©lÃ¨bre ; Cause cÃ©lÃ¨bre An incident that attracts great public attention.
+:*:chaine::chaÃ®nÃ© ; / (ballet) noun A series of small fast turns, often with the arms extended, used to cross a floor or stage.
+:*:cinema verite::cinÃ©ma vÃ©ritÃ© ; noun a movie that shows ordinary people in actual activities without being controlled by a director
+::cinemas verite::cinÃ©mas vÃ©rit ; noun a movie that shows ordinary people in actual activities without being controlled by a directorÃ©
+::champs-elysees::Champs-Ã‰lysÃ©es ; noun a major avenue in Paris famous for elegant shops and cafes
+::charge d'affaires::chargÃ© d'affaires ; noun the official temporarily in charge of a diplomatic mission in the absence of the ambassador
+:*:chateau::chÃ¢teau ; noun an impressive country house (or castle) in France
+:*:cliche::clichÃ© ; noun a trite or obvious remark; clichÃ©d adj. repeated regularly without thought or originality
+::cloisonne::cloisonnÃ© ; adj. (for metals) having areas separated by metal and filled with colored enamel and fired; noun enamelware in which colored areas are separated by thin metal strips
+:*:consomme::consommÃ© ; noun clear soup usually of beef or veal or chicken
+:*:communique::communiquÃ© ; noun an official report (usually sent in haste)
+:*:confrere::confrÃ¨re ; noun a person who is member of your class or profession
+:*:cortege::cortÃ¨ge ; noun the group following and attending to some important person; a funeral procession
+:*:coup d'etat::coup d'Ã©tat ; noun a sudden and decisive change of government illegally or by force
+:*:coup de tat::coup d'Ã©tat ; noun a sudden and decisive change of government illegally or by force
+:*:coup de grace::coup de grÃ¢ce ; noun the blow that kills (usually mercifully)
+:*:creche::crÃ¨che ; noun a hospital where foundlings (infant children of unknown parents) are taken in and cared for; a representation of Christ's nativity in the stable at Bethlehem
+:*:coulee::coulÃ©e ; A stream of lava.  A deep gulch or ravine, frequently dry in summer.
+::creme brulee::crÃ¨me brÃ»lÃ©e ; noun custard sprinkled with sugar and broiled
+:*:crepe::crÃªpe ; noun a soft thin light fabric with a crinkled surface; paper with a crinkled texture; usually colored and used for decorations; small very thin pancake; verb cover or drape with crape
+:*:creme caramel::crÃ¨me caramel ; noun baked custard topped with caramel
+::creme de cacao::crÃ¨me de cacao ; noun sweet liqueur flavored with vanilla and cacao beans
+::creme de menthe::crÃ¨me de menthe ; noun sweet green or white mint-flavored liqueur
+:*:crouton::croÃ»ton ; noun a small piece of toasted or fried bread; served in soup or salads
+::creusa::CreÃ¼sa ; In Greek mythology, Creusa was the daughter of Priam and Hecuba.
+::crudites::cruditÃ©s ; noun raw vegetables cut into bite-sized strips and served with a dip
+::curacao::curaÃ§ao ; noun flavored with sour orange peel; a popular island resort in the Netherlands Antilles
+:*:dais::daÃ¯s ; noun a platform raised above the surrounding level to give prominence to the person on it
+:*:debacle::dÃ©bÃ¢cle ; noun a sudden and violent collapse; flooding caused by a tumultuous breakup of ice in a river during the spring or summer; a sound defeat
+:*:debutante::dÃ©butant ; noun a sudden and violent collapse; flooding caused by a tumultuous breakup of ice in a river during the spring or summer; a sound defeat
+::declasse::dÃ©classÃ© ; Fallen or lowered in class, rank, or social position; lacking high station or birth; of inferior status
+::decolletage::dÃ©colletage ; noun a low-cut neckline on a woman's dress
+::decollete::dÃ©colletÃ© ; adj. (of a garment) having a low-cut neckline
+:*:decor::dÃ©cor ; noun decoration consisting of the layout and furnishings of a livable interior
+::decoupage::dÃ©coupage ; noun the art of decorating a surface with shapes or pictures and then coating it with vanish or lacquer; art produced by decorating a surface with cutouts and then coating it with several layers of varnish or lacquer
+::degage::dÃ©gagÃ© ; adj. showing lack of emotional involvement; free and relaxed in manner
+::deja vu::dÃ©jÃ  vu ; noun the experience of thinking that a new situation had occurred before
+::demode::dÃ©modÃ© ; adj. out of fashion
+::denoument::dÃ©noument ; Narrative structure.  (Not in most dictionaries)
+::derailleur::dÃ©railleur ; (cycling) the mechanism on a bicycle usedÂ to move the chain from one sprocket (gear) to another
+:*:derriere::derriÃ¨re ; noun the fleshy part of the human body that you sit on
+::deshabille::dÃ©shabillÃ© ; noun the state of being carelessly or partially dressed
+::detente::dÃ©tente ; noun the easing of tensions or strained relations (especially between nations)
+::diamante::diamantÃ© ; noun adornment consisting of a small piece of shiny material used to decorate clothing
+:*:discotheque::discothÃ¨que ; noun a public dance hall for dancing to recorded popular music
+:*:divorcee::divorcÃ©e ; noun a divorced woman or a woman who is separated from her husband
+:*:doppelganger::doppelgÃ¤nger ; noun a ghostly double of a living person that haunts its living counterpart
+:*:eclair::Ã©clair ; noun oblong cream puff
+::eclat::Ã©clat ; noun brilliant or conspicuous success or effect; ceremonial elegance and splendor; enthusiastic approval
+::el nino::El NiÃ±o ; noun the Christ child; (oceanography) a warm ocean current that flows along the equator from the date line and south off the coast of Ecuador at Christmas time
+::elan::Ã©lan ; noun enthusiastic and assured vigor and liveliness; distinctive and stylish elegance; a feeling of strong eagerness (usually in favor of a person or cause)
+:*:emigre::Ã©migrÃ© ; noun someone who leaves one country to settle in another
+:*:entree::entrÃ©e ; noun the act of entering; the right to enter; the principal dish of a meal; something that provides access (to get in or get out)
+::entrepot::entrepÃ´t ; noun a port where merchandise can be imported and then exported without paying import duties; a depository for goods
+::entrecote::entrecÃ´te ; CutÂ ofÂ meat taken from between the ribs
+:*:epee::Ã©pÃ©e ; noun a fencing sword similar to a foil but with a heavier blade
+::etouffee::Ã©touffÃ©e ; A Cajun shellfish dish.
+:*:facade::faÃ§ade ; noun the face or front of a building; a showy misrepresentation intended to conceal something unpleasant
+:*:fete::fÃªte ; noun an elaborate party (often outdoors); an organized series of acts and performances (usually in one place); verb have a celebration
+::faience::faÃ¯ence ; noun an elaborate party (often outdoors); an organized series of acts and performances (usually in one place); verb have a celebration
+:*:fiance::fiancÃ© ; noun a man who is engaged to be married. fiancee ; noun a woman who is engaged to be married
+::filmjolk::filmjÃ¶lk ; Nordic milk product.
+::fin de siecle::fin de siÃ¨cle ; adj. relating to or characteristic of the end of a century (especially the end of the 19th century)
+:*:flambe::flambÃ© ; verb pour liquor over and ignite (a dish)
+::fleche::flÃ¨che ; a type of church spire; a team cycling competition; an aggressive offensive fencing technique; a defensive fortification; ships of the Royal Navy
+::Fohn wind::FÃ¶hn wind ; A type of dry, relatively warm, downslope wind that occurs in the lee (downwind side) of a mountain range.
+::folie a deux::folie Ã  deux ; noun the simultaneous occurrence of symptoms of a mental disorder (as delusions) in two persons who are closely related (as siblings or man and wife)
+::folies a deux::folies Ã  deux
+::fouette::fouettÃ© ; From Ballet: The working leg is extended and whipped around
+:*:frappe::frappÃ© ; noun thick milkshake containing ice cream; liqueur poured over shaved ice; a frozen dessert with fruit flavoring (especially one containing no milk)
+:*:fraulein::frÃ¤ulein ; noun a German courtesy title or form of address for an unmarried woman
+:*:garcon::garÃ§on ; A waiter, esp. at a French restaurant
+:*:gateau::gÃ¢teau ; noun any of various rich and elaborate cakes
+::gemutlichkeit::gemÃ¼tlichkeit ; Friendliness.
+::glace::glacÃ© ; adj. (used especially of fruits) preserved by coating with or allowing to absorb sugar
+::glogg::glÃ¶gg ; noun Scandinavian punch made of claret and aquavit with spices and raisins and orange peel and sugar
+::gewurztraminer::GewÃ¼rztraminer ; An aromatic whiteÂ wine grape variety that grows best in cooler climates
+::gotterdammerung::GÃ¶tterdÃ¤mmerung ; noun myth about the ultimate destruction of the gods in a battle with evil
+::grafenberg spot::GrÃ¤fenberg spot ;  An erogenous area of the vagina.
+:*:habitue::habituÃ© ; noun a regular patron
+::ingenue::ingÃ©nue ; noun an actress who specializes in playing the role of an artless innocent young girl
+::jager::jÃ¤ger ; A German or Austrian hunter, rifleman, or sharpshooter
+:*:jalapeno::jalapeÃ±o ; noun hot green or red pepper of southwestern United States and Mexico; plant bearing very hot and finely tapering long peppers; usually red
+::jardiniere::jardiniÃ¨re ; A preparation of mixed vegetables stewed in a sauce.  An arrangement of flowers.
+::krouzek::krouÅ¾ek ; A ring-shaped diacritical mark (Â°), whose use is largely restricted to Ã…, Ã¥ and U, u.
+::kummel::kÃ¼mmel ; noun liqueur flavored with caraway seed or cumin
+::kaldolmar::kÃ¥ldolmar ; Swedish cabbage rolls filled with rice and minced meat.
+::landler::lÃ¤ndler ; noun a moderately slow Austrian country dance in triple time; involves spinning and clapping; music in triple time for dancing the landler
+::langue d'oil::langue d'oÃ¯l ; noun medieval provincial dialects of French spoken in central and northern France
+::la nina::La NiÃ±a ; Spanish:'The Girl' is an oceanic and atmospheric phenomenon that is the colder counterpart of El NiÃ±o.
+::litterateur::littÃ©rateur ; noun a writer of literary works
+::lycee::lycÃ©e ; noun a school for students intermediate between elementary school and college; usually grades 9 to 12
+::macedoine::macÃ©doine ; noun mixed diced fruits or vegetables; hot or cold
+::macrame::macramÃ© ; noun a coarse lace; made by weaving and knotting cords; verb make knotted patterns
+::maitre d'hotel::maÃ®tre d'hÃ´tel ; noun a dining-room attendant who is in charge of the waiters and the seating of customers
+::malaguena::malagueÃ±a ; A Spanish dance or folk tune resembling the fandango.
+::manana::maÃ±ana ; Spanish: Tomorrow.
+::manege::manÃ¨ge ; The art of horsemanship or of training horses.
+::manque::manquÃ© ; adj. unfulfilled or frustrated in realizing an ambition
+::materiel::matÃ©riel ; noun equipment and supplies of a military force
+:*:matinee::matinÃ©e ; noun a theatrical performance held during the daytime (especially in the afternoon)
+::melange::mÃ©lange ; noun a motley assortment of things
+:*:melee::mÃªlÃ©e ; noun a noisy riotous fight
+::menage a trois::mÃ©nage Ã  trois ; noun household for three; an arrangement where a married couple and a lover of one of them live together while sharing sexual relations
+::menages a trois::mÃ©nages Ã  trois
+::mesalliance::mÃ©salliance ; noun a marriage with a person of inferior social status
+::metier::mÃ©tier ; noun an occupation for which you are especially well suited; an asset of special worth or utility
+::minaudiere::minaudiÃ¨re ; A small, decorative handbag without handles or a strap.
+::mobius::MÃ¶bius ; noun a continuous closed surface with only one side; formed from a rectangular strip by rotating one end 180 degrees and joining it with the other end
+::moire::moirÃ© ; adj. (of silk fabric) having a wavelike pattern; noun silk fabric with a wavy surface pattern
+:*:moireing::moirÃ© ; A textile technique that creates a wavy or "watered" effect in fabric.
+::motley crue::MÃ¶tley CrÃ¼e ; American heavy metal band formed in Hollywood, California in 1981.
+::motorhead::MotÃ¶rhead ; English rock band formed in London in 1975.
+:*:naif::naÃ¯f ; adj. marked by or showing unaffected simplicity and lack of guile or worldly experience; noun a naive or inexperienced person
+::naive::naÃ¯ve ; adj. inexperienced; marked by or showing unaffected simplicity and lack of guile or worldly experience
+::naiver::naÃ¯ver ; See above.
+::naives::naÃ¯ves ; See above.
+::naivete::naÃ¯vetÃ© ; See above.
+::nee::nÃ©e ; adj. (meaning literally `born') used to indicate the maiden or family name of a married woman
+:*:negligee::negligÃ©e ; noun a loose dressing gown for women
+::neufchatel::NeufchÃ¢tel ; a cheese
+::nez perce::Nez PercÃ© ; noun the Shahaptian language spoken by the Nez Perce; a member of a tribe of the Shahaptian people living on the pacific coast
+:*:noel::NoÃ«l ; French:  Christmas.
+::nÃºmero uno::nÃºmero uno ; Number one
+::objet trouve::objet trouvÃ© ; An object found or picked up at random and considered aesthetically pleasing.
+::objets trouve::objets trouvÃ© ; See above.
+:*:ombre::ombrÃ© ;  (literally "shaded" in French) is the blending of one color hue to another.  A card game.
+::omerta::omertÃ  ; noun a code of silence practiced by the Mafia; a refusal to give evidence to the police about criminal activities
+::opera bouffe::opÃ©ra bouffe ; noun opera with a happy ending and in which some of the text is spoken
+::operas bouffe::opÃ©ras bouffe ; see above.
+::opera comique::opÃ©ra comique ; noun opera with a happy ending and in which some of the text is spoken
+::operas comique::opÃ©ras comique ; See above.
+::outre::outrÃ© ; adj. conspicuously or grossly unconventional or unusual
+::papier-mache::papier-mÃ¢chÃ© ; noun a substance made from paper pulp that can be molded when wet and painted when dry
+::passe::passÃ© ; adj. out of fashion
+::piece de resistance::piÃ¨ce de rÃ©sistance ; noun the most important dish of a meal; the outstanding item (the prize piece or main exhibit) in a collection
+::pied-a-terre::pied-Ã -terre ; noun lodging for occasional or secondary use
+::plisse::plissÃ© ; (Of a fabric) chemically treated to produce a shirred or puckered effect.
+:*:pina colada::PiÃ±a Colada ; noun a mixed drink made of pineapple juice and coconut cream and rum
+:*:pinata::piÃ±ata ; noun plaything consisting of a container filled with toys and candy; suspended from a height for blindfolded children to break with sticks
+:*:pinon::piÃ±on ; noun any of several low-growing pines of western North America
+::pirana::piraÃ±a ; noun small voraciously carnivorous freshwater fishes of South America that attack and destroy living animals
+::pique::piquÃ© ; noun tightly woven fabric with raised cords; a sudden outburst of anger; verb cause to feel resentment or indignation
+::piqued::piquÃ©d ;noun Animosity or ill-feeling, Offence taken. transitive verb To wound the pride of To arouse, stir, provoke.
+::piÃ¹::piÃ¹ ; Move.
+::plie::pliÃ© ; A movement in ballet, in which the knees are bent while the body remains upright
+::precis::prÃ©cis ; noun a sketchy summary of the main points of an argument or theory; verb make a summary (of)
+:*:protege::protÃ©gÃ© ; noun a person who receives support and protection from an influential patron who furthers the protege's career.  protegee ; noun a woman protege
+:*:puree::purÃ©e ; noun food prepared by cooking and straining or processed in a blender; verb rub through a strainer or process in an electric blender
+::polsa::pÃ¶lsa ; A traditional northern Swedish dish which has been compared to hash
+::pret-a-porter::prÃªt-Ã -porter ; Ready-to-wear / Off-the-rack.
+::Quebecois::QuÃ©bÃ©cois ; adj. of or relating to Quebec
+::raison d'etre::raison d'Ãªtre ; noun the purpose that justifies a thing's existence; reason for being
+::recherche::recherchÃ© ; adj. lavishly elegant and refined
+::retrousse::retroussÃ© ; adjective (of a person's nose) turned up at the tip in an attractive way.
+::risque::risquÃ© ; adjective slightly indecent and liable to shock, especially by being sexually suggestive.
+::riviere::riviÃ¨re ; noun a necklace of gems that increase in size toward a large central stone, typically consisting of more than one string.
+::roman a clef::roman Ã  clef ; noun a novel in which actual persons and events are disguised as fictional characters
+::roue::rouÃ© ; noun a dissolute man in fashionable society
+:*:saute::sautÃ© ; adj. fried quickly in a little fat; noun a dish of sauteed food; verb fry briefly over high heat
+:*:seance::sÃ©ance ; noun a meeting of spiritualists
+:*:senor::seÃ±or ; noun a Spanish title or form of address for a man; similar to the English `Mr' or `sir'. senora/seÃ±orita ; noun a Spanish title or form of address for a married woman; similar to the English `Mrs' or `madam'
+:*:smorgasbord::smÃ¶rgÃ¥sbord ; noun served as a buffet meal; a collection containing a variety of sorts of things
+:*:soiree::soirÃ©e ; noun a party of people assembled in the evening (usually at a private house)
+:*:souffle::soufflÃ© ; noun light fluffy dish of egg yolks and stiffly beaten egg whites mixed with e.g. cheese or fish or fruit
+::sinn fein::Sinn FÃ©in ; noun an Irish republican political movement founded in 1905 to promote independence from England
+::smorgastarta::smÃ¶rgÃ¥stÃ¥rta ; "sandwich-cake" or "sandwich-torte" is a dish of Swedish origin
+::soigne::soignÃ© ; adj. polished and well-groomed; showing sophisticated elegance
+:*:soupcon::soupÃ§on ; noun a slight but appreciable addition
+::surstromming::surstrÃ¶mming ; Lightly salted fermented Baltic Sea herring.
+:*:tete-a-tete::tÃªte-Ã -tÃªte ; adj. involving two persons; intimately private; noun a private conversation between two people; small sofa that seats two people
+::touche::touchÃ© ; Acknowledgement of a hit in fencing or a point made at one's expense.
+::tourtiere::tourtiÃ¨re ; A meatÂ pie that is usually eatenÂ at Christmas in QuÃ©bec
+:*:ubermensch::Ãœbermensch ; noun a person with great powers and abilities
+::ventre a terre::ventre Ã  terre ; (French) At high speed (literally, belly to the ground.)
+::vicuna::vicuÃ±a ; noun small wild cud-chewing Andean animal similar to the guanaco but smaller; valued for its fleecy undercoat; a soft wool fabric made from the fleece of the vicuna; the wool of the vicuna
+::vin rose::vin rosÃ© ; White wine.
+::vins rose::vins rosÃ© ; See above
+::vis a vis::vis Ã  vis ; adv. face-to-face
+::vis-a-vis::vis-Ã -vis ; See above
+::voila::voilÃ  ; Behold.  There you are.
 
 ;------------------------------------------------------------------------------
 ; Common Misspellings - the main list
@@ -2006,7 +2185,6 @@ return  ; This makes the above hotstrings do nothing so that they override the i
 ::dieing::dying
 ::eahc::each
 ::eachotehr::eachother
-::whats::what's
 ::ealier::earlier
 ::earlies::earliest
 ::eearly::early
@@ -5010,12 +5188,12 @@ return  ; This makes the above hotstrings do nothing so that they override the i
 ; and move into the above list or, preferably, the autocorrect user file.
 ;------------------------------------------------------------------------------
 /*
-:*:cooperat::coöperat
-::(c)::©
-::(r)::®
-::(tm)::™
-::a gogo::à gogo
-::abbe::abbé
+:*:cooperat::coÃ¶perat
+::(c)::Â©
+::(r)::Â®
+::(tm)::â„¢
+::a gogo::Ã  gogo
+::abbe::abbÃ©
 ::accension::accession, ascension
 ::achive::achieve, archive
 ::achived::achieved, archived
@@ -5027,12 +5205,12 @@ return  ; This makes the above hotstrings do nothing so that they override the i
 ::affort::afford, effort
 ::agin::again, a gin, aging
 ::agina::again, angina
-::ago-go::àgo-go
+::ago-go::Ã go-go
 ::aledge::allege, a ledge
 ::alot::a lot, allot
 ::alusion::allusion, illusion
 ::amature::armature, amateur
-::anu::añu
+::anu::aÃ±u
 ::anual::annual, anal
 ::anual::annual, manual
 ::aparent::apparent, a parent
@@ -5050,19 +5228,19 @@ return  ; This makes the above hotstrings do nothing so that they override the i
 ::behavour::behavior, behaviour
 ::belives::believes, beliefs
 ::boaut::bout, boat, about
-::Bon::Bön
+::Bon::BÃ¶n
 
 ::assasined::assassinated Broken by ":*:assasin::", but no great loss.
-::Bootes::Boötes
-::bric-a-brac::bric-à-brac
+::Bootes::BoÃ¶tes
+::bric-a-brac::bric-Ã -brac
 ::buring::burying, burning, burin, during
 ::busineses::business, businesses
-::cafe::café
+::cafe::cafÃ©
 ::calaber::caliber, calibre
 ::calander::calendar, calender, colander
 ::cancelled::canceled  ; commonwealth vs US
 ::cancelling::canceling  ; commonwealth vs US
-::canon::cañon
+::canon::caÃ±on
 ::cant::cannot, can not, can't
 ::carcas::carcass, Caracas
 ::carmel::caramel, carmel-by-the-sea
@@ -5074,9 +5252,9 @@ return  ; This makes the above hotstrings do nothing so that they override the i
 ::clera::clear, sclera
 ::comander::commander, commandeer
 ::competion::competition, completion
-::continuum::continuüm
-::coopt::coöpt
-::coordinat::coördinat
+::continuum::continuÃ¼m
+::coopt::coÃ¶pt
+::coordinat::coÃ¶rdinat
 ::coorperation::cooperation, corporation
 ::coudl::could, cloud
 ::councellor::councillor, counselor, councilor
@@ -5084,15 +5262,15 @@ return  ; This makes the above hotstrings do nothing so that they override the i
 ::coururier::courier, couturier
 ::coverted::converted, covered, coveted
 ::cpoy::coy, copy
-::creme::crème
+::creme::crÃ¨me
 ::dael::deal, dial, dahl
 ::deram::dram, dream
 ::desparate::desperate, disparate
 ::diea::idea, die
 ::dieing::dying, dyeing
 ::diversed::diverse, diverged
-::divorce::divorcé
-::Dona::Doña
+::divorce::divorcÃ©
+::Dona::DoÃ±a
 ::doub::doubt, daub
 ::dyas::dryas, Dyas (Robert Dyas is a hardware chain), dais
 ::efford::effort, afford
@@ -5100,7 +5278,7 @@ return  ; This makes the above hotstrings do nothing so that they override the i
 ::eigth::eighth, eight
 ::electic::eclectic, electric
 ::electon::election, electron
-::elite::élite
+::elite::Ã©lite
 ::emition::emission, emotion
 ::emminent::eminent, imminent
 ::empirial::empirical, imperial
@@ -5108,8 +5286,8 @@ return  ; This makes the above hotstrings do nothing so that they override the i
 ::erally::orally, really
 ::erested::arrested, erected
 ::ethose::those, ethos
-::etude::étude
-::expose::exposé
+::etude::Ã©tude
+::expose::exposÃ©
 ::extint::extinct, extant
 ::eyar::year, eyas
 ::eyars::years, eyas
@@ -5153,7 +5331,7 @@ return  ; This makes the above hotstrings do nothing so that they override the i
 ::israelies::Israelis, Israelites
 ::labatory::lavatory, laboratory
 ::labled::labelled, labeled
-::lame::lamé
+::lame::lamÃ©
 ::leanr::lean, learn, leaner
 ::lible::libel, liable
 ::liscense::license, licence
@@ -5172,35 +5350,35 @@ return  ; This makes the above hotstrings do nothing so that they override the i
 ::manuevers::maneuvers, manoeuvres
 ::mear::wear, mere, mare
 ::meranda::veranda, Miranda
-::Metis::Métis
+::Metis::MÃ©tis
 ::mit::mitt, M.I.T., German "with"
 ::monestary::monastery, monetary
 ::moreso::more, more so
 ::muscels::mussels, muscles
-::ne::né
+::ne::nÃ©
 ::neice::niece, nice
 ::neigbour::neighbour, neighbor
 ::neigbouring::neighbouring, neighboring
 ::neigbours::neighbours, neighbors
 ::nto:: not ; Replaced with case sensitive for NTO acronym.
 ::oging::going, ogling
-::ole::olé
+::ole::olÃ©
 ::onot::note, not
-::opium::opïum
-::ore::öre
-::ore::øre
+::opium::opÃ¯um
+::ore::Ã¶re
+::ore::Ã¸re
 ::orgin::origin, organ
 ::palce::place, palace
-::pate::pâte
-::pate::pâté
+::pate::pÃ¢te
+::pate::pÃ¢tÃ©
 ::performes::performed, performs
 ::personel::personnel, personal
 ::positon::position, positron
-::preëmpt
-::premiere::première
-::premiered::premièred
-::premieres::premières
-::premiering::premièring
+::preÃ«mpt
+::premiere::premiÃ¨re
+::premiered::premiÃ¨red
+::premieres::premiÃ¨res
+::premiering::premiÃ¨ring
 ::procede::proceed, precede
 ::proceded::proceeded, preceded
 ::procedes::proceeds, precedes
@@ -5211,15 +5389,15 @@ return  ; This makes the above hotstrings do nothing so that they override the i
 ::prominately::prominently, predominately
 ::qtuie::quite, quiet
 ::qutie::quite, quiet
-::reenter::reënter
+::reenter::reÃ«nter
 ::relized::realised, realized
 ::repatition::repetition, repartition
-::residuum::residuüm
+::residuum::residuÃ¼m
 ::restraunt::restraint, restaurant
-::resume::résumé
+::resume::rÃ©sumÃ©
 ::rigeur::rigueur, rigour, rigor
-::role::rôle
-::rose::rosé
+::role::rÃ´le
+::rose::rosÃ©
 ::sasy::says, sassy
 ::scholarstic::scholastic, scholarly
 ::secceeded::seceded, succeeded
@@ -5256,7 +5434,7 @@ return  ; This makes the above hotstrings do nothing so that they override the i
 ::travelling::traveling   ; commonwealth vs US
 ::troups::troupes, troops
 ::turnk::turnkey, trunk
-::uber::über
+::uber::Ã¼ber
 ::unmanouverable::unmaneuverable, unmanoeuvrable
 ::unsed::used, unused, unsaid
 ::vigeur::vigueur, vigour, vigor
@@ -5270,7 +5448,7 @@ return  ; This makes the above hotstrings do nothing so that they override the i
 ::woulf::would, wolf
 ::ws::was, www.example.ws
 ::Yementite::Yemenite, Yemeni
-:?:oology::oölogy
+:?:oology::oÃ¶logy
 :?:t he:: the  ; Can't use this. Needs to be cleverer.
 */
 
@@ -5283,7 +5461,7 @@ return  ; This makes the above hotstrings do nothing so that they override the i
 ::thursday::Thursday
 ::friday::Friday
 ::saturday::Saturday
-::sunday::Sunday 
+::sunday::Sunday
 
 ::january::January
 ::february::February
@@ -5302,4 +5480,3 @@ return  ; This makes the above hotstrings do nothing so that they override the i
 ;-------------------------------------------------------------------------------
 ; Anything below this point was added to the script by the user via the Win+H hotkey.
 ;-------------------------------------------------------------------------------
-
