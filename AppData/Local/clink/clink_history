@@ -322,7 +322,7 @@ fasatboot devices
 |	time=1739192995
 fastboot boot G:\Rooting\newtwrp\twrp-3.7.1_12-0-fleur.img
 |	time=1739193044
-adb
+|db
 |	time=1739193047
 |db devices
 |	time=1739193144
@@ -330,9 +330,9 @@ adb
 |	time=1739193180
 |astboot flash boot G:\Rooting\TWRP\twrp_12122022_A11.img
 |	time=1739193188
-fastboot reboot recovery
+|astboot reboot recovery
 |	time=1739193540
-adb devices
+|db devices
 |	time=1739199945
 |astboot devices
 |	time=1739199959
@@ -344,7 +344,7 @@ flashboot devices
 |	time=1739259956
 flashboot device
 |	time=1739259967
-fastboot devices
+|astboot devices
 |	time=1739260000
 fastboot flash boot G:\Rooting\TWRP\twrp_12122022_A11.img
 |	time=1740061480
@@ -524,7 +524,7 @@ curl -LJO https://drive.google.com/uc?export=download&id=183wk9NvCET_fQe_x-YpOcX
 |	time=1740936347
 |ir
 |	time=1740936349
-e .
+| .
 |	time=1740936353
 explorer.exe  .
 |	time=1740936438
@@ -612,7 +612,7 @@ nvim
 |	time=1759590135
 clear
 |	time=1759590137
-cls
+|ls
 |	time=1759590140
 |s
 |	time=1759590141
@@ -796,7 +796,7 @@ cd Downloads\
 |	time=1764672679
 ls
 |	time=1764672680
-dir
+|ir
 |	time=1764672688
 grep "MCA Scheme and Syllabus.doc" 
 |	time=1764672736
@@ -817,3 +817,69 @@ jtaskkill /f /im explorer.exe && start explorer.exe
 taskkill /f /im explorer.exe && start explorer.exe
 |	time=1765866625
 pwsh
+|	time=1766502898
+wt.exe 
+|	time=1766853959
+|astboot devices
+|	time=1766853963
+|astboot devices
+|	time=1766853988
+|astboot devices
+|	time=1766853990
+|astboot device
+|	time=1766854152
+fastboot device
+|	time=1766856555
+fastboot devices
+|	time=1766856606
+|ir
+|	time=1766856621
+fastboot flash boot twrp-3.7.0_12-1-fleur.img 
+|	time=1766857568
+|db devices
+|	time=1766857573
+adb push 
+|	time=1766857621
+|db devices
+|	time=1766857622
+cls
+|	time=1766857623
+adb devices
+|	time=1766857758
+| .
+|	time=1766857760
+e .
+|	time=1766857650
+adb
+|	time=1766857652
+|db devices
+|	time=1766857717
+|db push C:\Users\Manisk\Downloads\abc\Cherish-OS-v4.12-20230930-1542-fleur-OFFICIAL-GApps.zip /sdcard/
+|	time=1766857722
+adb push C:\Users\Manisk\Downloads\abc\Cherish-OS-v4.12-20230930-1542-fleur-OFFICIAL-GApps.zip /sdcard/
+|	time=1766857726
+adb devices
+|	time=1766857827
+|db push rom.zip /sdcard/
+|	time=1766857829
+adb push rom.zip /sdcard
+|	time=1766857833
+adb push rom.zip /sdcard/
+|	time=1766914587
+|lash_all.bat 
+|	time=1766915814
+fastboot flash boot lineage_boot.img
+|	time=1766915833
+|astboot reboot recovery
+|	time=1766943733
+dir
+|	time=1766943747
+|lash_all.bat 
+|	time=1766947124
+flash_all.bat 
+|	time=1767067527
+fastboot flash boot_a boot-4.12.img
+|	time=1767067536
+fastboot reboot 
+|	time=1767067554
+fastboot reboot recovery
