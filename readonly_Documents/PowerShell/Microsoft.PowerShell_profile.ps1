@@ -1391,3 +1391,35 @@ function cdf {
         Set-Location (Split-Path $sel)
     }
 }
+
+function pushrm {
+    if ($args.Count -ne 2) {
+        Write-Error "Usage: pushrm <local_file> <remote_dir>"
+        return
+    }
+
+    $LocalFile  = Resolve-Path $args[0]
+    $RemoteDir  = $args[1]
+
+    # Ensure remote directory exists (once per file, cheap)
+    adb shell "mkdir -p $RemoteDir"
+
+    # Push the file (NO manual quoting)
+    adb push $LocalFile $RemoteDir
+
+    if ($LASTEXITCODE -eq 0) {
+        Write-Host "✔ Pushed and removed: $($LocalFile.Path)"
+        Remove-Item -LiteralPath $LocalFile -Force
+    }
+    else {
+        Write-Warning "✘ Failed: $($LocalFile.Path)"
+    }
+}
+function ngui {
+    if ($args.Count -eq 0) {
+        neovide
+    }
+    else {
+        neovide @args
+    }
+}

@@ -883,3 +883,7 @@ fastboot flash boot_a boot-4.12.img
 fastboot reboot 
 |	time=1767067554
 fastboot reboot recovery
+|	time=1767069048
+flash_all.bat
+|	time=1767184615
+sfc /scannow

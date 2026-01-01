@@ -5,7 +5,7 @@ local options = {
         -- "cmake",
         -- "cpp",
         -- "fish",
-        -- "go",
+        "go",
         -- "gomod",
         -- "gosum",
         -- "gotmpl",

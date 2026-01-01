@@ -1,5 +1,5 @@
 [OSD]
-EnableOSD=1
+EnableOSD=0
 EnableBgnd=1
 EnableFill=0
 EnableStat=0
@@ -74,4 +74,4 @@ Implementation=2
 [RendererVulkan]
 Implementation=2
 [Info]
-Timestamp=10-10-2025, 06:15:36
+Timestamp=31-12-2025, 19:06:27
