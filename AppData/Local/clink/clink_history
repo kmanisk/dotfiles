@@ -886,4 +886,12 @@ fastboot reboot recovery
 |	time=1767069048
 flash_all.bat
 |	time=1767184615
+|fc /scannow
+|	time=1767184928
+chkdsk.exe /f /r
+|	time=1767184629
 sfc /scannow
+|	time=1767184801
+Dism.exe /Online /Cleanup-Image /ScanHealth
+|	time=1767184978
+chkdsk.exe /f /r
