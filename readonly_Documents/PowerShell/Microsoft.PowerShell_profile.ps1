@@ -1460,6 +1460,32 @@ Get-ChildItem -Path "$env:USERPROFILE\scoop\buckets" -Directory | ForEach-Object
 ∙     git -C $_.FullName clean -fd
 ∙ }
 }
+function fix-scoop-all {
+    Write-Host "--- Starting Scoop Repair ---" -ForegroundColor Cyan
+
+    # 1. Reset Scoop Core (The engine)
+    Write-Host "`n[1/3] Resetting Scoop Core..." -ForegroundColor Yellow
+    git -C "$env:SCOOP\apps\scoop\current" fetch --all
+    git -C "$env:SCOOP\apps\scoop\current" reset --hard origin/master
+    git -C "$env:SCOOP\apps\scoop\current" clean -fd
+
+    # 2. Reset All Buckets
+    Write-Host "`n[2/3] Resetting all buckets..." -ForegroundColor Yellow
+    Get-ChildItem -Path "$env:USERPROFILE\scoop\buckets" -Directory | ForEach-Object {
+        Write-Host "  -> Resetting $($_.Name)..." -ForegroundColor Cyan
+        git -C $_.FullName fetch --all
+        git -C $_.FullName reset --hard "@{u}"
+        git -C $_.FullName clean -fd
+    }
+
+    # 3. Final Sync & Cleanup
+    Write-Host "`n[3/3] Running final update and cleanup..." -ForegroundColor Yellow
+    scoop update
+    scoop cleanup * # Removes old versions of apps
+    # Optional: scoop cache rm * # Uncomment this to clear all downloaded installers
+
+    Write-Host "`n✅ Scoop is healthy and up to date!" -ForegroundColor Green
+}
 function Disable-AHK {
     <#
     .SYNOPSIS
