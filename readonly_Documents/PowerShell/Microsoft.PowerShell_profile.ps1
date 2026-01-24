@@ -1422,4 +1422,50 @@ function ngui {
     else {
         neovide @args
     }
+}# Profile Settings
+
+
+$ErrorActionPreference = "Stop"
+
+# Dynamically build the path to your Startup folder
+$ahkDir = Join-Path $HOME "AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup"
+
+# --- AutoHotkey Management Functions ---
+
+function Enable-AHK {
+    <#
+    .SYNOPSIS
+    Starts the specific AHK scripts from the Windows Startup folder.
+    #>
+    $scripts = @("ArrowKeysMapping.ahk", "AutoCorrect_v2.ahk")
+    
+    foreach ($script in $scripts) {
+        $fullPath = Join-Path $ahkDir $script
+        
+        if (Test-Path $fullPath) {
+            # WindowStyle Hidden keeps the console pop-up away
+            Start-Process AutoHotkey.exe "`"$fullPath`"" -WindowStyle Hidden
+            Write-Host "🚀 Started: $script" -ForegroundColor Green
+        } else {
+            Write-Warning "Missing script: $fullPath"
+        }
+    }
 }
+
+function Disable-AHK {
+    <#
+    .SYNOPSIS
+    Kills all running AutoHotkey process instances.
+    #>
+    $ahkProcesses = Get-Process AutoHotkey -ErrorAction SilentlyContinue
+    
+    if ($ahkProcesses) {
+        $ahkProcesses | Stop-Process -Force
+        Write-Host "🛑 All AutoHotkey scripts disabled." -ForegroundColor Yellow
+    } else {
+        Write-Host "ℹ️ No AutoHotkey processes are currently running." -ForegroundColor Gray
+    }
+}
+
+# Run on startup (Optional: remove this line if you only want manual control)
+# Enable-AHK
