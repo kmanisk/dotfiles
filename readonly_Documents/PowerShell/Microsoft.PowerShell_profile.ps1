@@ -1452,6 +1452,14 @@ function Enable-AHK {
     }
 }
 
+function fix-scoop{
+Get-ChildItem -Path "$env:USERPROFILE\scoop\buckets" -Directory | ForEach-Object {
+∙     Write-Host "Resetting $($_.Name)..." -ForegroundColor Cyan
+∙     git -C $_.FullName fetch --all
+∙     git -C $_.FullName reset --hard "@{u}"  # Quotes prevent the Hashtable error
+∙     git -C $_.FullName clean -fd
+∙ }
+}
 function Disable-AHK {
     <#
     .SYNOPSIS
