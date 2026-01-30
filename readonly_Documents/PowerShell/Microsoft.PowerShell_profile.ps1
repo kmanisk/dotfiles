@@ -89,95 +89,186 @@ function imginfo{
     Write-Output ("Total Media Size: {0:N2} GB" -f $totalSize)
 }
 
-function find {
+function s{
     param (
-        [Parameter(Mandatory)]
-        [string]$Query
+        [parameter(mandatory)]
+        [string]$query
     )
 
-    Clear-Host
+    clear-host
 
-    function Section($title, $color) {
-        Write-Host "`n== $title ==" -ForegroundColor $color
-        Write-Host ("-" * (6 + $title.Length)) -ForegroundColor DarkGray
+    function section($title, $color) {
+        write-host "`n== $title ==" -foregroundcolor $color
+        write-host ("-" * (6 + $title.length)) -foregroundcolor darkgray
     }
 
-    $preferredBuckets = @("extras", "main", "versions")
+    $preferredbuckets = @("extras", "main", "versions")
 
-    # ================= SCOOP =================
-    Section "SCOOP (bucket-aware)" Cyan
+    # ================= scoop =================
+    section "scoop (bucket-aware)" cyan
     try {
-        $currentBucket = ""
+        $currentbucket = ""
 
-        $scoopResults =
-        scoop search $Query 2>$null |
-        ForEach-Object {
+        $scoopresults =
+        scoop search $query 2>$null |
+        foreach-object {
             if ($_ -match "^'.+?' bucket:") {
-                $currentBucket = ($_ -replace " bucket:", "").Trim("'")
+                $currentbucket = ($_ -replace " bucket:", "").trim("'")
             }
-            elseif ($_ -match '^\s+(\S+)\s+\(([^)]+)\)') {
-                [PSCustomObject]@{
-                    Name    = $matches[1]
-                    Version = $matches[2]
-                    Bucket  = $currentBucket
+            elseif ($_ -match '^\s+(\s+)\s+\(([^)]+)\)') {
+                [pscustomobject]@{
+                    name    = $matches[1]
+                    version = $matches[2]
+                    bucket  = $currentbucket
                 }
             }
         }
 
-        $scoopResults |
-        Sort-Object `
-            @{ Expression = { 
-                if ($preferredBuckets -contains $_.Bucket) {
-                    $preferredBuckets.IndexOf($_.Bucket)
+        $scoopresults |
+        sort-object `
+            @{ expression = { 
+                if ($preferredbuckets -contains $_.bucket) {
+                    $preferredbuckets.indexof($_.bucket)
                 } else {
                     99
                 }
             }},
-            Name,
-            Version -Descending |
-        Group-Object Name |
-        ForEach-Object { $_.Group | Select-Object -First 1 } |
-        Format-Table Name, Version, Bucket -AutoSize
+            name,
+            version -descending |
+        group-object name |
+        foreach-object { $_.group | select-object -first 1 } |
+        format-table name, version, bucket -autosize
 
     } catch {
-        Write-Host "Scoop search failed" -ForegroundColor Red
+        write-host "scoop search failed" -foregroundcolor red
     }
 
-    # ================= WINGET =================
-    Section "WINGET" Green
+    # ================= winget =================
+    section "winget" green
     try {
-        winget search $Query --accept-source-agreements |
-        Select-Object -Skip 2 |
-        ForEach-Object {
-            if ($_ -match '(.+?)\s{2,}(\S+)\s{2,}(\S+)') {
-                [PSCustomObject]@{
-                    Name    = $matches[1].Trim()
-                    Version = $matches[3]
+        winget search $query --accept-source-agreements |
+        select-object -skip 2 |
+        foreach-object {
+            if ($_ -match '(.+?)\s{2,}(\s+)\s{2,}(\s+)') {
+                [pscustomobject]@{
+                    name    = $matches[1].trim()
+                    version = $matches[3]
                 }
             }
         } |
-        Sort-Object Name -Unique |
-        Format-Table Name, Version -AutoSize
+        sort-object name -unique |
+        format-table name, version -autosize
     } catch {
-        Write-Host "Winget search failed" -ForegroundColor Red
+        write-host "winget search failed" -foregroundcolor red
     }
 
-    # ================= CHOCO =================
-    Section "CHOCOLATEY" Magenta
+    # ================= choco =================
+    section "chocolatey" magenta
     try {
-        choco search $Query --limit-output |
-        ForEach-Object {
+        choco search $query --limit-output |
+        foreach-object {
             if ($_ -match '^([^|]+)\|(.+)$') {
-                [PSCustomObject]@{
-                    Name    = $matches[1]
-                    Version = $matches[2]
+                [pscustomobject]@{
+                    name    = $matches[1]
+                    version = $matches[2]
                 }
             }
         } |
-        Sort-Object Name -Unique |
-        Format-Table Name, Version -AutoSize
+        sort-object name -unique |
+        format-table name, version -autosize
     } catch {
-        Write-Host "Choco search failed" -ForegroundColor Red
+        write-host "choco search failed" -foregroundcolor red
+    }
+}
+function find {
+    param (
+        [parameter(mandatory)]
+        [string]$query
+    )
+
+    clear-host
+
+    function section($title, $color) {
+        write-host "`n== $title ==" -foregroundcolor $color
+        write-host ("-" * (6 + $title.length)) -foregroundcolor darkgray
+    }
+
+    $preferredbuckets = @("extras", "main", "versions")
+
+    # ================= scoop =================
+    section "scoop (bucket-aware)" cyan
+    try {
+        $currentbucket = ""
+
+        $scoopresults =
+        scoop search $query 2>$null |
+        foreach-object {
+            if ($_ -match "^'.+?' bucket:") {
+                $currentbucket = ($_ -replace " bucket:", "").trim("'")
+            }
+            elseif ($_ -match '^\s+(\s+)\s+\(([^)]+)\)') {
+                [pscustomobject]@{
+                    name    = $matches[1]
+                    version = $matches[2]
+                    bucket  = $currentbucket
+                }
+            }
+        }
+
+        $scoopresults |
+        sort-object `
+            @{ expression = { 
+                if ($preferredbuckets -contains $_.bucket) {
+                    $preferredbuckets.indexof($_.bucket)
+                } else {
+                    99
+                }
+            }},
+            name,
+            version -descending |
+        group-object name |
+        foreach-object { $_.group | select-object -first 1 } |
+        format-table name, version, bucket -autosize
+
+    } catch {
+        write-host "scoop search failed" -foregroundcolor red
+    }
+
+    # ================= winget =================
+    section "winget" green
+    try {
+        winget search $query --accept-source-agreements |
+        select-object -skip 2 |
+        foreach-object {
+            if ($_ -match '(.+?)\s{2,}(\s+)\s{2,}(\s+)') {
+                [pscustomobject]@{
+                    name    = $matches[1].trim()
+                    version = $matches[3]
+                }
+            }
+        } |
+        sort-object name -unique |
+        format-table name, version -autosize
+    } catch {
+        write-host "winget search failed" -foregroundcolor red
+    }
+
+    # ================= choco =================
+    section "chocolatey" magenta
+    try {
+        choco search $query --limit-output |
+        foreach-object {
+            if ($_ -match '^([^|]+)\|(.+)$') {
+                [pscustomobject]@{
+                    name    = $matches[1]
+                    version = $matches[2]
+                }
+            }
+        } |
+        sort-object name -unique |
+        format-table name, version -autosize
+    } catch {
+        write-host "choco search failed" -foregroundcolor red
     }
 }
 
