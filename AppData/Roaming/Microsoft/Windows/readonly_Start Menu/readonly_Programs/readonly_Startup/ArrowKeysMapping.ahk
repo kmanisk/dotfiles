@@ -101,3 +101,30 @@ RControl & u::Send("^{Backspace}")
 Passthrough(k,*) {
     Send(k)
 }
+; --- Caps brightness controls (functional) ---
+CapsLock & ]::ChangeBrightness(GetCurrentBrightNess() + 10)
+CapsLock & \::ChangeBrightness(GetCurrentBrightNess() - 10)
+ChangeBrightness( brightness, timeout := 1 )
+{
+    global CurrentBrightness
+    for property in ComObjGet("winmgmts:\\.\root\WMI")
+        .ExecQuery("SELECT * FROM WmiMonitorBrightnessMethods")
+    {
+        property.WmiSetBrightness(timeout
+            , &CurrentBrightness := Max(0, Min(brightness, 100)))
+    }
+
+    if (CurrentBrightness = 0 || CurrentBrightness = 100) {
+        SoundPlay "*64"
+        Sleep 100
+    }
+}
+
+GetCurrentBrightNess()
+{
+    for property in ComObjGet("winmgmts:\\.\root\WMI")
+        .ExecQuery("SELECT * FROM WmiMonitorBrightness")
+    {
+        return property.CurrentBrightness
+    }
+}
