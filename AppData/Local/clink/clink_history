@@ -596,7 +596,7 @@ scoop
 |	time=1753346836
 |owershell
 |	time=1753347112
-powershell
+|owershell
 |	time=1759590115
 |i
 |	time=1759590116
@@ -895,3 +895,11 @@ sfc /scannow
 Dism.exe /Online /Cleanup-Image /ScanHealth
 |	time=1767184978
 chkdsk.exe /f /r
+|	time=1768302447
+cd desktop
+|	time=1768302447
+|fmpeg -i input.webm \
+|	time=1768302450
+ffmpeg -i input.webm \
+|	time=1768302453
+powershell

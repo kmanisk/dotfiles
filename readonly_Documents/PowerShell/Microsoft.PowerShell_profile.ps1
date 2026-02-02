@@ -1594,3 +1594,48 @@ function Disable-AHK {
 
 # Run on startup (Optional: remove this line if you only want manual control)
 # Enable-AHK
+function convert-tomp4 {
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory, ValueFromPipeline)]
+        [string]$InputFile,
+
+        [int]$CRF = 16,              # 16–18 = visually lossless
+        [string]$Preset = "slow"     # slow = best quality/size tradeoff
+    )
+
+    if (-not (Test-Path $InputFile)) {
+        Write-Error "File not found: $InputFile"
+        return
+    }
+
+    $ffmpeg = "ffmpeg"
+    $OutputFile = [System.IO.Path]::ChangeExtension($InputFile, ".mp4")
+
+    Write-Host "Converting:" $InputFile "→" $OutputFile
+    Write-Host "CRF=$CRF | Preset=$Preset (max quality)"
+
+    & $ffmpeg `
+        -hide_banner `
+        -loglevel error `
+        -stats `
+        -i "$InputFile" `
+        -map 0 `
+        -c:v libx264 `
+        -profile:v high `
+        -level 4.2 `
+        -pix_fmt yuv420p `
+        -preset $Preset `
+        -crf $CRF `
+        -movflags +faststart `
+        -c:a aac `
+        -b:a 256k `
+        -ac 2 `
+        "$OutputFile"
+
+    if ($LASTEXITCODE -eq 0) {
+        Write-Host "✔ Done:" $OutputFile -ForegroundColor Green
+    } else {
+        Write-Error "✖ ffmpeg failed"
+    }
+}
