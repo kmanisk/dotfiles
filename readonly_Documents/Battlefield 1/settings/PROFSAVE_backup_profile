@@ -51,7 +51,7 @@ GstRender.HighDynamicRangeMode 0
 GstRender.HighResUIScaleFactor 0.500000
 GstRender.LensDistortion 0
 GstRender.LightingQuality 2
-GstRender.MaxVariableFps 2
+GstRender.MaxVariableFps 3
 GstRender.MeshQuality 3
 GstRender.MotionBlur 0.000000
 GstRender.MotionBlurEnabled 1
