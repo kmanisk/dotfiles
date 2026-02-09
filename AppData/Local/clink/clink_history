@@ -592,7 +592,7 @@ scoop update dotnet
 |	time=1753346357
 |owershell
 |	time=1753346833
-scoop 
+|coop 
 |	time=1753346836
 |owershell
 |	time=1753347112
@@ -766,7 +766,7 @@ rmdir "New folder *
 |	time=1764074858
 vifm
 |	time=1764074870
-q
+|
 |	time=1764142851
 curl ascii.live/forecast
 |	time=1764142870
@@ -902,4 +902,18 @@ cd desktop
 |	time=1768302450
 ffmpeg -i input.webm \
 |	time=1768302453
+|owershell
+|	time=1770062781
+scoop update * 
+|	time=1770062783
+|coop 
+|	time=1770062785
+scoop 
+|	time=1770062787
 powershell
+|	time=1770062958
+|
+|	time=1770062959
+q
+|	time=1770119105
+netsh wlan show interfaces
