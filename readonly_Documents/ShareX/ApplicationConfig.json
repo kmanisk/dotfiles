@@ -671,7 +671,7 @@
   "RememberMainFormPosition": false,
   "MainFormPosition": "218, 138",
   "RememberMainFormSize": false,
-  "MainFormSize": "1483, 744",
+  "MainFormSize": "1483, 752",
   "TrayLeftClickAction": "RectangleRegion",
   "TrayLeftDoubleClickAction": "OpenMainWindow",
   "TrayMiddleClickAction": "ClipboardUploadWithContentViewer",

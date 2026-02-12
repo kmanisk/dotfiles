@@ -917,3 +917,11 @@ powershell
 q
 |	time=1770119105
 netsh wlan show interfaces
+|	time=1770804000
+shutdown.exe 
+|	time=1770804006
+shutdown.exe /f /t
+|	time=1770804008
+shutdown.exe /f /t 0
+|	time=1770804010
+shutdown.exe /f 
