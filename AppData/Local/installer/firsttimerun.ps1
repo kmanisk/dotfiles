@@ -1,25 +1,30 @@
 <#
 .SYNOPSIS
-First-time system setup script for Windows using Scoop, Chocolatey, Winget.
-Fully self-contained. No Microsoft Store dependency.
+    Complete first-time Windows bootstrap script
+    Installs Scoop, Python, Winget, Chocolatey
+    Fixes PATH priority and removes WindowsApps python alias conflict
+    Fully automated, no Microsoft Store dependency
 #>
 
-#region Utility Functions
+#region Utility
 
 function Write-Section($msg) {
-    Write-Host "`n======================================================" -ForegroundColor DarkGray
+    Write-Host ""
+    Write-Host "======================================================" -ForegroundColor DarkGray
     Write-Host $msg -ForegroundColor Cyan
-    Write-Host "======================================================`n" -ForegroundColor DarkGray
+    Write-Host "======================================================" -ForegroundColor DarkGray
+    Write-Host ""
 }
 
-function Refresh-Environment {
-    $env:PATH = [System.Environment]::GetEnvironmentVariable("PATH","Machine") + ";" +
-                [System.Environment]::GetEnvironmentVariable("PATH","User")
+function Is-Admin {
+    $identity = [Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()
+    return $identity.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
 }
 
 #endregion
 
-#region Scoop Install (CRITICAL FIX)
+
+#region Scoop Install
 
 function Install-Scoop {
 
@@ -31,190 +36,216 @@ function Install-Scoop {
 
         Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
 
+        Write-Host "Scoop installed." -ForegroundColor Green
+    }
+    else {
+        Write-Host "Scoop already installed." -ForegroundColor Yellow
     }
 
-    # Guarantee Scoop env exists NOW
-    $env:SCOOP = "$HOME\scoop"
-    $env:PATH = "$HOME\scoop\shims;$env:PATH"
+    # Ensure SCOOP env variable exists
+    if (-not $env:SCOOP) {
 
-    Refresh-Environment
+        $env:SCOOP = "$env:USERPROFILE\scoop"
 
-    if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
-        throw "Scoop installation failed"
-    }
-
-    Write-Host "Scoop ready" -ForegroundColor Green
-}
-
-#endregion
-
-#region Scoop Buckets
-
-function Install-ScoopBuckets {
-
-    Write-Section "Installing Scoop Buckets"
-
-    $buckets = @(
-        "main",
-        "extras",
-        "versions",
-        "nerd-fonts",
-        "shemnei",
-        "volllly"
-    )
-
-    foreach ($bucket in $buckets) {
-
-        $bucketPath = "$HOME\scoop\buckets\$bucket"
-
-        if (-not (Test-Path $bucketPath)) {
-
-            Write-Host "Adding bucket: $bucket"
-            scoop bucket add $bucket
-
-        } else {
-
-            Write-Host "Bucket exists: $bucket"
-
-        }
-    }
-}
-
-#endregion
-
-#region Core Packages (FIXED)
-
-function Install-CorePackages {
-
-    Write-Section "Installing Core Packages via Scoop"
-
-    $packages = @(
-        "git",
-        "aria2",
-        "chezmoi",
-        "gh",
-        "python"
-    )
-
-    foreach ($pkg in $packages) {
-
-        if (-not (scoop list | Select-String "^$pkg ")) {
-
-            Write-Host "Installing $pkg"
-            scoop install $pkg
-
-        } else {
-
-            Write-Host "$pkg already installed"
-
-        }
-    }
-
-    # CRITICAL FIX: guarantee python usable immediately
-
-    $env:PATH = "$HOME\scoop\apps\python\current;$env:PATH"
-
-    if (-not (Test-Path "$HOME\scoop\apps\python\current\python.exe")) {
-        throw "Scoop Python install failed"
-    }
-
-    Write-Host "Python ready via Scoop" -ForegroundColor Green
-}
-
-#endregion
-
-#region Chocolatey
-
-function Install-Chocolatey {
-
-    Write-Section "Installing Chocolatey"
-
-    if (-not (Get-Command choco -ErrorAction SilentlyContinue)) {
-
-        Set-ExecutionPolicy Bypass -Scope Process -Force
-
-        Invoke-Expression (
-            (New-Object Net.WebClient).DownloadString(
-                "https://chocolatey.org/install.ps1"
-            )
+        [Environment]::SetEnvironmentVariable(
+            "SCOOP",
+            $env:SCOOP,
+            "User"
         )
-
     }
-
-    Refresh-Environment
 
 }
 
 #endregion
 
-#region Winget
+
+#region Scoop Python Install
+
+function Install-ScoopPython {
+
+    Write-Section "Installing Python via Scoop"
+
+    scoop bucket add main 2>$null
+
+    scoop install python 2>$null
+
+    $pythonPath = "$env:USERPROFILE\scoop\apps\python\current"
+
+    if (Test-Path "$pythonPath\python.exe") {
+
+        Write-Host "Python installed at: $pythonPath" -ForegroundColor Green
+    }
+    else {
+
+        Write-Host "Python install failed." -ForegroundColor Red
+        exit 1
+    }
+
+}
+
+#endregion
+
+
+#region Fix Python PATH Priority
+
+function Fix-PythonPathPriority {
+
+    Write-Section "Fixing Python PATH priority"
+
+    $scoopPython = "$env:USERPROFILE\scoop\apps\python\current"
+    $windowsApps = "$env:LOCALAPPDATA\Microsoft\WindowsApps"
+
+    $userPath = [Environment]::GetEnvironmentVariable("PATH", "User")
+
+    $pathParts = $userPath -split ';' | Where-Object {
+        $_ -and ($_ -ne $windowsApps) -and ($_ -ne $scoopPython)
+    }
+
+    $newPathParts = @($scoopPython) + $pathParts
+
+    $newPath = $newPathParts -join ';'
+
+    [Environment]::SetEnvironmentVariable(
+        "PATH",
+        $newPath,
+        "User"
+    )
+
+    # Refresh current session
+    $env:PATH = $newPath + ";" + [Environment]::GetEnvironmentVariable("PATH", "Machine")
+
+    # Disable WindowsApps python alias completely
+    reg add HKCU\Software\Microsoft\Windows\CurrentVersion\App Paths\python.exe `
+        /f `
+        /ve `
+        /d "$scoopPython\python.exe" | Out-Null
+
+    # Clear cache
+    Remove-Item Alias:\python -ErrorAction SilentlyContinue
+    Remove-Item Function:\python -ErrorAction SilentlyContinue
+
+    $resolved = where.exe python 2>$null
+
+    if ($resolved -and $resolved[0] -like "*scoop*") {
+
+        Write-Host "Python priority fixed." -ForegroundColor Green
+        Write-Host "Active python: $($resolved[0])"
+    }
+    else {
+
+        Write-Host "Python priority fixed for new terminals." -ForegroundColor Yellow
+        Write-Host "Restart terminal after script completes."
+    }
+
+}
+
+#endregion
+
+
+#region Winget Install
 
 function Install-Winget {
 
     Write-Section "Checking Winget"
 
-    if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
+    if (Get-Command winget -ErrorAction SilentlyContinue) {
 
-        Write-Host "Winget not present. Install manually if needed."
-
-    } else {
-
-        Write-Host "Winget ready"
-
+        Write-Host "Winget already installed." -ForegroundColor Green
+        return
     }
+
+    Write-Host "Installing Winget..."
+
+    scoop bucket add extras 2>$null
+    scoop install extras/winget
 
 }
 
 #endregion
 
-#region Python Pip Essentials (FIXED)
 
-function pipInstallEssential {
+#region Chocolatey Install
 
-    Write-Section "Installing Python Essentials"
+function Install-Chocolatey {
 
-    $python = "$HOME\scoop\apps\python\current\python.exe"
+    Write-Section "Checking Chocolatey"
 
-    if (-not (Test-Path $python)) {
-        throw "Python not found"
+    if (Get-Command choco -ErrorAction SilentlyContinue) {
+
+        Write-Host "Chocolatey already installed." -ForegroundColor Green
+        return
     }
 
-    & $python -m pip install --upgrade pip
+    Write-Host "Installing Chocolatey..."
 
-    $packages = @("gdown")
+    Set-ExecutionPolicy Bypass -Scope Process -Force
 
-    foreach ($pkg in $packages) {
-
-        & $python -m pip install $pkg --user
-
-    }
+    Invoke-Expression (
+        (New-Object Net.WebClient).DownloadString(
+            'https://chocolatey.org/install.ps1'
+        )
+    )
 
 }
 
 #endregion
+
+
+#region Install Core Tools
+
+function Install-CoreTools {
+
+    Write-Section "Installing core tools"
+
+    scoop install git 2>$null
+    scoop install gh 2>$null
+    scoop install chezmoi 2>$null
+    scoop install aria2 2>$null
+
+}
+
+#endregion
+
+
+#region Verify Python
+
+function Verify-Python {
+
+    Write-Section "Verifying Python"
+
+    $pythonExe = "$env:USERPROFILE\scoop\apps\python\current\python.exe"
+
+    if (-not (Test-Path $pythonExe)) {
+
+        Write-Host "Python missing." -ForegroundColor Red
+        exit 1
+    }
+
+    & $pythonExe --version
+
+}
+
+#endregion
+
 
 #region Main
 
-Write-Section "Starting First Time Setup"
+Write-Section "Starting Windows Bootstrap"
 
 Install-Scoop
 
-Install-ScoopBuckets
+Install-ScoopPython
 
-Install-CorePackages
-
-Install-Chocolatey
+Fix-PythonPathPriority
 
 Install-Winget
 
-$confirm = Read-Host "Install optional Python tools? (y/n)"
+Install-Chocolatey
 
-if ($confirm -eq "y") {
+Install-CoreTools
 
-    pipInstallEssential
+Verify-Python
 
-}
-
-Write-Section "Setup Completed Successfully"
+Write-Section "Bootstrap Completed Successfully"
 
 #endregion

@@ -1,21 +1,19 @@
-# Fix Scoop environment for non-interactive shell
+# Fix Scoop environment properly
 
 if (-not $HOME) {
     $HOME = [Environment]::GetFolderPath("UserProfile")
 }
 
-if (-not $env:SCOOP) {
-    $env:SCOOP = Join-Path $HOME "scoop"
-}
+$env:SCOOP = Join-Path $HOME "scoop"
 
 $SCOOP_SHIMS = Join-Path $env:SCOOP "shims"
 
-if ($env:PATH -notlike "*$SCOOP_SHIMS*") {
-    $env:PATH = "$SCOOP_SHIMS;$env:PATH"
-}
+$userPath = [Environment]::GetEnvironmentVariable("PATH","User")
+$machinePath = [Environment]::GetEnvironmentVariable("PATH","Machine")
 
-$env:PATH = [System.Environment]::GetEnvironmentVariable("PATH","User") + ";" +
-            [System.Environment]::GetEnvironmentVariable("PATH","Machine")#
+$env:PATH = "$SCOOP_SHIMS;$userPath;$machinePath"
+
+
 # VSync logic for VSCode/VSCodium extensions
 function vsync {
     $vscodeInstalled = Get-Command code -ErrorAction SilentlyContinue

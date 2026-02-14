@@ -816,7 +816,7 @@ jtaskkill /f /im explorer.exe && start explorer.exe
 |	time=1765866538
 taskkill /f /im explorer.exe && start explorer.exe
 |	time=1765866625
-pwsh
+|wsh
 |	time=1766502898
 wt.exe 
 |	time=1766853959
@@ -925,3 +925,5 @@ shutdown.exe /f /t
 shutdown.exe /f /t 0
 |	time=1770804010
 shutdown.exe /f 
+|	time=1771045186
+pwsh
