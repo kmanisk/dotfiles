@@ -7,7 +7,16 @@
 #>
 
 #region Utility
+# Ensure modern PowerShell is used
+if (-not (Get-Command pwsh -ErrorAction SilentlyContinue)) {
+    scoop install pwsh
+}
 
+$pwshPath = "$env:USERPROFILE\scoop\apps\pwsh\current\pwsh.exe"
+
+if (Test-Path $pwshPath) {
+    Write-Host "Modern PowerShell installed: $pwshPath" -ForegroundColor Green
+}
 function Write-Section($msg) {
     Write-Host ""
     Write-Host "======================================================" -ForegroundColor DarkGray

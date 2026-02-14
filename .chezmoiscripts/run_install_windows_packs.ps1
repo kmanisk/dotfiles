@@ -1,5 +1,4 @@
 # Fix Scoop environment properly
-
 if (-not $HOME) {
     $HOME = [Environment]::GetFolderPath("UserProfile")
 }
@@ -315,7 +314,39 @@ function Install-ChocoPackages {
         choco install $pkg.Name --version=$($pkg.Version) -y
     }
 }
+function Install-ScoopPackages {
+    param (
+        [array]$packages
+    )
 
+    Write-Host "======================================================================" -ForegroundColor Cyan
+    Write-Host "Installing Scoop packages..." -ForegroundColor Cyan
+    Write-Host "======================================================================" -ForegroundColor Cyan
+
+    foreach ($package in $packages) {
+
+        if ([string]::IsNullOrWhiteSpace($package)) {
+            continue
+        }
+
+        $installed = scoop list | Select-String -Pattern "^$package\s"
+
+        if ($installed) {
+            Write-Host "Already installed: $package" -ForegroundColor Yellow
+        }
+        else {
+            Write-Host "Installing: $package" -ForegroundColor Green
+
+            scoop install $package
+
+            if ($LASTEXITCODE -ne 0) {
+                Write-Host "Failed to install $package" -ForegroundColor Red
+            }
+        }
+    }
+
+    Write-Host ""
+}
 function Install-WingetPackages {
     param (
         [string[]]$packages
@@ -922,13 +953,106 @@ $configPath = Join-Path $HOME ".local\share\chezmoi\AppData\Local\installer\pack
 $path = Join-Path -Path $HOME -ChildPath ".local\share\chezmoi\AppData\Local\installer\packages.json"
 $config = Get-Content -Path $configPath | ConvertFrom-Json
 
+# $choice = Read-Host "Choose installation type (mini/full)"
+#
+# switch ($choice.ToLower()) {
+#     { $_ -in "mini", "m" } {
+#         # Check if Microsoft Store is installed
+#         $msstoreInstalled = Get-AppxPackage -Name "Microsoft.WindowsStore" -ErrorAction SilentlyContinue
+#         if ($msstoreInstalled) {
+#             Write-Host "Microsoft Store is installed. Proceeding with Scoop Python package installation."
+#             if (Test-Path "$HOME\scoop\apps\python\current\python.exe") {
+#                 & "$HOME\scoop\apps\python\current\python.exe" "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopmini.py"
+#             }
+#             else {
+#                 python "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopmini.py"
+#             }
+#         }
+#         else {
+#             Write-Host "Microsoft Store is NOT installed. Attempting to add Microsoft Store..." -ForegroundColor Yellow
+#             $storeZipUrl = "https://github.com/QuangVNMC/LTSC-Add-Microsoft-Store/releases/download/Bruh/LTSC-Add-Microsoft-Store.zip"
+#             $tempDir = [System.IO.Path]::GetTempPath()
+#             $storeZipPath = Join-Path $tempDir "LTSC-Add-Microsoft-Store.zip"
+#             $extractPath = Join-Path $tempDir "LTSC-Add-Microsoft-Store"
+#             Write-Host "Downloading Microsoft Store installer zip to temp directory..." -ForegroundColor Cyan
+#             Invoke-WebRequest -Uri $storeZipUrl -OutFile $storeZipPath
+#             Write-Host "Extracting zip in temp directory..." -ForegroundColor Cyan
+#             if (-not (Get-Command Expand-Archive -ErrorAction SilentlyContinue)) {
+#                 Write-Host "Expand-Archive not found. Please extract manually." -ForegroundColor Red
+#             }
+#             else {
+#                 Expand-Archive -Path $storeZipPath -DestinationPath $extractPath -Force
+#                 $cmdFile = Join-Path $extractPath "Add-Store.cmd"
+#                 if (Test-Path $cmdFile) {
+#                     Write-Host "Running Add-Store.cmd to install Microsoft Store..." -ForegroundColor Green
+#                     Start-Process -FilePath $cmdFile -Verb RunAs -Wait
+#                 }
+#                 else {
+#                     Write-Host "Add-Store.cmd not found after extraction!" -ForegroundColor Red
+#                 }
+#             }
+#         }
+#         Write-Host "=============================================================================================================================================="
+#         Install-WingetPackages -packages $config.winget.mini
+#         Write-Host "=============================================================================================================================================="
+#         Install-ChocoPackages -packages $config.choco.mini
+#         Write-Host "=============================================================================================================================================="
+#     }
+#     { $_ -in "full", "f" } {
+#         Write-Host "=============================================================================================================================================="
+#         # Check if Microsoft Store is installed
+#         $msstoreInstalled = Get-AppxPackage -Name "Microsoft.WindowsStore" -ErrorAction SilentlyContinue
+#         if ($msstoreInstalled) {
+#             Write-Host "Microsoft Store is installed. Proceeding with Scoop Python package installation."
+#             if (Test-Path "$HOME\scoop\apps\python\current\python.exe") {
+#                 & "$HOME\scoop\apps\python\current\python.exe" "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopfull.py"
+#             }
+#             else {
+#                 python "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopfull.py"
+#             }
+#         }
+#         else {
+#             Write-Host "Microsoft Store is NOT installed. Skipping Scoop Python package installation." -ForegroundColor Yellow
+#         }
+#         Write-Host "=============================================================================================================================================="
+#         pipInstallEssential
+#         Write-Host "=============================================================================================================================================="
+#         Install-WingetPackages -packages $config.winget.full
+#         Write-Host "=============================================================================================================================================="
+#         Install-ChocoPackages -packages $config.choco.full
+#         Write-Host "=============================================================================================================================================="
+#         Set-PermanentMachine
+#         vsync
+#     }
+# }
+# Write-Host "Installation completed!" -ForegroundColor Green
+#
+#
+
+# old block
 $choice = Read-Host "Choose installation type (mini/full)"
+
+# Absolute scoop python path (deterministic)
+$scoopPython = "$env:USERPROFILE\scoop\apps\python\current\python.exe"
+
+# Validate python exists
+if (-not (Test-Path $scoopPython)) {
+    Write-Host "ERROR: Scoop Python not found. Install Scoop Python first." -ForegroundColor Red
+    exit 1
+}
+
 switch ($choice.ToLower()) {
+
     { $_ -in "mini", "m" } {
-        # Check if Microsoft Store is installed
+
+        Write-Host "=============================================================================================================================================="
+        Write-Host "Running MINI installation using Scoop Python..." -ForegroundColor Cyan
+        Write-Host "=============================================================================================================================================="
+
+        # ================= OLD CODE (DISABLED) =================
+        <#
         $msstoreInstalled = Get-AppxPackage -Name "Microsoft.WindowsStore" -ErrorAction SilentlyContinue
         if ($msstoreInstalled) {
-            Write-Host "Microsoft Store is installed. Proceeding with Scoop Python package installation."
             if (Test-Path "$HOME\scoop\apps\python\current\python.exe") {
                 & "$HOME\scoop\apps\python\current\python.exe" "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopmini.py"
             }
@@ -937,41 +1061,35 @@ switch ($choice.ToLower()) {
             }
         }
         else {
-            Write-Host "Microsoft Store is NOT installed. Attempting to add Microsoft Store..." -ForegroundColor Yellow
-            $storeZipUrl = "https://github.com/QuangVNMC/LTSC-Add-Microsoft-Store/releases/download/Bruh/LTSC-Add-Microsoft-Store.zip"
-            $tempDir = [System.IO.Path]::GetTempPath()
-            $storeZipPath = Join-Path $tempDir "LTSC-Add-Microsoft-Store.zip"
-            $extractPath = Join-Path $tempDir "LTSC-Add-Microsoft-Store"
-            Write-Host "Downloading Microsoft Store installer zip to temp directory..." -ForegroundColor Cyan
-            Invoke-WebRequest -Uri $storeZipUrl -OutFile $storeZipPath
-            Write-Host "Extracting zip in temp directory..." -ForegroundColor Cyan
-            if (-not (Get-Command Expand-Archive -ErrorAction SilentlyContinue)) {
-                Write-Host "Expand-Archive not found. Please extract manually." -ForegroundColor Red
-            }
-            else {
-                Expand-Archive -Path $storeZipPath -DestinationPath $extractPath -Force
-                $cmdFile = Join-Path $extractPath "Add-Store.cmd"
-                if (Test-Path $cmdFile) {
-                    Write-Host "Running Add-Store.cmd to install Microsoft Store..." -ForegroundColor Green
-                    Start-Process -FilePath $cmdFile -Verb RunAs -Wait
-                }
-                else {
-                    Write-Host "Add-Store.cmd not found after extraction!" -ForegroundColor Red
-                }
-            }
+            # Microsoft Store install logic
         }
+        #>
+        # ================= NEW FIXED CODE =================
+        Install-ScoopPackages -packages $config.scoop.mini
+
         Write-Host "=============================================================================================================================================="
+
         Install-WingetPackages -packages $config.winget.mini
+
         Write-Host "=============================================================================================================================================="
+
         Install-ChocoPackages -packages $config.choco.mini
+
         Write-Host "=============================================================================================================================================="
     }
+
+
+
     { $_ -in "full", "f" } {
+
         Write-Host "=============================================================================================================================================="
-        # Check if Microsoft Store is installed
-        $msstoreInstalled = Get-AppxPackage -Name "Microsoft.WindowsStore" -ErrorAction SilentlyContinue
+        Write-Host "Running FULL installation using Scoop Python..." -ForegroundColor Cyan
+        Write-Host "=============================================================================================================================================="
+
+        # ================= OLD CODE (DISABLED) =================
+        <#
+        $msstoreInstalled = Get-AppxPackage -Name "Microsoft.WindowsStore"
         if ($msstoreInstalled) {
-            Write-Host "Microsoft Store is installed. Proceeding with Scoop Python package installation."
             if (Test-Path "$HOME\scoop\apps\python\current\python.exe") {
                 & "$HOME\scoop\apps\python\current\python.exe" "$HOME\.local\share\chezmoi\AppData\Local\installer\scoopfull.py"
             }
@@ -980,20 +1098,40 @@ switch ($choice.ToLower()) {
             }
         }
         else {
-            Write-Host "Microsoft Store is NOT installed. Skipping Scoop Python package installation." -ForegroundColor Yellow
+            Write-Host "Microsoft Store is NOT installed. Skipping Scoop Python package installation."
         }
+        #>
+        # ================= NEW FIXED CODE =================
+        Install-ScoopPackages -packages $config.scoop.full
         Write-Host "=============================================================================================================================================="
+
         pipInstallEssential
+
         Write-Host "=============================================================================================================================================="
+
         Install-WingetPackages -packages $config.winget.full
+
         Write-Host "=============================================================================================================================================="
+
         Install-ChocoPackages -packages $config.choco.full
+
         Write-Host "=============================================================================================================================================="
+
         Set-PermanentMachine
+
         vsync
     }
+
+    default {
+
+        Write-Host "Invalid choice. Please enter mini or full." -ForegroundColor Red
+        exit 1
+    }
 }
-Write-Host "Installation completed!" -ForegroundColor Green
+
+Write-Host ""
+Write-Host "Installation completed successfully." -ForegroundColor Green
+Write-Host ""
 function Pin-ChocoPackage {
     param (
         [string]$packageName
