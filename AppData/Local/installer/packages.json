@@ -71,11 +71,9 @@
   },
   "choco": {
     "mini": [
-      "7zip",
       "zoxide --version=0.9.0"
     ],
     "full": [
-      "7zip",
       "sharex",
       "ueli",
       "everything",

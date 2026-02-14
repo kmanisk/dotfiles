@@ -257,15 +257,15 @@
         },
         {
             "id": null,
-            "keys": "alt+down"
-        },
-        {
-            "id": null,
             "keys": "ctrl+alt+l"
         },
         {
             "id": null,
-            "keys": "ctrl+shift+4"
+            "keys": "alt+down"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+t"
         },
         {
             "id": null,
@@ -273,7 +273,7 @@
         },
         {
             "id": null,
-            "keys": "ctrl+shift+t"
+            "keys": "ctrl+shift+4"
         },
         {
             "id": null,
@@ -542,7 +542,7 @@
                 "experimental.retroTerminalEffect": false,
                 "font": 
                 {
-                    "face": "Iosevka Nerd Font Mono",
+                    "face": "IosevkaTerm Nerd Font Mono",
                     "size": 15
                 },
                 "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
