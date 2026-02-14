@@ -316,11 +316,15 @@ function Install-ChocoPackages {
 }
 function Install-ScoopPackages {
     param (
-        [array]$packages
+        [Parameter(Mandatory = $true)]
+        [array]$UserPackages,
+
+        [Parameter(Mandatory = $false)]
+        [array]$GlobalPackages = @()
     )
 
     Write-Host "======================================================================" -ForegroundColor Cyan
-    Write-Host "Installing Scoop packages..." -ForegroundColor Cyan
+    Write-Host "Installing Scoop packages (User + Global)..." -ForegroundColor Cyan
     Write-Host "======================================================================" -ForegroundColor Cyan
 
     # Ensure scoop exists
@@ -329,55 +333,112 @@ function Install-ScoopPackages {
         return
     }
 
-    # Get installed packages ONCE
-    $installedPackages = @{}
-    
+    # ============================
+    # Cache USER installed packages
+    # ============================
+    $installedUser = @{}
+
     scoop list | Select-Object -Skip 1 | ForEach-Object {
         $name = ($_ -split '\s+')[0]
         if ($name) {
-            $installedPackages[$name.ToLower()] = $true
+            $installedUser[$name.ToLower()] = $true
         }
     }
 
-    foreach ($package in $packages) {
+    # ============================
+    # Cache GLOBAL installed packages
+    # ============================
+    $installedGlobal = @{}
+
+    scoop list --global | Select-Object -Skip 1 | ForEach-Object {
+        $name = ($_ -split '\s+')[0]
+        if ($name) {
+            $installedGlobal[$name.ToLower()] = $true
+        }
+    }
+
+    # ============================
+    # Install USER packages
+    # ============================
+    Write-Host ""
+    Write-Host "User packages:" -ForegroundColor Magenta
+
+    foreach ($package in $UserPackages) {
 
         if ([string]::IsNullOrWhiteSpace($package)) {
             continue
         }
 
-        # Extract package name without bucket prefix
-        # examples:
-        # extras/vscode → vscode
-        # main/git → git
         $packageName = ($package -split '/')[ -1 ].ToLower()
 
-        if ($installedPackages.ContainsKey($packageName)) {
+        if ($installedUser.ContainsKey($packageName)) {
 
-            Write-Host "Already installed: $packageName" -ForegroundColor Yellow
+            Write-Host "Already installed (User): $packageName" -ForegroundColor Yellow
 
         }
         else {
 
-            Write-Host "Installing: $package" -ForegroundColor Green
+            Write-Host "Installing (User): $package" -ForegroundColor Green
 
             scoop install $package
 
             if ($LASTEXITCODE -eq 0) {
 
-                Write-Host "Installed successfully: $packageName" -ForegroundColor DarkGreen
-                $installedPackages[$packageName] = $true
+                Write-Host "Installed successfully (User): $packageName" -ForegroundColor DarkGreen
+                $installedUser[$packageName] = $true
 
             }
             else {
 
-                Write-Host "Failed to install: $packageName" -ForegroundColor Red
+                Write-Host "Failed (User): $packageName" -ForegroundColor Red
+
+            }
+        }
+    }
+
+    # ============================
+    # Install GLOBAL packages
+    # ============================
+    Write-Host ""
+    Write-Host "Global packages:" -ForegroundColor Magenta
+
+    foreach ($package in $GlobalPackages) {
+
+        if ([string]::IsNullOrWhiteSpace($package)) {
+            continue
+        }
+
+        $packageName = ($package -split '/')[ -1 ].ToLower()
+
+        if ($installedGlobal.ContainsKey($packageName)) {
+
+            Write-Host "Already installed (Global): $packageName" -ForegroundColor Yellow
+
+        }
+        else {
+
+            Write-Host "Installing (Global): $package" -ForegroundColor Green
+
+            scoop install --global $package
+
+            if ($LASTEXITCODE -eq 0) {
+
+                Write-Host "Installed successfully (Global): $packageName" -ForegroundColor DarkGreen
+                $installedGlobal[$packageName] = $true
+
+            }
+            else {
+
+                Write-Host "Failed (Global): $packageName" -ForegroundColor Red
 
             }
         }
     }
 
     Write-Host ""
-    Write-Host "Scoop package installation complete." -ForegroundColor Cyan
+    Write-Host "======================================================================" -ForegroundColor Cyan
+    Write-Host "Scoop installation complete." -ForegroundColor Cyan
+    Write-Host "======================================================================" -ForegroundColor Cyan
 }
 function Install-WingetPackages {
     param (
@@ -1097,7 +1158,9 @@ switch ($choice.ToLower()) {
         }
         #>
         # ================= NEW FIXED CODE =================
-        Install-ScoopPackages -packages $config.scoop.mini
+Install-ScoopPackages `
+    -UserPackages $config.scoop.mini `
+    -GlobalPackages $config.scoop.global
 
         Write-Host "=============================================================================================================================================="
 
@@ -1134,7 +1197,9 @@ switch ($choice.ToLower()) {
         }
         #>
         # ================= NEW FIXED CODE =================
-        Install-ScoopPackages -packages $config.scoop.full
+Install-ScoopPackages `
+    -UserPackages $config.scoop.full `
+    -GlobalPackages $config.scoop.global
         Write-Host "=============================================================================================================================================="
 
         pipInstallEssential
