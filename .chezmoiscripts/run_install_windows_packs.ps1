@@ -1,24 +1,21 @@
-# Ensure HOME exists
+# Fix Scoop environment for non-interactive shell
+
 if (-not $HOME) {
     $HOME = [Environment]::GetFolderPath("UserProfile")
 }
 
-# Ensure Scoop root exists
 if (-not $env:SCOOP) {
     $env:SCOOP = Join-Path $HOME "scoop"
 }
 
-# Ensure Scoop shims in PATH
 $SCOOP_SHIMS = Join-Path $env:SCOOP "shims"
 
 if ($env:PATH -notlike "*$SCOOP_SHIMS*") {
     $env:PATH = "$SCOOP_SHIMS;$env:PATH"
 }
 
-# Verify Scoop command works
-if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
-    throw "Scoop not found in PATH even though installed at $env:SCOOP"
-}
+$env:PATH = [System.Environment]::GetEnvironmentVariable("PATH","User") + ";" +
+            [System.Environment]::GetEnvironmentVariable("PATH","Machine")#
 # VSync logic for VSCode/VSCodium extensions
 function vsync {
     $vscodeInstalled = Get-Command code -ErrorAction SilentlyContinue
