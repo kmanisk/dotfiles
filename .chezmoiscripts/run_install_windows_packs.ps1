@@ -323,29 +323,61 @@ function Install-ScoopPackages {
     Write-Host "Installing Scoop packages..." -ForegroundColor Cyan
     Write-Host "======================================================================" -ForegroundColor Cyan
 
+    # Ensure scoop exists
+    if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
+        Write-Host "ERROR: Scoop is not installed." -ForegroundColor Red
+        return
+    }
+
+    # Get installed packages ONCE
+    $installedPackages = @{}
+    
+    scoop list | Select-Object -Skip 1 | ForEach-Object {
+        $name = ($_ -split '\s+')[0]
+        if ($name) {
+            $installedPackages[$name.ToLower()] = $true
+        }
+    }
+
     foreach ($package in $packages) {
 
         if ([string]::IsNullOrWhiteSpace($package)) {
             continue
         }
 
-        $installed = scoop list | Select-String -Pattern "^$package\s"
+        # Extract package name without bucket prefix
+        # examples:
+        # extras/vscode → vscode
+        # main/git → git
+        $packageName = ($package -split '/')[ -1 ].ToLower()
 
-        if ($installed) {
-            Write-Host "Already installed: $package" -ForegroundColor Yellow
+        if ($installedPackages.ContainsKey($packageName)) {
+
+            Write-Host "Already installed: $packageName" -ForegroundColor Yellow
+
         }
         else {
+
             Write-Host "Installing: $package" -ForegroundColor Green
 
             scoop install $package
 
-            if ($LASTEXITCODE -ne 0) {
-                Write-Host "Failed to install $package" -ForegroundColor Red
+            if ($LASTEXITCODE -eq 0) {
+
+                Write-Host "Installed successfully: $packageName" -ForegroundColor DarkGreen
+                $installedPackages[$packageName] = $true
+
+            }
+            else {
+
+                Write-Host "Failed to install: $packageName" -ForegroundColor Red
+
             }
         }
     }
 
     Write-Host ""
+    Write-Host "Scoop package installation complete." -ForegroundColor Cyan
 }
 function Install-WingetPackages {
     param (

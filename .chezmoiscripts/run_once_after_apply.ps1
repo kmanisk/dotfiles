@@ -16,7 +16,12 @@ function Install-Winget {
 	}
 }
 
-
+function Command-Exists {
+    param (
+        [string]$command
+    )
+    return $null -ne (Get-Command $command -ErrorAction SilentlyContinue)
+}
 function Check-And-AddBucket {
 	param (
 		[string]$bucketName,
