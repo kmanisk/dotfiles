@@ -52,7 +52,7 @@
     ],
     "global": [
       "nerd-fonts/JetBrainsMono-NF",
-      "nerd-fonts/Iosevka-NF-Mono"
+      "nerd-fonts/IosevkaTerm-NF-Mono"
     ]
   },
   "winget": {

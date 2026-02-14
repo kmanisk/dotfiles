@@ -257,11 +257,15 @@
         },
         {
             "id": null,
+            "keys": "alt+down"
+        },
+        {
+            "id": null,
             "keys": "ctrl+alt+l"
         },
         {
             "id": null,
-            "keys": "alt+down"
+            "keys": "ctrl+shift+4"
         },
         {
             "id": null,
@@ -270,10 +274,6 @@
         {
             "id": null,
             "keys": "ctrl+shift+t"
-        },
-        {
-            "id": null,
-            "keys": "ctrl+shift+4"
         },
         {
             "id": null,
@@ -542,7 +542,7 @@
                 "experimental.retroTerminalEffect": false,
                 "font": 
                 {
-                    "face": "IosevkaTerm Nerd Font Mono",
+                    "face": "Iosevka Nerd Font Mono",
                     "size": 15
                 },
                 "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
