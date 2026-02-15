@@ -20,31 +20,14 @@
 	"editor.showFoldingControls": "always",
 	"editor.tabSize": 4,
 	"workbench.sideBar.location": "right",
-	// "editor.fontSize": 17, jetbrains
-	// new is Iosevka
 	"editor.fontSize": 21,
 	"editor.lineHeight": 30,
 	// previous 35 line height IOSEVKA 
 	// original linehieght 26 for jetbrains 
 	"breadcrumbs.enabled": false,
-	"editor.fontFamily": "Iosevka Nerd Font Mono",
-	// "editor.fontFamily": "JetBrainsMono NF,Josefin Sans",
-	// "editor.fontFamily": "JetbrainsMono NF,JetBrainsMono Nerd Font, FiraCode Nerd Font",
-	// "editor.fontFamily": "'FiraCode Nerd Font Mono','JetBrainsMonoNL Nerd Font Mono','JetBrainsMono Nerd Font Mono','JetBrainsMono Nerd Font', monospace",
-	// "editor.fontFamily": "'Hack Nerd Font Mono', 'Hack Nerd Font', 'JetBrainsMonoNL Nerd Font Mono', 'JetBrainsMono Nerd Font Mono', 'JetBrainsMono Nerd Font', monospace",
-	// Terminal Old 
-	// "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font', 'monospace', monospace",
-	// "screencastMode.fontSize": 36,
-	// "terminal.integrated.fontSize": 16,
-	// "screencastMode.verticalOffset": 1,
-	// "editor.fontLigatures": true,
-	// "editor.wordWrap": "on",
-	// "editor.wrappingIndent": "same",
-	// "editor.lineNumbers": "relative",
-	// "editor.wordWrapColumn": 60,
-	// Terminal New
-	"terminal.integrated.fontFamily": "JetBrainsMonoNL Nerd Font",
-	// "terminal.integrated.fontFamily": "Iosevka Nerd Font Mono",
+	"editor.fontFamily": "IosevkaTerm Nerd Font",
+	"terminal.integrated.fontFamily": "JetBrainsMono Nerd Font",
+	"terminal.integrated.fontSize": 16,
 	"screencastMode.fontSize": 36,
 	"terminal.integrated.fontLigatures.enabled": true,
 	"screencastMode.verticalOffset": 1,
@@ -285,7 +268,7 @@
 		}
 	],
 	"window.menuBarVisibility": "compact",
-	"workbench.iconTheme": "material-icon-theme",
+	// "workbench.iconTheme": "material-icon-theme",
 	"extensions.ignoreRecommendations": true,
 	"terminal.integrated.profiles.windows": {
 		"New Powershell": {
@@ -311,8 +294,8 @@
 	"telemetry.editStats.enabled": false,
 	"telemetry.feedback.enabled": false,
 	"telemetry.telemetryLevel": "off",
-	"workbench.colorTheme": "Gruvbox Dark Medium",
 	"svelte.enable-ts-plugin": true,
 	"liveServer.settings.donotVerifyTags": true,
 	"editor.unicodeHighlight.invisibleCharacters": false,
+	"workbench.colorTheme": "Pycharm Original Theme",
 }
