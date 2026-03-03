@@ -794,7 +794,7 @@ emsdk help
 |	time=1764672679
 cd Downloads\
 |	time=1764672679
-ls
+|s
 |	time=1764672680
 |ir
 |	time=1764672688
@@ -872,7 +872,7 @@ fastboot flash boot lineage_boot.img
 |	time=1766915833
 |astboot reboot recovery
 |	time=1766943733
-dir
+|ir
 |	time=1766943747
 |lash_all.bat 
 |	time=1766947124
@@ -890,7 +890,7 @@ flash_all.bat
 |	time=1767184928
 chkdsk.exe /f /r
 |	time=1767184629
-sfc /scannow
+|fc /scannow
 |	time=1767184801
 Dism.exe /Online /Cleanup-Image /ScanHealth
 |	time=1767184978
@@ -910,7 +910,7 @@ scoop update *
 |	time=1770062785
 scoop 
 |	time=1770062787
-powershell
+|owershell
 |	time=1770062958
 |
 |	time=1770062959
@@ -927,3 +927,111 @@ shutdown.exe /f /t 0
 shutdown.exe /f 
 |	time=1771045186
 pwsh
+|	time=1771045883
+scoop install extras/windows-terminal
+|	time=1771045412
+powershell
+|	time=1771045618
+chezmoi apply -v
+|	time=1771600811
+|s
+|	time=1771601134
+|s
+|	time=1771601135
+ls
+|	time=1771601135
+dir
+|	time=1771619402
+scoop search batterym
+|	time=1771703756
+ffmpeg -i "Dhurandhar ｜ Use Headphones🎧 [xThj4X8CVDM].webm" -c:v copy -c:a aac -b:a 192k output.mp4
+|	time=1771703783
+ffmpeg -i output.mp4
+|	time=1771703787
+vlc output.mp4 
+|	time=1771779890
+|et stop bthserv
+|	time=1771780159
+|et stop bthserv
+|	time=1771780160
+|et start bthserv
+|	time=1771780181
+sc query RtkBtManServ
+|	time=1771780189
+sc config RtkBtManServ start= auto
+|	time=1771780190
+|et start RtkBtManServ
+|	time=1771780232
+net stop bthserv
+|	time=1771780234
+net stop RtkBtManServ
+|	time=1771780234
+reg delete HKLM\SYSTEM\CurrentControlSet\Services\BTHPORT\Parameters\Keys /f
+|	time=1771780234
+net start bthserv
+|	time=1771780236
+net start RtkBtManServ
+|	time=1771780259
+sc query BluetoothUserService
+|	time=1771780270
+sc config BluetoothUserService start= auto
+|	time=1771780271
+net start BluetoothUserService
+|	time=1771780301
+|c query type= service | findstr /i BluetoothUserService
+|	time=1771780307
+sc query type= service | findstr /i BluetoothUse
+|	time=1771780309
+sc query type= service | findstr /i Bluetooth
+|	time=1771780326
+sc config bthserv start= auto
+|	time=1771780326
+sc start bthserv
+|	time=1771780326
+DISM /Online /Cleanup-Image /RestoreHealth
+|	time=1771780396
+sfc /scannow
+|	time=1771780149
+sc config bthserv start= auto
+|	time=1771780149
+sc config BTAGService start= demand
+|	time=1771780149
+sc config BthAvctpSvc start= auto
+|	time=1771780149
+sc config BluetoothUserService start= auto
+|	time=1771780149
+sc config DeviceAssociationService start= auto
+|	time=1771780770
+sc query type= service | findstr /i BluetoothUserService
+|	time=1771780779
+sc config BluetoothUserService_XXXX start= auto
+|	time=1771780784
+net start BluetoothUserService_XXXX
+|	time=1771780805
+sc config BluetoothUserService_62a0c start= auto
+|	time=1771780805
+net start BluetoothUserService_62a0c
+|	time=1771780810
+sc query bthserv
+|	time=1771780812
+sc query BthAvctpSvc
+|	time=1771780851
+|owercfg /SETACVALUEINDEX SCHEME_CURRENT SUB_USB USBSELECTIVE SUSPEND 0
+|	time=1771780853
+|owercfg /SETACTIVE SCHEME_CURRENT
+|	time=1771780887
+|owercfg /SETACVALUEINDEX SCHEME_CURRENT SUB_USB USBSELECTIVE SUSPEND 0
+|	time=1771780891
+powercfg /SETACVALUEINDEX SCHEME_CURRENT SUB_USB USBSELECTIVE SUSPEND 0
+|	time=1771780896
+powercfg /SETACVALUEINDEX SCHEME_CURRENT 2a737441-1930-4402-8d77-b2bebba308a3 48e6b7a6-50f5-4782-a5d4-53bb8f07e226 0
+|	time=1771780896
+powercfg /SETDCVALUEINDEX SCHEME_CURRENT 2a737441-1930-4402-8d77-b2bebba308a3 48e6b7a6-50f5-4782-a5d4-53bb8f07e226 0
+|	time=1771780897
+powercfg /SETACTIVE SCHEME_CURRENT
+|	time=1771780902
+powercfg /Q | findstr /i "Selective"
+|	time=1771780919
+powercfg /Q SCHEME_CURRENT 2a737441-1930-4402-8d77-b2bebba308a3
+|	time=1771780955
+powercfg /h off

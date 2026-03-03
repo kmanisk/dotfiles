@@ -202,12 +202,15 @@ function find {
         $results = @()
 
         scoop search $query 2>$null | ForEach-Object {
-            # Bucket header line
+
+            # Detect bucket header
             if ($_ -match "^'(.+)' bucket:$") {
                 $currentBucket = $matches[1]
+                return
             }
-            # App line: name  version
-            elseif ($_ -match '^\s*([a-zA-Z0-9._-]+)\s+([^\s]+)') {
+
+            # Detect app line (name + version)
+            if ($_ -match '^\s*([a-zA-Z0-9._-]+)\s+([^\s]+)') {
                 $results += [pscustomobject]@{
                     Name    = $matches[1]
                     Version = $matches[2]
@@ -235,15 +238,16 @@ function find {
     # ================= winget =================
     section "winget" Green
     try {
-        winget search $query --accept-source-agreements |
-        Select-Object -Skip 1 |
-        Where-Object { $_ -match '\S+\s{2,}\S+' } |
+        winget search $query --accept-source-agreements 2>$null |
+        Where-Object { $_ -match '^\S.*\s{2,}\S' } |
         ForEach-Object {
-            $cols = ($_ -split '\s{2,}').Trim()
-            if ($cols.Count -ge 3) {
+            $cols = ($_ -split '\s{2,}')
+
+            if ($cols.Length -ge 3) {
                 [pscustomobject]@{
-                    Name    = $cols[0]
-                    Version = $cols[2]
+                    Name    = $cols[0].Trim()
+                    Id      = $cols[1].Trim()
+                    Version = $cols[2].Trim()
                 }
             }
         } |
@@ -257,7 +261,7 @@ function find {
     # ================= choco =================
     section "chocolatey" Magenta
     try {
-        choco search $query --limit-output |
+        choco search $query --limit-output 2>$null |
         ForEach-Object {
             if ($_ -match '^([^|]+)\|(.+)$') {
                 [pscustomobject]@{
@@ -273,7 +277,6 @@ function find {
         Write-Host "choco search failed" -ForegroundColor Red
     }
 }
-
 function cdwhich {
     param (
         [string]$commandName
@@ -1558,5 +1561,99 @@ function convert-tomp4 {
         Write-Host "✔ Done:" $OutputFile -ForegroundColor Green
     } else {
         Write-Error "✖ ffmpeg failed"
+    }
+}
+
+function s {
+    param (
+        [Parameter(Mandatory)]
+        [string]$query
+    )
+
+    Clear-Host
+
+    function section($title, $color) {
+        Write-Host "`n== $title ==" -ForegroundColor $color
+        Write-Host ("-" * (6 + $title.Length)) -ForegroundColor DarkGray
+    }
+
+    $preferredBuckets = @("extras", "main", "versions")
+
+    # ================= scoop =================
+    section "scoop (bucket-aware)" Cyan
+    try {
+        $currentBucket = $null
+        $results = @()
+
+        scoop search $query 2>$null | ForEach-Object {
+            # Bucket header line
+            if ($_ -match "^'(.+)' bucket:$") {
+                $currentBucket = $matches[1]
+            }
+            # App line: name  version
+            elseif ($_ -match '^\s*([a-zA-Z0-9._-]+)\s+([^\s]+)') {
+                $results += [pscustomobject]@{
+                    Name    = $matches[1]
+                    Version = $matches[2]
+                    Bucket  = $currentBucket
+                }
+            }
+        }
+
+        $results |
+        Sort-Object `
+            @{ Expression = {
+                if ($preferredBuckets -contains $_.Bucket) {
+                    $preferredBuckets.IndexOf($_.Bucket)
+                } else { 99 }
+            }},
+            Name |
+        Group-Object Name |
+        ForEach-Object { $_.Group | Select-Object -First 1 } |
+        Format-Table Name, Version, Bucket -AutoSize
+    }
+    catch {
+        Write-Host "scoop search failed" -ForegroundColor Red
+    }
+
+    # ================= winget =================
+    section "winget" Green
+    try {
+        winget search $query --accept-source-agreements |
+        Select-Object -Skip 1 |
+        Where-Object { $_ -match '\S+\s{2,}\S+' } |
+        ForEach-Object {
+            $cols = ($_ -split '\s{2,}').Trim()
+            if ($cols.Count -ge 3) {
+                [pscustomobject]@{
+                    Name    = $cols[0]
+                    Version = $cols[2]
+                }
+            }
+        } |
+        Sort-Object Name -Unique |
+        Format-Table Name, Version -AutoSize
+    }
+    catch {
+        Write-Host "winget search failed" -ForegroundColor Red
+    }
+
+    # ================= choco =================
+    section "chocolatey" Magenta
+    try {
+        choco search $query --limit-output |
+        ForEach-Object {
+            if ($_ -match '^([^|]+)\|(.+)$') {
+                [pscustomobject]@{
+                    Name    = $matches[1]
+                    Version = $matches[2]
+                }
+            }
+        } |
+        Sort-Object Name -Unique |
+        Format-Table Name, Version -AutoSize
+    }
+    catch {
+        Write-Host "choco search failed" -ForegroundColor Red
     }
 }

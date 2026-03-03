@@ -17,11 +17,11 @@ GstAudio.VoipOn 1
 GstAudio.VoipVolumeReduce 1
 GstAudio.Volume 1.000000
 GstAudio.YourSoundSystem 4
-GstRender.AmbientOcclusion 1
+GstRender.AmbientOcclusion 2
 GstRender.AnisotropicFilter 4
 GstRender.AntiAliasingDeferred 2
 GstRender.AntiAliasingPost 3
-GstRender.Brightness 0.530000
+GstRender.Brightness 0.500000
 GstRender.ChromaticAberration 0
 GstRender.ClampGpuMemory 1
 GstRender.ColorBlindCustomColorEnemy 189/54/49/255/2.0/0.58297/0.46998/1.0
@@ -42,8 +42,8 @@ GstRender.FieldOfViewScaleADS 0
 GstRender.FieldOfViewVertical 99.000000
 GstRender.FieldOfViewVerticalVehicle 92.000000
 GstRender.FilmGrain 0
-GstRender.FullscreenEnabled 0
-GstRender.FullscreenMode 1
+GstRender.FullscreenEnabled 1
+GstRender.FullscreenMode 0
 GstRender.FullscreenRefreshRate 165.003998
 GstRender.FullscreenScreen 0
 GstRender.HighDynamicRange 0

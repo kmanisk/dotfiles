@@ -205,7 +205,6 @@
 		"gleam": "gleam run -m $fileNameWithoutExt"
 	},
 	"editor.inlineSuggest.suppressSuggestions": true,
-	"workbench.activityBar.location": "hidden",
 	"prettier.requireConfig": true,
 	//Cody autocomplete turn off 
 	"cody.autocomplete.enabled": false,
@@ -225,7 +224,7 @@
 	"security.workspace.trust.untrustedFiles": "open",
 	"cody.commandHints.enabled": false,
 	"git.openRepositoryInParentFolders": "never",
-	"git.autofetch": false,
+	"git.autofetch": true,
 	"editor.lineDecorationsWidth": 10,
 	"editor.folding": false,
 	"editor.glyphMargin": false,
@@ -298,4 +297,5 @@
 	"liveServer.settings.donotVerifyTags": true,
 	"editor.unicodeHighlight.invisibleCharacters": false,
 	"workbench.colorTheme": "Pycharm Original Theme",
+	"workbench.preferredHighContrastColorTheme": "Gruvbox Dark (Hard)",
 }

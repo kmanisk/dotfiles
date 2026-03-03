@@ -1,4 +1,10 @@
 {
-  "vscode": null,
+  "vscode": [
+    "asvetliakov.vscode-neovim",
+    "github.copilot-chat",
+    "nicohlr.pycharm",
+    "robole.file-bunny",
+    "tobias-z.vscode-harpoon"
+  ],
   "vscodium": null
 }
