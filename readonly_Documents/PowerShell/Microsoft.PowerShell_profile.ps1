@@ -1564,6 +1564,13 @@ function convert-tomp4 {
     }
 }
 
+# Add to your PowerShell profile (notepad $PROFILE)
+$env:LIB = "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.2\lib\x64;$env:LIB"
+function emacs {
+    & "C:\Users\Administrator\scoop\apps\emacs\current\bin\emacs.exe" --init-directory "$HOME\.emacs.d" $args
+}
+
+#search the package managers for the packages all in one 
 function s {
     param (
         [Parameter(Mandatory)]

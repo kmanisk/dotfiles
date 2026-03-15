@@ -20,8 +20,8 @@
 	"editor.showFoldingControls": "always",
 	"editor.tabSize": 4,
 	"workbench.sideBar.location": "right",
-	"editor.fontSize": 21,
-	"editor.lineHeight": 30,
+	"editor.fontSize": 20,
+	"editor.lineHeight": 32,
 	// previous 35 line height IOSEVKA 
 	// original linehieght 26 for jetbrains 
 	"breadcrumbs.enabled": false,
@@ -296,6 +296,7 @@
 	"svelte.enable-ts-plugin": true,
 	"liveServer.settings.donotVerifyTags": true,
 	"editor.unicodeHighlight.invisibleCharacters": false,
-	"workbench.colorTheme": "Pycharm Original Theme",
+	"workbench.colorTheme": "Gruvbox Dark (Soft)",
 	"workbench.preferredHighContrastColorTheme": "Gruvbox Dark (Hard)",
+	"workbench.activityBar.location": "hidden",
 }
