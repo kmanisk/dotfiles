@@ -296,7 +296,13 @@
 	"svelte.enable-ts-plugin": true,
 	"liveServer.settings.donotVerifyTags": true,
 	"editor.unicodeHighlight.invisibleCharacters": false,
-	"workbench.colorTheme": "Gruvbox Dark (Soft)",
+	"workbench.colorTheme": "PyCharm Dark Theme",
 	"workbench.preferredHighContrastColorTheme": "Gruvbox Dark (Hard)",
 	"workbench.activityBar.location": "hidden",
+	"chat.tools.terminal.autoApprove": {
+		"rustc": true,
+		".\\check_gguf.exe": true,
+		"Get-Item": true,
+		"cargo search": true
+	},
 }

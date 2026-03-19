@@ -25,6 +25,7 @@
         <File filename="C:\Users\Administrator\Desktop\MiFlash20220507\MiFlash20220507\log\MNTSBQZHH6E6Q4YL@20252109423.txt" />
         <File filename="C:\fleur_in_global_images_V13.0.5.0.RKEINXM_20220718.0000.00_11.0_in\flash_all.bat" />
         <File filename="C:\Users\Administrator\Desktop\devprac\kubprac\depl.yaml" />
+        <File filename="C:\Users\Administrator\Desktop\Raft\OnlineFix64.dll" />
     </History>
     <ProjectPanels>
         <ProjectPanel id="0" workSpaceFile="" />
@@ -42,7 +43,7 @@
         <GUIConfig name="ScintillaViewsSplitter">vertical</GUIConfig>
         <GUIConfig name="UserDefineDlg" position="undocked">hide</GUIConfig>
         <GUIConfig name="TabSetting" replaceBySpace="no" size="4" backspaceUnindent="no" />
-        <GUIConfig name="AppPosition" x="386" y="117" width="1177" height="864" isMaximized="yes" />
+        <GUIConfig name="AppPosition" x="450" y="150" width="1177" height="864" isMaximized="no" />
         <GUIConfig name="FindWindowPosition" left="1080" top="645" right="1920" bottom="1136" isLessModeOn="no" />
         <GUIConfig name="FinderConfig" wrappedLines="no" purgeBeforeEverySearch="no" showOnlyOneEntryPerFoundLine="yes" />
         <GUIConfig name="noUpdate" intervalDays="15" nextUpdateDate="20250619" autoUpdateMode="0">yes</GUIConfig>

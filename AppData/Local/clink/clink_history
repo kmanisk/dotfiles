@@ -1037,3 +1037,7 @@ powercfg /Q SCHEME_CURRENT 2a737441-1930-4402-8d77-b2bebba308a3
 powercfg /h off
 |	time=1771781308
 control printers
+|	time=1773073119
+reg query HKLM\SYSTEM\CurrentControlSet\Services\BTHPORT\Parameters\Keys /s
+|	time=1773072795
+reg query HKLM\SYSTEM\CurrentControlSet\Services\BTHPORT\Parameters\Keys /s

@@ -1518,52 +1518,55 @@ function Disable-AHK {
 
 # Run on startup (Optional: remove this line if you only want manual control)
 # Enable-AHK
-function convert-tomp4 {
+function Convert-WebmToMp4 {
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory, ValueFromPipeline)]
+        [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Alias("FullName")]
         [string]$InputFile,
 
-        [int]$CRF = 16,              # 16–18 = visually lossless
-        [string]$Preset = "slow"     # slow = best quality/size tradeoff
+        [int]$CRF = 18,
+        [string]$Preset = "slow"
     )
 
-    if (-not (Test-Path $InputFile)) {
-        Write-Error "File not found: $InputFile"
-        return
-    }
+    process {
+        if (-not (Test-Path -LiteralPath $InputFile)) {
+            Write-Error "File not found: $InputFile"
+            return
+        }
 
-    $ffmpeg = "ffmpeg"
-    $OutputFile = [System.IO.Path]::ChangeExtension($InputFile, ".mp4")
+        $ResolvedPath = (Resolve-Path -LiteralPath $InputFile).Path
+        $ffmpeg = "ffmpeg"
+        $OutputFile = [System.IO.Path]::ChangeExtension($ResolvedPath, ".mp4")
 
-    Write-Host "Converting:" $InputFile "→" $OutputFile
-    Write-Host "CRF=$CRF | Preset=$Preset (max quality)"
+        Write-Host "Converting:" $ResolvedPath "→" $OutputFile
+        Write-Host "CRF=$CRF | Preset=$Preset"
 
-    & $ffmpeg `
-        -hide_banner `
-        -loglevel error `
-        -stats `
-        -i "$InputFile" `
-        -map 0 `
-        -c:v libx264 `
-        -profile:v high `
-        -level 4.2 `
-        -pix_fmt yuv420p `
-        -preset $Preset `
-        -crf $CRF `
-        -movflags +faststart `
-        -c:a aac `
-        -b:a 256k `
-        -ac 2 `
-        "$OutputFile"
+        & $ffmpeg `
+            -hide_banner `
+            -loglevel error `
+            -stats `
+            -i "$ResolvedPath" `
+            -map 0:v:0 -map 0:a:0? `
+            -c:v libx264 `
+            -preset $Preset `
+            -crf $CRF `
+            -profile:v high `
+            -level 4.2 `
+            -pix_fmt yuv420p `
+            -movflags +faststart `
+            -c:a aac `
+            -b:a 192k `
+            -ac 2 `
+            "$OutputFile"
 
-    if ($LASTEXITCODE -eq 0) {
-        Write-Host "✔ Done:" $OutputFile -ForegroundColor Green
-    } else {
-        Write-Error "✖ ffmpeg failed"
+        if ($LASTEXITCODE -eq 0) {
+            Write-Host "✔ Done:" $OutputFile -ForegroundColor Green
+        } else {
+            Write-Error "✖ ffmpeg failed for $ResolvedPath"
+        }
     }
 }
-
 # Add to your PowerShell profile (notepad $PROFILE)
 $env:LIB = "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.2\lib\x64;$env:LIB"
 function emacs {
