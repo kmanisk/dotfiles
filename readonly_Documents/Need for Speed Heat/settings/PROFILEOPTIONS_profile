@@ -1,7 +1,8 @@
 GstAudio.BinauralEnable 0
 GstAudio.CarSpeakerModeEnum 1
+GstAudio.ChatWheelSounds 1
 GstAudio.CopSpeechAudibility 0
-GstAudio.DynamicsEnum 2
+GstAudio.DynamicsEnum 0
 GstAudio.MasterVolume 1.000000
 GstAudio.MusicBalance 0
 GstAudio.MusicVolume 1.000000
@@ -26,12 +27,12 @@ GstRender.Brightness 0.500000
 GstRender.ColorBlindMode 0
 GstRender.DisplayResolution_ID 
 GstRender.DofMethod 2
-GstRender.EffectsQuality 2
+GstRender.EffectsQuality 3
 GstRender.FullscreenMode 0
 GstRender.FullscreenScreen 1
 GstRender.HDRMode 0
 GstRender.LightingQuality 2
-GstRender.MeshQuality 2
+GstRender.MeshQuality 3
 GstRender.MotionBlurEnabled 1
 GstRender.OverallGraphicsQuality 5
 GstRender.PhotoSensitivityEnabled 0

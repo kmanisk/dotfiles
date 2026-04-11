@@ -904,7 +904,7 @@ ffmpeg -i input.webm \
 |	time=1768302453
 |owershell
 |	time=1770062781
-scoop update * 
+|coop update * 
 |	time=1770062783
 |coop 
 |	time=1770062785
@@ -1041,3 +1041,7 @@ control printers
 reg query HKLM\SYSTEM\CurrentControlSet\Services\BTHPORT\Parameters\Keys /s
 |	time=1773072795
 reg query HKLM\SYSTEM\CurrentControlSet\Services\BTHPORT\Parameters\Keys /s
+|	time=1773538812
+scoop update all 
+|	time=1773538819
+scoop update * 

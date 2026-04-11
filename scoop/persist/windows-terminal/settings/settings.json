@@ -229,6 +229,10 @@
                 "action": "closeTab"
             },
             "id": "User.closeTab.0"
+        },
+        {
+            "command": "toggleShaderEffects",
+            "id": "User.toggleShaderEffects"
         }
     ],
     "alwaysShowTabs": false,
@@ -257,14 +261,6 @@
         },
         {
             "id": null,
-            "keys": "alt+down"
-        },
-        {
-            "id": null,
-            "keys": "ctrl+shift+4"
-        },
-        {
-            "id": null,
             "keys": "ctrl+alt+k"
         },
         {
@@ -273,7 +269,15 @@
         },
         {
             "id": null,
+            "keys": "ctrl+shift+4"
+        },
+        {
+            "id": null,
             "keys": "ctrl+alt+l"
+        },
+        {
+            "id": null,
+            "keys": "alt+down"
         },
         {
             "id": null,
@@ -502,6 +506,10 @@
         {
             "id": "User.closeTab.0",
             "keys": "alt+shift+q"
+        },
+        {
+            "id": "User.toggleShaderEffects",
+            "keys": "ctrl+\\"
         }
     ],
     "newTabMenu": 
