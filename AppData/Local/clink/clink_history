@@ -1045,3 +1045,9 @@ reg query HKLM\SYSTEM\CurrentControlSet\Services\BTHPORT\Parameters\Keys /s
 scoop update all 
 |	time=1773538819
 scoop update * 
+|	time=1775574890
+reg delete HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Configuration /f
+|	time=1775574891
+reg delete HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Connectivity /f
+|	time=1775574892
+reg delete HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\ScaleFactors /f

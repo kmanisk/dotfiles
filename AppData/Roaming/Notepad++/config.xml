@@ -2,6 +2,7 @@
 <NotepadPlus>
     <FindHistory nbMaxFindHistoryPath="10" nbMaxFindHistoryFilter="10" nbMaxFindHistoryFind="10" nbMaxFindHistoryReplace="10" matchWord="no" matchCase="no" wrap="yes" directionDown="yes" fifRecuisive="yes" fifInHiddenFolder="no" fifProjectPanel1="no" fifProjectPanel2="no" fifProjectPanel3="no" fifFilterFollowsDoc="no" fifFolderFollowsDoc="no" searchMode="0" transparencyMode="1" transparency="150" dotMatchesNewline="no" isSearch2ButtonsMode="no" regexBackward4PowerUser="no" bookmarkLine="no" purge="no">
         <Filter name="" />
+        <Find name="ghost" />
         <Find name="color" />
         <Find name="v2" />
         <Find name="use" />
@@ -11,7 +12,6 @@
         <Find name="theme" />
         <Find name="dla" />
         <Find name="jetbrains" />
-        <Find name="essential python" />
         <Replace name="" />
         <Replace name="maniskpr" />
     </FindHistory>
@@ -43,7 +43,7 @@
         <GUIConfig name="ScintillaViewsSplitter">vertical</GUIConfig>
         <GUIConfig name="UserDefineDlg" position="undocked">hide</GUIConfig>
         <GUIConfig name="TabSetting" replaceBySpace="no" size="4" backspaceUnindent="no" />
-        <GUIConfig name="AppPosition" x="475" y="144" width="1177" height="864" isMaximized="no" />
+        <GUIConfig name="AppPosition" x="475" y="144" width="1177" height="864" isMaximized="yes" />
         <GUIConfig name="FindWindowPosition" left="1080" top="645" right="1920" bottom="1087" isLessModeOn="no" />
         <GUIConfig name="FinderConfig" wrappedLines="no" purgeBeforeEverySearch="no" showOnlyOneEntryPerFoundLine="yes" FiF_ignoreunsavedChangesInOpenedFiles="no" />
         <GUIConfig name="noUpdate" intervalDays="15" nextUpdateDate="20250619" autoUpdateMode="0">yes</GUIConfig>
