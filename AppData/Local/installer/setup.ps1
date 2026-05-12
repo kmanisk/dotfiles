@@ -384,7 +384,9 @@ function Install-ScoopPackages {
     param([array]$UserPackages = @(), [array]$GlobalPackages = @())
     Write-Section "Scoop Packages"
     if (-not (Test-Cmd 'scoop')) { Write-SKIP "Scoop not available."; return }
-    $instUser = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
+
+    # Build installed sets once upfront
+    $instUser   = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
     $instGlobal = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
     scoop list 2>$null | Select-Object -Skip 1 | ForEach-Object {
         $n = if ($_ -is [string]) { ($_ -split '\s+')[0] } else { $_.Name }
@@ -394,26 +396,81 @@ function Install-ScoopPackages {
         $n = if ($_ -is [string]) { ($_ -split '\s+')[0] } else { $_.Name }
         if ($n) { [void]$instGlobal.Add($n) }
     }
+
+    # Collect packages into two buckets: need install vs need update
+    $toInstall = [System.Collections.Generic.List[string]]::new()
+    $toUpdate  = [System.Collections.Generic.List[string]]::new()
+
     foreach ($pkg in $UserPackages) {
         if ([string]::IsNullOrWhiteSpace($pkg)) { continue }
-        $short = ($pkg -split '/')[-1]; $key = "ScoopUser_$short"
-        if ((Test-StepDone $key) -or $instUser.Contains($short)) { Write-SKIP $short; Set-StepDone $key; continue }
-        Write-INFO "scoop install $pkg"
-        scoop install $pkg 2>&1 | Where-Object { $_ -notmatch 'aria2' } | ForEach-Object { Write-INFO "  $_" }
-        if ($LASTEXITCODE -eq 0) { Write-OK $short; Set-StepDone $key; [void]$instUser.Add($short) }
-        else { Write-FAIL "$short  -  will retry on next run." }
+        $short = ($pkg -split '/')[-1]
+        if ($instUser.Contains($short)) { $toUpdate.Add($short) }
+        else                            { $toInstall.Add($pkg)  }
     }
-    $isAdmin = Get-IsAdmin
+
+    # Install missing packages
+    if ($toInstall.Count -gt 0) {
+        Write-INFO "Installing $($toInstall.Count) new package(s)..."
+        foreach ($pkg in $toInstall) {
+            $short = ($pkg -split '/')[-1]
+            Write-INFO "scoop install $pkg"
+            scoop install $pkg 2>&1 | Where-Object { $_ -notmatch 'aria2' } | Out-Null
+            if ($LASTEXITCODE -eq 0) { Write-OK "$short installed."; [void]$instUser.Add($short) }
+            else                     { Write-FAIL "$short install failed  -  will retry on next run." }
+        }
+    }
+
+    # Update already-installed packages
+    if ($toUpdate.Count -gt 0) {
+        Write-INFO "Updating $($toUpdate.Count) already-installed package(s)..."
+        foreach ($short in $toUpdate) {
+            Write-INFO "scoop update $short"
+            $out = scoop update $short 2>&1 | Out-String
+            if ($out -match 'already up to date|Latest versions for all apps are installed') {
+                Write-SKIP "$short (already up to date)"
+            } elseif ($LASTEXITCODE -eq 0) {
+                Write-OK "$short updated."
+            } else {
+                Write-WARN "$short update failed  -  run 'scoop update $short' manually."
+            }
+        }
+    }
+
+    # Global packages (fonts etc - need admin)
+    $toInstallGlob = [System.Collections.Generic.List[string]]::new()
+    $toUpdateGlob  = [System.Collections.Generic.List[string]]::new()
+
     foreach ($pkg in $GlobalPackages) {
         if ([string]::IsNullOrWhiteSpace($pkg)) { continue }
-        $short = ($pkg -split '/')[-1]; $key = "ScoopGlobal_$short"
-        if ((Test-StepDone $key) -or $instGlobal.Contains($short)) { Write-SKIP "$short (global)"; Set-StepDone $key; continue }
+        $short = ($pkg -split '/')[-1]
+        if ($instGlobal.Contains($short)) { $toUpdateGlob.Add($short) }
+        else                              { $toInstallGlob.Add($pkg)  }
+    }
+
+    $isAdmin = Get-IsAdmin
+
+    foreach ($pkg in $toInstallGlob) {
+        $short = ($pkg -split '/')[-1]
         if (-not $isAdmin) { Write-WARN "$short (global)  -  re-run as Administrator to install."; continue }
         Write-INFO "scoop install --global $pkg"
         scoop install --global $pkg 2>&1 | Out-Null
-        if ($LASTEXITCODE -eq 0) { Write-OK "$short (global)"; Set-StepDone $key }
-        else { Write-FAIL "$short (global)  -  will retry on next run." }
+        if ($LASTEXITCODE -eq 0) { Write-OK "$short (global) installed."; [void]$instGlobal.Add($short) }
+        else                     { Write-FAIL "$short (global) failed  -  will retry on next run." }
     }
+
+    foreach ($short in $toUpdateGlob) {
+        if (-not $isAdmin) { Write-WARN "$short (global)  -  re-run as Administrator to update."; continue }
+        Write-INFO "scoop update $short (global)"
+        $out = scoop update $short --global 2>&1 | Out-String
+        if ($out -match 'already up to date|Latest versions for all apps are installed') {
+            Write-SKIP "$short (global, already up to date)"
+        } elseif ($LASTEXITCODE -eq 0) {
+            Write-OK "$short (global) updated."
+        } else {
+            Write-WARN "$short (global) update failed  -  run 'scoop update $short --global' manually."
+        }
+    }
+
     Update-SessionPath
 }
 

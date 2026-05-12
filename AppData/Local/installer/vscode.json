@@ -1,10 +1,45 @@
 {
   "vscode": [
     "asvetliakov.vscode-neovim",
-    "github.copilot-chat",
+    "bungcip.better-toml",
+    "devgauravjatt.github-catppuccin-dark",
+    "dsznajder.es7-react-js-snippets",
+    "formulahendry.code-runner",
+    "github.github-vscode-theme",
+    "jdinhlife.gruvbox",
+    "joshmu.periscope",
+    "mhkb.vscode-theme-darcula-stormy",
+    "michaelzhou.fleet-theme",
+    "ms-python.debugpy",
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "ms-python.vscode-python-envs",
+    "ms-vscode.live-server",
+    "ms-vscode.powershell",
     "nicohlr.pycharm",
     "robole.file-bunny",
-    "tobias-z.vscode-harpoon"
+    "sourcegraph.cody-ai",
+    "tamasfe.even-better-toml",
+    "zainchen.json"
   ],
-  "vscodium": null
+  "vscodium": [
+    "asvetliakov.vscode-neovim",
+    "bungcip.better-toml",
+    "devgauravjatt.github-catppuccin-dark",
+    "dsznajder.es7-react-js-snippets",
+    "formulahendry.code-runner",
+    "github.github-vscode-theme",
+    "jdinhlife.gruvbox",
+    "joshmu.periscope",
+    "mhkb.vscode-theme-darcula-stormy",
+    "michaelzhou.fleet-theme",
+    "ms-python.debugpy",
+    "ms-python.python",
+    "ms-python.vscode-python-envs",
+    "ms-vscode.live-server",
+    "ms-vscode.powershell",
+    "robole.file-bunny",
+    "sourcegraph.cody-ai",
+    "tamasfe.even-better-toml"
+  ]
 }
