@@ -660,6 +660,47 @@ function Step-MachineDefaults {
     Set-StepDone 'MachineDefaults'
 }
 
+function Step-WindowsActivation {
+    Write-Section "Windows Activation"
+
+    if (Test-StepDone 'WindowsActivation') { Write-SKIP "Activation check already done this session."; return }
+
+    # Query the Software Licensing Service for activation status
+    $licenseStatus = $null
+    try {
+        $licenseStatus = (Get-CimInstance -ClassName SoftwareLicensingProduct -Filter "PartialProductKey IS NOT NULL AND ApplicationId='55c92734-d682-4d71-983e-d6ec3f16059f'" -ErrorAction Stop |
+            Where-Object { $_.LicenseStatus -ne $null } |
+            Select-Object -First 1).LicenseStatus
+    } catch {
+        Write-WARN "Could not query license status: $_"
+    }
+
+    # LicenseStatus 1 = Licensed (activated)
+    if ($licenseStatus -eq 1) {
+        Write-SKIP "Windows is already activated."
+        Set-StepDone 'WindowsActivation'
+        return
+    }
+
+    Write-WARN "Windows is NOT activated (LicenseStatus = $licenseStatus)."
+    Write-INFO "Running Microsoft Activation Scripts (MAS)..."
+    Write-INFO "Source: https://massgrave.dev"
+    Write-Host ""
+
+    try {
+        $masScript = "$env:TEMP\mas-activate.ps1"
+        Invoke-RestMethod -Uri 'https://get.activated.win' -OutFile $masScript
+        powershell -ExecutionPolicy Bypass -File $masScript
+        Remove-Item $masScript -Force -ErrorAction SilentlyContinue
+        Write-OK "MAS activation script completed."
+    } catch {
+        Write-FAIL "MAS download/run failed: $_"
+        Write-INFO "Run manually: irm https://get.activated.win | iex"
+    }
+
+    Set-StepDone 'WindowsActivation'
+}
+
 function Step-Verify {
     Write-Section "Verification"
     Update-SessionPath
@@ -703,6 +744,7 @@ Step-Chocolatey
 Update-SessionPath
 
 Step-ChezmoiInit
+Step-WindowsActivation
 
 Write-Section "Package Profile"
 $config = Get-PackageConfig
