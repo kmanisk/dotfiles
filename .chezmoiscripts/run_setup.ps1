@@ -1,1 +1,1 @@
-write-host "hello from chezmoi scripts dir "
+write-host "Hi "
