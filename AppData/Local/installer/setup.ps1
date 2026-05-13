@@ -216,8 +216,13 @@ function Step-ScoopBuckets {
         Write-INFO "Adding bucket '$b'..."
         if ($custom.Contains($b)) { scoop bucket add $b $custom[$b] 2>&1 | Out-Null }
         else { scoop bucket add $b 2>&1 | Out-Null }
-        $check = scoop bucket list 2>$null | Where-Object { $_ -match "^$b\s" }
-        if ($check) { Write-OK "Bucket '$b' added."; [void]$existing.Add($b) }
+        # Re-query after add; handle both string (PS5.1) and object (PS7) output
+        $addedOk = $false
+        scoop bucket list 2>$null | ForEach-Object {
+            $n = if ($_ -is [string]) { ($_ -split '\s+')[0] } elseif ($_.Name) { $_.Name } else { $null }
+            if ($n -and $n -ieq $b) { $addedOk = $true }
+        }
+        if ($addedOk) { Write-OK "Bucket '$b' added."; [void]$existing.Add($b) }
         else { Write-FAIL "Bucket '$b' could not be added."; $failed = $true }
     }
     if (-not $failed) { Set-StepDone 'ScoopBuckets' }
@@ -278,15 +283,21 @@ function Step-Python {
 function Step-CoreTools {
     Write-Section "Core Tools (aria2 * gh * chezmoi * pwsh)"
     if (-not (Test-Cmd 'scoop')) { Write-SKIP "Scoop not available  -  skipping core tools."; return }
+    # aria2 installs its binary as aria2c, not aria2 -- map each tool to its real command
+    $toolCmdMap = @{ aria2='aria2c'; gh='gh'; chezmoi='chezmoi'; pwsh='pwsh' }
     $tools = @('aria2','gh','chezmoi','pwsh')
     foreach ($t in $tools) {
+        $cmd = $toolCmdMap[$t]
         $key = "CoreTool_$t"
-        if ((Test-StepDone $key) -and (Test-Cmd $t)) { Write-SKIP $t; continue }
-        if (Test-Cmd $t) { Write-SKIP $t; Set-StepDone $key; continue }
+        if ((Test-StepDone $key) -and (Test-Cmd $cmd)) { Write-SKIP $t; continue }
+        if (Test-Cmd $cmd) { Write-SKIP $t; Set-StepDone $key; continue }
         Write-INFO "Installing $t..."
-        $ok = Invoke-WithRetry -Tries 3 -Block { scoop install $t 2>&1 | Out-Null; if ($LASTEXITCODE -ne 0) { throw "Install failed" } }
+        # Avoid piping to Out-Null: $LASTEXITCODE gets clobbered by the pipeline on PS5.1
+        # Capture output array, filter aria2 warnings, print the rest
+        $installOut = @(scoop install $t 2>&1)
+        $installOut | Where-Object { $_ -notmatch '^WARN.*aria2' } | ForEach-Object { Write-INFO "  $_" }
         Update-SessionPath
-        if (Test-Cmd $t) { Write-OK "$t installed."; Set-StepDone $key }
+        if (Test-Cmd $cmd) { Write-OK "$t installed."; Set-StepDone $key }
         else { Write-FAIL "$t install failed  -  will retry on next run." }
     }
     if (Test-Cmd 'aria2c') {
@@ -313,8 +324,14 @@ function Step-Winget {
             Update-SessionPath
         } catch { Write-WARN "PSGallery fallback failed: $_" }
     }
+    # Win10: winget lands in WindowsApps which is not in the session PATH until new terminal
+    $waPath = "$env:LOCALAPPDATA\Microsoft\WindowsApps"
+    if ((Test-Path $waPath) -and ($env:PATH -notlike "*$waPath*")) {
+        $env:PATH = "$waPath;$env:PATH"
+    }
+    Update-SessionPath
     if (Test-Cmd 'winget') { Write-OK "Winget installed."; Set-StepDone 'Winget' }
-    else { Write-FAIL "Winget not found  -  continuing without it." }
+    else { Write-FAIL "Winget not found  -  install manually: https://aka.ms/getwinget" }
 }
 
 # Step 8: Chocolatey
@@ -392,9 +409,10 @@ function Install-ScoopPackages {
         $n = if ($_ -is [string]) { ($_ -split '\s+')[0] } else { $_.Name }
         if ($n) { [void]$instUser.Add($n) }
     }
-    scoop list --global 2>$null | Select-Object -Skip 1 | ForEach-Object {
-        $n = if ($_ -is [string]) { ($_ -split '\s+')[0] } else { $_.Name }
-        if ($n) { [void]$instGlobal.Add($n) }
+    # scoop list --global returns objects on PS7 and strings on PS5.1 -- handle both
+    @(scoop list --global 2>$null) | ForEach-Object {
+        $n = if ($_ -is [string]) { ($_ -split '\s+')[0] } elseif ($_.Name) { $_.Name } else { $null }
+        if ($n -and $n -match '\S' -and $n -notmatch '^(Name|---)') { [void]$instGlobal.Add($n) }
     }
 
     # Collect packages into two buckets: need install vs need update
@@ -425,13 +443,15 @@ function Install-ScoopPackages {
         Write-INFO "Updating $($toUpdate.Count) already-installed package(s)..."
         foreach ($short in $toUpdate) {
             Write-INFO "scoop update $short"
-            $out = scoop update $short 2>&1 | Out-String
-            if ($out -match 'already up to date|Latest versions for all apps are installed') {
+            # Collect as array then join -- Out-String can drop stderr lines on PS5.1
+            $outLines = @(scoop update $short 2>&1)
+            $outStr   = $outLines -join "`n"
+            if ($outStr -match '(latest version|already up to date|Latest versions for all apps are installed)') {
                 Write-SKIP "$short (already up to date)"
-            } elseif ($LASTEXITCODE -eq 0) {
-                Write-OK "$short updated."
-            } else {
+            } elseif ($outStr -match 'ERROR|FAIL' -or ($LASTEXITCODE -and $LASTEXITCODE -ne 0)) {
                 Write-WARN "$short update failed  -  run 'scoop update $short' manually."
+            } else {
+                Write-OK "$short updated."
             }
         }
     }
@@ -461,13 +481,14 @@ function Install-ScoopPackages {
     foreach ($short in $toUpdateGlob) {
         if (-not $isAdmin) { Write-WARN "$short (global)  -  re-run as Administrator to update."; continue }
         Write-INFO "scoop update $short (global)"
-        $out = scoop update $short --global 2>&1 | Out-String
-        if ($out -match 'already up to date|Latest versions for all apps are installed') {
+        $outLines = @(scoop update $short --global 2>&1)
+        $outStr   = $outLines -join "`n"
+        if ($outStr -match '(latest version|already up to date|Latest versions for all apps are installed)') {
             Write-SKIP "$short (global, already up to date)"
-        } elseif ($LASTEXITCODE -eq 0) {
-            Write-OK "$short (global) updated."
-        } else {
+        } elseif ($outStr -match 'ERROR|FAIL' -or ($LASTEXITCODE -and $LASTEXITCODE -ne 0)) {
             Write-WARN "$short (global) update failed  -  run 'scoop update $short --global' manually."
+        } else {
+            Write-OK "$short (global) updated."
         }
     }
 
