@@ -767,47 +767,26 @@ Update-SessionPath
 Step-ChezmoiInit
 Step-WindowsActivation
 
-Write-Section "Package Profile"
-$config = Get-PackageConfig
-
+# Profile choice saved to a temp file so run_once_after_apply.ps1 reads it instead of asking again.
+Write-Section "Install Profile"
+$PROFILE_FILE = "$env:TEMP\dotfiles-profile-choice.txt"
 $isFull = $false
-if ($config) {
+if (-not (Test-Path $PROFILE_FILE)) {
     $choice = ''
     while ($choice -notin @('mini','m','full','f')) {
         $choice = (Read-Host "     Profile  [mini / full]").Trim().ToLower()
         if ($choice -notin @('mini','m','full','f')) { Write-Host "     Type 'mini' or 'full'." -ForegroundColor Red }
     }
     $isFull = $choice -in @('full','f')
-
-    function Get-ConfigProp {
-        param($Obj, [string]$Name)
-        if ($null -ne $Obj -and $Obj.PSObject.Properties[$Name]) { return $Obj.$Name }
-        return @()
-    }
-
-    if ($isFull) {
-        $scoopPkgs = Get-ConfigProp $config.scoop "full"
-        $wingetPkgs = Get-ConfigProp $config.winget "full"
-        $chocoPkgs = Get-ConfigProp $config.choco "full"
-    } else {
-        $scoopPkgs = Get-ConfigProp $config.scoop "mini"
-        $wingetPkgs = Get-ConfigProp $config.winget "mini"
-        $chocoPkgs = Get-ConfigProp $config.choco "mini"
-    }
-    $scoopGlob = Get-ConfigProp $config.scoop "global"
-
-    Install-ScoopPackages -UserPackages $scoopPkgs -GlobalPackages $scoopGlob
-    Install-WingetPackages -Packages $wingetPkgs
-    Install-ChocoPackages -Packages $chocoPkgs
-    if ($isFull) { Install-PipEssentials }
+    $profileVal = if ($isFull) { 'full' } else { 'mini' }
+    Set-Content $PROFILE_FILE -Value $profileVal -Encoding ASCII
+    Write-OK "Profile '$profileVal' saved  -  chezmoi run_once will use this automatically."
 } else {
-    Write-WARN "Skipping packages  -  packages.json not available."
-    Write-INFO "Re-run after chezmoi applies to install packages."
+    $saved = (Get-Content $PROFILE_FILE -Raw).Trim()
+    $isFull = $saved -eq 'full'
+    Write-SKIP "Profile already chosen: $saved (delete $PROFILE_FILE to re-choose)"
 }
 
-Step-VSCodeExtensions
-Step-Pins
-if ($isFull) { Step-MachineDefaults }
 Step-Verify
 
 Write-Banner "Setup Complete"
@@ -823,4 +802,10 @@ Write-Host "     Re-run to retry any failed steps:" -ForegroundColor DarkGray
 Write-Host "         .\setup.ps1" -ForegroundColor DarkGray
 Write-Host "     Re-run everything from scratch:" -ForegroundColor DarkGray
 Write-Host "         .\setup.ps1 -Reset" -ForegroundColor DarkGray
+Write-Host ""
+Write-Host "  +------------------------------------------------------------+" -ForegroundColor DarkGray
+Write-Host "  | Want a clean debloated Windows? Run Chris Titus WinUtil:  |" -ForegroundColor DarkGray
+Write-Host "  |   irm https://christitus.com/win | iex                    |" -ForegroundColor DarkGray
+Write-Host "  +------------------------------------------------------------+" -ForegroundColor DarkGray
+Write-Host ""
 Write-Host ""
