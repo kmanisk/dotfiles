@@ -44,7 +44,6 @@
       "lsd",
       "starship",
       "extras/msiafterburner",
-      "extras/vcredist2022",
       "extras/rtss",
       "main/sudo",
       "main/gh",
@@ -65,7 +64,8 @@
       "Notepad++.Notepad++",
       "Valve.Steam",
       "JanDeDobbeleer.OhMyPosh",
-      "Microsoft.PowerShell"
+      "Microsoft.PowerShell",
+      "Microsoft.VCRedist.2015+.x64"
    ]
   },
   "choco": {
