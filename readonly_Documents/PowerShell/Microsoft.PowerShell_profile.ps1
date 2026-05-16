@@ -1667,3 +1667,59 @@ function s {
         Write-Host "choco search failed" -ForegroundColor Red
     }
 }
+function fail-clear {
+    [CmdletBinding()]
+    param()
+
+    Write-Host "`nScanning Scoop apps for failed installs..." -ForegroundColor Cyan
+
+    $failedApps = scoop list |
+        Where-Object { $_.Info -match "Install failed" } |
+        Select-Object -ExpandProperty Name
+
+    if (-not $failedApps) {
+        Write-Host "No failed Scoop packages found." -ForegroundColor Green
+        return
+    }
+
+    Write-Host "`nFailed packages detected:" -ForegroundColor Yellow
+    $failedApps | ForEach-Object {
+        Write-Host " - $_"
+    }
+
+    $globalRoot = scoop config global_path
+    $userRoot   = scoop config root_path
+
+    foreach ($app in $failedApps) {
+
+        Write-Host "`nCleaning: $app" -ForegroundColor Magenta
+
+        try {
+            scoop uninstall $app -g *> $null
+        } catch {}
+
+        try {
+            scoop uninstall $app *> $null
+        } catch {}
+
+        $paths = @(
+            "$userRoot\apps\$app",
+            "$globalRoot\apps\$app",
+            "$userRoot\persist\$app",
+            "$globalRoot\persist\$app",
+            "$userRoot\cache\$app*",
+            "$globalRoot\cache\$app*"
+        )
+
+        foreach ($path in $paths) {
+            Get-Item $path -ErrorAction SilentlyContinue |
+                Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
+        }
+
+        Write-Host "Removed broken package: $app" -ForegroundColor Green
+    }
+
+    scoop cleanup *
+
+    Write-Host "`nScoop failed-install cleanup complete." -ForegroundColor Cyan
+}
