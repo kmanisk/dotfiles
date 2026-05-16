@@ -50,7 +50,7 @@
       "extras/revouninstaller"
     ],
     "global": [
-      "nerd-fonts/JetBrainsMono-NF",
+      "nerd-fonts/JetBrainsMono-NF"
     ]
   },
   "winget": {

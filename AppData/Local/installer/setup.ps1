@@ -506,8 +506,12 @@ function Install-WingetPackages {
         if (Test-StepDone $key) { Write-SKIP $pkg; continue }
         if ($installedRaw -match [regex]::Escape($pkg)) { Write-SKIP $pkg; Set-StepDone $key; continue }
         Write-INFO "winget install $pkg"
-        winget install --id $pkg --source winget --accept-package-agreements --accept-source-agreements --silent 2>&1 | Out-Null
-        if ($LASTEXITCODE -eq 0) { Write-OK $pkg; Set-StepDone $key }
+        # Capture output as array -- piping to Out-Null clobbers $LASTEXITCODE on PS5.1
+        $wOut = @(winget install --id $pkg --source winget `
+            --accept-package-agreements --accept-source-agreements --silent 2>&1)
+        # Re-check installed list rather than trusting $LASTEXITCODE through a pipe
+        $nowRaw = winget list --accept-source-agreements 2>$null | Out-String
+        if ($nowRaw -match [regex]::Escape($pkg)) { Write-OK $pkg; Set-StepDone $key }
         else { Write-FAIL "$pkg  -  will retry on next run." }
     }
 }
@@ -785,6 +789,27 @@ if (-not (Test-Path $PROFILE_FILE)) {
     $saved = (Get-Content $PROFILE_FILE -Raw).Trim()
     $isFull = $saved -eq 'full'
     Write-SKIP "Profile already chosen: $saved (delete $PROFILE_FILE to re-choose)"
+}
+
+# Also install packages directly here -- this handles re-runs where chezmoi
+# run_once won't fire again (it only runs when the script file changes).
+# The package functions are fully idempotent so running them twice is safe.
+$_config = Get-PackageConfig
+if ($_config) {
+    function Get-CProp { param($o,[string]$n) if($o.PSObject.Properties[$n]){return @($o.$n)};return @() }
+    $_scoopPkgs  = if ($isFull) { Get-CProp $_config.scoop  'full'   } else { Get-CProp $_config.scoop  'mini'   }
+    $_scoopGlob  = Get-CProp $_config.scoop 'global'
+    $_wingetPkgs = if ($isFull) { Get-CProp $_config.winget 'full'   } else { Get-CProp $_config.winget 'mini'   }
+    $_chocoPkgs  = if ($isFull) { Get-CProp $_config.choco  'full'   } else { Get-CProp $_config.choco  'mini'   }
+    Install-ScoopPackages  -UserPackages $_scoopPkgs -GlobalPackages $_scoopGlob
+    Install-WingetPackages -Packages $_wingetPkgs
+    Install-ChocoPackages  -Packages $_chocoPkgs
+    if ($isFull) { Install-PipEssentials }
+    Step-VSCodeExtensions
+    Step-Pins
+    if ($isFull) { Step-MachineDefaults }
+} else {
+    Write-WARN "packages.json not found  -  run 'chezmoi apply' first, then re-run setup.ps1"
 }
 
 Step-Verify
