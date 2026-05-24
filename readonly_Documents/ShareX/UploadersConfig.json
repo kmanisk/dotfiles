@@ -60,6 +60,15 @@
   "OneTimeSecretAPIUsername": "",
   "OneTimeSecretAPIKey": "",
   "PastieIsPublic": false,
+  "PrivateBinSettings": {
+    "Username": null,
+    "Password": null,
+    "BurnAfterReading": false,
+    "Expiration": "W1",
+    "Format": "PlainText",
+    "CustomUrl": "https://privatebin.net/",
+    "PastePassword": ""
+  },
   "DropboxOAuth2Info": null,
   "DropboxUploadPath": "ShareX/%y/%mo",
   "DropboxAutoCreateShareableLink": true,
@@ -119,8 +128,6 @@
   "EmailDefaultBody": "Screenshot is attached.",
   "EmailAutomaticSend": false,
   "EmailAutomaticSendTo": "",
-  "MegaAuthInfos": null,
-  "MegaParentNodeId": null,
   "AmazonS3Settings": {
     "AccessKeyID": null,
     "SecretAccessKey": null,
@@ -253,5 +260,5 @@
   "CustomFileUploaderSelected": 0,
   "CustomURLShortenerSelected": 0,
   "CustomURLSharingServiceSelected": 0,
-  "ApplicationVersion": "19.0.2"
+  "ApplicationVersion": "20.1.0"
 }

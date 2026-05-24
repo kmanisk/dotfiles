@@ -5,7 +5,6 @@
       "less",
       "bat",
       "ripgrep",
-      "extras/neovide",
       "neovim",
       "starship",
       "extras/windows-terminal",
@@ -16,7 +15,6 @@
       "7zip",
       "extras/autohotkey",
       "vscode",
-      "vscodium",
       "fastfetch",
       "fzf",
       "psfzf",
@@ -30,17 +28,12 @@
       "vifm",
       "gcc",
       "aria2",
-      "extras/neovide",
       "grep",
       "ripgrep",
-      "java/openjdk",
-      "extras/nexusfont",
       "vlc",
-      "extras/crystaldiskinfo",
       "extras/winaero-tweaker",
       "extras/nvcleanstall",
       "main/win32yank",
-      "ntop",
       "lsd",
       "starship",
       "extras/msiafterburner",
@@ -73,12 +66,10 @@
       "zoxide --version=0.9.0"
     ],
     "full": [
-      "sharex",
       "ueli",
       "everything",
       "zoxide --version=0.9.0",
-      "irfanview",
-      "nerd-fonts-iosevkaterm"
+      "irfanview"
     ]
   }
 }
