@@ -43,7 +43,7 @@
       "extras/revouninstaller"
     ],
     "global": [
-      "nerd-fonts/JetBrainsMono-NF"
+        "nerd-fonts/IosevkaTerm-NF-Mono"
     ]
   },
   "winget": {
