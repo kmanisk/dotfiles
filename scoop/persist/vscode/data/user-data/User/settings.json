@@ -20,13 +20,13 @@
 	"editor.showFoldingControls": "always",
 	"editor.tabSize": 4,
 	"workbench.sideBar.location": "right",
-	"editor.fontSize": 20,
-	"editor.lineHeight": 32,
+	"editor.fontSize": 21,
+	"editor.lineHeight": 34,
 	// previous 35 line height IOSEVKA 
 	// original linehieght 26 for jetbrains 
 	"breadcrumbs.enabled": false,
-	"editor.fontFamily": "IosevkaTerm Nerd Font",
-	"terminal.integrated.fontFamily": "JetBrainsMono Nerd Font",
+	"editor.fontFamily": "IosevkaTerm Nerd Font Mono",
+	"terminal.integrated.fontFamily": "IosevkaTerm Nerd Font Mono",
 	"terminal.integrated.fontSize": 16,
 	"screencastMode.fontSize": 36,
 	"terminal.integrated.fontLigatures.enabled": true,

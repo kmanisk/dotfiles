@@ -4,7 +4,6 @@
     "7zip",
     "autohotkey",
     "vscode",
-    "vscodium",
     "fastfetch",
     "fzf",
     "psfzf",
@@ -18,28 +17,22 @@
     "vifm",
     "gcc",
     "aria2",
-    "neovide",
     "grep",
     "ripgrep",
-    "openjdk",
-    "nexusfont",
     "vlc",
-    "crystaldiskinfo",
     "winaero-tweaker",
     "nvcleanstall",
     "win32yank",
-    "ntop",
     "lsd",
     "starship",
     "msiafterburner",
-    "vcredist2022",
     "rtss",
     "sudo",
     "gh",
     "revouninstaller"
   ],
   "scoop_global": [
-    "jetbrainsmono-nf"
+    "iosevkaterm-nf-mono"
   ],
   "winget": [
     "chrisant996.Clink",
@@ -47,14 +40,13 @@
     "Notepad++.Notepad++",
     "Valve.Steam",
     "JanDeDobbeleer.OhMyPosh",
-    "Microsoft.PowerShell"
+    "Microsoft.PowerShell",
+    "Microsoft.VCRedist.2015+.x64"
   ],
   "choco": [
-    "sharex",
     "ueli",
     "everything",
     "zoxide",
-    "irfanview",
-    "nerd-fonts-IosevkaTerm"
+    "irfanview"
   ]
 }
