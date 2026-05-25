@@ -45,7 +45,7 @@ return {
         -- like for ex : python.lua or java.lua
         -- default is commented i.e disabled
 
-        "ftplugin",
+        -- "ftplugin",
       },
     },
   },

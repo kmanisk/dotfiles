@@ -1,4 +1,7 @@
 return {
+    -- =========================================================================
+    --                            CORE DEVELOPMENT
+    -- =========================================================================
     {
         "nvim-treesitter/nvim-treesitter",
         event = { "BufReadPre", "BufNewFile" },
@@ -7,6 +10,9 @@ return {
         end,
     },
 
+    -- =========================================================================
+    --                        LANGUAGE SERVER PROTOCOL (LSP)
+    -- =========================================================================
     {
         "neovim/nvim-lspconfig",
         event = { "BufReadPre", "BufNewFile" },
@@ -25,6 +31,9 @@ return {
         end,
     },
 
+    -- =========================================================================
+    --                        CODE FORMATTING & LINTING
+    -- =========================================================================
     {
         "mfussenegger/nvim-lint",
         event = { "BufReadPre", "BufNewFile" },
@@ -59,10 +68,13 @@ return {
         end,
     },
 
+    -- =========================================================================
+    --                             AUTO COMPLETION
+    -- =========================================================================
     {
         "hrsh7th/nvim-cmp",
         cond = function()
-            return not vim.g.vscode -- Exclude this plugin in VSCode
+            return not vim.g.vscode
         end,
         dependencies = {
             "hrsh7th/cmp-nvim-lsp",
@@ -77,39 +89,44 @@ return {
             require("configs.cmp").setup()
         end,
     },
-    {
-        "NvChad/nvterm",
-        enabled = false,
-    },
-    {
-        "folke/which-key.nvim",
-        enabled = false,
-    },
-    {
-        "lewis6991/gitsigns.nvim",
-        enabled = false,
-    },
 
+    -- =========================================================================
+    --                            UI & NAVIGATION
+    -- =========================================================================
     {
-        "CRAG666/code_runner.nvim",
-        config = true,
-        cond = function()
-            return not vim.g.vscode -- Exclude this plugin in VSCode
+        "nvim-tree/nvim-tree.lua",
+        opts = function()
+            return require("configs.nvim-tree")
+        end,
+        config = function(_, opts)
+            require("nvim-tree").setup(opts)
         end,
     },
 
     {
         "Mofiqul/vscode.nvim",
-        cond = function()
-            return not vim.g.vscode -- Exclude this plugin in VSCode
-        end,
+        cond = function() return not vim.g.vscode end,
     },
+
     {
         "wellle/targets.vim",
+        cond = function() return not vim.g.vscode end,
+    },
+
+    -- =========================================================================
+    --                        EXTERNAL TOOL INTEGRATION
+    -- =========================================================================
+    {
+        "CRAG666/code_runner.nvim",
+        cmd = { "RunCode", "RunFile", "RunProject", "RunClose", "CRFiletype", "CRProjects" },
         cond = function()
             return not vim.g.vscode
         end,
+        config = function()
+            require("configs.code_runner")
+        end,
     },
+
     {
         "kdheepak/lazygit.nvim",
         lazy = true,
@@ -120,25 +137,23 @@ return {
             "LazyGitFilter",
             "LazyGitFilterCurrentFile",
         },
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-        },
+        dependencies = { "nvim-lua/plenary.nvim" },
         keys = {
             { "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" },
         },
         config = function()
-            vim.g.lazygit_floating_window_winblend = 0 -- transparency of floating window
-            vim.g.lazygit_floating_window_scaling_factor = 0.9 -- scaling factor for floating window
-            vim.g.lazygit_floating_window_border_chars = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" } -- customize popup window border
-            vim.g.lazygit_floating_window_use_plenary = 0 -- use plenary.nvim if available
-            vim.g.lazygit_use_neovim_remote = 1 -- fallback to 0 if neovim-remote is not installed
-
-            vim.g.lazygit_use_custom_config_file_path = 0 -- use default config path
-            vim.g.lazygit_config_file_path = "" -- custom config file path
-            -- OR
-            vim.g.lazygit_config_file_path = {} -- table of custom config file paths
-
-            vim.g.lazygit_on_exit_callback = nil -- optional function callback on exit
+            vim.g.lazygit_floating_window_winblend = 0
+            vim.g.lazygit_floating_window_scaling_factor = 0.9
+            vim.g.lazygit_floating_window_border_chars = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }
+            vim.g.lazygit_floating_window_use_plenary = 0
+            vim.g.lazygit_use_neovim_remote = 1
         end,
     },
+
+    -- =========================================================================
+    --                           DISABLED DEFAULTS
+    -- =========================================================================
+    { "NvChad/nvterm", enabled = false },
+    { "folke/which-key.nvim", enabled = false },
+    { "lewis6991/gitsigns.nvim", enabled = false },
 }

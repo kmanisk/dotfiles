@@ -1,26 +1,26 @@
--- plugins/leap.lua
+-- =============================================================================
+--                                  LEAP.NVIM
+-- =============================================================================
 return {
-    "ggandor/leap.nvim",
+    url = "https://codeberg.org/andyg/leap.nvim",
     lazy = false,
-
-    cond = function()
-        return not vim.g.vscode -- Exclude this plugin in VSCode
-    end,
+    -- Enable in VSCode as well, as requested
     config = function()
-        -- Set up leap.nvim with default mappings
-        require("leap").add_default_mappings()
-        -- Remove specific keybinding (remove 'x' keybind)
-        local opts = { noremap = true, silent = true }
+        -- =====================================================================
+        --                             MAPPINGS
+        -- =====================================================================
+        -- Recommended replacement for add_default_mappings()
+        vim.keymap.set({'n', 'x', 'o'}, 's',  '<Plug>(leap-forward)')
+        vim.keymap.set({'n', 'x', 'o'}, 'S',  '<Plug>(leap-backward)')
+        vim.keymap.set({'n', 'x', 'o'}, 'gs', '<Plug>(leap-from-window)')
 
-        -- Unmap the key 'x' in normal and visual modes
-        vim.api.nvim_set_keymap("n", "x", "<nop>", opts)
-        vim.api.nvim_set_keymap("v", "x", "<nop>", opts)
-
-        -- Optional: Customize further settings
+        -- =====================================================================
+        --                             CONFIGURATION
+        -- =====================================================================
         require("leap").setup({
             highlight = {
-                backdrop = 0.5, -- Adjust backdrop opacity
-                matches = "Search", -- Highlight color for matches
+                backdrop = 0.5,
+                matches = "Search",
             },
         })
     end,
