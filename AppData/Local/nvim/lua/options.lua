@@ -43,22 +43,6 @@ opt.swapfile     = false
 o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 
 -- =============================================================================
---                              SHELL CONFIGURATION
--- =============================================================================
-if vim.fn.executable("pwsh") == 1 then
-    o.shell = "pwsh"
-    o.shellcmdflag = "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;$PSStyle.OutputRendering = 'PlainText';"
-else
-    o.shell = "powershell"
-    o.shellcmdflag = "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command"
-end
-
-o.shellredir = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode"
-o.shellpipe  = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode"
-o.shellquote = ""
-o.shellxquote = ""
-
--- =============================================================================
 --                               UI & APPEARANCE
 -- =============================================================================
 o.guicursor  = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50"

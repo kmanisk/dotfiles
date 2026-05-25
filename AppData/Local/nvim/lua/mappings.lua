@@ -79,9 +79,24 @@ map("n", "x",          '"_x',                                    opts)
 -- =============================================================================
 --                                   TERMINAL
 -- =============================================================================
-map({ "n", "t" }, "<A-i>", function() require("nvchad.term").toggle({ pos = "float", id = "floatTerm" }) end, { desc = "Toggle float terminal" })
-map({ "n", "t" }, "<A-;>", function() require("nvchad.term").toggle({ pos = "sp", id = "htoggleTerm" }) end,   { desc = "Toggle horizontal terminal" })
-map("t", "jk",         [[<C-\><C-n>]],                           opts)
+map({ "n", "t" }, "<A-i>", "<cmd>ToggleTerm direction=float<cr>",      { desc = "Toggle float terminal" })
+map({ "n", "t" }, "<A-;>", "<cmd>ToggleTerm direction=horizontal<cr>", { desc = "Toggle horizontal terminal" })
+map("t", "jk",         [[<C-\><C-n>]],                                 opts)
+
+-- Terminal Navigation
+function _G.set_terminal_keymaps()
+  local opts = {buffer = 0}
+  vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
+  vim.keymap.set('t', 'jk', [[<C-\><C-n>]], opts)
+  vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
+  vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
+  vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
+  vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
+  vim.keymap.set('t', '<C-w>', [[<C-\><C-n><C-w>]], opts)
+end
+
+-- if you only want these mappings for toggle term use termopen
+vim.cmd('autocmd! TermOpen term://*toggleterm#* lua set_terminal_keymaps()')
 
 -- =============================================================================
 --                                    PLUGINS

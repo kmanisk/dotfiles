@@ -13,6 +13,12 @@ if vim.g.vscode then
     require("user.vscode_keymaps")
 else
     -- =========================================================================
+    --                             SHELL SETUP
+    -- =========================================================================
+    -- Load shell options early so all system calls use the correct shell
+    require("shell")
+
+    -- =========================================================================
     --                          LAZY.NVIM BOOTSTRAP
     -- =========================================================================
     local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"

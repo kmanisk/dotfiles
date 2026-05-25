@@ -2,7 +2,7 @@
 local M = {}
 -- UI Configuration
 M.ui = {
-    theme = "gruvbox", -- Set the theme for Neovim
+    theme = "ayu_dark", -- Set the theme for Neovim
     transparency = true, -- Enable transparency
     -- default/vscode/vscode_colored/minimal
     -- default/round/block/arrow separators work only for default statusline theme
@@ -34,12 +34,12 @@ M.ui = {
 }
 
 M.base46 = {
-    theme = "gruvbox", -- Change to your preferred base46 theme (e.g., 'tokyonight', 'gruvbox', etc.)
+    theme = "ayu_dark", -- Change to your preferred base46 theme (e.g., 'tokyonight', 'gruvbox', etc.)
     hl_add = {},
     hl_override = {},
     changed_themes = {},
     transparency = false,
-    theme_toggle = { "gruvbox", "one_light" },
+    theme_toggle = { "ayu_dark", "one_light" },
 }
 
 M.nvdash = {
