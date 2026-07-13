@@ -1051,3 +1051,5 @@ reg delete HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Configuration /
 reg delete HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Connectivity /f
 |	time=1775574892
 reg delete HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\ScaleFactors /f
+|	time=1779399325
+scoop install f.lux

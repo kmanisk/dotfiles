@@ -87,3 +87,4 @@ else
         desc = "Automatically source mappings.lua on save",
     })
 end
+-- added by me
