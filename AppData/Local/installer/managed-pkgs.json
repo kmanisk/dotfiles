@@ -1,60 +1,32 @@
 {
   "scoop_user": [
-    "ditto",
-    "7zip",
-    "autohotkey",
-    "vscode",
-    "vscodium",
-    "fastfetch",
-    "fzf",
-    "psfzf",
-    "less",
-    "windows-terminal",
-    "bat",
-    "scoop-search",
-    "neovim",
-    "innounp",
-    "dark",
     "vifm",
-    "gcc",
-    "aria2",
-    "neovide",
-    "grep",
+    "less",
+    "bat",
     "ripgrep",
-    "openjdk",
-    "nexusfont",
-    "vlc",
-    "crystaldiskinfo",
-    "winaero-tweaker",
-    "nvcleanstall",
-    "win32yank",
-    "ntop",
-    "lsd",
+    "neovide",
+    "neovim",
     "starship",
-    "msiafterburner",
-    "vcredist2022",
-    "rtss",
-    "sudo",
+    "windows-terminal",
+    "gcc",
+    "git",
+    "7zip",
+    "dark",
+    "aria2",
     "gh",
-    "revouninstaller"
+    "chezmoi",
+    "pwsh",
+    "python",
+    "scoop"
   ],
   "scoop_global": [
     "jetbrainsmono-nf"
   ],
   "winget": [
     "chrisant996.Clink",
-    "AntibodySoftware.WizTree",
-    "Notepad++.Notepad++",
-    "Valve.Steam",
-    "JanDeDobbeleer.OhMyPosh",
-    "Microsoft.PowerShell"
+    "JanDeDobbeleer.OhMyPosh"
   ],
   "choco": [
-    "sharex",
-    "ueli",
-    "everything",
-    "zoxide",
-    "irfanview",
-    "nerd-fonts-IosevkaTerm"
+    "zoxide"
   ]
 }

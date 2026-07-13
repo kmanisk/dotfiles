@@ -113,7 +113,7 @@
 			"hideMainWindowOnBlur": true,
 			"hotKey": {
 				"key": "Space",
-				"modifier": "Control",
+				"modifier": "Alt",
 				"secondModifier": "-"
 			},
 			"language": "English",
