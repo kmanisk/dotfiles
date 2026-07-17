@@ -362,12 +362,19 @@ function Invoke-ChocoPackages {
 function Invoke-PipEssentials {
     Write-Section "pip Packages"
     $py = "$env:USERPROFILE\scoop\apps\python\current\python.exe"
-    if (-not (Test-Path $py)) { $py = if (Test-Cmd 'python') { 'python' } else { $null } }
-    if (-not $py) { Write-FAIL "Python not found."; return }
+    if (-not (Test-Path $py)) {
+        # Reject the Windows Store execution-alias stub -- it resolves via
+        # Get-Command but isn't a real interpreter, and silently no-ops pip.
+        $cmd = Get-Command 'python' -EA SilentlyContinue
+        if ($cmd -and $cmd.Source -notmatch 'WindowsApps') { $py = $cmd.Source } else { $py = $null }
+    }
+    if (-not $py) { Write-FAIL "Python not found (scoop install python failed earlier) - skipping pip."; return }
     & $py -m pip install --upgrade pip --quiet 2>$null
     foreach ($p in @('gdown')) {
-        if (& $py -m pip show $p 2>$null) { Write-SKIP $p }
-        else { & $py -m pip install $p --quiet; Write-OK "$p installed." }
+        $shown = & $py -m pip show $p 2>$null
+        if ($LASTEXITCODE -eq 0 -and $shown) { Write-SKIP $p; continue }
+        & $py -m pip install $p --quiet
+        if ($LASTEXITCODE -eq 0) { Write-OK "$p installed." } else { Write-FAIL "$p install failed." }
     }
 }
 
@@ -475,7 +482,9 @@ function Invoke-MachineDefaults {
         }
         $polReg = 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\System'
         if (-not (Test-Path $polReg)) { New-Item $polReg -Force | Out-Null }
-        if ((Get-ItemProperty $polReg 'AllowClipboardHistory' -EA SilentlyContinue).AllowClipboardHistory -ne 0) {
+        $chProp = Get-ItemProperty -Path $polReg -Name 'AllowClipboardHistory' -EA SilentlyContinue
+        $chVal  = if ($chProp -and $chProp.PSObject.Properties['AllowClipboardHistory']) { $chProp.AllowClipboardHistory } else { $null }
+        if ($chVal -ne 0) {
             Set-ItemProperty $polReg 'AllowClipboardHistory' 0 -Type DWord; Write-OK "Clipboard history disabled."
         } else { Write-SKIP "Clipboard history already disabled." }
 
@@ -529,12 +538,21 @@ function Invoke-MachineDefaults {
     $spotExe = "$env:APPDATA\Spotify\spotify.exe"
     if (-not (Test-Path $spotExe)) {
         Write-INFO "Installing Spotify via SpotX..."
-        Set-MpPreference -DisableRealtimeMonitoring $true -EA SilentlyContinue
+        $hasDefender = Test-Cmd 'Set-MpPreference'
+        if ($hasDefender) { Set-MpPreference -DisableRealtimeMonitoring $true -EA SilentlyContinue }
         $s = "$env:TEMP\spotx-run.ps1"
         Invoke-WebRequest -useb 'https://raw.githubusercontent.com/SpotX-Official/spotx-official.github.io/main/run.ps1' -OutFile $s
+        # Sanitize LIB/INCLUDE so a stale toolchain path doesn't crash SpotX's binary scanner
+        foreach ($envVar in 'LIB','INCLUDE') {
+            $cur = [Environment]::GetEnvironmentVariable($envVar)
+            if ($cur) {
+                $clean = ($cur -split ';' | Where-Object { $_ -and (Test-Path $_) }) -join ';'
+                [Environment]::SetEnvironmentVariable($envVar, $clean)
+            }
+        }
         powershell -ExecutionPolicy Bypass -File $s -new_theme
         Remove-Item $s -Force -EA SilentlyContinue
-        Set-MpPreference -DisableRealtimeMonitoring $false -EA SilentlyContinue
+        if ($hasDefender) { Set-MpPreference -DisableRealtimeMonitoring $false -EA SilentlyContinue }
         Write-OK "Spotify installed."
     } else { Write-SKIP "Spotify already installed." }
 }
