@@ -33,7 +33,6 @@
       "extras/neovide",
       "grep",
       "ripgrep",
-      "java/openjdk",
       "extras/nexusfont",
       "vlc",
       "extras/crystaldiskinfo",
@@ -43,8 +42,6 @@
       "ntop",
       "lsd",
       "starship",
-      "extras/msiafterburner",
-      "extras/rtss",
       "main/sudo",
       "main/gh",
       "extras/revouninstaller"
