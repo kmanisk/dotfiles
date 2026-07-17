@@ -9,14 +9,15 @@
       "neovim",
       "starship",
       "extras/windows-terminal",
-      "gcc"
+      "gcc",
+      "git"
     ],
     "full": [
+      "git",
       "extras/ditto",
       "7zip",
       "extras/autohotkey",
       "vscode",
-      "vscodium",
       "fastfetch",
       "fzf",
       "psfzf",
@@ -61,9 +62,8 @@
       "Notepad++.Notepad++",
       "Valve.Steam",
       "JanDeDobbeleer.OhMyPosh",
-      "Microsoft.PowerShell",
       "Microsoft.VCRedist.2015+.x64"
-   ]
+    ]
   },
   "choco": {
     "mini": [
