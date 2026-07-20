@@ -1,10 +1,10 @@
 {
   "scoop_user": [
+    "git",
     "ditto",
     "7zip",
     "autohotkey",
     "vscode",
-    "vscodium",
     "fastfetch",
     "fzf",
     "psfzf",
