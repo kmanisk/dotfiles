@@ -694,7 +694,7 @@ plist
 |	time=1761473435
 |coop update *
 |	time=1761473574
-scoop update *
+|coop update *
 |	time=1761473598
 Get-Process pwsh | Stop-Process -Force
 |	time=1761473642
@@ -938,9 +938,9 @@ chezmoi apply -v
 |	time=1771601134
 |s
 |	time=1771601135
-ls
+|s
 |	time=1771601135
-dir
+|ir
 |	time=1771619402
 scoop search batterym
 |	time=1771703756
@@ -1053,3 +1053,15 @@ reg delete HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Connectivity /f
 reg delete HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\ScaleFactors /f
 |	time=1779399325
 scoop install f.lux
+|	time=1784300686
+ls
+|	time=1784300688
+|ir
+|	time=1784300693
+cd .chezmoiscripts\
+|	time=1784300710
+dir
+|	time=1784300714
+explorer.exe . 
+|	time=1784640087
+scoop update *

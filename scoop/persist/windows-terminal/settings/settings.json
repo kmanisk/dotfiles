@@ -261,11 +261,11 @@
         },
         {
             "id": null,
-            "keys": "ctrl+alt+k"
+            "keys": "ctrl+shift+t"
         },
         {
             "id": null,
-            "keys": "ctrl+shift+t"
+            "keys": "ctrl+alt+k"
         },
         {
             "id": null,
@@ -531,7 +531,7 @@
             "font": 
             {
                 "builtinGlyphs": true,
-                "face": "JetBrainsMonoNL Nerd Font",
+                "face": "Iosevka Nerd Font Mono",
                 "size": 14
             },
             "icon": null,
@@ -550,7 +550,7 @@
                 "experimental.retroTerminalEffect": false,
                 "font": 
                 {
-                    "face": "IosevkaTerm Nerd Font Mono",
+                    "face": "Iosevka Nerd Font",
                     "size": 15
                 },
                 "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
