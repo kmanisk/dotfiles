@@ -662,7 +662,7 @@ disr
 |	time=1760287685
 |ir
 |	time=1760462567
-uall
+|all
 |	time=1760462569
 |wsh
 |	time=1761379913
@@ -1065,3 +1065,5 @@ dir
 explorer.exe . 
 |	time=1784640087
 scoop update *
+|	time=1784903814
+uall

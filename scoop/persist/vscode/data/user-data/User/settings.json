@@ -21,13 +21,13 @@
 	"editor.tabSize": 4,
 	"workbench.sideBar.location": "right",
 	"editor.fontSize": 20,
-	"editor.lineHeight": 32,
+	"editor.lineHeight": 33,
 	// previous 35 line height IOSEVKA 
 	// original linehieght 26 for jetbrains 
 	"breadcrumbs.enabled": false,
-	"editor.fontFamily": "IosevkaTerm Nerd Font",
-	"terminal.integrated.fontFamily": "JetBrainsMono Nerd Font",
-	"terminal.integrated.fontSize": 16,
+	"editor.fontFamily": "Iosevka Nerd Font",
+	"terminal.integrated.fontFamily": "Iosevka Nerd Font",
+	"terminal.integrated.fontSize": 17,
 	"screencastMode.fontSize": 36,
 	"terminal.integrated.fontLigatures.enabled": true,
 	"screencastMode.verticalOffset": 1,
@@ -296,7 +296,7 @@
 	"svelte.enable-ts-plugin": true,
 	"liveServer.settings.donotVerifyTags": true,
 	"editor.unicodeHighlight.invisibleCharacters": false,
-	"workbench.colorTheme": "PyCharm Dark Theme",
+	"workbench.colorTheme": "GitHub Dark Colorblind (Beta)",
 	"workbench.preferredHighContrastColorTheme": "Gruvbox Dark (Hard)",
 	"workbench.activityBar.location": "hidden",
 	"chat.tools.terminal.autoApprove": {
@@ -305,4 +305,5 @@
 		"Get-Item": true,
 		"cargo search": true
 	},
+	"workbench.editor.useModal": "some",
 }

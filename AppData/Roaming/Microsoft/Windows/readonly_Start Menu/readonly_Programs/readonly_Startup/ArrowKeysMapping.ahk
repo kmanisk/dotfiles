@@ -128,3 +128,8 @@ GetCurrentBrightNess()
         return property.CurrentBrightness
     }
 }
+
+
+
+<+<#F23::Send "{Blind}{LShift Up}{LWin Up}{PrintScreen Down}"
+<+<#F23 Up::Send "{PrintScreen Up}"

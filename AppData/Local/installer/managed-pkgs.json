@@ -35,7 +35,7 @@
     "revouninstaller"
   ],
   "scoop_global": [
-    "jetbrainsmono-nf"
+    "iosevka-nf"
   ],
   "winget": [
     "chrisant996.Clink",
@@ -43,7 +43,6 @@
     "Notepad++.Notepad++",
     "Valve.Steam",
     "JanDeDobbeleer.OhMyPosh",
-    "Microsoft.PowerShell",
     "Microsoft.VCRedist.2015+.x64"
   ],
   "choco": [
@@ -51,7 +50,6 @@
     "ueli",
     "everything",
     "zoxide",
-    "irfanview",
-    "nerd-fonts-iosevkaterm"
+    "irfanview"
   ]
 }
