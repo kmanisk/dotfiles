@@ -44,7 +44,7 @@ GstRender.FieldOfViewVerticalVehicle 92.000000
 GstRender.FilmGrain 0
 GstRender.FullscreenEnabled 1
 GstRender.FullscreenMode 0
-GstRender.FullscreenRefreshRate 100.000000
+GstRender.FullscreenRefreshRate 165.003998
 GstRender.FullscreenScreen 0
 GstRender.HighDynamicRange 0
 GstRender.HighDynamicRangeMode 0
@@ -57,7 +57,7 @@ GstRender.MotionBlur 0.000000
 GstRender.MotionBlurEnabled 1
 GstRender.OverallGraphicsQuality 5
 GstRender.PostProcessQuality 2
-GstRender.ResolutionHeight 1080
+GstRender.ResolutionHeight 1200
 GstRender.ResolutionHertz 60.000000
 GstRender.ResolutionScale 1.200000
 GstRender.ResolutionWidth 1920

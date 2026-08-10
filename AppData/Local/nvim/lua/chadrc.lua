@@ -2,7 +2,7 @@
 local M = {}
 -- UI Configuration
 M.ui = {
-    theme = "carbonfox", -- Set the theme for Neovim
+    theme = "aquarium", -- Set the theme for Neovim
     transparency = true, -- Enable transparency
     -- default/vscode/vscode_colored/minimal
     -- default/round/block/arrow separators work only for default statusline theme
@@ -34,12 +34,12 @@ M.ui = {
 }
 
 M.base46 = {
-    theme = "carbonfox", -- Change to your preferred base46 theme (e.g., 'tokyonight', 'gruvbox', etc.)
+    theme = "aquarium", -- Change to your preferred base46 theme (e.g., 'tokyonight', 'gruvbox', etc.)
     hl_add = {},
     hl_override = {},
     changed_themes = {},
     transparency = false,
-    theme_toggle = { "carbonfox", "one_light" },
+    theme_toggle = { "aquarium", "one_light" },
 }
 
 M.nvdash = {

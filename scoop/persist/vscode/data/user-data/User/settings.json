@@ -296,7 +296,7 @@
 	"svelte.enable-ts-plugin": true,
 	"liveServer.settings.donotVerifyTags": true,
 	"editor.unicodeHighlight.invisibleCharacters": false,
-	"workbench.colorTheme": "GitHub Dark Colorblind (Beta)",
+	"workbench.colorTheme": "Gruvbox Dark Medium",
 	"workbench.preferredHighContrastColorTheme": "Gruvbox Dark (Hard)",
 	"workbench.activityBar.location": "hidden",
 	"chat.tools.terminal.autoApprove": {
