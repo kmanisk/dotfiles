@@ -1,9 +1,9 @@
+// tasks.json (Windows)
+// Confirmed path from your setup: %APPDATA%\Zed\tasks.json
 [
   {
     "label": "run file",
-    "command": "C:\\Users\\Manisk\\AppData\\Roaming\\Zed\\runfile.bat",
-    "env": {},
-    "cwd": "$ZED_WORKTREE_ROOT",
+    "command": "Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force; & \"$env:APPDATA\\Zed\\run-file.ps1\" -File \"$ZED_FILE\"",
     "use_new_terminal": false,
     "allow_concurrent_runs": false,
     "reveal": "always"

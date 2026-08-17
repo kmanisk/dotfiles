@@ -2,20 +2,19 @@
 <NotepadPlus>
     <FindHistory nbMaxFindHistoryPath="10" nbMaxFindHistoryFilter="10" nbMaxFindHistoryFind="10" nbMaxFindHistoryReplace="10" matchWord="no" matchCase="no" wrap="yes" directionDown="yes" fifRecuisive="yes" fifInHiddenFolder="no" fifProjectPanel1="no" fifProjectPanel2="no" fifProjectPanel3="no" fifFilterFollowsDoc="no" fifFolderFollowsDoc="no" searchMode="0" transparencyMode="1" transparency="150" dotMatchesNewline="no" isSearch2ButtonsMode="no" regexBackward4PowerUser="no" bookmarkLine="no" purge="no">
         <Filter name="" />
+        <Find name="title" />
+        <Find name="ctrl+shift+" />
+        <Find name="shift" />
+        <Find name="colorscheme" />
         <Find name="hadware" />
         <Find name="nerd" />
         <Find name="th" />
         <Find name="afterbu" />
         <Find name="msi" />
         <Find name="neovim" />
-        <Find name="nvim" />
-        <Find name="noevim" />
-        <Find name="qt" />
-        <Find name="revo" />
         <Replace name="maniskpr" />
     </FindHistory>
     <History nbMaxFile="10" inSubMenu="no" customLength="-1">
-        <File filename="C:\Users\Administrator\Desktop\remember.txt" />
         <File filename="E:\projects\PriceTrack\.env" />
         <File filename="C:\Program Files\IrfanView\i_plugins.txt" />
         <File filename="C:\Program Files\Unlocker\Unlocker.cfg" />
@@ -25,6 +24,7 @@
         <File filename="C:\Windows.old\Users\Public\Documents\Steam\RUNE\1659040\leaderboards.ini" />
         <File filename="C:\Windows.old\Users\Public\Documents\Steam\CODEX\374320\leaderboards.ini" />
         <File filename="C:\Users\Administrator\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\startup.txt" />
+        <File filename="C:\Users\Administrator\scoop\apps\windows-terminal\current\settings\tok.txt" />
     </History>
     <ProjectPanels>
         <ProjectPanel id="0" workSpaceFile="" />
@@ -42,8 +42,8 @@
         <GUIConfig name="ScintillaViewsSplitter">vertical</GUIConfig>
         <GUIConfig name="UserDefineDlg" position="undocked">hide</GUIConfig>
         <GUIConfig name="TabSetting" replaceBySpace="no" size="4" backspaceUnindent="no" />
-        <GUIConfig name="AppPosition" x="213" y="20" width="1343" height="910" isMaximized="no" />
-        <GUIConfig name="FindWindowPosition" left="659" top="367" right="1262" bottom="726" isLessModeOn="no" />
+        <GUIConfig name="AppPosition" x="213" y="20" width="1343" height="910" isMaximized="yes" />
+        <GUIConfig name="FindWindowPosition" left="955" top="311" right="1795" bottom="800" isLessModeOn="no" />
         <GUIConfig name="FinderConfig" wrappedLines="no" purgeBeforeEverySearch="no" showOnlyOneEntryPerFoundLine="yes" FiF_ignoreunsavedChangesInOpenedFiles="no" />
         <GUIConfig name="noUpdate" intervalDays="15" nextUpdateDate="20250128" autoUpdateMode="1">no</GUIConfig>
         <GUIConfig name="Auto-detection">yes</GUIConfig>

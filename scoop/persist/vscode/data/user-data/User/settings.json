@@ -306,4 +306,5 @@
 		"cargo search": true
 	},
 	"workbench.editor.useModal": "some",
+	"files.autoSave": "afterDelay",
 }

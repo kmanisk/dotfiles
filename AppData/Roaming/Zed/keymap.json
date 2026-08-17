@@ -22,7 +22,7 @@
       "alt-;": "workspace::ToggleBottomDock",
       "alt-w": "pane::CloseActiveItem",
       "alt-j": "pane::ActivateNextItem",
-      "alt-k": "pane::ActivatePrevItem"
+      "alt-k": "pane::ActivatePreviousItem"
     }
   },
   {
@@ -88,23 +88,11 @@
       //
       "p": "editor::Paste",
       "shift-j": "pane::ActivateNextItem",
-      "shift-k": "pane::ActivatePrevItem",
-      "ctrl-h": [
-        "workspace::ActivatePaneInDirection",
-        "Left"
-      ],
-      "ctrl-l": [
-        "workspace::ActivatePaneInDirection",
-        "Right"
-      ],
-      "ctrl-k": [
-        "workspace::ActivatePaneInDirection",
-        "Up"
-      ],
-      "ctrl-j": [
-        "workspace::ActivatePaneInDirection",
-        "Down"
-      ],
+      "shift-k": "pane::ActivatePreviousItem",
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-l": "workspace::ActivatePaneRight",
+      "ctrl-k": "workspace::ActivatePaneUp",
+      "ctrl-j": "workspace::ActivatePaneDown",
       // +LSP
       "space c a": "editor::ToggleCodeActions",
       "c a": "editor::ToggleCodeActions",
@@ -119,10 +107,10 @@
       "g T": "editor::GoToTypeDefinitionSplit",
       "g r": "editor::FindAllReferences",
       "] d": "editor::GoToDiagnostic",
-      "[ d": "editor::GoToPrevDiagnostic",
+      "[ d": "editor::GoToPreviousDiagnostic",
       // TODO: Go to next/prev error
       "] e": "editor::GoToDiagnostic",
-      "[ e": "editor::GoToPrevDiagnostic",
+      "[ e": "editor::GoToPreviousDiagnostic",
       // Symbol search
       "s s": "outline::Toggle",
       "s S": "project_symbols::Toggle",
@@ -131,7 +119,7 @@
       // +Git
       // Git prev/next hunk
       "] h": "editor::GoToHunk",
-      "[ h": "editor::GoToPrevHunk",
+      "[ h": "editor::GoToPreviousHunk",
       // TODO: git diff is not ready yet, refer https://github.com/zed-industries/zed/issues/8665#issuecomment-2194000497
       // + Buffers
       // Switch between buffers
@@ -180,7 +168,7 @@
     "context": "Editor && vim_mode == insert && !menu",
     "bindings": {
       "j k": "vim::NormalBefore", // remap jk in insert mode to escape
-      "tab": "editor::AcceptInlineCompletion",
+      "tab": "editor::AcceptEditPrediction",
       "alt-i": "editor::ShowCompletions"
     }
   },
@@ -212,18 +200,9 @@
   {
     "context": "Terminal && !menu",
     "bindings": {
-      "ctrl-h": [
-        "workspace::ActivatePaneInDirection",
-        "Left"
-      ],
-      "ctrl-l": [
-        "workspace::ActivatePaneInDirection",
-        "Right"
-      ],
-      "ctrl-k": [
-        "workspace::ActivatePaneInDirection",
-        "Up"
-      ]
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-l": "workspace::ActivatePaneRight",
+      "ctrl-k": "workspace::ActivatePaneUp"
       // "ctrl-j": ["workspace::ActivatePaneInDirection", "Down"]
     }
   },
@@ -247,18 +226,9 @@
       "q": "workspace::ToggleRightDock",
       "space e": "workspace::ToggleRightDock",
       // Navigate between panel
-      "ctrl-h": [
-        "workspace::ActivatePaneInDirection",
-        "Left"
-      ],
-      "ctrl-l": [
-        "workspace::ActivatePaneInDirection",
-        "Right"
-      ],
-      "ctrl-k": [
-        "workspace::ActivatePaneInDirection",
-        "Up"
-      ],
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-l": "workspace::ActivatePaneRight",
+      "ctrl-k": "workspace::ActivatePaneUp",
       // "ctrl-j": [
       //   "workspace::ActivatePaneInDirection",
       //   "Down"
@@ -269,22 +239,10 @@
   {
     "context": "Dock",
     "bindings": {
-      "ctrl-w h": [
-        "workspace::ActivatePaneInDirection",
-        "Left"
-      ],
-      "ctrl-w l": [
-        "workspace::ActivatePaneInDirection",
-        "Right"
-      ],
-      "ctrl-w k": [
-        "workspace::ActivatePaneInDirection",
-        "Up"
-      ],
-      "ctrl-w j": [
-        "workspace::ActivatePaneInDirection",
-        "Down"
-      ]
+      "ctrl-w h": "workspace::ActivatePaneLeft",
+      "ctrl-w l": "workspace::ActivatePaneRight",
+      "ctrl-w k": "workspace::ActivatePaneUp",
+      "ctrl-w j": "workspace::ActivatePaneDown"
     }
   },
   {
@@ -305,6 +263,63 @@
         }
       ]
     }
+  },
+  // ==================== Ported from VSCode keybindings.json ====================
+  // Font zoom + editor clipboard, matching your VSCode alt+shift+y/u and alt+y/u
+  {
+    "context": "Editor",
+    "bindings": {
+      "alt-shift-y": "zed::DecreaseBufferFontSize",
+      "alt-shift-u": "zed::IncreaseBufferFontSize",
+      "alt-y": "editor::Copy",
+      "alt-u": "editor::Paste"
+    }
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      // Duplicate of "space x" — kept for VSCode muscle memory (alt+shift+x)
+      "alt-shift-x": "zed::Extensions",
+      // Duplicate of "alt-e"/"space e" — kept for VSCode muscle memory (alt+s)
+      "alt-s": "workspace::ToggleRightDock",
+      // Rough substitute for the FileBunny extension's alt+f quick-open —
+      // not identical behavior, just the closest built-in equivalent
+      "alt-f": "file_finder::Toggle",
+      // Closest match for VSCode's Alt+O "open file/folder"
+      "alt-o": "workspace::Open",
+      // Pane resize — VSCode's increase/decrease view size didn't have a
+      // direction, so these default to left/right (swap to
+      // vim::ResizePaneUp / vim::ResizePaneDown if you'd rather resize
+      // vertically)
+      "shift-alt-[": "vim::ResizePaneLeft",
+      "shift-alt-]": "vim::ResizePaneRight",
+      // Git panel toggle, matching VSCode's shift+alt+g. If this doesn't
+      // fire, search "git panel" in the command palette to find the exact
+      // action name for your Zed version and swap it in here.
+      "shift-alt-g": "git_panel::ToggleFocus"
+    }
+  },
+  {
+    // Move the current editor to the pane in a direction — matches your
+    // VSCode ctrl+alt+h/j/k/l (previous/below/above/next group) exactly
+    "bindings": {
+      "ctrl-alt-h": [
+        "workspace::MoveItemToPaneInDirection",
+        { "direction": "left" }
+      ],
+      "ctrl-alt-j": [
+        "workspace::MoveItemToPaneInDirection",
+        { "direction": "down" }
+      ],
+      "ctrl-alt-k": [
+        "workspace::MoveItemToPaneInDirection",
+        { "direction": "up" }
+      ],
+      "ctrl-alt-l": [
+        "workspace::MoveItemToPaneInDirection",
+        { "direction": "right" }
+      ]
+    }
   }
   // Subword motion is not working really nice with `ciw`, disable for now
   // {
@@ -316,4 +331,5 @@
   //     "g e": "vim::PreviousSubwordEnd"
   //   }
   // }
+
 ]

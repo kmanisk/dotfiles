@@ -1044,7 +1044,7 @@ reg query HKLM\SYSTEM\CurrentControlSet\Services\BTHPORT\Parameters\Keys /s
 |	time=1773538812
 scoop update all 
 |	time=1773538819
-scoop update * 
+|coop update * 
 |	time=1775574890
 reg delete HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\Configuration /f
 |	time=1775574891
@@ -1067,3 +1067,5 @@ explorer.exe .
 scoop update *
 |	time=1784903814
 uall
+|	time=1785076263
+scoop update * 
