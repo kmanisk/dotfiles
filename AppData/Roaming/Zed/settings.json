@@ -1,12 +1,7 @@
 // Zed settings //
 // For information on how to configure Zed, see the Zed
 // documentation: https://zed.dev/docs/configuring-zed
-//
-// To see all of Zed's default settings without changing your
-// custom settings, run `zed: open default settings` from the
-// command palette (cmd-shift-p / ctrl-shift-p)
 {
-  //tab width
   "proxy": "",
   "title_bar": {
     "show_sign_in": false
@@ -34,51 +29,56 @@
   },
   "hover_popover_enabled": true,
   "selection_highlight": false,
+  "ui_font_family": "Iosevka Nerd Font",
+  "ui_font_size": 19.0,
+  "buffer_font_family": "Iosevka Nerd Font",
   "buffer_font_fallbacks": [
+    "JetBrainsMono NF",
     "Josefin Sans"
   ],
+  "buffer_font_size": 19.0,
+  "buffer_font_features": {
+    "liga": true
+  },
   "colorize_brackets": false,
   "show_edit_predictions": true,
   "preferred_line_length": 60,
-  // CHANGED: was "editor_width". VSCode's "editor.wordWrapColumn": 60 wraps
-  // at a fixed column regardless of pane width — "editor_width" doesn't do
-  // that, it wraps to whatever width the pane happens to be. This setting
-  // is what actually gives you the fixed-60-column wrap you had before.
   "soft_wrap": "none",
   "hard_tabs": true,
   "tab_size": 4,
   "base_keymap": "VSCode",
-  "ui_font_family": "Iosevka Nerd Font",
   "tabs": {
-    // "file_icons": true,
-    "git_status": true,
+    "git_status": true
   },
   "tab_bar": {
-    "show_nav_history_buttons": false,
+    "show_nav_history_buttons": false
   },
-  //terminal
+  // Terminal
   "terminal": {
     "font_fallbacks": [
-      "monospace",
       "monospace"
     ],
     "font_family": "Iosevka Nerd Font",
-    "font_size": 21.0,
+    "font_size": 19.0,
     "copy_on_select": true,
     "default_width": 187,
     "line_height": {
       "custom": 1.0
     },
-    "shell": "system"
+    "shell": {
+      "program": "pwsh.exe"
+    }
   },
-  //code formatter
+  // Code formatter
   "format_on_save": "on",
+  "remove_trailing_whitespace_on_save": true,
+  "ensure_final_newline_on_save": true,
   "formatter": {
     "language_server": {
       "name": "prettier"
     }
   },
-  // ADDED: ported from your VSCode prettier.* extension settings
+  // Ported from VSCode prettier.* settings
   "prettier": {
     "semi": true,
     "useTabs": true,
@@ -87,17 +87,95 @@
     "arrowParens": "avoid",
     "trailingComma": "all"
   },
-  // ADDED: "formatter" above is global, which would otherwise route Rust
-  // files through Prettier (Prettier can't format Rust). This keeps Rust
-  // on its own language server (rust-analyzer -> rustfmt), which is what
-  // your commented-out "rust-analyzer" default-formatter line in VSCode
-  // was already pointing at.
   "languages": {
     "Rust": {
-      "formatter": "language_server"
+      "formatter": "language_server",
+      "tab_size": 4,
+      "hard_tabs": true
+    },
+    "Python": {
+      "formatter": "language_server",
+      "tab_size": 4,
+      "hard_tabs": true
+    },
+    "Go": {
+      "formatter": "language_server",
+      "tab_size": 4,
+      "hard_tabs": true
+    },
+    "C": {
+      "formatter": "language_server",
+      "tab_size": 4,
+      "hard_tabs": true
+    },
+    "C++": {
+      "formatter": "language_server",
+      "tab_size": 4,
+      "hard_tabs": true
+    },
+    "Lua": {
+      "formatter": "language_server",
+      "tab_size": 4,
+      "hard_tabs": true
+    },
+    "JavaScript": {
+      "formatter": "language_server",
+      "tab_size": 4,
+      "hard_tabs": true
+    },
+    "TypeScript": {
+      "formatter": "language_server",
+      "tab_size": 4,
+      "hard_tabs": true
+    },
+    "TSX": {
+      "formatter": "language_server",
+      "tab_size": 4,
+      "hard_tabs": true
+    },
+    "JSON": {
+      "formatter": "language_server",
+      "tab_size": 4,
+      "hard_tabs": true
+    },
+    "HTML": {
+      "formatter": "language_server",
+      "tab_size": 4,
+      "hard_tabs": true
+    },
+    "CSS": {
+      "formatter": "language_server",
+      "tab_size": 4,
+      "hard_tabs": true
     }
   },
-  //toolbar
+  "lsp": {
+    "rust-analyzer": {
+      "initialization_options": {
+        "check": {
+          "command": "clippy"
+        }
+      }
+    },
+    "lua-language-server": {
+      "settings": {
+        "Lua": {
+          "diagnostics": {
+            "globals": ["vim"]
+          }
+        }
+      }
+    },
+    "gopls": {
+      "initialization_options": {
+        "analyses": {
+          "unusedparams": true
+        },
+        "staticcheck": true
+      }
+    }
+  },
+  // Toolbar
   "toolbar": {
     "breadcrumbs": false,
     "quick_actions": false
@@ -123,18 +201,12 @@
     "use_system_clipboard": "on_yank"
   },
   "vim_mode": true,
-  "ui_font_size": 19.0,
-  "buffer_font_size": 17.0,
-  "buffer_font_features": {
-    "liga": true
-  },
   "theme": {
     "mode": "system",
     "light": "Gruvbox Light",
     "dark": "Catppuccin Mocha - No Italics"
   },
   "relative_line_numbers": "enabled",
-  "buffer_font_family": "JetBrainsMono NF",
   "scrollbar": {
     "axes": {
       "horizontal": false,
@@ -142,19 +214,16 @@
     },
     "show": "never"
   },
-  // Indentation, rainbow indentation
+  // Indentation
   "indent_guides": {
     "enabled": true,
     "coloring": "indent_aware"
   },
   "inlay_hints": {
-    // CHANGED: was "true". VSCode had "editor.inlayHints.enabled": "off"
-    // (flagged "remember changed" in your settings), so this now matches.
     "enabled": false
   },
-  // ADDED: ported from VSCode's "editor.scrollBeyondLastLine": false
   "scroll_beyond_last_line": "off",
-  // File scan exclusions, hide on the file explorer and search
+  // File scan exclusions
   "file_scan_exclusions": [
     "**/.git",
     "**/.svn",
@@ -164,7 +233,6 @@
     "**/Thumbs.db",
     "**/.classpath",
     "**/.settings",
-    // above is default from Zed
     "**/out",
     "**/dist",
     "**/.husky",
@@ -177,17 +245,16 @@
     "**/.nyc_output",
     "**/report",
     "**/node_modules",
-    // ADDED: ported from VSCode's files.exclude
     "**/*.class",
     "**/*.exe",
     "**/*.pdb"
   ],
-  // Turn off telemetry
+  // Telemetry
   "telemetry": {
     "diagnostics": false,
     "metrics": false
   },
-  // Move all panel to the right
+  // Panels dock layout
   "project_panel": {
     "auto_fold_dirs": false,
     "button": true,
@@ -200,7 +267,6 @@
   "collaboration_panel": {
     "dock": "left"
   },
-  // Move some unnecessary panels to the left
   "notification_panel": {
     "dock": "left"
   },
@@ -209,15 +275,5 @@
   },
   "cursor_blink": false,
   "multi_cursor_modifier": "alt",
-  "cursor_shape": "bar",
-// "context": "Workspace",
-//  "bindings": {
-//    "ctrl-;": null,
-//    "alt-e": "workspace::ToggleRightDock",
-//    "alt-d": "workspace::CloseAllDocks",
-//    "space t h": "theme_selector::Toggle",
-//    "alt-q": ["task::Spawn", { "task_name": "run file" }],
-//    "alt-w": "workspace::CloseWindow",
-//    "ctrl-j": null
-//  }
+  "cursor_shape": "bar"
 }
