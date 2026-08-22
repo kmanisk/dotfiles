@@ -20,7 +20,7 @@
   "theme": {
     "mode": "system",
     "light": "Gruvbox Light",
-    "dark": "Base16 Woodland"
+    "dark": "VSCode Dark Polished"
   },
 
   // ─────────────────────────────────────────────────
@@ -52,10 +52,8 @@
   // ─────────────────────────────────────────────────
   "preferred_line_length": 60,
   "soft_wrap": "none",
-  "hard_tabs": true,
+  "hard_tabs": false,
   "tab_size": 4,
-  "auto_indent": false,
-  "use_on_type_format": false,
   "colorize_brackets": false,
   "show_edit_predictions": true,
   "show_signature_help_after_edits": true,
@@ -100,7 +98,7 @@
   // ─────────────────────────────────────────────────
   "indent_guides": {
     "enabled": true,
-    "coloring": "indent_aware"
+    "coloring": "fixed"
   },
 
   // ─────────────────────────────────────────────────
@@ -294,9 +292,7 @@
     "Java": {
       "formatter": "language_server",
       "tab_size": 4,
-      "hard_tabs": true,
-      "auto_indent": false,
-      "use_on_type_format": false
+      "hard_tabs": false
     }
   },
 
