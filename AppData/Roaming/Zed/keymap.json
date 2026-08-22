@@ -29,7 +29,12 @@
       "space t h": "theme_selector::Toggle",
       "ctrl-s ctrl-k": "zed::OpenKeymap",
       "space o c": "zed::OpenSettings",
+      "space o s": "zed::OpenSettings",
       "space o k": "zed::OpenKeymap",
+
+      // Zen / Centered Layout & Zoom
+      "space z z": "workspace::ToggleCenteredLayout",
+      "space z f": "workspace::ToggleZoom",
 
       // Tasks (Code Runner)
       "alt-q": [
@@ -144,6 +149,7 @@
       "space s k": "zed::OpenKeymap",
       "space o k": "zed::OpenKeymap",
       "space o c": "zed::OpenSettings",
+      "space o s": "zed::OpenSettings",
       "space n f": "workspace::NewFile",
       "space t t": "workspace::NewTerminal",
 
@@ -154,11 +160,10 @@
       "space g h": "pane::SplitHorizontal",
 
       // Zoom & Zen Mode (matches Neovim / VSCode zen-mode)
-      "space z z": "workspace::ToggleZoom",
-      "space c z": "workspace::ToggleCenteredLayout",
+      "space z z": "workspace::ToggleCenteredLayout",
+      "space z f": "workspace::ToggleZoom",
 
       // Folds
-      "space z": "editor::ToggleFold",
       "space r f": "editor::ToggleFoldRecursive",
       "z a": "editor::ToggleFold",
 
@@ -342,7 +347,8 @@
       "ctrl-`": "workspace::ToggleBottomDock",
       // Escape to Normal Mode with jk
       "j k": "vim::NormalBefore",
-      "tab": "editor::AcceptEditPrediction",
+      // Tab: accept AI prediction if one is showing, otherwise indent normally
+      "tab": ["editor::AcceptEditPrediction", { "fallback_action": "editor::Tab" }],
       "alt-i": "editor::ShowCompletions",
       "ctrl-p": "editor::Paste",
       "ctrl-m": "editor::Paste"
@@ -436,6 +442,36 @@
           "reveal": "no_focus"
         }
       ]
+    }
+  },
+
+  // =============================================================================
+  //                   VimControl Keybindings
+  // =============================================================================
+  {
+    "context": "VimControl && !menu",
+    "bindings": {
+      "g s": "outline::Toggle",
+      "g i": "editor::ToggleCodeActions",
+      "g d": "editor::OpenExcerpts",
+      "g c": [
+        "editor::ToggleComments",
+        {
+          "advance_downwards": false
+        }
+      ],
+      "s h": "workspace::ActivatePaneLeft"
+    }
+  },
+  {
+    "context": "Editor && VimControl && !VimWaiting && !menu",
+    "bindings": {
+      "g l": "vim::SelectNext",
+      "g L": "vim::SelectPrevious",
+      "g a": "editor::SelectAllMatches",
+      "g shift-a": "editor::FindAllReferences",
+      "g f": "project_symbols::Toggle",
+      "space p e": "diagnostics::Deploy"
     }
   }
 ]

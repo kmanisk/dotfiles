@@ -1,75 +1,209 @@
-// Zed settings //
-// For information on how to configure Zed, see the Zed
-// documentation: https://zed.dev/docs/configuring-zed
+// Zed settings
+// Docs: https://zed.dev/docs/configuring-zed
 {
-  "proxy": "",
-  "title_bar": {
-    "show_sign_in": false
-  },
-  "which_key": {
-    "enabled": true
-  },
-  "icon_theme": "Catppuccin Mocha",
+  // ─────────────────────────────────────────────────
+  // General / Window
+  // ─────────────────────────────────────────────────
   "auto_update": false,
+  "proxy": "",
+  "base_keymap": "VSCode",
+  "when_closing_with_no_tabs": "keep_window_open",
+  "bottom_dock_layout": "contained",
   "session": {
     "trust_all_worktrees": true
   },
-  "preview_tabs": {
-    "enabled": false
+
+  // ─────────────────────────────────────────────────
+  // Theme & Icons
+  // ─────────────────────────────────────────────────
+  "icon_theme": "Catppuccin Mocha",
+  "theme": {
+    "mode": "system",
+    "light": "Gruvbox Light",
+    "dark": "Base16 Woodland"
   },
-  "show_signature_help_after_edits": true,
-  "auto_signature_help": true,
-  "mouse_wheel_zoom": true,
-  "gutter": {
-    "line_numbers": true,
-    "folds": false
-  },
-  "minimap": {
-    "show": "never"
-  },
-  "hover_popover_enabled": true,
-  "selection_highlight": false,
+
+  // ─────────────────────────────────────────────────
+  // UI Font
+  // ─────────────────────────────────────────────────
   "ui_font_family": "Iosevka Nerd Font",
   "ui_font_size": 19.0,
+
+  // ─────────────────────────────────────────────────
+  // Editor (Buffer) Font
+  // ─────────────────────────────────────────────────
   "buffer_font_family": "Iosevka Nerd Font",
   "buffer_font_fallbacks": [
     "JetBrainsMono NF",
     "Josefin Sans"
   ],
-  "buffer_font_size": 19.0,
+  "buffer_font_size": 25.0,        // <- change this to adjust editor code font size
   "buffer_font_features": {
-    "liga": true
+    "liga": true,                   // enable ligatures
+    "calt": true                    // contextual alternates (coding ligatures: ->, =>, !=, ===)
   },
-  "colorize_brackets": false,
-  "show_edit_predictions": true,
+  "buffer_font_weight": 370,
+  "buffer_line_height": {
+    "custom": 1.35                  // Iosevka sweet spot
+  },
+
+  // ─────────────────────────────────────────────────
+  // Editor Behaviour
+  // ─────────────────────────────────────────────────
   "preferred_line_length": 60,
   "soft_wrap": "none",
   "hard_tabs": true,
   "tab_size": 4,
-  "base_keymap": "VSCode",
+  "auto_indent": false,
+  "use_on_type_format": false,
+  "colorize_brackets": false,
+  "show_edit_predictions": true,
+  "show_signature_help_after_edits": true,
+  "auto_signature_help": true,
+  "mouse_wheel_zoom": true,
+  "hover_popover_enabled": true,
+  "selection_highlight": false,
+  "scroll_beyond_last_line": "off",
+  "cursor_blink": false,
+  "cursor_shape": "bar",
+  "multi_cursor_modifier": "alt",
+
+  // ─────────────────────────────────────────────────
+  // Gutter
+  // ─────────────────────────────────────────────────
+  "gutter": {
+    "line_numbers": true,
+    "folds": false
+  },
+  "relative_line_numbers": "enabled",
+
+  // ─────────────────────────────────────────────────
+  // Minimap
+  // ─────────────────────────────────────────────────
+  "minimap": {
+    "show": "never"
+  },
+
+  // ─────────────────────────────────────────────────
+  // Scrollbar
+  // ─────────────────────────────────────────────────
+  "scrollbar": {
+    "show": "never",
+    "axes": {
+      "horizontal": false,
+      "vertical": false
+    }
+  },
+
+  // ─────────────────────────────────────────────────
+  // Indentation Guides
+  // ─────────────────────────────────────────────────
+  "indent_guides": {
+    "enabled": true,
+    "coloring": "indent_aware"
+  },
+
+  // ─────────────────────────────────────────────────
+  // Inlay Hints
+  // ─────────────────────────────────────────────────
+  "inlay_hints": {
+    "enabled": false
+  },
+
+  // ─────────────────────────────────────────────────
+  // Tabs & Tab Bar
+  // ─────────────────────────────────────────────────
+  "preview_tabs": {
+    "enabled": false
+  },
   "tabs": {
     "git_status": true
   },
   "tab_bar": {
-    "show_nav_history_buttons": false
+    "show_nav_history_buttons": false,
+    "show_tab_bar_buttons": false
   },
-  // Terminal
-  "terminal": {
-    "font_fallbacks": [
-      "monospace"
-    ],
-    "font_family": "Iosevka Nerd Font",
-    "font_size": 19.0,
-    "copy_on_select": true,
-    "default_width": 187,
-    "line_height": {
-      "custom": 1.0
-    },
-    "shell": {
-      "program": "pwsh.exe"
+
+  // ─────────────────────────────────────────────────
+  // Toolbar
+  // ─────────────────────────────────────────────────
+  "toolbar": {
+    "breadcrumbs": false,
+    "quick_actions": false
+  },
+
+  // ─────────────────────────────────────────────────
+  // Status Bar & Centered Layout (Zen Mode)
+  // ─────────────────────────────────────────────────
+  "status_bar": {
+    "active_language_button": false,
+    "cursor_position_button": false,
+    "line_endings_button": false,
+    "experimental.show": false
+  },
+  "centered_layout": {
+    "left_padding": 0.15,
+    "right_padding": 0.15
+  },
+
+  // ─────────────────────────────────────────────────
+  // Title Bar
+  // ─────────────────────────────────────────────────
+  "title_bar": {
+    "show_sign_in": false
+  },
+
+  // ─────────────────────────────────────────────────
+  // Vim Mode
+  // ─────────────────────────────────────────────────
+  "vim_mode": true,
+  "vim": {
+    "use_system_clipboard": "on_yank"
+  },
+
+  // ─────────────────────────────────────────────────
+  // Which-key (keybinding hints)
+  // ─────────────────────────────────────────────────
+  "which_key": {
+    "enabled": true
+  },
+
+  // ─────────────────────────────────────────────────
+  // Autosave
+  // ─────────────────────────────────────────────────
+  "autosave": {
+    "after_delay": {
+      "milliseconds": 1000
     }
   },
-  // Code formatter
+  "autosave_delay": 1500,
+  "autosave_on_focus_change": true,
+  "autosave_on_window_change": true,
+  "autosave_on_build": true,
+  "autosave_on_build_delay": 1500,
+  "autosave_on_build_events": [
+    "build",
+    "run",
+    "debug"
+  ],
+  "autosave_on_build_events_delay": 1500,
+
+  // ─────────────────────────────────────────────────
+  // Terminal
+  // ─────────────────────────────────────────────────
+  "terminal": {
+    "shell": { "program": "pwsh.exe" },
+    "font_family": "Iosevka Nerd Font",
+    "font_size": 19.0,
+    "font_fallbacks": ["monospace"],
+    "line_height": { "custom": 1.0 },
+    "copy_on_select": true,
+    "default_width": 187
+  },
+
+  // ─────────────────────────────────────────────────
+  // Code Formatter (global default: Prettier)
+  // ─────────────────────────────────────────────────
   "format_on_save": "on",
   "remove_trailing_whitespace_on_save": true,
   "ensure_final_newline_on_save": true,
@@ -78,7 +212,11 @@
       "name": "prettier"
     }
   },
+
+  // ─────────────────────────────────────────────────
+  // Prettier Options
   // Ported from VSCode prettier.* settings
+  // ─────────────────────────────────────────────────
   "prettier": {
     "semi": true,
     "useTabs": true,
@@ -87,6 +225,10 @@
     "arrowParens": "avoid",
     "trailingComma": "all"
   },
+
+  // ─────────────────────────────────────────────────
+  // Per-Language Overrides
+  // ─────────────────────────────────────────────────
   "languages": {
     "Rust": {
       "formatter": "language_server",
@@ -147,9 +289,22 @@
       "formatter": "language_server",
       "tab_size": 4,
       "hard_tabs": true
+    },
+    // Java: Prettier has no Java support — must use the language server (jdtls)
+    "Java": {
+      "formatter": "language_server",
+      "tab_size": 4,
+      "hard_tabs": true,
+      "auto_indent": false,
+      "use_on_type_format": false
     }
   },
+
+  // ─────────────────────────────────────────────────
+  // LSP (Language Server Protocol) Config
+  // ─────────────────────────────────────────────────
   "lsp": {
+    // Rust: use clippy for on-save checks
     "rust-analyzer": {
       "initialization_options": {
         "check": {
@@ -157,6 +312,7 @@
         }
       }
     },
+    // Lua: expose vim globals so diagnostics do not complain
     "lua-language-server": {
       "settings": {
         "Lua": {
@@ -166,6 +322,7 @@
         }
       }
     },
+    // Go: enable unused-param analysis + staticcheck
     "gopls": {
       "initialization_options": {
         "analyses": {
@@ -175,55 +332,56 @@
       }
     }
   },
-  // Toolbar
-  "toolbar": {
-    "breadcrumbs": false,
-    "quick_actions": false
+
+  // ─────────────────────────────────────────────────
+  // AI Agent Panel
+  // ─────────────────────────────────────────────────
+  "agent": {
+    "sidebar_side": "right",
+    "default_height": 318.0,
+    "favorite_models": [],
+    "model_parameters": []
   },
-  "when_closing_with_no_tabs": "keep_window_open",
-  "autosave": {
-    "after_delay": {
-      "milliseconds": 1000
+
+  // ─────────────────────────────────────────────────
+  // Panel Dock Layout
+  // ─────────────────────────────────────────────────
+  "project_panel": {
+    "auto_fold_dirs": false,
+    "button": true,
+    "dock": "right",
+    "git_status": true,
+    "scrollbar": {
+      "show": "never"
+    },
+    "indent_guides": {
+      "show": "never"
     }
   },
-  "autosave_delay": 1500,
-  "autosave_on_focus_change": true,
-  "autosave_on_window_change": true,
-  "autosave_on_build": true,
-  "autosave_on_build_delay": 1500,
-  "autosave_on_build_events": [
-    "build",
-    "run",
-    "debug"
-  ],
-  "autosave_on_build_events_delay": 1500,
-  "vim": {
-    "use_system_clipboard": "on_yank"
-  },
-  "vim_mode": true,
-  "theme": {
-    "mode": "system",
-    "light": "Gruvbox Light",
-    "dark": "Catppuccin Mocha - No Italics"
-  },
-  "relative_line_numbers": "enabled",
-  "scrollbar": {
-    "axes": {
-      "horizontal": false,
-      "vertical": false
+  "outline_panel": {
+    "dock": "right",
+    "scrollbar": {
+      "show": "never"
     },
-    "show": "never"
+    "indent_guides": {
+      "show": "never"
+    }
   },
-  // Indentation
-  "indent_guides": {
-    "enabled": true,
-    "coloring": "indent_aware"
+  "collaboration_panel": {
+    "button": false,
+    "dock": "left"
   },
-  "inlay_hints": {
-    "enabled": false
+  "notification_panel": {
+    "dock": "left"
   },
-  "scroll_beyond_last_line": "off",
-  // File scan exclusions
+  "chat_panel": {
+    "dock": "left"
+  },
+
+  // ─────────────────────────────────────────────────
+  // File Scan Exclusions
+  // Files/dirs hidden from the project panel & search
+  // ─────────────────────────────────────────────────
   "file_scan_exclusions": [
     "**/.git",
     "**/.svn",
@@ -249,31 +407,12 @@
     "**/*.exe",
     "**/*.pdb"
   ],
-  // Telemetry
+
+  // ─────────────────────────────────────────────────
+  // Telemetry (all off)
+  // ─────────────────────────────────────────────────
   "telemetry": {
     "diagnostics": false,
     "metrics": false
-  },
-  // Panels dock layout
-  "project_panel": {
-    "auto_fold_dirs": false,
-    "button": true,
-    "dock": "right",
-    "git_status": true
-  },
-  "outline_panel": {
-    "dock": "right"
-  },
-  "collaboration_panel": {
-    "dock": "left"
-  },
-  "notification_panel": {
-    "dock": "left"
-  },
-  "chat_panel": {
-    "dock": "left"
-  },
-  "cursor_blink": false,
-  "multi_cursor_modifier": "alt",
-  "cursor_shape": "bar"
+  }
 }

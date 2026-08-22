@@ -10,7 +10,9 @@
       "starship",
       "extras/windows-terminal",
       "gcc",
-      "git"
+      "git",
+      "fd",
+      "extras/emacs"
     ],
     "full": [
       "git",
@@ -45,7 +47,9 @@
       "starship",
       "main/sudo",
       "main/gh",
-      "extras/revouninstaller"
+      "extras/revouninstaller",
+      "fd",
+      "extras/emacs"
     ],
     "global": [
         "nerd-fonts/Iosevka-NF"
