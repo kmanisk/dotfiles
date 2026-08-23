@@ -12,7 +12,8 @@
   "session": {
     "trust_all_worktrees": true
   },
-
+  "horizontal_scroll_margin": 1,
+  "vertical_scroll_margin": 1,
   // ─────────────────────────────────────────────────
   // Theme & Icons
   // ─────────────────────────────────────────────────
@@ -20,7 +21,7 @@
   "theme": {
     "mode": "system",
     "light": "Gruvbox Light",
-    "dark": "VSCode Dark Polished"
+    "dark": "Ultimate Dark Neo"
   },
 
   // ─────────────────────────────────────────────────
