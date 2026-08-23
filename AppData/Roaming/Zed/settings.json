@@ -4,6 +4,7 @@
   // ─────────────────────────────────────────────────
   // General / Window
   // ─────────────────────────────────────────────────
+  "show_wrap_guides": true,
   "auto_update": false,
   "proxy": "",
   "base_keymap": "VSCode",
@@ -21,7 +22,7 @@
   "theme": {
     "mode": "system",
     "light": "Gruvbox Light",
-    "dark": "Ultimate Dark Neo"
+    "dark": "IBM 5151 Light"
   },
 
   // ─────────────────────────────────────────────────
@@ -52,7 +53,7 @@
   // Editor Behaviour
   // ─────────────────────────────────────────────────
   "preferred_line_length": 60,
-  "soft_wrap": "none",
+  "soft_wrap": "editor_width",
   "hard_tabs": false,
   "tab_size": 4,
   "colorize_brackets": false,
