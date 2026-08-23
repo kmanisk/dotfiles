@@ -1723,3 +1723,7 @@ function fail-clear {
 
     Write-Host "`nScoop failed-install cleanup complete." -ForegroundColor Cyan
 }
+
+function mcpedit {
+    nvim "C:\Users\Administrator\.gemini\antigravity-cli\mcp_config.json"
+}
