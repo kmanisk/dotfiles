@@ -23,7 +23,7 @@
       "alt-shift-x": "zed::Extensions",
 
       // Window & Item Closing
-      "alt-w": "workspace::CloseWindow",
+      "alt-w": "pane::CloseActiveItem",
 
       // Themes & Settings
       "space t h": "theme_selector::Toggle",
@@ -37,7 +37,7 @@
       "space z f": "workspace::ToggleZoom",
 
       // Tasks (Code Runner)
-      "alt-q": [
+      "alt-r": [
         "task::Spawn",
         {
           "task_name": "run file"
@@ -243,7 +243,7 @@
       // Hover
       "shift-l": "editor::Hover",
 
-      // Tab / Item switching (matches Neovim <S-j> and <S-k>)
+      // Tab / Item switching
       "shift-j": "pane::ActivateNextItem",
       "shift-k": "pane::ActivatePreviousItem",
       "alt-j": "pane::ActivateNextItem",

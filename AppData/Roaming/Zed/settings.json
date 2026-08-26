@@ -22,7 +22,7 @@
   "theme": {
     "mode": "system",
     "light": "Gruvbox Light",
-    "dark": "IBM 5151 Light"
+    "dark": "Base16 DanQing"
   },
 
   // ─────────────────────────────────────────────────
@@ -194,7 +194,7 @@
   "terminal": {
     "shell": { "program": "pwsh.exe" },
     "font_family": "Iosevka Nerd Font",
-    "font_size": 19.0,
+    "font_size": 22.0,
     "font_fallbacks": ["monospace"],
     "line_height": { "custom": 1.0 },
     "copy_on_select": true,
