@@ -263,23 +263,23 @@
         },
         {
             "id": null,
-            "keys": "alt+down"
-        },
-        {
-            "id": null,
             "keys": "ctrl+alt+l"
         },
         {
             "id": null,
-            "keys": "ctrl+shift+4"
+            "keys": "alt+down"
+        },
+        {
+            "id": "User.scrollUp.0",
+            "keys": "ctrl+alt+k"
         },
         {
             "id": null,
             "keys": "ctrl+shift+t"
         },
         {
-            "id": "User.scrollUp.0",
-            "keys": "ctrl+alt+k"
+            "id": null,
+            "keys": "ctrl+shift+4"
         },
         {
             "id": null,

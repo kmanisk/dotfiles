@@ -220,6 +220,9 @@
       "space q": "pane::CloseActiveItem",
       "ctrl-w": "pane::CloseActiveItem",
       "space c t": "pane::CloseInactiveItems",
+      "space c l": "pane::CloseItemsToTheLeft",
+      "space n": "editor::NewlineBelow",
+      "space N": "editor::NewlineAbove",
 
       // Selection & Clipboard
       "space s a": "editor::SelectAll",
@@ -231,10 +234,26 @@
         "editor::SelectAll",
         "editor::Copy"
       ],
-      "p": "editor::Paste",
       "space d": [
         "editor::SelectAll",
         "editor::Copy"
+      ],
+
+      // Number Increment & Decrement (matches Neovim +/-)
+      "+": "vim::Increment",
+      "-": "vim::Decrement",
+      "=": "vim::Increment",
+      "ctrl-a": "vim::Increment",
+      "ctrl-x": "vim::Decrement",
+
+      // Paste on new line (matches Neovim gp / gP)
+      "g p": [
+        "editor::NewlineBelow",
+        "vim::Paste"
+      ],
+      "g P": [
+        "editor::NewlineAbove",
+        "vim::Paste"
       ],
 
       // Redo with U
@@ -258,10 +277,8 @@
       // LSP / Code Actions
       "space c a": "editor::ToggleCodeActions",
       "space a": "editor::ToggleCodeActions",
-      "c a": "editor::ToggleCodeActions",
       "space .": "editor::ToggleCodeActions",
       "space c r": "editor::Rename",
-      "c r": "editor::Rename",
       "g d": "editor::GoToDefinition",
       "g D": "editor::GoToDefinitionSplit",
       "g i": "editor::GoToImplementation",
@@ -295,16 +312,20 @@
       "space v p": "diagnostics::Deploy",
 
       // Symbol Search & Outline
-      "s s": "outline::Toggle",
       "space c s": "outline::Toggle",
-      "s S": "project_symbols::Toggle",
 
       // Git Navigation
       "] h": "editor::GoToHunk",
       "[ h": "editor::GoToPreviousHunk",
 
       // Project Panel Reveal
-      "space e": "pane::RevealInProjectPanel"
+      "space e": "pane::RevealInProjectPanel",
+
+      // Leap & Motion Jumps
+      "g w": "vim::HelixJumpToWord",
+      "space j": "vim::HelixJumpToWord",
+      "g s": "vim::PushSneak",
+      "g S": "vim::PushSneakBackward"
     }
   },
 
@@ -333,7 +354,21 @@
       "x": "editor::Cut",
       "space a": "editor::ToggleCodeActions",
       "space c a": "editor::ToggleCodeActions",
-      "space f d": "editor::Format"
+      "space f d": "editor::Format",
+      "shift-s": ["vim::PushAddSurrounds", {}],
+      "s": ["vim::PushAddSurrounds", {}],
+      "g w": "vim::HelixJumpToWord",
+      "space j": "vim::HelixJumpToWord",
+      "g s": "vim::PushSneak",
+      "g S": "vim::PushSneakBackward",
+
+      // Move selected lines up/down (matches Neovim J / K in visual mode)
+      "shift-j": "editor::MoveLineDown",
+      "shift-k": "editor::MoveLineUp",
+
+      // Indent & Outdent
+      "<": "editor::Outdent",
+      ">": "editor::Indent"
     }
   },
 
@@ -341,7 +376,7 @@
   //                   Editor (Insert Mode - Vim)
   // =============================================================================
   {
-    "context": "Editor && vim_mode == insert && !menu",
+    "context": "Editor && vim_mode == insert",
     "bindings": {
       "ctrl-;": "workspace::ToggleBottomDock",
       "ctrl-`": "workspace::ToggleBottomDock",
@@ -352,18 +387,6 @@
       "alt-i": "editor::ShowCompletions",
       "ctrl-p": "editor::Paste",
       "ctrl-m": "editor::Paste"
-    }
-  },
-
-  // =============================================================================
-  //                   Operator Pending Mode
-  // =============================================================================
-  {
-    "context": "Editor && vim_operator == c",
-    "bindings": {
-      "c": "vim::CurrentLine",
-      "r": "editor::Rename",
-      "a": "editor::ToggleCodeActions"
     }
   },
 
@@ -451,7 +474,9 @@
   {
     "context": "VimControl && !menu",
     "bindings": {
-      "g s": "outline::Toggle",
+      "g s": "vim::PushSneak",
+      "g S": "vim::PushSneakBackward",
+      "g w": "vim::HelixJumpToWord",
       "g i": "editor::ToggleCodeActions",
       "g d": "editor::OpenExcerpts",
       "g c": [
@@ -459,8 +484,7 @@
         {
           "advance_downwards": false
         }
-      ],
-      "s h": "workspace::ActivatePaneLeft"
+      ]
     }
   },
   {
@@ -471,6 +495,8 @@
       "g a": "editor::SelectAllMatches",
       "g shift-a": "editor::FindAllReferences",
       "g f": "project_symbols::Toggle",
+      "g w": "vim::HelixJumpToWord",
+      "space j": "vim::HelixJumpToWord",
       "space p e": "diagnostics::Deploy"
     }
   }

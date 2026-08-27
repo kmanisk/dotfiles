@@ -4,6 +4,11 @@
   // ─────────────────────────────────────────────────
   // General / Window
   // ─────────────────────────────────────────────────
+  "instrumentation": {
+    "performance_profiler": {
+      "enabled": false
+    }
+  },
   "show_wrap_guides": true,
   "auto_update": false,
   "proxy": "",
@@ -22,7 +27,7 @@
   "theme": {
     "mode": "system",
     "light": "Gruvbox Light",
-    "dark": "Base16 DanQing"
+    "dark": "Base16 Everforest"
   },
 
   // ─────────────────────────────────────────────────
@@ -73,7 +78,10 @@
   // ─────────────────────────────────────────────────
   "gutter": {
     "line_numbers": true,
-    "folds": false
+    "folds": false,
+    "code_actions": false,
+    "runnables": false,
+    "min_line_number_digits": 0       // minimal compact gutter width
   },
   "relative_line_numbers": "enabled",
 
@@ -150,7 +158,21 @@
   // Title Bar
   // ─────────────────────────────────────────────────
   "title_bar": {
-    "show_sign_in": false
+    "show_sign_in": false,
+    "show_onboarding_banner": false,
+    "show_project_items": false,
+    "show_branch_name": false,
+    "show_user_menu": false,
+    "show_user_picture": false
+  },
+
+  // ─────────────────────────────────────────────────
+  // Git (Version Control)
+  // ─────────────────────────────────────────────────
+  "git": {
+    // To re-enable git modified line indicators in the gutter, change "hide" to "tracked_files" or uncomment below:
+    // "git_gutter": "tracked_files",
+    "git_gutter": "hide"
   },
 
   // ─────────────────────────────────────────────────
@@ -158,7 +180,7 @@
   // ─────────────────────────────────────────────────
   "vim_mode": true,
   "vim": {
-    "use_system_clipboard": "on_yank"
+    "use_system_clipboard": "always"
   },
 
   // ─────────────────────────────────────────────────
@@ -349,6 +371,7 @@
     "button": true,
     "dock": "right",
     "git_status": true,
+    "hide_root": true,
     "scrollbar": {
       "show": "never"
     },
