@@ -201,13 +201,9 @@ function Step-ScoopBuckets {
     if (-not (Test-Cmd 'scoop')) { Write-SKIP "Scoop not available  -  skipping buckets."; return }
     if (-not (Test-Cmd 'git')) { Write-WARN "Git not available  -  skipping buckets (will retry after Git install)."; return }
 
-    $official = @('main','extras','versions','nerd-fonts','java','games')
+    $official = @('main', 'extras', 'java', 'nonportable')
     $custom = [ordered]@{
-        'volllly' = 'https://github.com/volllly/scoop-bucket.git'
-        'shemnei' = 'https://github.com/Shemnei/scoop-bucket.git'
-        'nonportable' = 'https://github.com/ScoopInstaller/Nonportable'
-        'chawyehsu_dorado' = 'https://github.com/chawyehsu/dorado'
-        'kkzzhizhou_scoop-apps' = 'https://github.com/kkzzhizhou/scoop-apps'
+        'rilo' = 'https://github.com/kmanisk/scoop-bucket'
     }
     $existing = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
     scoop bucket list 2>$null | ForEach-Object {
