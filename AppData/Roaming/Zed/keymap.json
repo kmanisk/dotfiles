@@ -118,7 +118,10 @@
       "alt-s": "multi_workspace::ToggleWorkspaceSidebar",
 
       // Inline AI Assistant (generate / edit code in-place)
-      "ctrl-enter": "assistant::InlineAssist"
+      "ctrl-enter": "assistant::InlineAssist",
+
+      // Show Suggestions / Autocomplete
+      "alt-i": "editor::ShowCompletions"
     }
   },
 

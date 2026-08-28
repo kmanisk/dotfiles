@@ -27,13 +27,13 @@
     "theme": {
         "mode": "system",
         "light": "Gruvbox Light",
-        "dark": "Nightfox - opaque"
+        "dark": "VSCode Dark Polished"
     },
     // ─────────────────────────────────────────────────
     // UI Font
     // ─────────────────────────────────────────────────
     // "ui_font_family": "Hurmit Nerd Font Mono",
-    "ui_font_family": "Pixel Code",
+    "ui_font_family": "JetBrainsMono Nerd Font",
     "ui_font_size": 19.0,
     // ─────────────────────────────────────────────────
     // Editor (Buffer) Font
