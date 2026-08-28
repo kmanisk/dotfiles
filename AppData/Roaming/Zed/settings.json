@@ -272,7 +272,7 @@
         // Java: Prettier has no Java support — must use the language server (jdtls)
         "Java": {
             "formatter": "language_server",
-            "tab_size": 4,
+            "tab_size": 2,
             "hard_tabs": false
         }
     },

@@ -391,8 +391,6 @@
       "ctrl-`": "workspace::ToggleBottomDock",
       // Escape to Normal Mode with jk
       "j k": "vim::NormalBefore",
-      // Tab: accept AI prediction if one is showing, otherwise indent normally
-      "tab": ["editor::AcceptEditPrediction", { "fallback_action": "editor::Tab" }],
       "alt-i": "editor::ShowCompletions",
       "alt-l": "workspace::ToggleLeftDock",
       "ctrl-p": "editor::Paste",
