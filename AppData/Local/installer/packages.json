@@ -84,8 +84,6 @@
       "extras/windows-terminal",
       "extras/zed",
       "java/openjdk",
-      "nerd-fonts/Iosevka-NF",
-      "nerd-fonts/JetBrainsMono-NF",
       "rilo/rilo"
     ],
     "global": []
