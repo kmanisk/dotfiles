@@ -32,8 +32,11 @@
     ],
     "full": [
       "main/7zip",
+      "main/antigravity-cli",
       "main/aria2",
       "main/bat",
+      "main/chezmoi",
+      "main/codex",
       "main/dark",
       "main/fastfetch",
       "main/fd",
@@ -50,6 +53,7 @@
       "main/neovim",
       "main/nodejs",
       "main/ntop",
+      "main/opencode",
       "main/pnpm",
       "main/pwsh",
       "main/python",
@@ -75,6 +79,7 @@
       "extras/obs-studio",
       "extras/obsidian",
       "extras/psfzf",
+      "extras/reshade",
       "extras/revouninstaller",
       "extras/telegram",
       "extras/vifm",
@@ -84,30 +89,29 @@
       "extras/windows-terminal",
       "extras/zed",
       "java/openjdk",
+      "nonportable/equalizer-apo-np",
+      "nonportable/peace-np",
       "rilo/rilo"
     ],
     "global": []
   },
   "winget": {
     "mini": [
-      "chrisant996.Clink",
-      "JanDeDobbeleer.OhMyPosh"
+      "chrisant996.Clink"
     ],
     "full": [
       "chrisant996.Clink",
       "AntibodySoftware.WizTree",
       "Valve.Steam",
-      "JanDeDobbeleer.OhMyPosh",
+      "ShareX.ShareX",
+      "voidtools.Everything",
+      "OliverSchwendener.ueli",
+      "IrfanSkiljan.IrfanView",
       "Microsoft.VCRedist.2015+.x64"
     ]
   },
   "choco": {
     "mini": [],
-    "full": [
-      "sharex",
-      "ueli",
-      "everything",
-      "irfanview"
-    ]
+    "full": []
   }
 }
