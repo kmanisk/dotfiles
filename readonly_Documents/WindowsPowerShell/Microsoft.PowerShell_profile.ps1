@@ -625,7 +625,7 @@ function ff($name) {
 function uall {
     scoop update *
     scoop cleanup *
-    choco upgrade all
+    # choco upgrade all
     winget upgrade --all
 }
 
@@ -644,7 +644,7 @@ function g. { Set-Location .. }
 function pcheck {
     scoop status
     winget upgrade
-    choco outdated
+    # choco outdated
 }
 
 
@@ -1628,24 +1628,26 @@ function s {
         Write-Host "winget search failed" -ForegroundColor Red
     }
 
-    # ================= choco =================
-    section "chocolatey" Magenta
-    try {
-        choco search $query --limit-output |
-        ForEach-Object {
-            if ($_ -match '^([^|]+)\|(.+)$') {
-                [pscustomobject]@{
-                    Name    = $matches[1]
-                    Version = $matches[2]
-                }
-            }
-        } |
-        Sort-Object Name -Unique |
-        Format-Table Name, Version -AutoSize
-    }
-    catch {
-        Write-Host "choco search failed" -ForegroundColor Red
-    }
+    # <#
+    # # ================= choco =================
+    # section "chocolatey" Magenta
+    # try {
+    #     choco search $query --limit-output |
+    #     ForEach-Object {
+    #         if ($_ -match '^([^|]+)\|(.+)$') {
+    #             [pscustomobject]@{
+    #                 Name    = $matches[1]
+    #                 Version = $matches[2]
+    #             }
+    #         }
+    #     } |
+    #     Sort-Object Name -Unique |
+    #     Format-Table Name, Version -AutoSize
+    # }
+    # catch {
+    #     Write-Host "choco search failed" -ForegroundColor Red
+    # }
+    # #>
 }
 function fail-clear {
     [CmdletBinding()]

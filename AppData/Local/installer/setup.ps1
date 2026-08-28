@@ -339,30 +339,32 @@ function Step-Winget {
     else { Write-FAIL "Winget not found  -  install manually: https://aka.ms/getwinget" }
 }
 
-# Step 8: Chocolatey
-function Step-Chocolatey {
-    Write-Section "Chocolatey"
-    if ((Test-StepDone 'Chocolatey') -and (Test-Cmd 'choco')) { Write-SKIP "Chocolatey already installed."; return }
-    if (-not (Test-Cmd 'choco')) {
-        Write-INFO "Installing Chocolatey..."
-        Set-ExecutionPolicy Bypass -Scope Process -Force
-        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-        try {
-            Invoke-Expression ((New-Object Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-        } catch {
-            Write-FAIL "Chocolatey install failed: $_  -  continuing without it."
-            return
-        }
-        Update-SessionPath
-        if (Test-Cmd 'choco') { Write-OK "Chocolatey installed." }
-        else { Write-FAIL "choco not on PATH after install  -  restart terminal."; return }
-    } else { Write-SKIP "Chocolatey already on PATH." }
-    choco feature enable -n allowGlobalConfirmation -y 2>$null | Out-Null
-    choco feature enable -n checksumFiles -y 2>$null | Out-Null
-    choco feature enable -n allowEmptyChecksums -y 2>$null | Out-Null
-    Write-OK "Chocolatey features configured."
-    Set-StepDone 'Chocolatey'
-}
+# <#
+# # Step 8: Chocolatey
+# function Step-Chocolatey {
+#     Write-Section "Chocolatey"
+#     if ((Test-StepDone 'Chocolatey') -and (Test-Cmd 'choco')) { Write-SKIP "Chocolatey already installed."; return }
+#     if (-not (Test-Cmd 'choco')) {
+#         Write-INFO "Installing Chocolatey..."
+#         Set-ExecutionPolicy Bypass -Scope Process -Force
+#         [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+#         try {
+#             Invoke-Expression ((New-Object Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+#         } catch {
+#             Write-FAIL "Chocolatey install failed: $_  -  continuing without it."
+#             return
+#         }
+#         Update-SessionPath
+#         if (Test-Cmd 'choco') { Write-OK "Chocolatey installed." }
+#         else { Write-FAIL "choco not on PATH after install  -  restart terminal."; return }
+#     } else { Write-SKIP "Chocolatey already on PATH." }
+#     choco feature enable -n allowGlobalConfirmation -y 2>$null | Out-Null
+#     choco feature enable -n checksumFiles -y 2>$null | Out-Null
+#     choco feature enable -n allowEmptyChecksums -y 2>$null | Out-Null
+#     Write-OK "Chocolatey features configured."
+#     Set-StepDone 'Chocolatey'
+# }
+# #>
 
 # Step 9: Chezmoi Init
 function Step-ChezmoiInit {
@@ -521,46 +523,48 @@ function Install-WingetPackages {
     }
 }
 
-function Install-ChocoPackages {
-    param([string[]]$Packages = @())
-    Write-Section "Chocolatey Packages"
-    if (-not (Test-Cmd 'choco')) { Write-SKIP "Chocolatey not available."; return }
-    $instChoco = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
-    choco list 2>$null | ForEach-Object {
-        if ($_ -match '^(\S+)\s+\S') { [void]$instChoco.Add($matches[1]) }
-    }
-    $batch = [System.Collections.Generic.List[string]]::new()
-    $versioned = [System.Collections.Generic.List[hashtable]]::new()
-    foreach ($pkg in $Packages) {
-        if ([string]::IsNullOrWhiteSpace($pkg)) { continue }
-        if ($pkg -match '^(.+?)\s+--version[= ](\S+)$') {
-            $name = $matches[1].Trim(); $ver = $matches[2].Trim()
-            $key = "Choco_${name}_$ver"
-            if ((Test-StepDone $key) -or $instChoco.Contains($name)) { Write-SKIP $name; Set-StepDone $key; continue }
-            $versioned.Add(@{ Name=$name; Version=$ver; Key=$key })
-        } else {
-            $key = "Choco_$($pkg -replace '[^\w]','_')"
-            if ((Test-StepDone $key) -or $instChoco.Contains($pkg)) { Write-SKIP $pkg; Set-StepDone $key; continue }
-            $batch.Add($pkg)
-        }
-    }
-    if ($batch.Count -gt 0) {
-        Write-INFO "Batch installing: $($batch -join ', ')"
-        choco install @batch -y 2>&1 | Out-Null
-        $nowInstalled = choco list 2>$null | Out-String
-        foreach ($p in $batch) {
-            $key = "Choco_$($p -replace '[^\w]','_')"
-            if ($nowInstalled -match "(?m)^$([regex]::Escape($p))\s") { Write-OK $p; Set-StepDone $key }
-            else { Write-FAIL "$p  -  will retry on next run." }
-        }
-    }
-    foreach ($v in $versioned) {
-        Write-INFO "choco install $($v.Name) --version=$($v.Version)"
-        choco install $v.Name --version=$($v.Version) -y 2>&1 | Out-Null
-        if ($LASTEXITCODE -eq 0) { Write-OK $v.Name; Set-StepDone $v.Key }
-        else { Write-FAIL "$($v.Name)  -  will retry on next run." }
-    }
-}
+# <#
+# function Install-ChocoPackages {
+#     param([string[]]$Packages = @())
+#     Write-Section "Chocolatey Packages"
+#     if (-not (Test-Cmd 'choco')) { Write-SKIP "Chocolatey not available."; return }
+#     $instChoco = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
+#     choco list 2>$null | ForEach-Object {
+#         if ($_ -match '^(\S+)\s+\S') { [void]$instChoco.Add($matches[1]) }
+#     }
+#     $batch = [System.Collections.Generic.List[string]]::new()
+#     $versioned = [System.Collections.Generic.List[hashtable]]::new()
+#     foreach ($pkg in $Packages) {
+#         if ([string]::IsNullOrWhiteSpace($pkg)) { continue }
+#         if ($pkg -match '^(.+?)\s+--version[= ](\S+)$') {
+#             $name = $matches[1].Trim(); $ver = $matches[2].Trim()
+#             $key = "Choco_${name}_$ver"
+#             if ((Test-StepDone $key) -or $instChoco.Contains($name)) { Write-SKIP $name; Set-StepDone $key; continue }
+#             $versioned.Add(@{ Name=$name; Version=$ver; Key=$key })
+#         } else {
+#             $key = "Choco_$($pkg -replace '[^\w]','_')"
+#             if ((Test-StepDone $key) -or $instChoco.Contains($pkg)) { Write-SKIP $pkg; Set-StepDone $key; continue }
+#             $batch.Add($pkg)
+#         }
+#     }
+#     if ($batch.Count -gt 0) {
+#         Write-INFO "Batch installing: $($batch -join ', ')"
+#         choco install @batch -y 2>&1 | Out-Null
+#         $nowInstalled = choco list 2>$null | Out-String
+#         foreach ($p in $batch) {
+#             $key = "Choco_$($p -replace '[^\w]','_')"
+#             if ($nowInstalled -match "(?m)^$([regex]::Escape($p))\s") { Write-OK $p; Set-StepDone $key }
+#             else { Write-FAIL "$p  -  will retry on next run." }
+#         }
+#     }
+#     foreach ($v in $versioned) {
+#         Write-INFO "choco install $($v.Name) --version=$($v.Version)"
+#         choco install $v.Name --version=$($v.Version) -y 2>&1 | Out-Null
+#         if ($LASTEXITCODE -eq 0) { Write-OK $v.Name; Set-StepDone $v.Key }
+#         else { Write-FAIL "$($v.Name)  -  will retry on next run." }
+#     }
+# }
+# #>
 
 function Install-PipEssentials {
     Write-Section "pip Packages"
@@ -742,7 +746,7 @@ function Step-Verify {
         @{Cmd='aria2c'; Label='aria2'}
         @{Cmd='python'; Label='Python'}
         @{Cmd='winget'; Label='Winget'}
-        @{Cmd='choco'; Label='Chocolatey'}
+        # @{Cmd='choco'; Label='Chocolatey'}
         @{Cmd='pwsh'; Label='PowerShell 7'}
     )) {
         if (Test-Cmd $r.Cmd) { Write-OK $r.Label }
@@ -770,7 +774,7 @@ Step-ScoopBuckets
 Step-Python
 Step-CoreTools
 Step-Winget
-Step-Chocolatey
+# Step-Chocolatey
 Update-SessionPath
 
 Step-ChezmoiInit
@@ -805,10 +809,10 @@ if ($_config) {
     $_scoopPkgs  = if ($isFull) { Get-CProp $_config.scoop  'full'   } else { Get-CProp $_config.scoop  'mini'   }
     $_scoopGlob  = Get-CProp $_config.scoop 'global'
     $_wingetPkgs = if ($isFull) { Get-CProp $_config.winget 'full'   } else { Get-CProp $_config.winget 'mini'   }
-    $_chocoPkgs  = if ($isFull) { Get-CProp $_config.choco  'full'   } else { Get-CProp $_config.choco  'mini'   }
+    # $_chocoPkgs  = if ($isFull) { Get-CProp $_config.choco  'full'   } else { Get-CProp $_config.choco  'mini'   }
     Install-ScoopPackages  -UserPackages $_scoopPkgs -GlobalPackages $_scoopGlob
     Install-WingetPackages -Packages $_wingetPkgs
-    Install-ChocoPackages  -Packages $_chocoPkgs
+    # Install-ChocoPackages  -Packages $_chocoPkgs
     if ($isFull) { Install-PipEssentials }
     Step-VSCodeExtensions
     Step-Pins
@@ -825,7 +829,7 @@ Write-Host ""
 Write-Host "     Sync dotfiles anytime:           chezmoi apply" -ForegroundColor Green
 Write-Host "     Update all packages:" -ForegroundColor Green
 Write-Host "         scoop update *" -ForegroundColor Green
-Write-Host "         choco upgrade all -y" -ForegroundColor Green
+# Write-Host "         choco upgrade all -y" -ForegroundColor Green
 Write-Host "         winget upgrade --all" -ForegroundColor Green
 Write-Host ""
 Write-Host "     Re-run to retry any failed steps:" -ForegroundColor DarkGray

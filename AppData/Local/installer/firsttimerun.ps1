@@ -179,31 +179,33 @@ function Install-Winget {
 #endregion
 
 
-#region Chocolatey Install
-
-function Install-Chocolatey {
-
-    Write-Section "Checking Chocolatey"
-
-    if (Get-Command choco -ErrorAction SilentlyContinue) {
-
-        Write-Host "Chocolatey already installed." -ForegroundColor Green
-        return
-    }
-
-    Write-Host "Installing Chocolatey..."
-
-    Set-ExecutionPolicy Bypass -Scope Process -Force
-
-    Invoke-Expression (
-        (New-Object Net.WebClient).DownloadString(
-            'https://chocolatey.org/install.ps1'
-        )
-    )
-
-}
-
-#endregion
+# <#
+# #region Chocolatey Install
+# 
+# function Install-Chocolatey {
+# 
+#     Write-Section "Checking Chocolatey"
+# 
+#     if (Get-Command choco -ErrorAction SilentlyContinue) {
+# 
+#         Write-Host "Chocolatey already installed." -ForegroundColor Green
+#         return
+#     }
+# 
+#     Write-Host "Installing Chocolatey..."
+# 
+#     Set-ExecutionPolicy Bypass -Scope Process -Force
+# 
+#     Invoke-Expression (
+#         (New-Object Net.WebClient).DownloadString(
+#             'https://chocolatey.org/install.ps1'
+#         )
+#     )
+# 
+# }
+# 
+# #endregion
+# #>
 
 
 #region Install Core Tools
@@ -255,7 +257,7 @@ Fix-PythonPathPriority
 
 Install-Winget
 
-Install-Chocolatey
+# Install-Chocolatey
 
 Install-CoreTools
 
