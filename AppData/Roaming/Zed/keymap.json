@@ -235,6 +235,13 @@
         "editor::Paste"
       ],
 
+      // Black Hole Register (x, dd, D, c, C never overwrite register/clipboard)
+      "x": ["workspace::SendKeystrokes", "\" _ x"],
+      "d d": ["workspace::SendKeystrokes", "\" _ d d"],
+      "D": ["workspace::SendKeystrokes", "\" _ D"],
+      "c": ["workspace::SendKeystrokes", "\" _ c"],
+      "C": ["workspace::SendKeystrokes", "\" _ C"],
+
       // Redo
       "U": "vim::Redo",
 
@@ -314,7 +321,11 @@
       "ctrl-;": "workspace::ToggleBottomDock",
       "g c": "editor::ToggleComments",
       "space /": "editor::ToggleComments",
-      "x": "editor::Delete",
+      // Black Hole Register (Deletions & Pastes do not clobber yank register)
+      "x": ["workspace::SendKeystrokes", "\" _ d"],
+      "d": ["workspace::SendKeystrokes", "\" _ d"],
+      "c": ["workspace::SendKeystrokes", "\" _ c"],
+      "p": ["workspace::SendKeystrokes", "\" _ d P"],
       "space c a": "editor::ToggleCodeActions",
       "space f d": "editor::Format",
       "shift-s": ["vim::PushAddSurrounds", {}],
