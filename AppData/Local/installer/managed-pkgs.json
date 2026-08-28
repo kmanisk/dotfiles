@@ -12,6 +12,7 @@
     "dark",
     "ditto",
     "equalizer-apo-np",
+    "everything",
     "fastfetch",
     "fd",
     "ffmpeg",
@@ -68,8 +69,6 @@
     "AntibodySoftware.WizTree",
     "Valve.Steam",
     "Discord.Discord",
-    "ShareX.ShareX",
-    "voidtools.Everything",
     "IrfanSkiljan.IrfanView",
     "Microsoft.VCRedist.2015+.x64"
   ],

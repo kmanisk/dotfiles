@@ -69,6 +69,7 @@
       "extras/autohotkey",
       "extras/crystaldiskinfo",
       "extras/ditto",
+      "extras/everything",
       "extras/greenshot",
       "extras/lazygit",
       "extras/localsend",
@@ -104,8 +105,6 @@
       "AntibodySoftware.WizTree",
       "Valve.Steam",
       "Discord.Discord",
-      "ShareX.ShareX",
-      "voidtools.Everything",
       "IrfanSkiljan.IrfanView",
       "Microsoft.VCRedist.2015+.x64"
     ]
