@@ -91,7 +91,8 @@
       "java/openjdk",
       "nonportable/equalizer-apo-np",
       "nonportable/peace-np",
-      "rilo/rilo"
+      "rilo/rilo",
+      "rilo/ueli"
     ],
     "global": []
   },
@@ -103,9 +104,9 @@
       "chrisant996.Clink",
       "AntibodySoftware.WizTree",
       "Valve.Steam",
+      "Discord.Discord",
       "ShareX.ShareX",
       "voidtools.Everything",
-      "OliverSchwendener.ueli",
       "IrfanSkiljan.IrfanView",
       "Microsoft.VCRedist.2015+.x64"
     ]
