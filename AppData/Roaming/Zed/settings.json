@@ -1,9 +1,61 @@
 // Zed settings
 // Docs: https://zed.dev/docs/configuring-zed
 {
-    // ─────────────────────────────────────────────────
-    // General / Window
-    // ─────────────────────────────────────────────────
+    // ─────────────────────────────────────────────────────────────────────────────
+    // 1. TYPOGRAPHY & FONTS (All Fonts in One Place)
+    // ─────────────────────────────────────────────────────────────────────────────
+    // Editor (Buffer) Font
+    "buffer_font_family": "Monocraft",
+    "buffer_font_fallbacks": [
+        "Iosevka Nerd Font Mono",
+        "Aporetic Sans Mono",
+        "FantasqueSansM Nerd Font Mono"
+    ],
+    "buffer_font_size": 30.0, // <- Change this to adjust editor code size
+    "buffer_font_weight": 400, // Regular = 400, Medium = 500, SemiBold = 600, Bold = 700
+    "buffer_line_height": {
+        "custom": 1.4 // Line height spacing (1.35 - 1.4 sweet spot)
+    },
+    "buffer_font_features": {
+        "liga": true, // Enable standard ligatures
+        "calt": true // Contextual alternates (coding ligatures: ->, =>, !=, ===)
+    },
+    // UI Font (Sidebars, Menus, Status Bar, Tabs)
+    "ui_font_family": "JetBrainsMono Nerd Font",
+    "ui_font_fallbacks": [
+        "Segoe UI",
+        "system-ui"
+    ],
+    "ui_font_size": 19.0,
+    "ui_font_weight": 400,
+    // Terminal Font
+    "terminal": {
+        "shell": {
+            "program": "pwsh.exe"
+        },
+        "font_family": "Iosevka Nerd Font",
+        "font_fallbacks": [
+            "monospace"
+        ],
+        "font_size": 22.0,
+        "line_height": {
+            "custom": 1.0
+        },
+        "copy_on_select": true,
+        "default_width": 187
+    },
+    // ─────────────────────────────────────────────────────────────────────────────
+    // 2. THEME & ICONS
+    // ─────────────────────────────────────────────────────────────────────────────
+    "icon_theme": "JetBrains Icons Dark",
+    "theme": {
+        "mode": "system",
+        "light": "Gruvbox Light",
+        "dark": "Carbonfox - opaque"
+    },
+    // ─────────────────────────────────────────────────────────────────────────────
+    // 3. GENERAL & WINDOW
+    // ─────────────────────────────────────────────────────────────────────────────
     "cli_default_open_behavior": "existing_window",
     "instrumentation": {
         "performance_profiler": {
@@ -20,43 +72,9 @@
     },
     "horizontal_scroll_margin": 1,
     "vertical_scroll_margin": 99,
-    // ─────────────────────────────────────────────────
-    // Theme & Icons
-    // ─────────────────────────────────────────────────
-    "icon_theme": "JetBrains Icons Dark",
-    "theme": {
-        "mode": "system",
-        "light": "Gruvbox Light",
-        "dark": "VSCode Dark Polished"
-    },
-    // ─────────────────────────────────────────────────
-    // UI Font
-    // ─────────────────────────────────────────────────
-    // "ui_font_family": "Hurmit Nerd Font Mono",
-    "ui_font_family": "JetBrainsMono Nerd Font",
-    "ui_font_size": 19.0,
-    // ─────────────────────────────────────────────────
-    // Editor (Buffer) Font
-    // ─────────────────────────────────────────────────
-    "buffer_font_family": "FantasqueSansM Nerd Font Mono",
-    "buffer_font_fallbacks": [
-        "Iosevka Nerd Font Mono",
-        "Aporetic Sans Mono",
-        "FantasqueSansM Nerd Font Mono"
-    ],
-    "buffer_font_size": 30.0, // <- change this to adjust editor code font size
-    "buffer_font_features": {
-        "liga": true, // enable ligatures
-        "calt": true // contextual alternates (coding ligatures: ->, =>, !=, ===)
-    },
-    "buffer_font_weight": 400,
-    "buffer_line_height": {
-        // "custom": 1.35 // Iosevka sweet spot
-        "custom": 1.4
-    },
-    // ─────────────────────────────────────────────────
-    // Editor Behaviour
-    // ─────────────────────────────────────────────────
+    // ─────────────────────────────────────────────────────────────────────────────
+    // 4. EDITOR BEHAVIOUR
+    // ─────────────────────────────────────────────────────────────────────────────
     "preferred_line_length": 60,
     "soft_wrap": "editor_width",
     "hard_tabs": false,
@@ -75,9 +93,9 @@
     "cursor_blink": false,
     "cursor_shape": "bar",
     "multi_cursor_modifier": "alt",
-    // ─────────────────────────────────────────────────
-    // Gutter
-    // ─────────────────────────────────────────────────
+    // ─────────────────────────────────────────────────────────────────────────────
+    // 5. GUTTER & LINE NUMBERS
+    // ─────────────────────────────────────────────────────────────────────────────
     "gutter": {
         "line_numbers": true,
         "folds": false,
@@ -88,15 +106,12 @@
         "min_line_number_digits": 0
     },
     "relative_line_numbers": "enabled",
-    // ─────────────────────────────────────────────────
-    // Minimap
-    // ─────────────────────────────────────────────────
+    // ─────────────────────────────────────────────────────────────────────────────
+    // 6. MINIMAP & SCROLLBAR
+    // ─────────────────────────────────────────────────────────────────────────────
     "minimap": {
         "show": "never"
     },
-    // ─────────────────────────────────────────────────
-    // Scrollbar
-    // ─────────────────────────────────────────────────
     "scrollbar": {
         "show": "never",
         "axes": {
@@ -104,22 +119,19 @@
             "vertical": false
         }
     },
-    // ─────────────────────────────────────────────────
-    // Indentation Guides
-    // ─────────────────────────────────────────────────
+    // ─────────────────────────────────────────────────────────────────────────────
+    // 7. INDENT GUIDES & INLAY HINTS
+    // ─────────────────────────────────────────────────────────────────────────────
     "indent_guides": {
         "enabled": true,
         "coloring": "fixed"
     },
-    // ─────────────────────────────────────────────────
-    // Inlay Hints
-    // ─────────────────────────────────────────────────
     "inlay_hints": {
         "enabled": false
     },
-    // ─────────────────────────────────────────────────
-    // Tabs & Tab Bar
-    // ─────────────────────────────────────────────────
+    // ─────────────────────────────────────────────────────────────────────────────
+    // 8. TABS, TOOLBAR & STATUS BAR
+    // ─────────────────────────────────────────────────────────────────────────────
     "preview_tabs": {
         "enabled": false
     },
@@ -130,16 +142,10 @@
         "show_nav_history_buttons": false,
         "show_tab_bar_buttons": false
     },
-    // ─────────────────────────────────────────────────
-    // Toolbar
-    // ─────────────────────────────────────────────────
     "toolbar": {
         "breadcrumbs": false,
         "quick_actions": false
     },
-    // ─────────────────────────────────────────────────
-    // Status Bar & Centered Layout (Zen Mode)
-    // ─────────────────────────────────────────────────
     "status_bar": {
         "experimental.show": false,
         "active_language_button": false,
@@ -150,72 +156,46 @@
         "left_padding": 0.15,
         "right_padding": 0.15
     },
-    // ─────────────────────────────────────────────────
-    // Title Bar
-    // ─────────────────────────────────────────────────
     "title_bar": {
         "show_sign_in": false,
         "show_project_items": false,
         "show_branch_name": false,
         "show_user_menu": false
     },
-    // ─────────────────────────────────────────────────
-    // Git (Version Control)
-    // ─────────────────────────────────────────────────
+    // ─────────────────────────────────────────────────────────────────────────────
+    // 9. GIT (VERSION CONTROL)
+    // ─────────────────────────────────────────────────────────────────────────────
     "git": {
-        // To re-enable git modified line indicators in the gutter, change "hide" to "tracked_files" or uncomment below:
-        // "git_gutter": "tracked_files",
         "git_gutter": "hide"
     },
-    // ─────────────────────────────────────────────────
-    // Vim Mode
-    // ─────────────────────────────────────────────────
+    // ─────────────────────────────────────────────────────────────────────────────
+    // 10. VIM MODE & WHICH-KEY
+    // ─────────────────────────────────────────────────────────────────────────────
     "vim_mode": true,
     "vim": {
         "use_system_clipboard": "always"
     },
-    // ─────────────────────────────────────────────────
-    // Which-key (keybinding hints)
-    // ─────────────────────────────────────────────────
     "which_key": {
         "enabled": true
     },
-    // ─────────────────────────────────────────────────
-    // Autosave
-    // ─────────────────────────────────────────────────
+    // ─────────────────────────────────────────────────────────────────────────────
+    // 11. AUTOSAVE
+    // ─────────────────────────────────────────────────────────────────────────────
     "autosave": {
         "after_delay": {
             "milliseconds": 500
         }
     },
-    // ─────────────────────────────────────────────────
-    // Terminal
-    // ─────────────────────────────────────────────────
-    "terminal": {
-        "shell": {
-            "program": "pwsh.exe"
-        },
-        "font_family": "Iosevka Nerd Font",
-        "font_size": 22.0,
-        "font_fallbacks": [
-            "monospace"
-        ],
-        "line_height": {
-            "custom": 1.0
-        },
-        "copy_on_select": true,
-        "default_width": 187
-    },
-    // ─────────────────────────────────────────────────
-    // Code Formatter
-    // ─────────────────────────────────────────────────
+    // ─────────────────────────────────────────────────────────────────────────────
+    // 12. CODE FORMATTER
+    // ─────────────────────────────────────────────────────────────────────────────
     "format_on_save": "on",
     "remove_trailing_whitespace_on_save": true,
     "ensure_final_newline_on_save": true,
     "formatter": "language_server",
-    // ─────────────────────────────────────────────────
-    // Per-Language Overrides
-    // ─────────────────────────────────────────────────
+    // ─────────────────────────────────────────────────────────────────────────────
+    // 13. PER-LANGUAGE OVERRIDES
+    // ─────────────────────────────────────────────────────────────────────────────
     "languages": {
         "Rust": {
             "formatter": "language_server",
@@ -277,18 +257,16 @@
             "tab_size": 4,
             "hard_tabs": true
         },
-        // Java: Prettier has no Java support — must use the language server (jdtls)
         "Java": {
             "formatter": "language_server",
             "tab_size": 2,
             "hard_tabs": false
         }
     },
-    // ─────────────────────────────────────────────────
-    // LSP (Language Server Protocol) Config
-    // ─────────────────────────────────────────────────
+    // ─────────────────────────────────────────────────────────────────────────────
+    // 14. LSP (LANGUAGE SERVER PROTOCOL) CONFIG
+    // ─────────────────────────────────────────────────────────────────────────────
     "lsp": {
-        // Rust: use clippy for on-save checks
         "rust-analyzer": {
             "initialization_options": {
                 "check": {
@@ -296,7 +274,6 @@
                 }
             }
         },
-        // Lua: expose vim globals so diagnostics do not complain
         "lua-language-server": {
             "settings": {
                 "Lua": {
@@ -308,7 +285,6 @@
                 }
             }
         },
-        // Go: enable unused-param analysis + staticcheck
         "gopls": {
             "initialization_options": {
                 "analyses": {
@@ -318,9 +294,9 @@
             }
         }
     },
-    // ─────────────────────────────────────────────────
-    // Language Models (Google Gemini 3.7 Flash)
-    // ─────────────────────────────────────────────────
+    // ─────────────────────────────────────────────────────────────────────────────
+    // 15. AI MODELS (GOOGLE GEMINI 3.7 FLASH)
+    // ─────────────────────────────────────────────────────────────────────────────
     "language_models": {
         "google": {
             "available_models": [
@@ -349,9 +325,9 @@
         },
         "favorite_models": []
     },
-    // ─────────────────────────────────────────────────
-    // Panel Dock Layout
-    // ─────────────────────────────────────────────────
+    // ─────────────────────────────────────────────────────────────────────────────
+    // 16. PANEL DOCK LAYOUT
+    // ─────────────────────────────────────────────────────────────────────────────
     "project_panel": {
         "auto_fold_dirs": false,
         "button": true,
@@ -384,10 +360,9 @@
     "chat_panel": {
         "dock": "left"
     },
-    // ─────────────────────────────────────────────────
-    // File Scan Exclusions
-    // Files/dirs hidden from the project panel & search
-    // ─────────────────────────────────────────────────
+    // ─────────────────────────────────────────────────────────────────────────────
+    // 17. FILE SCAN EXCLUSIONS
+    // ─────────────────────────────────────────────────────────────────────────────
     "file_scan_exclusions": [
         "**/.git",
         "**/.svn",
@@ -413,9 +388,9 @@
         "**/*.exe",
         "**/*.pdb"
     ],
-    // ─────────────────────────────────────────────────
-    // Telemetry (all off)
-    // ─────────────────────────────────────────────────
+    // ─────────────────────────────────────────────────────────────────────────────
+    // 18. TELEMETRY
+    // ─────────────────────────────────────────────────────────────────────────────
     "telemetry": {
         "diagnostics": false,
         "metrics": false
