@@ -159,7 +159,10 @@
       "space r f": "editor::ToggleFoldRecursive",
       "z a": "editor::ToggleFold",
 
-      // Git & Panels
+      // Git & Panels (Gitsigns style)
+      "space h r": "editor::RevertSelectedHunks",
+      "space h d": "editor::ToggleHunkDiff",
+      "space h p": "editor::ToggleHunkDiff",
       "space g h d": "editor::ToggleHunkDiff",
       "space g h r": "editor::RevertSelectedHunks",
       "space l g": "git_panel::ToggleFocus",
