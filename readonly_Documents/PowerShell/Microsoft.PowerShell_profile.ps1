@@ -1723,3 +1723,218 @@ function fail-clear {
 function mcpedit {
     nvim "C:\Users\Administrator\.gemini\antigravity-cli\mcp_config.json"
 }
+
+# =============================================================================
+# Font Management (Install, Remove, List, and Sync with packages.json)
+# =============================================================================
+function fontmanage {
+    <#
+    .SYNOPSIS
+        Manage Windows fonts and sync font manifests in packages.json.
+    .DESCRIPTION
+        Install or remove font files (TTF/OTF/ZIP/URL), register/unregister in Windows,
+        and update packages.json manifests automatically.
+    .EXAMPLE
+        fontmanage install C:\Downloads\CozetteVector.ttf
+        fontmanage install https://github.com/the-moonwitch/Cozette/releases/download/v.1.30.0/CozetteVector.zip
+        fontmanage add Cozette
+        fontmanage remove Cozette
+        fontmanage list
+    #>
+    [CmdletBinding()]
+    param(
+        [Parameter(Position = 0, Mandatory = $false)]
+        [ValidateSet("install", "i", "remove", "rm", "r", "add", "list", "ls", "l")]
+        [string]$Action = "list",
+
+        [Parameter(Position = 1, Mandatory = $false, ValueFromRemainingArguments = $true)]
+        [string[]]$Targets
+    )
+
+    $chezmoiPkgs = "$HOME\.local\share\chezmoi\AppData\Local\installer\packages.json"
+    $localPkgs   = "$env:LOCALAPPDATA\installer\packages.json"
+    $userFonts   = "$env:LOCALAPPDATA\Microsoft\Windows\Fonts"
+    $regKey      = "HKCU:\Software\Microsoft\Windows NT\CurrentVersion\Fonts"
+
+    if (-not (Test-Path $userFonts)) {
+        New-Item -ItemType Directory -Path $userFonts -Force | Out-Null
+    }
+
+    # Helper: update packages.json in both locations
+    $updateManifest = {
+        param([string]$FontName, [bool]$Add)
+        foreach ($p in @($chezmoiPkgs, $localPkgs)) {
+            if (Test-Path $p) {
+                try {
+                    $json = Get-Content $p -Raw | ConvertFrom-Json -AsHashtable
+                    $fontList = [System.Collections.Generic.List[object]]::new($json["fonts"])
+                    if ($Add) {
+                        if ($fontList -notcontains $FontName) {
+                            $fontList.Add($FontName)
+                            $json["fonts"] = $fontList
+                            $json | ConvertTo-Json -Depth 10 | Set-Content $p -Encoding UTF8
+                            Write-Host "Added '$FontName' to $p" -ForegroundColor Green
+                        }
+                    } else {
+                        if ($fontList -contains $FontName) {
+                            [void]$fontList.Remove($FontName)
+                            $json["fonts"] = $fontList
+                            $json | ConvertTo-Json -Depth 10 | Set-Content $p -Encoding UTF8
+                            Write-Host "Removed '$FontName' from $p" -ForegroundColor Yellow
+                        }
+                    }
+                } catch {
+                    Write-Warning "Could not update $p : $_"
+                }
+            }
+        }
+    }
+
+    # Helper: broadcast font change
+    $notifyFontChange = {
+        Add-Type -TypeDefinition @"
+using System;
+using System.Runtime.InteropServices;
+public class WinFontNotifier {
+    [DllImport("user32.dll", SetLastError = true)]
+    public static extern int SendMessage(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam);
+}
+"@ -ErrorAction SilentlyContinue
+        try {
+            [WinFontNotifier]::SendMessage(0xffff, 0x001D, [IntPtr]::Zero, [IntPtr]::Zero) | Out-Null
+        } catch {}
+    }
+
+    switch ($Action) {
+        { $_ -in "list", "ls", "l" } {
+            Write-Host "`n=== TRACKED FONTS IN PACKAGES.JSON ===" -ForegroundColor Cyan
+            if (Test-Path $chezmoiPkgs) {
+                $data = Get-Content $chezmoiPkgs -Raw | ConvertFrom-Json -AsHashtable
+                $data["fonts"] | ForEach-Object { Write-Host " - $_" -ForegroundColor Green }
+            }
+
+            Write-Host "`n=== INSTALLED USER FONTS ($userFonts) ===" -ForegroundColor Cyan
+            $installed = Get-ChildItem -Path $userFonts -Include *.ttf, *.otf -Recurse -ErrorAction SilentlyContinue
+            if ($installed) {
+                $installed | ForEach-Object { Write-Host " - $($_.Name)" }
+            } else {
+                Write-Host " (No per-user font files in $userFonts)" -ForegroundColor DarkGray
+            }
+        }
+
+        { $_ -in "add" } {
+            if (-not $Targets) {
+                Write-Error "Please specify a font name to add to packages.json."
+                return
+            }
+            foreach ($t in $Targets) {
+                & $updateManifest $t $true
+            }
+        }
+
+        { $_ -in "install", "i" } {
+            if (-not $Targets) {
+                Write-Error "Please specify a font path, URL, or font name to install."
+                return
+            }
+
+            foreach ($target in $Targets) {
+                $tempDir = $null
+                $filesToInstall = @()
+                $inferredName = $target
+
+                # 1. URL Download
+                if ($target -match '^https?://') {
+                    Write-Host "Downloading font from $target..." -ForegroundColor Cyan
+                    $tempDir = Join-Path $env:TEMP ([System.Guid]::NewGuid().ToString())
+                    New-Item -ItemType Directory -Path $tempDir -Force | Out-Null
+                    $fileName = ($target -split '/')[-1]
+                    $dlPath = Join-Path $tempDir $fileName
+                    Invoke-RestMethod -Uri $target -OutFile $dlPath
+
+                    if ($fileName -match '\.zip$') {
+                        Expand-Archive -Path $dlPath -DestinationPath $tempDir -Force
+                        $filesToInstall = Get-ChildItem -Path $tempDir -Include *.ttf, *.otf -Recurse
+                    } elseif ($fileName -match '\.(ttf|otf)$') {
+                        $filesToInstall = @(Get-Item $dlPath)
+                    }
+                    $inferredName = ($fileName -replace '\.(zip|ttf|otf)$', '')
+                }
+                # 2. Local File / Folder / ZIP
+                elseif (Test-Path $target) {
+                    $item = Get-Item $target
+                    if ($item.PSIsContainer) {
+                        $filesToInstall = Get-ChildItem -Path $item.FullName -Include *.ttf, *.otf -Recurse
+                        $inferredName = $item.Name
+                    } elseif ($item.Extension -ieq ".zip") {
+                        $tempDir = Join-Path $env:TEMP ([System.Guid]::NewGuid().ToString())
+                        Expand-Archive -Path $item.FullName -DestinationPath $tempDir -Force
+                        $filesToInstall = Get-ChildItem -Path $tempDir -Include *.ttf, *.otf -Recurse
+                        $inferredName = [System.IO.Path]::GetFileNameWithoutExtension($item.Name)
+                    } elseif ($item.Extension -in @(".ttf", ".otf")) {
+                        $filesToInstall = @($item)
+                        $inferredName = [System.IO.Path]::GetFileNameWithoutExtension($item.Name)
+                    }
+                }
+                # 3. Font Name (Add to manifest)
+                else {
+                    & $updateManifest $target $true
+                    continue
+                }
+
+                # Install font files to User Fonts
+                foreach ($f in $filesToInstall) {
+                    $dest = Join-Path $userFonts $f.Name
+                    Copy-Item $f.FullName $dest -Force
+                    $fontRegName = "$([System.IO.Path]::GetFileNameWithoutExtension($f.Name)) (TrueType)"
+                    Set-ItemProperty -Path $regKey -Name $fontRegName -Value $dest -Force
+                    Write-Host "Installed: $($f.Name)" -ForegroundColor Green
+                }
+
+                if ($filesToInstall.Count -gt 0) {
+                    & $notifyFontChange
+                    & $updateManifest $inferredName $true
+                    Write-Host "Font '$inferredName' successfully installed and registered!" -ForegroundColor Green
+                }
+
+                if ($tempDir -and (Test-Path $tempDir)) {
+                    Remove-Item $tempDir -Recurse -Force -ErrorAction SilentlyContinue
+                }
+            }
+        }
+
+        { $_ -in "remove", "rm", "r" } {
+            if (-not $Targets) {
+                Write-Error "Please specify a font name to remove."
+                return
+            }
+
+            foreach ($target in $Targets) {
+                $pattern = "*$target*"
+                $foundFiles = Get-ChildItem -Path $userFonts -Filter $pattern -Include *.ttf, *.otf -Recurse -ErrorAction SilentlyContinue
+                if ($foundFiles) {
+                    foreach ($f in $foundFiles) {
+                        Remove-Item $f.FullName -Force -ErrorAction SilentlyContinue
+                        Write-Host "Deleted font file: $($f.Name)" -ForegroundColor Yellow
+                    }
+                }
+
+                # Remove registry entries
+                $regEntries = Get-ItemProperty -Path $regKey -ErrorAction SilentlyContinue
+                if ($regEntries) {
+                    $props = $regEntries.PSObject.Properties | Where-Object { $_.Name -like "*$target*" -or $_.Value -like "*$target*" }
+                    foreach ($prop in $props) {
+                        Remove-ItemProperty -Path $regKey -Name $prop.Name -ErrorAction SilentlyContinue
+                        Write-Host "Removed registry font: $($prop.Name)" -ForegroundColor Yellow
+                    }
+                }
+
+                & $notifyFontChange
+                & $updateManifest $target $false
+                Write-Host "Font '$target' uninstalled." -ForegroundColor Green
+            }
+        }
+    }
+}
+Set-Alias -Name fman -Value fontmanage
+
