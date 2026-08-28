@@ -1842,19 +1842,69 @@ public class WinFontNotifier {
     }
 
     switch ($Action) {
-        { $_ -in "list", "ls", "l" } {
-            Write-Host "`n=== TRACKED FONTS IN PACKAGES.JSON ===" -ForegroundColor Cyan
+        { $_ -in "list", "ls", "l", "lf" } {
+            $isFull = ($Action -eq "lf") -or ($Targets -contains "full") -or ($Targets -contains "-full") -or ($Targets -contains "-f")
+
+            $tracked = @()
             if (Test-Path $chezmoiPkgs) {
-                $data = Get-Content $chezmoiPkgs -Raw | ConvertFrom-Json -AsHashtable
-                $data["fonts"] | ForEach-Object { Write-Host " - $_" -ForegroundColor Green }
+                $tracked = @((Get-Content $chezmoiPkgs -Raw | ConvertFrom-Json -AsHashtable)["fonts"])
+            }
+            $installed = Get-ChildItem -Path $userFonts -Include *.ttf, *.otf -Recurse -ErrorAction SilentlyContinue
+
+            function Find-FontFiles {
+                param([string]$FontName, $AllFiles)
+                $simple = ($FontName -replace "(Mono|Sans|Serif|Font|Nerd)", "").ToLower()
+                return @($AllFiles | Where-Object {
+                    $_.Name -like "*$FontName*" -or
+                    $_.Name.ToLower() -like "*$simple*" -or
+                    ($simple -eq "hermit" -and $_.Name -like "*hurmit*") -or
+                    ($simple -eq "intelone" -and $_.Name -like "*intone*") -or
+                    ($simple -eq "fantasquesans" -and $_.Name -like "*fantasque*") -or
+                    ($simple -match "psudo" -and $_.Name -like "*psudo*")
+                })
             }
 
-            Write-Host "`n=== INSTALLED USER FONTS ($userFonts) ===" -ForegroundColor Cyan
-            $installed = Get-ChildItem -Path $userFonts -Include *.ttf, *.otf -Recurse -ErrorAction SilentlyContinue
-            if ($installed) {
-                $installed | ForEach-Object { Write-Host " - $($_.Name)" }
-            } else {
-                Write-Host " (No per-user font files in $userFonts)" -ForegroundColor DarkGray
+            Write-Host "`n=== TRACKED FONTS ($($tracked.Count)) ===" -ForegroundColor Cyan
+            $matchedFileNames = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
+
+            foreach ($font in $tracked) {
+                $m = Find-FontFiles $font $installed
+                if ($m.Count -gt 0) {
+                    Write-Host "  [OK] $font ($($m.Count) variant file(s))" -ForegroundColor Green
+                    if ($isFull) {
+                        $m | ForEach-Object { 
+                            [void]$matchedFileNames.Add($_.Name)
+                            Write-Host "       -> $($_.Name)" -ForegroundColor DarkGray 
+                        }
+                    } else {
+                        $m | ForEach-Object { [void]$matchedFileNames.Add($_.Name) }
+                    }
+                } else {
+                    Write-Host "  [--] $font (not installed in user fonts)" -ForegroundColor DarkGray
+                }
+            }
+
+            # Unmatched extra user fonts
+            $unmatched = @($installed | Where-Object { -not $matchedFileNames.Contains($_.Name) })
+            if ($unmatched.Count -gt 0) {
+                Write-Host "`n=== OTHER INSTALLED USER FONTS ($($unmatched.Count)) ===" -ForegroundColor Yellow
+                if ($isFull) {
+                    $unmatched | ForEach-Object { Write-Host "  - $($_.Name)" -ForegroundColor DarkGray }
+                } else {
+                    $groups = @{}
+                    foreach ($u in $unmatched) {
+                        $clean = $u.BaseName -replace '(-Bold|-Regular|-Italic|-BoldItalic|-ExtraBold|-SemiBold|-Light|-Medium|-Thin|-Heavy|-Oblique)+$', ''
+                        if (-not $groups.ContainsKey($clean)) { $groups[$clean] = 0 }
+                        $groups[$clean]++
+                    }
+                    foreach ($g in ($groups.Keys | Sort-Object)) {
+                        Write-Host "  - $g ($($groups[$g]) file(s))" -ForegroundColor DarkGray
+                    }
+                }
+            }
+
+            if (-not $isFull) {
+                Write-Host "`n Tip: Run 'fontmanage list -full' (or 'fman lf') to view all individual .ttf/.otf variant files." -ForegroundColor DarkCyan
             }
         }
 
@@ -1879,8 +1929,50 @@ public class WinFontNotifier {
                 $filesToInstall = @()
                 $inferredName = $target
 
-                # 1. URL Download
-                if ($target -match '^https?://') {
+                # 1. GitHub repo shorthand (e.g. 'the-moonwitch/Cozette', 'IdreesInc/Monocraft')
+                if ($target -match '^[a-zA-Z0-9_.-]+/[a-zA-Z0-9_.-]+$' -and -not (Test-Path $target)) {
+                    Write-Host "Resolving latest GitHub release for $target..." -ForegroundColor Cyan
+                    try {
+                        $api = "https://api.github.com/repos/$target/releases/latest"
+                        $headers = @{ "User-Agent" = "Mozilla/5.0" }
+                        if ($env:GITHUB_TOKEN) { $headers["Authorization"] = "token $env:GITHUB_TOKEN" }
+                        $res = Invoke-RestMethod -Uri $api -Headers $headers -ErrorAction Stop
+
+                        $zipAssets = @($res.assets | Where-Object { $_.name -match "\.zip$" })
+                        $downloadUrls = @()
+                        if ($zipAssets.Count -gt 0) {
+                            $best = ($zipAssets | Where-Object { $_.name -match "(font|vector|bundle|release|all)" } | Select-Object -First 1)
+                            if (-not $best) { $best = $zipAssets[0] }
+                            $downloadUrls = @($best.browser_download_url)
+                        } else {
+                            $fontAssets = @($res.assets | Where-Object { $_.name -match "\.(ttf|otf)$" })
+                            if ($fontAssets.Count -gt 0) {
+                                $downloadUrls = @($fontAssets | Select-Object -ExpandProperty browser_download_url)
+                            }
+                        }
+
+                        if ($downloadUrls.Count -gt 0) {
+                            $tempDir = Join-Path $env:TEMP ([System.Guid]::NewGuid().ToString())
+                            New-Item -ItemType Directory -Path $tempDir -Force | Out-Null
+                            foreach ($dUrl in $downloadUrls) {
+                                $fName = ($dUrl -split '/')[-1]
+                                $dlFile = Join-Path $tempDir $fName
+                                curl.exe -fL -A "Mozilla/5.0" -s -o $dlFile $dUrl
+                                if ($fName -match '\.zip$') {
+                                    Expand-Archive -Path $dlFile -DestinationPath $tempDir -Force
+                                }
+                            }
+                            $filesToInstall = Get-ChildItem -Path $tempDir -Include *.ttf, *.otf -Recurse
+                            $inferredName = ($target -split '/')[-1]
+                        } else {
+                            Write-Warning "No font files (.ttf/.otf/.zip) found in latest release of $target."
+                        }
+                    } catch {
+                        Write-Warning "GitHub release query failed for $target : $_"
+                    }
+                }
+                # 2. URL Download (Direct Link or Release Asset)
+                elseif ($target -match '^https?://') {
                     Write-Host "Downloading font from $target..." -ForegroundColor Cyan
                     $tempDir = Join-Path $env:TEMP ([System.Guid]::NewGuid().ToString())
                     New-Item -ItemType Directory -Path $tempDir -Force | Out-Null
@@ -1900,7 +1992,7 @@ public class WinFontNotifier {
                     }
                     $inferredName = ($fileName -replace '\.(zip|ttf|otf)$', '')
                 }
-                # 2. Local File / Folder / ZIP
+                # 3. Local File / Folder / ZIP
                 elseif (Test-Path $target) {
                     $item = Get-Item $target
                     if ($item.PSIsContainer) {
@@ -1916,7 +2008,7 @@ public class WinFontNotifier {
                         $inferredName = [System.IO.Path]::GetFileNameWithoutExtension($item.Name)
                     }
                 }
-                # 3. Font Name (Add to manifest)
+                # 4. Font Name (Add to manifest)
                 else {
                     & $updateManifest $target $true
                     continue
