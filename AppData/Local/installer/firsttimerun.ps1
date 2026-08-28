@@ -110,7 +110,7 @@ function Fix-PythonPathPriority {
         $_ -and ($_ -ne $windowsApps) -and ($_ -ne $scoopPython)
     }
 
-    $newPathParts = @($scoopPython) + $pathParts
+    $newPathParts = @($scoopPython) + $pathParts + @($windowsApps)
 
     $newPath = $newPathParts -join ';'
 
