@@ -558,65 +558,133 @@ function Invoke-MachineDefaults {
 }
 
 # ==============================================================================
-# FONTS (Lightweight Single TTF Downloads via curl)
+# FONTS (Declarative Single TTF Downloads via curl)
 # ==============================================================================
 
 function Invoke-Fonts {
+    param([array]$Desired = @())
     Write-Section "Coding Fonts (Single TTF)"
+    if (-not $Desired -or $Desired.Count -eq 0) { Write-SKIP "No fonts declared in packages.json."; return }
+
     $fontsDir = Join-Path $env:LOCALAPPDATA 'Microsoft\Windows\Fonts'
     if (-not (Test-Path $fontsDir)) {
         New-Item -ItemType Directory -Path $fontsDir -Force | Out-Null
     }
-
-    $fonts = @(
-        @{
-            Name     = 'Monocraft.ttf'
-            RegName  = 'Monocraft (TrueType)'
-            Url      = 'https://github.com/IdreesInc/Monocraft/releases/download/v3.0/Monocraft.ttf'
-        },
-        @{
-            Name     = 'ComicMono.ttf'
-            RegName  = 'Comic Mono (TrueType)'
-            Url      = 'https://raw.githubusercontent.com/dtinth/comic-mono-font/master/ComicMono.ttf'
-        }
-    )
-
     $regPath = 'HKCU:\Software\Microsoft\Windows NT\CurrentVersion\Fonts'
     if (-not (Test-Path $regPath)) { New-Item -Path $regPath -Force | Out-Null }
 
-    # Minimal Iosevka Nerd Font check
-    $iosevkaReg = Join-Path $fontsDir 'IosevkaNerdFont-Regular.ttf'
-    if (-not (Test-Path $iosevkaReg)) {
-        Write-INFO "Downloading Iosevka Nerd Font..."
-        $zipPath = "$env:TEMP\Iosevka.zip"
-        curl.exe -fLo $zipPath -s 'https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Iosevka.zip'
-        if (Test-Path $zipPath) {
-            Expand-Archive -Path $zipPath -DestinationPath "$env:TEMP\iosevka_tmp" -Force
-            if (Test-Path "$env:TEMP\iosevka_tmp\IosevkaNerdFont-Regular.ttf") {
-                Copy-Item "$env:TEMP\iosevka_tmp\IosevkaNerdFont-*.ttf" $fontsDir -Force -EA SilentlyContinue
-            }
-            Remove-Item $zipPath -Force -EA SilentlyContinue
-            Remove-Item "$env:TEMP\iosevka_tmp" -Recurse -Force -EA SilentlyContinue
-            Write-OK "Iosevka Nerd Font installed."
+    # Known single-file direct download registry
+    $customFonts = @{
+        'monocraft' = @{
+            Filename = 'Monocraft.ttf'
+            Url      = 'https://github.com/IdreesInc/Monocraft/releases/download/v3.0/Monocraft.ttf'
+            RegName  = 'Monocraft (TrueType)'
         }
-    } else {
-        Write-SKIP "Iosevka Nerd Font (already installed)"
+        'comicmono' = @{
+            Filename = 'ComicMono.ttf'
+            Url      = 'https://raw.githubusercontent.com/dtinth/comic-mono-font/master/ComicMono.ttf'
+            RegName  = 'Comic Mono (TrueType)'
+        }
+        'pixelcode' = @{
+            Filename = 'PixelCode.ttf'
+            Url      = 'https://raw.githubusercontent.com/qwerasd205/PixelCode/master/PixelCode.ttf'
+            RegName  = 'Pixel Code (TrueType)'
+        }
     }
 
-    foreach ($f in $fonts) {
-        $dest = Join-Path $fontsDir $f.Name
-        if (-not (Test-Path $dest)) {
-            Write-INFO "Downloading $($f.Name)..."
-            curl.exe -fLo $dest -s $f.Url
+    # Aliases to canonical font names
+    $aliases = @{
+        'monoone'         = 'IntelOneMono'
+        'mono-one'        = 'IntelOneMono'
+        'mono one'        = 'IntelOneMono'
+        'intel-one-mono'  = 'IntelOneMono'
+        'intelonemono'    = 'IntelOneMono'
+        'intel one mono'  = 'IntelOneMono'
+        'jetbrains-mono'  = 'JetBrainsMono'
+        'jetbrains'       = 'JetBrainsMono'
+        'fira-code'       = 'FiraCode'
+        'fira'            = 'FiraCode'
+        'cascadia-code'   = 'CascadiaCode'
+        'cascadia'        = 'CascadiaCode'
+        'geist-mono'      = 'GeistMono'
+        'geist'           = 'GeistMono'
+        'victor-mono'     = 'VictorMono'
+    }
+
+    foreach ($font in $Desired) {
+        if ([string]::IsNullOrWhiteSpace($font)) { continue }
+        $key = $font.Trim().ToLower()
+        $cleanFont = if ($aliases.ContainsKey($key)) { $aliases[$key] } else { $font.Trim() }
+
+        # Check if font files already exist in user fonts directory
+        $prefix = if ($cleanFont -ieq 'IntelOneMono') { 'IntoneMono' } else { $cleanFont }
+        $existing = @(Get-ChildItem $fontsDir -Filter "*$prefix*.ttf" -ErrorAction SilentlyContinue)
+        if ($existing.Count -gt 0) {
+            Write-SKIP "$cleanFont (already installed - $($existing.Count) file(s))"
+            foreach ($f in $existing) {
+                $regName = [System.IO.Path]::GetFileNameWithoutExtension($f.Name) + ' (TrueType)'
+                New-ItemProperty -Path $regPath -Name $regName -Value $f.FullName -PropertyType String -Force | Out-Null
+            }
+            continue
+        }
+
+        # Case 1: Custom single-file direct download
+        if ($customFonts.ContainsKey($key)) {
+            $meta = $customFonts[$key]
+            $dest = Join-Path $fontsDir $meta.Filename
+            Write-INFO "Downloading $cleanFont (single TTF via curl)..."
+            curl.exe -fLo $dest -s $meta.Url
             if ($LASTEXITCODE -eq 0 -and (Test-Path $dest)) {
-                New-ItemProperty -Path $regPath -Name $f.RegName -Value $dest -PropertyType String -Force | Out-Null
-                Write-OK "$($f.Name) installed."
+                New-ItemProperty -Path $regPath -Name $meta.RegName -Value $dest -PropertyType String -Force | Out-Null
+                Write-OK "$cleanFont installed ($([math]::Round((Get-Item $dest).Length/1KB, 1)) KB)."
             } else {
-                Write-FAIL "$($f.Name) download failed."
+                Write-FAIL "$cleanFont download failed."
+            }
+            continue
+        }
+
+        # Case 2: Generic / Smart Nerd Font download (fetches archive & extracts ONLY core TTFs)
+        Write-INFO "Downloading $cleanFont (Nerd Font lightweight archive)..."
+        $zipUrl = "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/$cleanFont.zip"
+        $tmpZip = Join-Path $env:TEMP "$($cleanFont)_nf.zip"
+        curl.exe -fLo $tmpZip -s $zipUrl
+        if ($LASTEXITCODE -eq 0 -and (Test-Path $tmpZip)) {
+            $allEntries = @(tar.exe -tf $tmpZip 2>$null)
+            # Smart filter: Pick clean standard Regular, Bold, Italic (ignore mono/propo/oblique bloat)
+            $targets = @($allEntries | Where-Object {
+                $_ -match '\.(ttf|otf)$' -and
+                $_ -match '-(Regular|Bold|Italic)\.' -and
+                $_ -notmatch 'NerdFont(Mono|Propo)-'
+            })
+            if (-not $targets -or $targets.Count -eq 0) {
+                $targets = @($allEntries | Where-Object {
+                    $_ -match '\.(ttf|otf)$' -and
+                    $_ -match '(Regular|Bold)' -and
+                    $_ -notmatch 'NerdFont(Mono|Propo)-'
+                })
+            }
+            if (-not $targets -or $targets.Count -eq 0) {
+                $targets = @($allEntries | Where-Object { $_ -match '\.(ttf|otf)$' } | Select-Object -First 2)
+            }
+
+            if ($targets -and $targets.Count -gt 0) {
+                foreach ($t in $targets) {
+                    & tar.exe -xf $tmpZip -C $fontsDir $t
+                    $installedFile = Join-Path $fontsDir $t
+                    if (Test-Path $installedFile) {
+                        $regName = [System.IO.Path]::GetFileNameWithoutExtension($t) + ' (TrueType)'
+                        New-ItemProperty -Path $regPath -Name $regName -Value $installedFile -PropertyType String -Force | Out-Null
+                    }
+                }
+                Remove-Item $tmpZip -Force -EA SilentlyContinue
+                Write-OK "$cleanFont installed ($($targets.Count) files)."
+            } else {
+                Remove-Item $tmpZip -Force -EA SilentlyContinue
+                Write-FAIL "$cleanFont archive did not contain recognizable TTF files."
             }
         } else {
-            New-ItemProperty -Path $regPath -Name $f.RegName -Value $dest -PropertyType String -Force | Out-Null
-            Write-SKIP "$($f.Name) (already installed)"
+            Remove-Item $tmpZip -Force -EA SilentlyContinue
+            Write-FAIL "$cleanFont could not be downloaded (check font name spelling)."
         }
     }
 }
@@ -655,6 +723,7 @@ if (Test-Path $PROFILE_FILE) {
     Write-OK "Profile '$profileVal' saved."
 }
 
+$fontPkgs   = Get-Prop $config 'fonts'
 $scoopPkgs  = if ($isFull) { Get-Prop $config.scoop  'full'   } else { Get-Prop $config.scoop  'mini'   }
 $scoopGlob  = Get-Prop $config.scoop 'global'
 $wingetPkgs = if ($isFull) { Get-Prop $config.winget 'full'   } else { Get-Prop $config.winget 'mini'   }
@@ -666,7 +735,7 @@ Invoke-ChocoPackages  -Desired $chocoPkgs
 if ($isFull) { Invoke-PipEssentials }
 Invoke-VSCodeExtensions
 Invoke-PackagePins
-Invoke-Fonts
+Invoke-Fonts          -Desired $fontPkgs
 if ($isFull) { Invoke-MachineDefaults }
 
 Write-Host ""

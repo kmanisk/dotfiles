@@ -1,4 +1,11 @@
 {
+  "fonts": [
+    "Iosevka",
+    "Monocraft",
+    "ComicMono",
+    "PixelCode",
+    "IntelOneMono"
+  ],
   "scoop": {
     "mini": [
       "vifm",
