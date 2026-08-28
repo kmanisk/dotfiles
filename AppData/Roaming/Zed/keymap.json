@@ -314,7 +314,7 @@
       "ctrl-;": "workspace::ToggleBottomDock",
       "g c": "editor::ToggleComments",
       "space /": "editor::ToggleComments",
-      "x": "editor::Cut",
+      "x": "editor::Delete",
       "space c a": "editor::ToggleCodeActions",
       "space f d": "editor::Format",
       "shift-s": ["vim::PushAddSurrounds", {}],

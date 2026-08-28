@@ -141,7 +141,8 @@
     },
     "tab_bar": {
         "show_nav_history_buttons": false,
-        "show_tab_bar_buttons": false
+        "show_tab_bar_buttons": false,
+        "show": true // add to hide or remove tabs
     },
     "toolbar": {
         "breadcrumbs": false,
@@ -179,7 +180,7 @@
     // ─────────────────────────────────────────────────────────────────────────────
     "vim_mode": true,
     "vim": {
-        "use_system_clipboard": "always"
+        "use_system_clipboard": "on_yank"
     },
     "which_key": {
         "enabled": true
