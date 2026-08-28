@@ -154,8 +154,8 @@
       // Zoom, Zen & Fullscreen Mode
       "space z z": "workspace::ToggleCenteredLayout",
       "space z f": "workspace::ToggleZoom",
-      "space z F": "workspace::ToggleFullScreen",
-      "f11": "workspace::ToggleFullScreen",
+      "space z F": "zed::ToggleFullScreen",
+      "f11": "zed::ToggleFullScreen",
 
       // Folds
       "space r f": "editor::ToggleFoldRecursive",
