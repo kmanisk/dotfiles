@@ -154,7 +154,12 @@ function Step-Scoop {
     }
     Update-SessionPath
     if (Test-Cmd 'scoop') {
-        Write-OK "Scoop installed."
+        scoop config aria2-enabled true 2>$null | Out-Null
+        scoop config aria2-warning-enabled false 2>$null | Out-Null
+        scoop config aria2-retry-wait 2 2>$null | Out-Null
+        scoop config aria2-split 8 2>$null | Out-Null
+        scoop config show_update_log false 2>$null | Out-Null
+        Write-OK "Scoop installed and configured."
         Set-StepDone 'Scoop'
     } elseif ($ok) {
         Write-WARN "Scoop installed but not on PATH  -  open a new terminal if steps fail."

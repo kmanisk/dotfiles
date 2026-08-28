@@ -32,15 +32,29 @@
     "sudo",
     "gh",
     "revouninstaller",
-    "fd"
+    "fd",
+    "zoxide",
+    "zed",
+    "nodejs",
+    "pnpm",
+    "python",
+    "rust",
+    "openjdk",
+    "pwsh",
+    "imagemagick",
+    "ffmpeg",
+    "lazygit",
+    "yazi",
+    "obsidian",
+    "telegram",
+    "localsend",
+    "yt-dlp",
+    "notepadplusplus"
   ],
-  "scoop_global": [
-    ""
-  ],
+  "scoop_global": [],
   "winget": [
     "chrisant996.Clink",
     "AntibodySoftware.WizTree",
-    "Notepad++.Notepad++",
     "Valve.Steam",
     "JanDeDobbeleer.OhMyPosh",
     "Microsoft.VCRedist.2015+.x64"
@@ -49,7 +63,6 @@
     "sharex",
     "ueli",
     "everything",
-    "zoxide",
     "irfanview"
   ]
 }

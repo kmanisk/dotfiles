@@ -624,6 +624,7 @@ function ff($name) {
 }
 function uall {
     scoop update *
+    scoop cleanup *
     choco upgrade all
     winget upgrade --all
 }

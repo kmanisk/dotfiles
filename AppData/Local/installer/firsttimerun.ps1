@@ -63,6 +63,12 @@ function Install-Scoop {
         )
     }
 
+    # Configure optimal Scoop settings
+    scoop config aria2-enabled true 2>$null
+    scoop config aria2-warning-enabled false 2>$null
+    scoop config aria2-retry-wait 2 2>$null
+    scoop config aria2-split 8 2>$null
+    scoop config show_update_log false 2>$null
 }
 
 #endregion
