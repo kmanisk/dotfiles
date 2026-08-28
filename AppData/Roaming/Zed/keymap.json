@@ -284,10 +284,11 @@
       // Join Lines (matches Neovim <leader>j / J)
       "space j": "vim::JoinLines",
 
-      // 2-Character Leap / Sneak Search
+      // 2-Character Leap / Sneak Search (Across Whole File)
       "g s": "vim::PushSneak",
       "g S": "vim::PushSneakBackward",
-      "g z z": "editor::ScrollCursorCenter"
+      "g z": "vim::PushTillSneak",
+      "g Z": "vim::PushTillSneakBackward"
     }
   },
 
@@ -319,6 +320,8 @@
       "S": "vim::HelixJumpToWord",
       "g s": "vim::PushSneak",
       "g S": "vim::PushSneakBackward",
+      "g z": "vim::PushTillSneak",
+      "g Z": "vim::PushTillSneakBackward",
 
       // Move selected lines up/down
       "shift-j": "editor::MoveLineDown",
@@ -332,13 +335,15 @@
 
   // =============================================================================
   //                   Editor (Operator-Pending Mode - Vim)
-  //                   Allows chaining y, d, c with s (Word Jump) & gs (Sneak)
+  //                   Allows chaining y, d, c with gs/gz (2-Char Sneak & Till)
   // =============================================================================
   {
     "context": "Editor && vim_mode == operator",
     "bindings": {
       "g s": "vim::PushSneak",
       "g S": "vim::PushSneakBackward",
+      "g z": "vim::PushTillSneak",
+      "g Z": "vim::PushTillSneakBackward",
       "z": "vim::PushSneak",
       "Z": "vim::PushSneakBackward"
     }
