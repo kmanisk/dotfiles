@@ -647,6 +647,20 @@ function pcheck {
     # choco outdated
 }
 
+function wlist {
+    $exe = "$env:LOCALAPPDATA\Microsoft\WindowsApps\winget.exe"
+    & $exe list --source winget $args
+}
+
+function winget {
+    $exe = "$env:LOCALAPPDATA\Microsoft\WindowsApps\winget.exe"
+    if ($args.Count -ge 1 -and $args[0] -eq "list" -and $args -notcontains "--source" -and $args -notcontains "-s") {
+        & $exe list --source winget @($args | Select-Object -Skip 1)
+    } else {
+        & $exe @args
+    }
+}
+
 
 #only cd to the dir
 #function fcd {
