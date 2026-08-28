@@ -1,10 +1,4 @@
-# Dotfiles
-
-Personal Windows dotfiles managed with [chezmoi](https://www.chezmoi.io).
-
 ## Bootstrap
-
-Run in PowerShell to set up a fresh machine:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -Command "Invoke-RestMethod https://github.com/kmanisk/dotfiles/raw/master/AppData/Local/installer/setup.ps1 -OutFile $env:TEMP\setup.ps1; & $env:TEMP\setup.ps1"
