@@ -286,9 +286,7 @@
 
       // 2-Character Leap / Sneak Search (Across Whole File)
       "g s": "vim::PushSneak",
-      "g S": "vim::PushSneakBackward",
-      "g z": "vim::PushTillSneak",
-      "g Z": "vim::PushTillSneakBackward"
+      "g S": "vim::PushSneakBackward"
     }
   },
 
@@ -320,8 +318,6 @@
       "S": "vim::HelixJumpToWord",
       "g s": "vim::PushSneak",
       "g S": "vim::PushSneakBackward",
-      "g z": "vim::PushTillSneak",
-      "g Z": "vim::PushTillSneakBackward",
 
       // Move selected lines up/down
       "shift-j": "editor::MoveLineDown",
@@ -335,15 +331,13 @@
 
   // =============================================================================
   //                   Editor (Operator-Pending Mode - Vim)
-  //                   Allows chaining y, d, c with gs/gz (2-Char Sneak & Till)
+  //                   Allows chaining y, d, c with gs (2-Char Sneak)
   // =============================================================================
   {
     "context": "Editor && vim_mode == operator",
     "bindings": {
       "g s": "vim::PushSneak",
       "g S": "vim::PushSneakBackward",
-      "g z": "vim::PushTillSneak",
-      "g Z": "vim::PushTillSneakBackward",
       "z": "vim::PushSneak",
       "Z": "vim::PushSneakBackward"
     }
