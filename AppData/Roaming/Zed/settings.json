@@ -18,7 +18,7 @@
         "trust_all_worktrees": true
     },
     "horizontal_scroll_margin": 1,
-    "vertical_scroll_margin": 1,
+    "vertical_scroll_margin": 99,
     // ─────────────────────────────────────────────────
     // Theme & Icons
     // ─────────────────────────────────────────────────
@@ -66,7 +66,7 @@
     "mouse_wheel_zoom": true,
     "hover_popover_enabled": true,
     "selection_highlight": false,
-    "scroll_beyond_last_line": "off",
+    "scroll_beyond_last_line": "vertical_scroll_margin",
     "cursor_blink": false,
     "cursor_shape": "bar",
     "multi_cursor_modifier": "alt",

@@ -333,7 +333,8 @@
       "g w": "vim::HelixJumpToWord",
       "space j": "vim::HelixJumpToWord",
       "g s": "vim::PushSneak",
-      "g S": "vim::PushSneakBackward"
+      "g S": "vim::PushSneakBackward",
+      "g z z": "editor::ScrollCursorCenter"
     }
   },
 
