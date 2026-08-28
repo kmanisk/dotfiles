@@ -848,12 +848,29 @@ function dall {
             $installedFiles = Get-ChildItem -Path $userFonts -Include *.ttf, *.otf -Recurse -ErrorAction SilentlyContinue
             $newAdded = $false
             foreach ($file in $installedFiles) {
-                $base = [System.IO.Path]::GetFileNameWithoutExtension($file.Name) -replace '(-Bold|-Regular|-Italic|-BoldItalic|-ExtraBold|-SemiBold|-Light|-Medium|-Thin|-Heavy|-Oblique|NerdFont|Mono|_| )+$', ''
-                if (-not [string]::IsNullOrWhiteSpace($base) -and -not $existingSet.Contains($base)) {
-                    $fontList.Add($base)
-                    [void]$existingSet.Add($base)
+                $clean = $file.BaseName -replace '(-Bold|-Regular|-Italic|-BoldItalic|-ExtraBold|-SemiBold|-Light|-Medium|-Thin|-Heavy|-Black|-ExtraLight|-ExtraBlack|-Oblique|-Normal|BoldItalic|BoldUpright|RegularItalic|RegularUpright|_bold|_italic|_regular)+$', ''
+                $clean = $clean -replace '[-_]+$', ''
+                if ($clean -match '^(FSEX\d+|Fixedsys)') { $clean = "Fixedsys" }
+                elseif ($clean -match '^Cozette') { $clean = "Cozette" }
+                elseif ($clean -match '^GohuFont') { $clean = "GohuFont" }
+                elseif ($clean -match '^Monocraft') { $clean = "Monocraft" }
+                elseif ($clean -match '^Iosevka') { $clean = "Iosevka" }
+                elseif ($clean -match '^Agave') { $clean = "Agave" }
+                elseif ($clean -match '^JetBrainsMono') { $clean = "JetBrainsMono" }
+                elseif ($clean -match '^(Intone|IntelOne)') { $clean = "IntelOneMono" }
+                elseif ($clean -match '^(Hurmit|Hermit)') { $clean = "Hermit" }
+                elseif ($clean -match '^Fantasque') { $clean = "FantasqueSansMono" }
+                elseif ($clean -match '^DaddyTime') { $clean = "DaddyTimeMono" }
+                elseif ($clean -match '^Victor') { $clean = "VictorMono" }
+                elseif ($clean -match '^(psudo|Pseudo)') { $clean = "PsudoFontLigaMono" }
+                elseif ($clean -match '^aporetic-sans') { $clean = "AporeticSansMono" }
+                elseif ($clean -match '^aporetic-serif') { $clean = "AporeticSerifMono" }
+
+                if (-not [string]::IsNullOrWhiteSpace($clean) -and -not $existingSet.Contains($clean)) {
+                    $fontList.Add($clean)
+                    [void]$existingSet.Add($clean)
                     $newAdded = $true
-                    Write-Host "Discovered new font: $base (added to packages.json)" -ForegroundColor Green
+                    Write-Host "Discovered new font family: $clean (added to packages.json)" -ForegroundColor Green
                 }
             }
 

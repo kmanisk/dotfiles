@@ -22,7 +22,6 @@
 
       // Window & Item Closing (Global)
       "alt-w": "pane::CloseActiveItem",
-      "space q": "pane::CloseActiveItem",
 
       // Themes & Settings
       "ctrl-s ctrl-k": "zed::OpenKeymap",
@@ -75,7 +74,6 @@
     "bindings": {
       "ctrl-;": "workspace::ToggleBottomDock",
       "alt-w": "pane::CloseActiveItem",
-      "space q": "pane::CloseActiveItem",
       "alt-j": "pane::ActivateNextItem",
       "alt-k": "pane::ActivatePreviousItem"
     }
@@ -337,12 +335,14 @@
   //                   Allows chaining y, d, c with s (Word Jump) & gs (Sneak)
   // =============================================================================
   {
-    "context": "Editor && vim_mode == operator && !VimWaiting && !menu",
+    "context": "Editor && vim_mode == operator",
     "bindings": {
       "s": "vim::HelixJumpToWord",
       "S": "vim::HelixJumpToWord",
       "g s": "vim::PushSneak",
-      "g S": "vim::PushSneakBackward"
+      "g S": "vim::PushSneakBackward",
+      "z": "vim::PushSneak",
+      "Z": "vim::PushSneakBackward"
     }
   },
 
@@ -477,7 +477,6 @@
       "alt-s": "multi_workspace::ToggleWorkspaceSidebar",
       "alt-l": "workspace::ToggleLeftDock",
       "alt-w": "pane::CloseActiveItem",
-      "space q": "pane::CloseActiveItem",
       "alt-j": "pane::ActivateNextItem",
       "alt-k": "pane::ActivatePreviousItem",
       "ctrl-h": "workspace::ActivatePaneLeft",
