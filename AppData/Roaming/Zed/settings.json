@@ -5,13 +5,13 @@
     // 1. TYPOGRAPHY & FONTS (All Fonts in One Place)
     // ─────────────────────────────────────────────────────────────────────────────
     // Editor (Buffer) Font
-    "buffer_font_family": "Monocraft",
+    "buffer_font_family": "CozetteVector",
     "buffer_font_fallbacks": [
         "Iosevka Nerd Font Mono",
         "Aporetic Sans Mono",
         "FantasqueSansM Nerd Font Mono"
     ],
-    "buffer_font_size": 30.0, // <- Change this to adjust editor code size
+    "buffer_font_size": 32.0, // <- Change this to adjust editor code size
     "buffer_font_weight": 400, // Regular = 400, Medium = 500, SemiBold = 600, Bold = 700
     "buffer_line_height": {
         "custom": 1.4 // Line height spacing (1.35 - 1.4 sweet spot)
@@ -21,7 +21,7 @@
         "calt": true // Contextual alternates (coding ligatures: ->, =>, !=, ===)
     },
     // UI Font (Sidebars, Menus, Status Bar, Tabs)
-    "ui_font_family": "JetBrainsMono Nerd Font",
+    "ui_font_family": "Iosevka Nerd Font Mono",
     "ui_font_fallbacks": [
         "Segoe UI",
         "system-ui"
@@ -51,7 +51,7 @@
     "theme": {
         "mode": "system",
         "light": "Gruvbox Light",
-        "dark": "Carbonfox - opaque"
+        "dark": "Base16 selenized-dark"
     },
     // ─────────────────────────────────────────────────────────────────────────────
     // 3. GENERAL & WINDOW
