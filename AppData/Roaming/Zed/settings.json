@@ -5,7 +5,8 @@
     // 1. TYPOGRAPHY & FONTS (All Fonts in One Place)
     // ─────────────────────────────────────────────────────────────────────────────
     // Editor (Buffer) Font
-    "buffer_font_family": "CozetteVector",
+    // "buffer_font_family": "CozetteVector",
+    "buffer_font_family": "Departure Mono",
     "buffer_font_fallbacks": [
         "Iosevka Nerd Font Mono",
         "Aporetic Sans Mono",
@@ -51,7 +52,7 @@
     "theme": {
         "mode": "system",
         "light": "Gruvbox Light",
-        "dark": "Base16 Spacemacs"
+        "dark": "Base16 Gruvbox Material Dark, Medium"
     },
     // ─────────────────────────────────────────────────────────────────────────────
     // 3. GENERAL & WINDOW
@@ -160,7 +161,9 @@
         "show_sign_in": false,
         "show_project_items": false,
         "show_branch_name": false,
-        "show_user_menu": false
+        "show_user_menu": false,
+        "show_worktree_name": false,
+        "show_branch_status_icon": false
     },
     // ─────────────────────────────────────────────────────────────────────────────
     // 9. GIT (VERSION CONTROL)

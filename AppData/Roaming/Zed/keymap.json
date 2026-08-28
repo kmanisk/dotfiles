@@ -151,9 +151,11 @@
       "space g v": "pane::SplitVertical",
       "space g h": "pane::SplitHorizontal",
 
-      // Zoom & Zen Mode
+      // Zoom, Zen & Fullscreen Mode
       "space z z": "workspace::ToggleCenteredLayout",
       "space z f": "workspace::ToggleZoom",
+      "space z F": "workspace::ToggleFullScreen",
+      "f11": "workspace::ToggleFullScreen",
 
       // Folds
       "space r f": "editor::ToggleFoldRecursive",
