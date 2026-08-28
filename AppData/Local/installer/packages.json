@@ -27,7 +27,8 @@
       "extras/windows-terminal",
       "gcc",
       "git",
-      "fd"
+      "fd",
+      "zoxide"
     ],
     "full": [
       "git",
@@ -62,7 +63,8 @@
       "main/sudo",
       "main/gh",
       "extras/revouninstaller",
-      "fd"
+      "fd",
+      "zoxide"
     ],
     "global": []
   },
@@ -81,14 +83,11 @@
     ]
   },
   "choco": {
-    "mini": [
-      "zoxide --version=0.9.0"
-    ],
+    "mini": [],
     "full": [
       "sharex",
       "ueli",
       "everything",
-      "zoxide --version=0.9.0",
       "irfanview"
     ]
   }

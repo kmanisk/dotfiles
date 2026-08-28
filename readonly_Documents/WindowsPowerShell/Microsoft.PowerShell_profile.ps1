@@ -1,19 +1,499 @@
-
 # Ensure Terminal-Icons module is installed before importing
 # now Everything is fixed as per my need for god sake don't chagne or break
 # after this
-# if (-not (Get-Module -ListAvailable -Name Terminal-Icons)) {
-#     Install-Module -Name Terminal-Icons -Scope CurrentUser -Force -SkipPublisherCheck
-# }
-# Import-Module -Name Terminal-Icons
-# Map vi and vim to nvim
-## Replace the current Terminal-Icons block with:
-if ($PSVersionTable.PSVersion.Major -ge 5) {
+#if (-not (Get-Module -ListAvailable -Name Terminal-Icons)) {
+#    Install-Module -Name Terminal-Icons -Scope CurrentUser -Force -SkipPublisherCheck
+#}
+#Import-Module -Name Terminal-Icons
+## Check if PSReadLine is installed, if not, install it
+#if (!(Get-Module -ListAvailable -Name PSReadLine)) {
+#    Install-Module -Name PSReadLine -Scope CurrentUser -Force -SkipPublisherCheck
+#}
+#Import-Module -Name PSReadLine
+#
+## Ensure the required modules are loaded
+#if (-not (Get-Command Expand-Archive -ErrorAction SilentlyContinue)) {
+#    Import-Module Microsoft.PowerShell.Archive
+#}
+# For Terminal-Icons
+if ($PSVersionTable.PSVersion.Major -ge 7) {
     if (-not (Get-Module -ListAvailable -Name Terminal-Icons)) {
         Install-Module -Name Terminal-Icons -Repository PSGallery -Force -Scope CurrentUser
     }
     Import-Module -Name Terminal-Icons -ErrorAction SilentlyContinue
 }
+function showpack{
+    nvim "$HOME\AppData\Local\installer\packages.json"
+}
+# For PSReadLine
+if ($PSVersionTable.PSVersion.Major -ge 7) {
+    if (!(Get-Module -ListAvailable -Name PSReadLine)) {
+        Install-Module -Name PSReadLine -AllowPrerelease -Force -SkipPublisherCheck
+    }
+    Import-Module PSReadLine
+}
+function editdot(){
+     nvim "$Home\.local\share\chezmoi\.chezmoiscripts\run_install_windows_packs.ps1"
+}
+
+# function editdot() {
+#     nvim "$HOME\.local\share\chezmoi\.chezmoiscripts\run_install_windows_packs.ps1"
+# }
+function cha {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$path
+    )
+    chezmoi add $path
+}
+function chu{
+    chezmoi update
+}
+function scclear{
+    scoop cache rm *
+}
+
+Set-Alias -Name word -Value "C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"
+Set-Alias -Name xl -Value "C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"
+Set-Alias -Name ppt -Value "C:\Program Files\Microsoft Office\root\Office16\POWERPNT.EXE"
+function imginfo{
+    $sourceFolder = "G:\photos\organized_media"
+
+# Define photo and video extensions
+    $photoExtensions = @("jpg", "jpeg", "png", "gif", "bmp", "tiff", "heic", "webp")
+    $videoExtensions = @("mp4", "mov", "avi", "mkv", "wmv", "flv", "webm", "m4v")
+
+# Get all files recursively
+    $allFiles = Get-ChildItem -Path $sourceFolder -Recurse -File
+
+# Filter photo and video files separately
+    $photoFiles = $allFiles | Where-Object { $photoExtensions -contains $_.Extension.TrimStart(".").ToLower() }
+    $videoFiles = $allFiles | Where-Object { $videoExtensions -contains $_.Extension.TrimStart(".").ToLower() }
+
+# Count and size calculations
+    $photoCount = $photoFiles.Count
+    $photoSize = ($photoFiles | Measure-Object -Property Length -Sum).Sum / 1GB  # Convert to GB
+
+    $videoCount = $videoFiles.Count
+    $videoSize = ($videoFiles | Measure-Object -Property Length -Sum).Sum / 1GB  # Convert to GB
+
+    $totalCount = $photoCount + $videoCount
+    $totalSize = $photoSize + $videoSize
+
+# Output the results
+    Write-Output "Total Photos: $photoCount"
+    Write-Output ("Total Photo Size: {0:N2} GB" -f $photoSize)
+    Write-Output "Total Videos: $videoCount"
+    Write-Output ("Total Video Size: {0:N2} GB" -f $videoSize)
+    Write-Output "Total Media Files: $totalCount"
+    Write-Output ("Total Media Size: {0:N2} GB" -f $totalSize)
+}
+
+function s{
+    param (
+        [parameter(mandatory)]
+        [string]$query
+    )
+
+    clear-host
+
+    function section($title, $color) {
+        write-host "`n== $title ==" -foregroundcolor $color
+        write-host ("-" * (6 + $title.length)) -foregroundcolor darkgray
+    }
+
+    $preferredbuckets = @("extras", "main", "versions")
+
+    # ================= scoop =================
+    section "scoop (bucket-aware)" cyan
+    try {
+        $currentbucket = ""
+
+        $scoopresults =
+        scoop search $query 2>$null |
+        foreach-object {
+            if ($_ -match "^'.+?' bucket:") {
+                $currentbucket = ($_ -replace " bucket:", "").trim("'")
+            }
+            elseif ($_ -match '^\s+(\s+)\s+\(([^)]+)\)') {
+                [pscustomobject]@{
+                    name    = $matches[1]
+                    version = $matches[2]
+                    bucket  = $currentbucket
+                }
+            }
+        }
+
+        $scoopresults |
+        sort-object `
+            @{ expression = { 
+                if ($preferredbuckets -contains $_.bucket) {
+                    $preferredbuckets.indexof($_.bucket)
+                } else {
+                    99
+                }
+            }},
+            name,
+            version -descending |
+        group-object name |
+        foreach-object { $_.group | select-object -first 1 } |
+        format-table name, version, bucket -autosize
+
+    } catch {
+        write-host "scoop search failed" -foregroundcolor red
+    }
+
+    # ================= winget =================
+    section "winget" green
+    try {
+        winget search $query --accept-source-agreements |
+        select-object -skip 2 |
+        foreach-object {
+            if ($_ -match '(.+?)\s{2,}(\s+)\s{2,}(\s+)') {
+                [pscustomobject]@{
+                    name    = $matches[1].trim()
+                    version = $matches[3]
+                }
+            }
+        } |
+        sort-object name -unique |
+        format-table name, version -autosize
+    } catch {
+        write-host "winget search failed" -foregroundcolor red
+    }
+
+    # ================= choco =================
+    section "chocolatey" magenta
+    try {
+        choco search $query --limit-output |
+        foreach-object {
+            if ($_ -match '^([^|]+)\|(.+)$') {
+                [pscustomobject]@{
+                    name    = $matches[1]
+                    version = $matches[2]
+                }
+            }
+        } |
+        sort-object name -unique |
+        format-table name, version -autosize
+    } catch {
+        write-host "choco search failed" -foregroundcolor red
+    }
+}
+function find {
+    param (
+        [Parameter(Mandatory)]
+        [string]$query
+    )
+
+    Clear-Host
+
+    function section($title, $color) {
+        Write-Host "`n== $title ==" -ForegroundColor $color
+        Write-Host ("-" * (6 + $title.Length)) -ForegroundColor DarkGray
+    }
+
+    $preferredBuckets = @("extras", "main", "versions")
+
+    # ================= scoop =================
+    section "scoop (bucket-aware)" Cyan
+    try {
+        $currentBucket = $null
+        $results = @()
+
+        scoop search $query 2>$null | ForEach-Object {
+
+            # Detect bucket header
+            if ($_ -match "^'(.+)' bucket:$") {
+                $currentBucket = $matches[1]
+                return
+            }
+
+            # Detect app line (name + version)
+            if ($_ -match '^\s*([a-zA-Z0-9._-]+)\s+([^\s]+)') {
+                $results += [pscustomobject]@{
+                    Name    = $matches[1]
+                    Version = $matches[2]
+                    Bucket  = $currentBucket
+                }
+            }
+        }
+
+        $results |
+        Sort-Object `
+            @{ Expression = {
+                if ($preferredBuckets -contains $_.Bucket) {
+                    $preferredBuckets.IndexOf($_.Bucket)
+                } else { 99 }
+            }},
+            Name |
+        Group-Object Name |
+        ForEach-Object { $_.Group | Select-Object -First 1 } |
+        Format-Table Name, Version, Bucket -AutoSize
+    }
+    catch {
+        Write-Host "scoop search failed" -ForegroundColor Red
+    }
+
+    # ================= winget =================
+    section "winget" Green
+    try {
+        winget search $query --accept-source-agreements 2>$null |
+        Where-Object { $_ -match '^\S.*\s{2,}\S' } |
+        ForEach-Object {
+            $cols = ($_ -split '\s{2,}')
+
+            if ($cols.Length -ge 3) {
+                [pscustomobject]@{
+                    Name    = $cols[0].Trim()
+                    Id      = $cols[1].Trim()
+                    Version = $cols[2].Trim()
+                }
+            }
+        } |
+        Sort-Object Name -Unique |
+        Format-Table Name, Version -AutoSize
+    }
+    catch {
+        Write-Host "winget search failed" -ForegroundColor Red
+    }
+
+    # ================= choco =================
+    section "chocolatey" Magenta
+    try {
+        choco search $query --limit-output 2>$null |
+        ForEach-Object {
+            if ($_ -match '^([^|]+)\|(.+)$') {
+                [pscustomobject]@{
+                    Name    = $matches[1]
+                    Version = $matches[2]
+                }
+            }
+        } |
+        Sort-Object Name -Unique |
+        Format-Table Name, Version -AutoSize
+    }
+    catch {
+        Write-Host "choco search failed" -ForegroundColor Red
+    }
+}
+function cdwhich {
+    param (
+        [string]$commandName
+    )
+    
+    # Change location to the source of the provided command
+    Set-Location (Get-Command $commandName).Source
+}
+#this is added
+function extedit{
+    $ext = Join-Path $HOME "AppData\Local\installer\code_extensions.json"
+    #Write-Host "path : "  $ext
+    nvim $ext
+
+}
+function Show-PathValues {
+    Write-Host "System PATH Values:" -ForegroundColor Green
+    [Environment]::GetEnvironmentVariable("Path", [System.EnvironmentVariableTarget]::Machine) -split ';' | ForEach-Object { Write-Output $_ }
+
+    Write-Host "User PATH Values:" -ForegroundColor Cyan
+    [Environment]::GetEnvironmentVariable("Path", [System.EnvironmentVariableTarget]::User) -split ';' | ForEach-Object { Write-Output $_ }
+}
+
+# Create an alias for the function
+Set-Alias -Name spath -Value Show-PathValues
+    if (Get-Command bat -ErrorAction SilentlyContinue) {
+        Set-Alias -Name cat -Value bat
+    }
+    else{
+        Set-Alias -Name cat -Value cat
+    }
+#
+#function cat {
+#    if (Get-Command bat -ErrorAction SilentlyContinue) {
+#        #bat @Args
+#        Set-Alias -Name cat -Value bat
+#    } else {
+#        #Get-Content @Args
+#    }
+#}
+
+function font{
+[System.Reflection.Assembly]::LoadWithPartialName("System.Drawing") | Out-Null; (New-Object System.Drawing.Text.InstalledFontCollection).Families.Name
+}
+
+#Invoke-Expression (&sfss --hook)
+
+#if (Get-Command sfss -ErrorAction SilentlyContinue) {
+#    Invoke-Expression (&sfss --hook)
+#} 
+
+
+
+
+function vsync {
+	$vscodeInstalled = Get-Command code -ErrorAction SilentlyContinue
+	$vscodiumInstalled = Get-Command codium -ErrorAction SilentlyContinue
+	$extensionsFilePath = Join-Path $HOME ".local\share\chezmoi\AppData\Local\installer\vscode.txt"
+
+	if (Test-Path $extensionsFilePath) {
+		$desiredExtensions = Get-Content -Path $extensionsFilePath
+        
+		if ($vscodeInstalled) {
+			$currentVSCodeExtensions = & code --list-extensions
+			$extensionsToAdd = $desiredExtensions | Where-Object { $currentVSCodeExtensions -notcontains $_ }
+			$extensionsToRemove = $currentVSCodeExtensions | Where-Object { $desiredExtensions -notcontains $_ }
+
+			if ($extensionsToAdd -or $extensionsToRemove) {
+				Write-Host "`nVSCode Extensions to Add:" -ForegroundColor Green
+				$extensionsToAdd | ForEach-Object { Write-Host "  + $_" }
+				Write-Host "`nVSCode Extensions to Remove:" -ForegroundColor Red
+				$extensionsToRemove | ForEach-Object { Write-Host "  - $_" }
+
+				$confirmation = Read-Host "`nDo you want to update VSCode extensions? (y/n)"
+				if ($confirmation -eq 'y') {
+					$extensionsToAdd | ForEach-Object { & code --install-extension $_ }
+					$extensionsToRemove | ForEach-Object { & code --uninstall-extension $_ }
+				}
+			}
+		}
+
+		if ($vscodiumInstalled) {
+			$currentVSCodiumExtensions = & codium --list-extensions
+			$extensionsToAdd = $desiredExtensions | Where-Object { $currentVSCodiumExtensions -notcontains $_ }
+			$extensionsToRemove = $currentVSCodiumExtensions | Where-Object { $desiredExtensions -notcontains $_ }
+
+			if ($extensionsToAdd -or $extensionsToRemove) {
+				Write-Host "`nVSCodium Extensions to Add:" -ForegroundColor Green
+				$extensionsToAdd | ForEach-Object { Write-Host "  + $_" }
+				Write-Host "`nVSCodium Extensions to Remove:" -ForegroundColor Red
+				$extensionsToRemove | ForEach-Object { Write-Host "  - $_" }
+
+				$confirmation = Read-Host "`nDo you want to update VSCodium extensions? (y/n)"
+				if ($confirmation -eq 'y') {
+					$extensionsToAdd | ForEach-Object { & codium --install-extension $_ }
+					$extensionsToRemove | ForEach-Object { & codium --uninstall-extension $_ }
+				}
+			}
+		}
+	}
+ else {
+		Write-Host "Extensions file not found at $extensionsFilePath"
+	}
+}
+
+# Custom key handlers
+#Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
+#Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
+Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
+#Set-PSReadLineKeyHandler -Chord 'Ctrl+d' -Function DeleteChar
+##Set-PSReadLineKeyHandler -Chord 'Ctrl+w' -Function BackwardDeleteWord
+#Set-PSReadLineKeyHandler -Chord 'Alt+d' -Function DeleteWord
+#Set-PSReadLineKeyHandler -Chord 'Ctrl+LeftArrow' -Function BackwardWord
+#Set-PSReadLineKeyHandler -Chord 'Ctrl+RightArrow' -Function ForwardWord
+#Set-PSReadLineKeyHandler -Chord 'Ctrl+z' -Function Undo
+#Set-PSReadLineKeyHandler -Chord 'Ctrl+y' -Function Redo
+function epack{
+    $paths = Join-Path $Home "appdata\local\installer\packages.json"
+    nvim $paths
+
+}
+function his{
+    cat (Get-PSReadLineOption).HistorySavePath
+}
+
+
+#function codeext{
+#    # Check if VSCode and VSCodium are installed
+#    $vscodeInstalled = Get-Command code -ErrorAction SilentlyContinue
+#    $vscodiumInstalled = Get-Command codium -ErrorAction SilentlyContinue
+#
+#    if (-not $vscodeInstalled) {
+#        Write-Host "VSCode is not installed. Installing via Chocolatey..."
+#        choco install vscode -y
+#    }
+#    else {
+#        Write-Host "VSCode is already installed."
+#    }
+#
+#    if (-not $vscodiumInstalled) {
+#        Write-Host "VSCodium is not installed. Installing via Chocolatey..."
+#        choco install vscodium -y
+#    }
+#    else {
+#        Write-Host "VSCodium is already installed."
+#    }
+#
+#    # Proceed to manage extensions only if at least one editor is installed
+#    if ($vscodeInstalled -or $vscodiumInstalled) {
+#        $extensionsFilePath = Join-Path $HOME "AppData\Local\installer\vscode.txt"
+#
+#        if (Test-Path $extensionsFilePath) {
+#            # Read desired extensions from file
+#            $desiredExtensions = Get-Content -Path $extensionsFilePath
+#
+#            # Get currently installed extensions
+#            $vscodeExtensions = @()
+#            $vscodiumExtensions = @()
+#
+#            if ($vscodeInstalled) {
+#                $vscodeExtensions = & code --list-extensions
+#            }
+#            if ($vscodiumInstalled) {
+#                $vscodiumExtensions = & codium --list-extensions
+#            }
+#
+#            # Handle VSCode Extensions
+#            if ($vscodeInstalled) {
+#                # Install missing extensions
+#                foreach ($extension in $desiredExtensions) {
+#                    if ($vscodeExtensions -notcontains $extension) {
+#                        Write-Host "Installing VSCode extension: $extension"
+#                        & code --install-extension $extension
+#                    }
+#                }
+#
+#                # Remove undesired extensions
+#                foreach ($installed in $vscodeExtensions) {
+#                    if ($desiredExtensions -notcontains $installed) {
+#                        Write-Host "Removing VSCode extension: $installed"
+#                        & code --uninstall-extension $installed
+#                    }
+#                }
+#            }
+#
+#            # Handle VSCodium Extensions
+#            if ($vscodiumInstalled) {
+#                # Install missing extensions
+#                foreach ($extension in $desiredExtensions) {
+#                    if ($vscodiumExtensions -notcontains $extension) {
+#                        Write-Host "Installing VSCodium extension: $extension"
+#                        & codium --install-extension $extension
+#                    }
+#                }
+#
+#                # Remove undesired extensions
+#                foreach ($installed in $vscodiumExtensions) {
+#                    if ($desiredExtensions -notcontains $installed) {
+#                        Write-Host "Removing VSCodium extension: $installed"
+#                        & codium --uninstall-extension $installed
+#                    }
+#                }
+#            }
+#
+#            Write-Host "Extensions synchronization completed successfully."
+#        }
+#        else {
+#            Write-Host "Extensions file not found at $extensionsFilePath."
+#        }
+#    }
+#    else {
+#        Write-Host "Neither VSCode nor VSCodium is installed. Cannot manage extensions."
+#    }
+#}
+
+Set-Alias -Name rn -Value Rename-Item
+
 Function flist {
     param (
         [string]$SearchTerm = "*"
@@ -23,32 +503,16 @@ Function flist {
     Select-Object Name
 }
 if (Get-Command lsd -ErrorAction SilentlyContinue) {
-    Remove-Item Alias:ls -Force -ErrorAction SilentlyContinue
-    New-Alias -Name ls -Value lsd
+    Set-Alias ls lsd
 }
 else {
     Set-Alias ls Get-ChildItem
 }
+#Remove-Item Alias:zi -ErrorAction SilentlyContinue
 function shutit {
+    dall
     shutdown /s /t 0
 }
-
-# if (Get-Command bat -ErrorAction SilentlyContinue) {
-#     Set-Alias -Name cat -Value bat
-# }
-# else {
-#     Set-Alias -Name cat -Value Get-Content
-# }
-# Replace the current block with:
-if (Get-Command bat -ErrorAction SilentlyContinue) {
-    Remove-Item Alias:cat -Force -ErrorAction SilentlyContinue
-    New-Alias -Name cat -Value bat
-}
-else {
-    Remove-Item Alias:cat -Force -ErrorAction SilentlyContinue
-    New-Alias -Name cat -Value Get-Content
-}
-
 
 #with logo
 #fastfetch --logo C:\Users\Manisk\.config\fastfetch\logo.txt
@@ -56,72 +520,103 @@ else {
 #fastfetch
 
 
+# Enhanced PowerShell Experience
+# Enhanced PSReadLine Configuration
+$PSReadLineOptions = @{
+    EditMode = 'Windows'
+    HistoryNoDuplicates = $true
+    HistorySearchCursorMovesToEnd = $true
+    Colors = @{
+        Command = '#87CEEB'  # SkyBlue (pastel)
+        Parameter = '#98FB98'  # PaleGreen (pastel)
+        Operator = '#FFB6C1'  # LightPink (pastel)
+        Variable = '#DDA0DD'  # Plum (pastel)
+        String = '#FFDAB9'  # PeachPuff (pastel)
+        Number = '#B0E0E6'  # PowderBlue (pastel)
+        Type = '#F0E68C'  # Khaki (pastel)
+        Comment = '#D3D3D3'  # LightGray (pastel)
+        Keyword = '#8367c7'  # Violet (pastel)
+        Error = '#FF6347'  # Tomato (keeping it close to red for visibility)
+    }
+    PredictionSource = 'History'
+    PredictionViewStyle = 'ListView'
+    BellStyle = 'None'
+}
+
+Set-PSReadLineOption @PSReadLineOptions
 if ($Host.Name -notmatch 'ConsoleHost') {
     # Disable predictive suggestions for non-interactive shells
-    # Set-PSReadLineOption -PredictionSource None
+    #Set-PSReadLineOption -PredictionSource HistoryAndPlugin -PredictionViewStyle ListView # Optional
+    Set-PSReadLineOption -PredictionSource None
 }
 else {
     # Enable predictive suggestions for interactive shells
-    # Set-PSReadLineOption -PredictionSource HistoryAndPlugin
+    Set-PSReadLineOption -PredictionSource HistoryAndPlugin -PredictionViewStyle ListView # Optional
+    #Set-PSReadLineOption -PredictionSource HistoryAndPlugin
+    #Set-PSReadLineOption -PredictionViewStyle ListView
+    #can use -EditMode Emacs or Vi mode for folloing the windows one will use windows like home end keybinds   
+    Set-PSReadLineOption -EditMode Windows
+    
 }
 
+# Alias zi to cdi
+#Set-Alias -Name zi -Value cdi
+#Set-Alias -Name z -Value cd
+Set-Alias ng "C:\Users\Manisk\scoop\shims\neovide.exe"
 Set-Alias -Name vim -Value nvim
 Set-Alias -Name nivm -Value nvim
 Set-Alias -Name vi -Value nvim
-Function update-fzf {
-    Write-Host "Updating fzf cache..."
-    Get-ChildItem -Recurse -Directory $HOME | ForEach-Object { $_.FullName } > $HOME\fzf_dir_cache.txt
-    Get-ChildItem -Recurse -File $HOME | ForEach-Object { $_.FullName } > $HOME\fzf_file_cache.txt
-    Write-Host "fzf cache updated."
-}
-
+#Function update-fzf {
+#    Write-Host "Updating fzf cache..."
+#    Get-ChildItem -Recurse -Directory $HOME | ForEach-Object { $_.FullName } > $HOME\fzf_dir_cache.txt
+#    Get-ChildItem -Recurse -File $HOME | ForEach-Object { $_.FullName } > $HOME\fzf_file_cache.txt
+#    Write-Host "fzf cache updated."
+#}
+#
 function rel {
     & $profile
     Write-Host "done"
 }
-
-
-Function cf {
-    $cacheFile = "$HOME\fzf_dir_cache.txt"
-    if (Test-Path $cacheFile) {
-        $selection = Get-Content $cacheFile | Where-Object { 
-            $_ -notlike "*\.vscode*" -and 
-            $_ -notlike "*\.vscode-oss*" -and
-            $_ -notlike "*\.chade*" -and
-            $_ -notlike "*\.git*" -and
-            $_ -notlike "*node_modules*"  # Add other directories you want to exclude
-        } | fzf --no-sort
-        if ($selection) {
-            Set-Location $selection
-        }
-    }
-    else {
-        Write-Host "Directory cache not found. Generate it using 'Get-ChildItem'."
-    }
-}
-
-Function vic {
-    $cacheFile = "$HOME\fzf_file_cache.txt"
-    if (Test-Path $cacheFile) {
-        $selection = Get-Content $cacheFile | Where-Object { 
-            $_ -notlike "*\.vscode*" -and 
-            $_ -notlike "*\.vscode-oss*" -and
-            $_ -notlike "*\.chade*" -and
-            $_ -notlike "*\.git*" -and
-            $_ -notlike "*node_modules*"  # Add other files you want to exclude
-        } | fzf --no-sort
-        if ($selection) {
-            Set-Location (Split-Path $selection)
-            nvim $selection
-        }
-    }
-    else {
-        Write-Host "File cache not found. Generate it using 'Get-ChildItem'."
-    }
-}
+#Function cf {
+#    $cacheFile = "$HOME\fzf_dir_cache.txt"
+#    if (Test-Path $cacheFile) {
+#        $selection = Get-Content $cacheFile | Where-Object { 
+#            $_ -notlike "*\.vscode*" -and 
+#            $_ -notlike "*\.vscode-oss*" -and
+#            $_ -notlike "*\.chade*" -and
+#            $_ -notlike "*\.git*" -and
+#            $_ -notlike "*node_modules*"  # Add other directories you want to exclude
+#        } | fzf --no-sort
+#        if ($selection) {
+#            Set-Location $selection
+#        }
+#    }
+#    else {
+#        Write-Host "Directory cache not found. Generate it using 'Get-ChildItem'."
+#    }
+#}
+#
+#Function vic {
+#    $cacheFile = "$HOME\fzf_file_cache.txt"
+#    if (Test-Path $cacheFile) {
+#        $selection = Get-Content $cacheFile | Where-Object { 
+#            $_ -notlike "*\.vscode*" -and 
+#            $_ -notlike "*\.vscode-oss*" -and
+#            $_ -notlike "*\.chade*" -and
+#            $_ -notlike "*\.git*" -and
+#            $_ -notlike "*node_modules*"  # Add other files you want to exclude
+#        } | fzf --no-sort
+#        if ($selection) {
+#            Set-Location (Split-Path $selection)
+#            nvim $selection
+#        }
+#    }
+#    else {
+#        Write-Host "File cache not found. Generate it using 'Get-ChildItem'."
+#    }
+#}
 
 # dotfiles Management
-$DotFilesPath = "G:\dotfiles"
 function ff($name) {
     Get-ChildItem -recurse -filter "*${name}*" -ErrorAction SilentlyContinue | ForEach-Object {
         Write-Output "$($_.FullName)"
@@ -130,10 +625,21 @@ function ff($name) {
 function uall {
     scoop update *
     choco upgrade all
+    winget upgrade --all
 }
 
+
+function up {
+    Set-Location ..
+}
+#function .. {
+#    Set-Location ..
+#}
+
+function ... {
+    Set-Location ..\..
+}
 function g. { Set-Location .. }
-function .. { Set-Location ..\.. }
 function pcheck {
     scoop status
     winget upgrade
@@ -141,6 +647,85 @@ function pcheck {
 }
 
 
+#only cd to the dir
+#function fcd {
+#    $dir = Get-ChildItem -Directory | Select-Object -ExpandProperty FullName | fzf --preview 'ls -a {1}' --height 40% --border
+#    if ($dir) {
+#        # Change location in the current session
+#        Set-Location $dir
+#    }
+#}
+
+
+#dynamic can go ~ to home or .. one dir up but closes itself
+# function fzcd {
+#  
+#     # Get current location
+#     $currentDir = Get-Location
+#
+#     # Add a "Go Home" option and "Go Up One Level" option
+#     $directories = @(
+#         "~"  # Go Home
+#         ".." # Go Up One Level
+#         (Get-ChildItem -Directory -Path $currentDir) | Select-Object -ExpandProperty FullName
+#     )
+#
+#     # Use fzf to let the user select a directory
+#     $selectedDir = $directories | fzf --preview 'ls -a {1}' --height 40% --border
+#
+#     # If user selects a directory, change to that directory
+#     if ($selectedDir) {
+#         if ($selectedDir -eq "~") {
+#             # Go to home directory
+#             Set-Location $env:USERPROFILE
+#         }
+#         elseif ($selectedDir -eq "..") {
+#             # Go up one directory
+#             Set-Location (Split-Path $currentDir -Parent)
+#         }
+#         else {
+#             # Change to the selected directory
+#             Set-Location $selectedDir
+#         }
+#     }
+# }
+#
+
+#function fcd {
+#    # Get current location
+#    $currentDir = Get-Location
+#
+#    # Add a "Go Home" option and "Go Up One Level" option
+#    $directories = @(
+#        "~"  # Go Home
+#        ".." # Go Up One Level
+#        "D:\" # D: drive root
+#        "E:\" # E: drive root
+#        "F:\" # F: drive root
+#        "G:\" # G: drive root
+#        (Get-ChildItem -Directory -Path $currentDir -Recurse) | Select-Object -ExpandProperty FullName
+#    )
+#
+#    # Use fzf to let the user select a directory
+#    $selectedDir = $directories | fzf --preview 'ls -a {1}' --height 40% --border
+#
+#    # If user selects a directory, change to that directory
+#    if ($selectedDir) {
+#        if ($selectedDir -eq "~") {
+#            # Go to home directory
+#            Set-Location $env:USERPROFILE
+#        }
+#        elseif ($selectedDir -eq "..") {
+#            # Go up one directory
+#            Set-Location (Split-Path $currentDir -Parent)
+#        }
+#        else {
+#            # Change to the selected directory
+#            Set-Location $selectedDir
+#        }
+#    }
+#}
+#
 $env:EDITOR = "nvim"
 function q { exit }
 function st { chezmoi status }
@@ -200,6 +785,12 @@ function madd {
         chezmoi add $absolutePath
     }
 }
+function lgall {
+    git add .
+    git commit -m "something"
+    git push -u origin master
+    
+}
 function dpush {
     Write-Host "Starting automation"
     Set-Location -Path "$HOME\.local\share\chezmoi"
@@ -218,35 +809,75 @@ function dp {
     #Set-Location -path "$HOME"
 }
 
-#chezmoi add modifiedFiles Automation via one command
 function dall {
+    param(
+        [string]$CommitMsg
+    )
+
     Write-Host "Changes Done..."
     st
-    Write-Host ""  # Add an empty line for new line
+    Write-Host ""
+
     Write-Host "Adding all the changes to dot repo"
 
-    # Check for 'DA' elements and call dfor if there are any
     $deletedFiles = chezmoi status | Where-Object { $_ -match '^DA' }
     if ($deletedFiles.Count -gt 0) {
         Write-Host "Deleting any file removed from the Home Directory if any:"
         dfor
-        Write-Host ""  # Add an empty line for new line
+        Write-Host ""
     }
 
     madd
-    Write-Host ""  # Add an empty line for new line
-    Write-Host "Pushing Everything" -ForegroundColor Green
-    dp
-    Write-Host ""  # Add an empty line for new line
+    Write-Host ""
+
+    if ([string]::IsNullOrWhiteSpace($CommitMsg)) {
+        dp
+    } else {
+        Set-Location -Path "$HOME\.local\share\chezmoi"
+        git add .
+        git commit -m "$CommitMsg"
+        git push -u origin master
+    }
+
+    Write-Host ""
     Set-Location -Path $HOME
 }
-
+# function dall {
+#     Write-Host "Changes Done..."
+#     st
+#     Write-Host ""  # Add an empty line for new line
+#     Write-Host "Adding all the changes to dot repo"
+#
+#     # Check for 'DA' elements and call dfor if there are any
+#     $deletedFiles = chezmoi status | Where-Object { $_ -match '^DA' }
+#     if ($deletedFiles.Count -gt 0) {
+#         Write-Host "Deleting any file removed from the Home Directory if any:"
+#         dfor
+#         Write-Host ""  # Add an empty line for new line
+#     }
+#
+#     madd
+#     Write-Host ""  # Add an empty line for new line
+#     Write-Host "Pushing Everything" -ForegroundColor Green
+#     dp
+#     Write-Host ""  # Add an empty line for new line
+#     Set-Location -Path $HOME
+# }
+#
 function gall {
     Set-Location -Path "$HOME\.local\share\chezmoi"
     git add .
     git commit -m "for readme file"
     git push -u origin master
 }
+function gitall {
+    param (
+        [Parameter(Mandatory=$true)]
+        [string]$commitMessage
+    )
+    git add . ; git commit -m $commitMessage ; git push
+}
+
 function dallm {
     Write-Host "Changes Done..."
     st
@@ -268,7 +899,7 @@ function dallm {
 }
 Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
 Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
-# Set-PSReadLineOption -PredictionSource HistoryAndPlugin
+Set-PSReadLineOption -PredictionSource HistoryAndPlugin
 Set-PSReadLineOption -MaximumHistoryCount 10000
 # Custom completion for common commands
 $scriptblock = {
@@ -297,7 +928,7 @@ $scriptblock = {
 }
 Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock $scriptblock
 
-Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
+#Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
 function kvim {
     nvim -u "C:\Users\Manisk\AppData\Local\kvim\init.lua"
 }
@@ -314,8 +945,7 @@ Set-PSReadLineOption -AddToHistoryHandler {
 }
 
 # Improved prediction settings
-Set-PSReadLineOption -HistorySearchCursorMovesToEnd
-# Set-PSReadLineOption -PredictionSource HistoryAndPlugin
+Set-PSReadLineOption -PredictionSource HistoryAndPlugin
 Set-PSReadLineOption -MaximumHistoryCount 10000
 # Network Utilities
 function Get-PubIP { (Invoke-WebRequest http://ifconfig.me/ip).Content }
@@ -329,7 +959,16 @@ function unzip ($file) {
     $fullFile = Get-ChildItem -Path $pwd -Filter $file | ForEach-Object { $_.FullName }
     Expand-Archive -Path $fullFile -DestinationPath $pwd
 }
-
+function isadmin{
+$isAdmin = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+if($isAdmin)
+{
+    Write-Host "Yes" -ForegroundColor Green
+}
+else{
+    Write-Host "No" -ForegroundColor Red
+}
+}
 # Open WinUtil full-release
 function winutil {
     irm https://christitus.com/win | iex
@@ -348,15 +987,19 @@ function roam { cd "C:\Users\Manisk\AppData\Roaming" }
 # Quick File Creation
 function nf { param($name) New-Item -ItemType "file" -Path . -Name $name }
 
+#Sccache setup lets see fail or not 
+$env:SCCACHE_DIR = "C:\sccache_cache"
+
 # env print Shortcuts
 function envs {
-    Get-ChildItem Env:
+$env:PATH -split ";"
 }
 # Directory Management
 function mkcd { param($dir) mkdir $dir -Force; Set-Location $dir }
 
 Set-Alias -Name ':q' -Value exit
 #function lab {cd "c:\new"}
+#edited here
 Set-PSReadLineOption -EditMode Vi
 function edit { cd "C:\Users\Manisk\AppData\Local\nvim" }
 Set-Alias -Name gna -Value Get-NetAdapter
@@ -364,6 +1007,10 @@ function spshell { cd "C:\Users\Manisk\AppData\Roaming\Microsoft\Windows\Start M
 function cod { cd "C:\Users\Manisk\Coding\" }
 function cods { cd "C:\Users\Manisk\Coding\" }
 # Reload the PowerShell profile
+function reload-profile {
+    & $PROFILE
+    Write-Host "Success!"
+}
 function rel { . $profile }
 function rel { & $profile }
 Set-Alias e explorer.exe
@@ -401,22 +1048,12 @@ Function cpyfile {
 }
 
 
-Remove-Item Alias:ps -Force -ErrorAction SilentlyContinue
-New-Alias -Name ps -Value Get-Process
+Set-Alias ps Get-Process
+Set-Alias rm Remove-Item
+Set-Alias cpy Copy-Item
+Set-Alias cls Clear-Host
+Set-Alias mv Move-Item
 
-Remove-Item Alias:rm -Force -ErrorAction SilentlyContinue
-New-Alias -Name rm -Value Remove-Item
-
-Remove-Item Alias:cls -Force -ErrorAction SilentlyContinue
-New-Alias -Name cls -Value Clear-Host
-
-Remove-Item Alias:mv -Force -ErrorAction SilentlyContinue
-New-Alias -Name mv -Value Move-Item
-# Set-Alias -Force ps Get-Process
-# Set-Alias -Force rm Remove-Item
-# Set-Alias -Force cpy Copy-Item
-# Set-Alias -Force cls Clear-Host
-# Set-Alias -Force mv Move-Item
 
 function cpycmd {
     param (
@@ -429,16 +1066,36 @@ function cpycmd {
     # Copy the output to the clipboard
     $output | Set-Clipboard
 }
+
+#function cpytree {
+#    param (
+#        [string]$dirPath
+#    )
+#
+#    # Generate the tree output with /f /a options
+#    $treeOutput = & cmd.exe /c "tree $dirPath /f /a"
+#
+#    # Copy the tree output to the clipboard
+#    $treeOutput | Set-Clipboard
+#}
 function cpytree {
     param (
-        [string]$dirPath
+        [string]$dirPath = (Get-Location).Path # Default to the current directory
     )
+
+    # Directories to exclude
+    $excludeDirs = @("node_modules", "next", "build")
 
     # Generate the tree output with /f /a options
     $treeOutput = & cmd.exe /c "tree $dirPath /f /a"
 
-    # Copy the tree output to the clipboard
-    $treeOutput | Set-Clipboard
+    # Filter out lines containing the excluded directory names
+    $filteredOutput = $treeOutput | Where-Object {
+        -not ($_ -match ($excludeDirs -join "|"))
+    }
+
+    # Copy the filtered output to the clipboard
+    $filteredOutput | Set-Clipboard
 }
 
 function cpypath {
@@ -463,6 +1120,7 @@ function gc { param($m) git commit -m "$m" }
 
 function gp { git push }
 
+<# function g { __zoxide_z github } #>
 
 function gcl { git clone "$args" }
 
@@ -490,6 +1148,7 @@ function fs {
 }
 #file manager for console 
 function fm { vifm }
+Set-Alias recon reload-profile
 
 # Set UNIX-like aliases for the admin command, so sudo <command> will run the command with elevated rights.
 Set-Alias -Name su -Value admin
@@ -553,8 +1212,9 @@ function dots { Set-Location -Path $Home\.local\share\chezmoi\ }
 
 # Quick Access to Editing the Profile
 function ep { nvim $PROFILE }
-function dotf { cd "G:\dotfiles" }
-function eueli { nvim "C:\Users\Manisk\AppData\Roaming\ueli\config.json" }
+function eueli {
+    nvim "$env:HOME\AppData\Roaming\ueli\config.json"
+}
 # Simplified Process Management
 function k9 { Stop-Process -Name $args[0] }
 
@@ -562,13 +1222,13 @@ function k9 { Stop-Process -Name $args[0] }
 function la { Get-ChildItem -Path . -Force | Format-Table -AutoSize }
 function ll { Get-ChildItem -Path . -Force -Hidden | Format-Table -AutoSize }
 
-function grep($regex, $dir) {
-    if ( $dir ) {
-        Get-ChildItem $dir | select-string $regex
-        return
-    }
-    $input | select-string $regex
-}
+# function grep($regex, $dir) {
+#     if ( $dir ) {
+#         Get-ChildItem $dir | select-string $regex
+#         return
+#     }
+#     $input | select-string $regex
+# }
 function head {
     param($Path, $n = 10)
     Get-Content $Path -Head $n
@@ -630,8 +1290,20 @@ function export($name, $value) {
     set-item -force -path "env:$name" -value $value;
 }
 #shows path of the commands
+#function which($name) {
+#    Get-Command $name | Select-Object -ExpandProperty Definition
+#}
 function which($name) {
-    Get-Command $name | Select-Object -ExpandProperty Definition
+    # Check if the command exists
+    $command = Get-Command $name -ErrorAction SilentlyContinue
+    
+    if ($null -ne $command) {
+        # If the command exists, return its definition
+        $command | Select-Object -ExpandProperty Definition
+    } else {
+        # If the command does not exist, show a message
+        Write-Host "Command '$name' does not exist."
+    }
 }
 
 Set-Alias -Name np -Value Notepad++.exe
@@ -653,13 +1325,9 @@ Set-PSReadLineKeyHandler -Key Ctrl+Shift+b `
 
 Set-Alias lvim 'C:\Users\Manisk\.local\bin\lvim.ps1'
 
-# Enable Starship Prompt
-# To disable Starship, comment this line and uncomment the Oh-My-Posh section.
-Invoke-Expression (&starship init powershell)
+# Prompt Configuration
+# Uncomment only one of the following blocks to enable the desired prompt.
 
-# Enable Oh-My-Posh Prompt
-# Uncomment this section to enable Oh-My-Posh and disable Starship.
- 
 function Get-Theme {
     if (Test-Path -Path $PROFILE.CurrentUserAllHosts -PathType leaf) {
         $existingTheme = Select-String -Raw -Path $PROFILE.CurrentUserAllHosts -Pattern "oh-my-posh init pwsh --config"
@@ -693,41 +1361,348 @@ function Get-Theme {
         }
     }
 }
-#disable commnet to enable Oh-My-Posh remember to first disable the Starship prompt first 
+# Enable Starship Prompt  To disable Starship, comment this line and uncomment the Oh-My-Posh section.
+Invoke-Expression (&starship init powershell)
+
+# Enable Oh-My-Posh Prompt
+# Uncomment this section to enable Oh-My-Posh and disable Starship.
+ 
 #Get-Theme
 
 
 # Zoxide Initialization
-# if (Get-Command zoxide -ErrorAction SilentlyContinue) {
-#     Invoke-Expression (& { (zoxide init --cmd cd powershell | Out-String) })
-# }
-# else {
-#     Write-Warning "zoxide is not installed. Install it using Scoop or manually from https://github.com/ajeetdsouza/zoxide."
-#     #winget install -e --id ajeetdsouza.zoxide
-#     #Write-Host "zoxide installed successfully. Initializing..."
-#     #Write-Host "zoxide not installed"
-#     #Invoke-Expression (& { (zoxide init powershell | Out-String) })
-#     try {
-#         #winget install -e --id ajeetdsouza.zoxide
-#         #Write-Host "zoxide installed successfully. Initializing..." -ForegroundColor Cyan
-#         # Write-Host "zoxide not installed"
-#         # Invoke-Expression (& { (zoxide init powershell | Out-String) })
-#     }
-#     catch {
-#         Write-Error "Failed to install zoxide. Error: $_"
-#     }
-# }
-
-# Replace the zoxide initialization with this
 if (Get-Command zoxide -ErrorAction SilentlyContinue) {
-    Invoke-Expression (& { (zoxide init powershell --hook prompt | Out-String) })
+    Invoke-Expression (& { (zoxide init --cmd cd powershell | Out-String) })
 }
-# Import the Chocolatey Profile that contains the necessary code to enable
-# tab-completions to function for `choco`.
-# Be aware that if you are missing these lines from your profile, tab completion
-# for `choco` will not function.
-# See https://ch0.co/tab-completion for details.
-$ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
-if (Test-Path($ChocolateyProfile)) {
-  Import-Module "$ChocolateyProfile"
+# Scoop Advance Search 
+. ([ScriptBlock]::Create((& scoop-search --hook | Out-String)))
+
+function cdf {
+    $sel = ff | fzf
+    if (-not $sel) { return }
+
+    if (Test-Path $sel -PathType Container) {
+        Set-Location $sel
+    } else {
+        Set-Location (Split-Path $sel)
+    }
+}
+
+function pushrm {
+    if ($args.Count -ne 2) {
+        Write-Error "Usage: pushrm <local_file> <remote_dir>"
+        return
+    }
+
+    $LocalFile  = Resolve-Path $args[0]
+    $RemoteDir  = $args[1]
+
+    # Ensure remote directory exists (once per file, cheap)
+    adb shell "mkdir -p $RemoteDir"
+
+    # Push the file (NO manual quoting)
+    adb push $LocalFile $RemoteDir
+
+    if ($LASTEXITCODE -eq 0) {
+        Write-Host "✔ Pushed and removed: $($LocalFile.Path)"
+        Remove-Item -LiteralPath $LocalFile -Force
+    }
+    else {
+        Write-Warning "✘ Failed: $($LocalFile.Path)"
+    }
+}
+function ngui {
+    if ($args.Count -eq 0) {
+        neovide
+    }
+    else {
+        neovide @args
+    }
+}# Profile Settings
+
+
+$ErrorActionPreference = "Stop"
+
+# Dynamically build the path to your Startup folder
+$ahkDir = Join-Path $HOME "AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup"
+
+# --- AutoHotkey Management Functions ---
+
+function Enable-AHK {
+    <#
+    .SYNOPSIS
+    Starts the specific AHK scripts from the Windows Startup folder.
+    #>
+    $scripts = @("ArrowKeysMapping.ahk", "AutoCorrect_v2.ahk")
+    
+    foreach ($script in $scripts) {
+        $fullPath = Join-Path $ahkDir $script
+        
+        if (Test-Path $fullPath) {
+            # WindowStyle Hidden keeps the console pop-up away
+            Start-Process AutoHotkey.exe "`"$fullPath`"" -WindowStyle Hidden
+            Write-Host "🚀 Started: $script" -ForegroundColor Green
+        } else {
+            Write-Warning "Missing script: $fullPath"
+        }
+    }
+}
+
+function fix-scoop{
+Get-ChildItem -Path "$env:USERPROFILE\scoop\buckets" -Directory | ForEach-Object {
+∙     Write-Host "Resetting $($_.Name)..." -ForegroundColor Cyan
+∙     git -C $_.FullName fetch --all
+∙     git -C $_.FullName reset --hard "@{u}"  # Quotes prevent the Hashtable error
+∙     git -C $_.FullName clean -fd
+∙ }
+}
+function fix-scoop-all {
+    Write-Host "--- Starting Scoop Repair ---" -ForegroundColor Cyan
+
+    # 1. Reset Scoop Core (The engine)
+    Write-Host "`n[1/3] Resetting Scoop Core..." -ForegroundColor Yellow
+    git -C "$env:SCOOP\apps\scoop\current" fetch --all
+    git -C "$env:SCOOP\apps\scoop\current" reset --hard origin/master
+    git -C "$env:SCOOP\apps\scoop\current" clean -fd
+
+    # 2. Reset All Buckets
+    Write-Host "`n[2/3] Resetting all buckets..." -ForegroundColor Yellow
+    Get-ChildItem -Path "$env:USERPROFILE\scoop\buckets" -Directory | ForEach-Object {
+        Write-Host "  -> Resetting $($_.Name)..." -ForegroundColor Cyan
+        git -C $_.FullName fetch --all
+        git -C $_.FullName reset --hard "@{u}"
+        git -C $_.FullName clean -fd
+    }
+
+    # 3. Final Sync & Cleanup
+    Write-Host "`n[3/3] Running final update and cleanup..." -ForegroundColor Yellow
+    scoop update
+    scoop cleanup * # Removes old versions of apps
+    # Optional: scoop cache rm * # Uncomment this to clear all downloaded installers
+
+    Write-Host "`n✅ Scoop is healthy and up to date!" -ForegroundColor Green
+}
+function Disable-AHK {
+    <#
+    .SYNOPSIS
+    Kills all running AutoHotkey process instances.
+    #>
+    $ahkProcesses = Get-Process AutoHotkey -ErrorAction SilentlyContinue
+    
+    if ($ahkProcesses) {
+        $ahkProcesses | Stop-Process -Force
+        Write-Host "🛑 All AutoHotkey scripts disabled." -ForegroundColor Yellow
+    } else {
+        Write-Host "ℹ️ No AutoHotkey processes are currently running." -ForegroundColor Gray
+    }
+}
+
+# Run on startup (Optional: remove this line if you only want manual control)
+# Enable-AHK
+function Convert-WebmToMp4 {
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Alias("FullName")]
+        [string]$InputFile,
+
+        [int]$CRF = 18,
+        [string]$Preset = "slow"
+    )
+
+    process {
+        if (-not (Test-Path -LiteralPath $InputFile)) {
+            Write-Error "File not found: $InputFile"
+            return
+        }
+
+        $ResolvedPath = (Resolve-Path -LiteralPath $InputFile).Path
+        $ffmpeg = "ffmpeg"
+        $OutputFile = [System.IO.Path]::ChangeExtension($ResolvedPath, ".mp4")
+
+        Write-Host "Converting:" $ResolvedPath "→" $OutputFile
+        Write-Host "CRF=$CRF | Preset=$Preset"
+
+        & $ffmpeg `
+            -hide_banner `
+            -loglevel error `
+            -stats `
+            -i "$ResolvedPath" `
+            -map 0:v:0 -map 0:a:0? `
+            -c:v libx264 `
+            -preset $Preset `
+            -crf $CRF `
+            -profile:v high `
+            -level 4.2 `
+            -pix_fmt yuv420p `
+            -movflags +faststart `
+            -c:a aac `
+            -b:a 192k `
+            -ac 2 `
+            "$OutputFile"
+
+        if ($LASTEXITCODE -eq 0) {
+            Write-Host "✔ Done:" $OutputFile -ForegroundColor Green
+        } else {
+            Write-Error "✖ ffmpeg failed for $ResolvedPath"
+        }
+    }
+}
+function emacs {
+    & "C:\Users\Administrator\scoop\apps\emacs\current\bin\emacs.exe" --init-directory "$HOME\.emacs.d" $args
+}
+
+#search the package managers for the packages all in one 
+function s {
+    param (
+        [Parameter(Mandatory)]
+        [string]$query
+    )
+
+    Clear-Host
+
+    function section($title, $color) {
+        Write-Host "`n== $title ==" -ForegroundColor $color
+        Write-Host ("-" * (6 + $title.Length)) -ForegroundColor DarkGray
+    }
+
+    $preferredBuckets = @("extras", "main", "versions")
+
+    # ================= scoop =================
+    section "scoop (bucket-aware)" Cyan
+    try {
+        $currentBucket = $null
+        $results = @()
+
+        scoop search $query 2>$null | ForEach-Object {
+            # Bucket header line
+            if ($_ -match "^'(.+)' bucket:$") {
+                $currentBucket = $matches[1]
+            }
+            # App line: name  version
+            elseif ($_ -match '^\s*([a-zA-Z0-9._-]+)\s+([^\s]+)') {
+                $results += [pscustomobject]@{
+                    Name    = $matches[1]
+                    Version = $matches[2]
+                    Bucket  = $currentBucket
+                }
+            }
+        }
+
+        $results |
+        Sort-Object `
+            @{ Expression = {
+                if ($preferredBuckets -contains $_.Bucket) {
+                    $preferredBuckets.IndexOf($_.Bucket)
+                } else { 99 }
+            }},
+            Name |
+        Group-Object Name |
+        ForEach-Object { $_.Group | Select-Object -First 1 } |
+        Format-Table Name, Version, Bucket -AutoSize
+    }
+    catch {
+        Write-Host "scoop search failed" -ForegroundColor Red
+    }
+
+    # ================= winget =================
+    section "winget" Green
+    try {
+        winget search $query --accept-source-agreements |
+        Select-Object -Skip 1 |
+        Where-Object { $_ -match '\S+\s{2,}\S+' } |
+        ForEach-Object {
+            $cols = ($_ -split '\s{2,}').Trim()
+            if ($cols.Count -ge 3) {
+                [pscustomobject]@{
+                    Name    = $cols[0]
+                    Version = $cols[2]
+                }
+            }
+        } |
+        Sort-Object Name -Unique |
+        Format-Table Name, Version -AutoSize
+    }
+    catch {
+        Write-Host "winget search failed" -ForegroundColor Red
+    }
+
+    # ================= choco =================
+    section "chocolatey" Magenta
+    try {
+        choco search $query --limit-output |
+        ForEach-Object {
+            if ($_ -match '^([^|]+)\|(.+)$') {
+                [pscustomobject]@{
+                    Name    = $matches[1]
+                    Version = $matches[2]
+                }
+            }
+        } |
+        Sort-Object Name -Unique |
+        Format-Table Name, Version -AutoSize
+    }
+    catch {
+        Write-Host "choco search failed" -ForegroundColor Red
+    }
+}
+function fail-clear {
+    [CmdletBinding()]
+    param()
+
+    Write-Host "`nScanning Scoop apps for failed installs..." -ForegroundColor Cyan
+
+    $failedApps = scoop list |
+        Where-Object { $_.Info -match "Install failed" } |
+        Select-Object -ExpandProperty Name
+
+    if (-not $failedApps) {
+        Write-Host "No failed Scoop packages found." -ForegroundColor Green
+        return
+    }
+
+    Write-Host "`nFailed packages detected:" -ForegroundColor Yellow
+    $failedApps | ForEach-Object {
+        Write-Host " - $_"
+    }
+
+    $globalRoot = scoop config global_path
+    $userRoot   = scoop config root_path
+
+    foreach ($app in $failedApps) {
+
+        Write-Host "`nCleaning: $app" -ForegroundColor Magenta
+
+        try {
+            scoop uninstall $app -g *> $null
+        } catch {}
+
+        try {
+            scoop uninstall $app *> $null
+        } catch {}
+
+        $paths = @(
+            "$userRoot\apps\$app",
+            "$globalRoot\apps\$app",
+            "$userRoot\persist\$app",
+            "$globalRoot\persist\$app",
+            "$userRoot\cache\$app*",
+            "$globalRoot\cache\$app*"
+        )
+
+        foreach ($path in $paths) {
+            Get-Item $path -ErrorAction SilentlyContinue |
+                Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
+        }
+
+        Write-Host "Removed broken package: $app" -ForegroundColor Green
+    }
+
+    scoop cleanup *
+
+    Write-Host "`nScoop failed-install cleanup complete." -ForegroundColor Cyan
+}
+
+function mcpedit {
+    nvim "C:\Users\Administrator\.gemini\antigravity-cli\mcp_config.json"
 }

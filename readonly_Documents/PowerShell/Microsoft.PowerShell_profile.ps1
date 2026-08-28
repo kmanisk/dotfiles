@@ -23,7 +23,7 @@ if ($PSVersionTable.PSVersion.Major -ge 7) {
     Import-Module -Name Terminal-Icons -ErrorAction SilentlyContinue
 }
 function showpack{
-    nvim "$HOMEA\AppData\Local\installer\packages.json"
+    nvim "$HOME\AppData\Local\installer\packages.json"
 }
 # For PSReadLine
 if ($PSVersionTable.PSVersion.Major -ge 7) {
@@ -1374,25 +1374,6 @@ Invoke-Expression (&starship init powershell)
 if (Get-Command zoxide -ErrorAction SilentlyContinue) {
     Invoke-Expression (& { (zoxide init --cmd cd powershell | Out-String) })
 }
-else {
-    #Write-Warning "zoxide is not installed. Install it using Scoop or manually from https://github.com/ajeetdsouza/zoxide."
-    Write-Host "Zoxide not installed"
-    #winget install -e --id ajeetdsouza.zoxide
-    #Write-Host "zoxide installed successfully. Initializing..."
-    #Write-Host "zoxide not installed"
-    #Invoke-Expression (& { (zoxide init powershell | Out-String) })
-    try {
-        choco install zoxide --version=0.9.0 -y
-        #choco pin add --name zoxide
-        #winget install -e --id ajeetdsouza.zoxide
-        #Write-Host "zoxide installed successfully. Initializing..." -ForegroundColor Cyan
-        # Write-Host "zoxide not installed"
-        # Invoke-Expression (& { (zoxide init powershell | Out-String) })
-    }
-    catch {
-        Write-Error "Failed to install zoxide. Error: $_"
-    }
-}
 # Scoop Advance Search 
 . ([ScriptBlock]::Create((& scoop-search --hook | Out-String)))
 
@@ -1567,8 +1548,6 @@ function Convert-WebmToMp4 {
         }
     }
 }
-# Add to your PowerShell profile (notepad $PROFILE)
-$env:LIB = "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.2\lib\x64;$env:LIB"
 function emacs {
     & "C:\Users\Administrator\scoop\apps\emacs\current\bin\emacs.exe" --init-directory "$HOME\.emacs.d" $args
 }
