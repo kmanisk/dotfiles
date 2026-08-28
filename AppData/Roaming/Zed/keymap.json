@@ -337,8 +337,6 @@
   {
     "context": "Editor && vim_mode == operator",
     "bindings": {
-      "s": "vim::HelixJumpToWord",
-      "S": "vim::HelixJumpToWord",
       "g s": "vim::PushSneak",
       "g S": "vim::PushSneakBackward",
       "z": "vim::PushSneak",
