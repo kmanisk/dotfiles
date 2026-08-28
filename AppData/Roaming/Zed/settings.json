@@ -51,7 +51,7 @@
     "theme": {
         "mode": "system",
         "light": "Gruvbox Light",
-        "dark": "Base16 selenized-dark"
+        "dark": "Base16 Spacemacs"
     },
     // ─────────────────────────────────────────────────────────────────────────────
     // 3. GENERAL & WINDOW
@@ -166,7 +166,10 @@
     // 9. GIT (VERSION CONTROL)
     // ─────────────────────────────────────────────────────────────────────────────
     "git": {
-        "git_gutter": "hide"
+        "git_gutter": "hide",
+        "inline_blame": {
+            "enabled": false
+        }
     },
     // ─────────────────────────────────────────────────────────────────────────────
     // 10. VIM MODE & WHICH-KEY
