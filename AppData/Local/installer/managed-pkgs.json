@@ -71,6 +71,5 @@
     "Discord.Discord",
     "IrfanSkiljan.IrfanView",
     "Microsoft.VCRedist.2015+.x64"
-  ],
-  "choco": []
+  ]
 }
