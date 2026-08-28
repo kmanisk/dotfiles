@@ -107,7 +107,7 @@ try {
             } elseif (Test-Path "build.gradle") {
                 gradle run
             } else {
-                java $File
+                java --enable-preview $File
             }
         }
 

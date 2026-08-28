@@ -236,15 +236,7 @@
 
       // Selection & Clipboard
       "space s a": "editor::SelectAll",
-      "space d a": [
-        "editor::SelectAll",
-        "editor::Cut"
-      ],
       "space y a": [
-        "editor::SelectAll",
-        "editor::Copy"
-      ],
-      "space d": [
         "editor::SelectAll",
         "editor::Copy"
       ],
@@ -256,14 +248,10 @@
       "ctrl-a": "vim::Increment",
       "ctrl-x": "vim::Decrement",
 
-      // Paste on new line (matches Neovim gp / gP)
+      // Paste on new line (matches Neovim gp)
       "g p": [
         "editor::NewlineBelow",
-        "vim::Paste"
-      ],
-      "g P": [
-        "editor::NewlineAbove",
-        "vim::Paste"
+        "editor::Paste"
       ],
 
       // Redo with U
@@ -331,9 +319,14 @@
       // Project Panel Reveal
       "space e": "pane::RevealInProjectPanel",
 
-      // Leap & Motion Jumps
-      "g w": "vim::HelixJumpToWord",
-      "space j": "vim::HelixJumpToWord",
+      // Word Jump (Hop / Flash style with character labels)
+      "s": "vim::HelixJumpToWord",
+      "S": "vim::HelixJumpToWord",
+
+      // Join Lines (matches Neovim <leader>j / J)
+      "space j": "vim::JoinLines",
+
+      // 2-Character Leap / Sneak Search
       "g s": "vim::PushSneak",
       "g S": "vim::PushSneakBackward",
       "g z z": "editor::ScrollCursorCenter"
@@ -367,9 +360,8 @@
       "space c a": "editor::ToggleCodeActions",
       "space f d": "editor::Format",
       "shift-s": ["vim::PushAddSurrounds", {}],
-      "s": ["vim::PushAddSurrounds", {}],
-      "g w": "vim::HelixJumpToWord",
-      "space j": "vim::HelixJumpToWord",
+      "s": "vim::HelixJumpToWord",
+      "S": "vim::HelixJumpToWord",
       "g s": "vim::PushSneak",
       "g S": "vim::PushSneakBackward",
 
@@ -380,6 +372,20 @@
       // Indent & Outdent
       "<": "editor::Outdent",
       ">": "editor::Indent"
+    }
+  },
+
+  // =============================================================================
+  //                   Editor (Operator-Pending Mode - Vim)
+  //                   Allows chaining y, d, c with s (Word Jump) & gs (Sneak)
+  // =============================================================================
+  {
+    "context": "Editor && vim_mode == operator && !VimWaiting && !menu",
+    "bindings": {
+      "s": "vim::HelixJumpToWord",
+      "S": "vim::HelixJumpToWord",
+      "g s": "vim::PushSneak",
+      "g S": "vim::PushSneakBackward"
     }
   },
 
@@ -486,7 +492,6 @@
     "bindings": {
       "g s": "vim::PushSneak",
       "g S": "vim::PushSneakBackward",
-      "g w": "vim::HelixJumpToWord",
       "g i": "editor::ToggleCodeActions",
       "g d": "editor::OpenExcerpts",
       "g c": [
@@ -505,8 +510,6 @@
       "g a": "editor::SelectAllMatches",
       "g shift-a": "editor::FindAllReferences",
       "g f": "project_symbols::Toggle",
-      "g w": "vim::HelixJumpToWord",
-      "space j": "vim::HelixJumpToWord",
       "space p e": "diagnostics::Deploy"
     }
   },
