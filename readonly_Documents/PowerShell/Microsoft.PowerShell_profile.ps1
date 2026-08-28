@@ -1875,61 +1875,95 @@ EXAMPLES:
         { $_ -in "list", "ls", "l", "lf" } {
             $isFull = ($Action -eq "lf") -or ($Targets -contains "full") -or ($Targets -contains "-full") -or ($Targets -contains "-f")
 
-            $tracked = @()
-            if (Test-Path $chezmoiPkgs) {
-                $tracked = @((Get-Content $chezmoiPkgs -Raw | ConvertFrom-Json -AsHashtable)["fonts"])
-            }
             $installed = Get-ChildItem -Path $userFonts -Include *.ttf, *.otf -Recurse -ErrorAction SilentlyContinue
 
-            function Find-FontFiles {
-                param([string]$FontName, $AllFiles)
-                $simple = ($FontName -replace "(Mono|Sans|Serif|Font|Nerd)", "").ToLower()
-                return @($AllFiles | Where-Object {
-                    $_.Name -like "*$FontName*" -or
-                    $_.Name.ToLower() -like "*$simple*" -or
-                    ($simple -eq "hermit" -and $_.Name -like "*hurmit*") -or
-                    ($simple -eq "intelone" -and $_.Name -like "*intone*") -or
-                    ($simple -eq "fantasquesans" -and $_.Name -like "*fantasque*") -or
-                    ($simple -match "psudo" -and $_.Name -like "*psudo*") -or
-                    ($simple -like "*fixedsys*" -and $_.Name -like "*fsex*")
-                })
+            if (-not $installed -or $installed.Count -eq 0) {
+                Write-Host "No user fonts installed in $userFonts." -ForegroundColor Yellow
+                return
             }
 
-            Write-Host "`n=== TRACKED FONTS ($($tracked.Count)) ===" -ForegroundColor Cyan
-            $matchedFileNames = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
+            # Group files into clean font families
+            $families = @{}
+            foreach ($f in $installed) {
+                $clean = $f.BaseName -replace '(-Bold|-Regular|-Italic|-BoldItalic|-ExtraBold|-SemiBold|-Light|-Medium|-Thin|-Heavy|-Black|-ExtraLight|-ExtraBlack|-Oblique|-Normal|BoldItalic|BoldUpright|RegularItalic|RegularUpright|_bold|_italic|_regular)+$', ''
+                $clean = $clean -replace '[-_]+$', ''
+                if ($clean -match '^(FSEX\d+|Fixedsys)') { $clean = "Fixedsys" }
+                elseif ($clean -match '^Cozette') { $clean = "Cozette" }
+                elseif ($clean -match '^GohuFont') { $clean = "GohuFont" }
+                elseif ($clean -match '^Monocraft') { $clean = "Monocraft" }
+                elseif ($clean -match '^Iosevka') { $clean = "Iosevka" }
+                elseif ($clean -match '^Agave') { $clean = "Agave" }
+                elseif ($clean -match '^(Intone|IntelOne)') { $clean = "IntelOneMono" }
+                elseif ($clean -match '^(Hurmit|Hermit)') { $clean = "Hermit" }
+                elseif ($clean -match '^Fantasque') { $clean = "FantasqueSansMono" }
+                elseif ($clean -match '^DaddyTime') { $clean = "DaddyTimeMono" }
+                elseif ($clean -match '^Victor') { $clean = "VictorMono" }
+                elseif ($clean -match '^(psudo|Pseudo)') { $clean = "PsudoFontLigaMono" }
+                elseif ($clean -match '^aporetic-sans') { $clean = "AporeticSansMono" }
+                elseif ($clean -match '^aporetic-serif') { $clean = "AporeticSerifMono" }
 
-            foreach ($font in $tracked) {
-                $m = Find-FontFiles $font $installed
-                if ($m.Count -gt 0) {
-                    Write-Host "  [OK] $font ($($m.Count) variant file(s))" -ForegroundColor Green
-                    if ($isFull) {
-                        $m | ForEach-Object { 
-                            [void]$matchedFileNames.Add($_.Name)
-                            Write-Host "       -> $($_.Name)" -ForegroundColor DarkGray 
-                        }
-                    } else {
-                        $m | ForEach-Object { [void]$matchedFileNames.Add($_.Name) }
-                    }
+                if (-not $families.ContainsKey($clean)) {
+                    $families[$clean] = [System.Collections.Generic.List[string]]::new()
+                }
+                $families[$clean].Add($f.Name)
+            }
+
+            $pixelKeywords = @("pixel", "bitmap", "craft", "cozette", "gohu", "fixedsys", "terminus", "scientifica", "creep", "tamzen", "unscii", "spleen", "dina")
+
+            $catPixel = [System.Collections.Generic.SortedDictionary[string, System.Collections.Generic.List[string]]]::new([System.StringComparer]::OrdinalIgnoreCase)
+            $catMono  = [System.Collections.Generic.SortedDictionary[string, System.Collections.Generic.List[string]]]::new([System.StringComparer]::OrdinalIgnoreCase)
+            $catOther = [System.Collections.Generic.SortedDictionary[string, System.Collections.Generic.List[string]]]::new([System.StringComparer]::OrdinalIgnoreCase)
+
+            foreach ($k in $families.Keys) {
+                $lower = $k.ToLower()
+                $isPixel = $false
+                foreach ($kw in $pixelKeywords) {
+                    if ($lower -like "*$kw*") { $isPixel = $true; break }
+                }
+
+                if ($isPixel) {
+                    $catPixel[$k] = $families[$k]
+                } elseif ($lower -match "(mono|code|nerd|sans|serif|type|jetbrains|fira|cascadia|consolas|hack|roboto|inconsolata|agave|iosevka|hermit|fantasque|daddy|victor)") {
+                    $catMono[$k] = $families[$k]
                 } else {
-                    Write-Host "  [--] $font (not installed in user fonts)" -ForegroundColor DarkGray
+                    $catOther[$k] = $families[$k]
                 }
             }
 
-            # Unmatched extra user fonts
-            $unmatched = @($installed | Where-Object { -not $matchedFileNames.Contains($_.Name) })
-            if ($unmatched.Count -gt 0) {
-                Write-Host "`n=== OTHER INSTALLED USER FONTS ($($unmatched.Count)) ===" -ForegroundColor Yellow
-                if ($isFull) {
-                    $unmatched | ForEach-Object { Write-Host "  - $($_.Name)" -ForegroundColor DarkGray }
-                } else {
-                    $groups = @{}
-                    foreach ($u in $unmatched) {
-                        $clean = $u.BaseName -replace '(-Bold|-Regular|-Italic|-BoldItalic|-ExtraBold|-SemiBold|-Light|-Medium|-Thin|-Heavy|-Oblique)+$', ''
-                        if (-not $groups.ContainsKey($clean)) { $groups[$clean] = 0 }
-                        $groups[$clean]++
+            Write-Host "`n=== INSTALLED USER FONTS ($($families.Count) Families, $($installed.Count) Files) ===" -ForegroundColor Cyan
+
+            if ($catPixel.Count -gt 0) {
+                Write-Host "`n[ Pixel & Bitmap Fonts ]" -ForegroundColor Yellow
+                foreach ($fam in $catPixel.Keys) {
+                    Write-Host "  - $fam ($($catPixel[$fam].Count) variants)" -ForegroundColor White
+                    if ($isFull) {
+                        foreach ($file in $catPixel[$fam]) {
+                            Write-Host "       -> $file" -ForegroundColor DarkGray
+                        }
                     }
-                    foreach ($g in ($groups.Keys | Sort-Object)) {
-                        Write-Host "  - $g ($($groups[$g]) file(s))" -ForegroundColor DarkGray
+                }
+            }
+
+            if ($catMono.Count -gt 0) {
+                Write-Host "`n[ Monospace & Coding Fonts ]" -ForegroundColor Yellow
+                foreach ($fam in $catMono.Keys) {
+                    Write-Host "  - $fam ($($catMono[$fam].Count) variants)" -ForegroundColor White
+                    if ($isFull) {
+                        foreach ($file in $catMono[$fam]) {
+                            Write-Host "       -> $file" -ForegroundColor DarkGray
+                        }
+                    }
+                }
+            }
+
+            if ($catOther.Count -gt 0) {
+                Write-Host "`n[ Other Fonts ]" -ForegroundColor Yellow
+                foreach ($fam in $catOther.Keys) {
+                    Write-Host "  - $fam ($($catOther[$fam].Count) variants)" -ForegroundColor White
+                    if ($isFull) {
+                        foreach ($file in $catOther[$fam]) {
+                            Write-Host "       -> $file" -ForegroundColor DarkGray
+                        }
                     }
                 }
             }
