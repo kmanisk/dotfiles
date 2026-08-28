@@ -1780,8 +1780,8 @@ function fontmanage {
     [CmdletBinding()]
     param(
         [Parameter(Position = 0, Mandatory = $false)]
-        [ValidateSet("install", "i", "remove", "rm", "r", "add", "list", "ls", "l")]
-        [string]$Action = "list",
+        [ValidateSet("install", "i", "remove", "rm", "r", "add", "list", "ls", "l", "lf", "help", "h", "-h", "--help", "-help", "/?", "version", "v", "-v", "--version")]
+        [string]$Action = "help",
 
         [Parameter(Position = 1, Mandatory = $false, ValueFromRemainingArguments = $true)]
         [string[]]$Targets
@@ -1842,6 +1842,36 @@ public class WinFontNotifier {
     }
 
     switch ($Action) {
+        { $_ -in "help", "h", "-h", "--help", "-help", "/?" } {
+            Write-Host @"
+fman - PowerShell Font Manager for Windows
+
+USAGE:
+    fman install <repo | url | path>    Install font from GitHub repo, URL, or local file
+    fman remove <font_name>             Uninstall a font and remove registry entries
+    fman list                           List all installed font families
+    fman list -full                     List all individual .ttf / .otf variant files
+    fman add <font_name>                Track a font name in packages.json
+    fman help                           Show this help message
+
+EXAMPLES:
+    fman install the-moonwitch/Cozette
+    fman install kika/fixedsys
+    fman install IdreesInc/Monocraft
+    fman install "https://github.com/.../release.zip"
+    fman install "C:\Downloads\CustomFont.ttf"
+    fman remove fixedsys
+    fman list
+    fman list -full
+"@ -ForegroundColor Cyan
+            return
+        }
+
+        { $_ -in "version", "v", "-v", "--version" } {
+            Write-Host "fman v1.0.0 - PowerShell Font Manager for Windows" -ForegroundColor Cyan
+            return
+        }
+
         { $_ -in "list", "ls", "l", "lf" } {
             $isFull = ($Action -eq "lf") -or ($Targets -contains "full") -or ($Targets -contains "-full") -or ($Targets -contains "-f")
 
