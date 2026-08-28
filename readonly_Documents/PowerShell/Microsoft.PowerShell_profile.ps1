@@ -833,6 +833,42 @@ function dall {
     st
     Write-Host ""
 
+    # Auto-detect newly installed user fonts and add to packages.json (no deletion)
+    $chezmoiPkgs = "$HOME\.local\share\chezmoi\AppData\Local\installer\packages.json"
+    $localPkgs   = "$env:LOCALAPPDATA\installer\packages.json"
+    $userFonts   = "$env:LOCALAPPDATA\Microsoft\Windows\Fonts"
+
+    if ((Test-Path $userFonts) -and (Test-Path $chezmoiPkgs)) {
+        try {
+            $json = Get-Content $chezmoiPkgs -Raw | ConvertFrom-Json -AsHashtable
+            $fontList = [System.Collections.Generic.List[object]]::new($json["fonts"])
+            $existingSet = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
+            foreach ($f in $fontList) { [void]$existingSet.Add($f.ToString()) }
+
+            $installedFiles = Get-ChildItem -Path $userFonts -Include *.ttf, *.otf -Recurse -ErrorAction SilentlyContinue
+            $newAdded = $false
+            foreach ($file in $installedFiles) {
+                $base = [System.IO.Path]::GetFileNameWithoutExtension($file.Name) -replace '(-Bold|-Regular|-Italic|-BoldItalic|-ExtraBold|-SemiBold|-Light|-Medium|-Thin|-Heavy|-Oblique|NerdFont|Mono|_| )+$', ''
+                if (-not [string]::IsNullOrWhiteSpace($base) -and -not $existingSet.Contains($base)) {
+                    $fontList.Add($base)
+                    [void]$existingSet.Add($base)
+                    $newAdded = $true
+                    Write-Host "Discovered new font: $base (added to packages.json)" -ForegroundColor Green
+                }
+            }
+
+            if ($newAdded) {
+                $json["fonts"] = $fontList
+                $json | ConvertTo-Json -Depth 10 | Set-Content $chezmoiPkgs -Encoding UTF8
+                if (Test-Path $localPkgs) {
+                    $json | ConvertTo-Json -Depth 10 | Set-Content $localPkgs -Encoding UTF8
+                }
+            }
+        } catch {
+            Write-Warning "Font check during dall skipped: $_"
+        }
+    }
+
     Write-Host "Adding all the changes to dot repo"
 
     $deletedFiles = chezmoi status | Where-Object { $_ -match '^DA' }
@@ -1850,7 +1886,11 @@ public class WinFontNotifier {
                     New-Item -ItemType Directory -Path $tempDir -Force | Out-Null
                     $fileName = ($target -split '/')[-1]
                     $dlPath = Join-Path $tempDir $fileName
-                    Invoke-RestMethod -Uri $target -OutFile $dlPath
+                    if (Get-Command 'curl.exe' -ErrorAction SilentlyContinue) {
+                        curl.exe -fL -A "Mozilla/5.0" -s -o $dlPath $target
+                    } else {
+                        Invoke-WebRequest -Uri $target -OutFile $dlPath -Headers @{ 'User-Agent' = 'Mozilla/5.0' } -MaximumRedirection 10
+                    }
 
                     if ($fileName -match '\.zip$') {
                         Expand-Archive -Path $dlPath -DestinationPath $tempDir -Force
@@ -1885,10 +1925,16 @@ public class WinFontNotifier {
                 # Install font files to User Fonts
                 foreach ($f in $filesToInstall) {
                     $dest = Join-Path $userFonts $f.Name
-                    Copy-Item $f.FullName $dest -Force
-                    $fontRegName = "$([System.IO.Path]::GetFileNameWithoutExtension($f.Name)) (TrueType)"
-                    Set-ItemProperty -Path $regKey -Name $fontRegName -Value $dest -Force
-                    Write-Host "Installed: $($f.Name)" -ForegroundColor Green
+                    try {
+                        if (-not (Test-Path $dest)) {
+                            Copy-Item $f.FullName $dest -Force -ErrorAction Stop
+                        }
+                        $fontRegName = "$([System.IO.Path]::GetFileNameWithoutExtension($f.Name)) (TrueType)"
+                        Set-ItemProperty -Path $regKey -Name $fontRegName -Value $dest -Force
+                        Write-Host "Installed: $($f.Name)" -ForegroundColor Green
+                    } catch {
+                        Write-Host "Skipped (in use/already present): $($f.Name)" -ForegroundColor DarkGray
+                    }
                 }
 
                 if ($filesToInstall.Count -gt 0) {

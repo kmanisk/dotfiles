@@ -288,74 +288,6 @@ function Invoke-WingetPackages {
 }
 
 # ==============================================================================
-# CHOCOLATEY - declarative
-# ==============================================================================
-
-function Invoke-ChocoPackages {
-    param([string[]]$Desired = @())
-    Write-Section "Chocolatey Packages"
-    if (-not (Test-Cmd 'choco')) { Write-SKIP "Chocolatey not available."; return }
-
-    $manifest  = Get-Manifest
-    $instChoco = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
-    choco list 2>$null | ForEach-Object {
-        if ($_ -match '^(\S+)\s+\S') { [void]$instChoco.Add($matches[1]) }
-    }
-
-    # Build desired names set (strip --version=x suffix)
-    $desiredNames = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
-    foreach ($pkg in $Desired) {
-        $name = if ($pkg -match '^(.+?)\s+--version') { $matches[1].Trim() } else { $pkg.Trim() }
-        [void]$desiredNames.Add($name)
-    }
-
-    # Declarative uninstall (only what we previously managed)
-    foreach ($prev in @($manifest.choco)) {
-        if (-not $desiredNames.Contains($prev) -and $instChoco.Contains($prev)) {
-            Write-INFO "Removing $prev (no longer in packages.json)..."
-            choco uninstall $prev -y 2>&1 | Out-Null
-            if ($LASTEXITCODE -eq 0) { Write-OK "$prev uninstalled."; [void]$instChoco.Remove($prev) }
-            else { Write-WARN "$prev uninstall failed." }
-        }
-    }
-
-    # Install missing
-    $batch    = [System.Collections.Generic.List[string]]::new()
-    $versioned = [System.Collections.Generic.List[hashtable]]::new()
-
-    foreach ($pkg in $Desired) {
-        if ([string]::IsNullOrWhiteSpace($pkg)) { continue }
-        if ($pkg -match '^(.+?)\s+--version[= ](\S+)$') {
-            $name = $matches[1].Trim(); $ver = $matches[2].Trim()
-            if ($instChoco.Contains($name)) { Write-SKIP $name; continue }
-            $versioned.Add(@{ Name=$name; Version=$ver })
-        } else {
-            if ($instChoco.Contains($pkg)) { Write-SKIP $pkg; continue }
-            $batch.Add($pkg)
-        }
-    }
-
-    if ($batch.Count -gt 0) {
-        Write-INFO "Batch installing: $($batch -join ', ')"
-        choco install @batch -y 2>&1 | Out-Null
-        $nowInstalled = choco list 2>$null | Out-String
-        foreach ($p in $batch) {
-            if ($nowInstalled -match "(?m)^$([regex]::Escape($p))\s") { Write-OK $p }
-            else { Write-FAIL "$p failed." }
-        }
-    }
-
-    foreach ($v in $versioned) {
-        Write-INFO "choco install $($v.Name) --version=$($v.Version)"
-        choco install $v.Name --version=$($v.Version) -y 2>&1 | Out-Null
-        if ($LASTEXITCODE -eq 0) { Write-OK $v.Name } else { Write-FAIL "$($v.Name) failed." }
-    }
-
-    $manifest.choco = @($desiredNames)
-    Save-Manifest $manifest
-}
-
-# ==============================================================================
 # PIP
 # ==============================================================================
 
@@ -434,15 +366,6 @@ function Invoke-VSCodeExtensions {
 
 function Invoke-PackagePins {
     Write-Section "Package Pins"
-    if (Test-Cmd 'choco') {
-        $pinned = choco pin list 2>$null | Out-String
-        foreach ($p in @('zoxide')) {
-            if ($pinned -match [regex]::Escape($p)) { Write-SKIP "$p (choco, pinned)" }
-            elseif ((choco list 2>$null | Out-String) -match "(?m)^$([regex]::Escape($p))\s") {
-                choco pin add -n $p 2>$null | Out-Null; Write-OK "$p pinned (choco)"
-            } else { Write-INFO "$p not installed - skipping pin" }
-        }
-    }
     if (Test-Cmd 'winget') {
         $pinnedW = winget pin list 2>$null | Out-String
         foreach ($id in @('AutoHotkey.AutoHotkey','Spotify.Spotify','OliverSchwendener.ueli')) {
@@ -776,11 +699,9 @@ $fontPkgs   = Get-Prop $config 'fonts'
 $scoopPkgs  = if ($isFull) { Get-Prop $config.scoop  'full'   } else { Get-Prop $config.scoop  'mini'   }
 $scoopGlob  = Get-Prop $config.scoop 'global'
 $wingetPkgs = if ($isFull) { Get-Prop $config.winget 'full'   } else { Get-Prop $config.winget 'mini'   }
-$chocoPkgs  = if ($isFull) { Get-Prop $config.choco  'full'   } else { Get-Prop $config.choco  'mini'   }
 
 Invoke-ScoopPackages  -Desired $scoopPkgs -DesiredGlobal $scoopGlob
 Invoke-WingetPackages -Desired $wingetPkgs
-Invoke-ChocoPackages  -Desired $chocoPkgs
 if ($isFull) { Invoke-PipEssentials }
 Invoke-VSCodeExtensions
 Invoke-PackagePins
