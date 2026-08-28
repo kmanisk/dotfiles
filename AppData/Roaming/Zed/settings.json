@@ -26,17 +26,17 @@
     "theme": {
         "mode": "system",
         "light": "Gruvbox Light",
-        "dark": "Base16 Embers"
+        "dark": "Base16 Espresso"
     },
     // ─────────────────────────────────────────────────
     // UI Font
     // ─────────────────────────────────────────────────
-    "ui_font_family": "Iosevka Nerd Font",
+    "ui_font_family": "Hurmit Nerd Font Mono",
     "ui_font_size": 19.0,
     // ─────────────────────────────────────────────────
     // Editor (Buffer) Font
     // ─────────────────────────────────────────────────
-    "buffer_font_family": "Iosevka Nerd Font Mono",
+    "buffer_font_family": "",
     "buffer_font_fallbacks": [
         "JetBrainsMono NF",
         "Josefin Sans"
@@ -46,7 +46,7 @@
         "liga": true, // enable ligatures
         "calt": true // contextual alternates (coding ligatures: ->, =>, !=, ===)
     },
-    "buffer_font_weight": 370,
+    "buffer_font_weight": 400,
     "buffer_line_height": {
         "custom": 1.35 // Iosevka sweet spot
     },

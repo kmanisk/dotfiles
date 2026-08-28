@@ -21,7 +21,6 @@
     "neovide",
     "grep",
     "ripgrep",
-    "nexusfont",
     "vlc",
     "crystaldiskinfo",
     "winaero-tweaker",
@@ -32,10 +31,11 @@
     "starship",
     "sudo",
     "gh",
-    "revouninstaller"
+    "revouninstaller",
+    "fd"
   ],
   "scoop_global": [
-    "iosevka-nf"
+    ""
   ],
   "winget": [
     "chrisant996.Clink",

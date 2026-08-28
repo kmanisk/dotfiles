@@ -573,98 +573,145 @@ function Invoke-Fonts {
     $regPath = 'HKCU:\Software\Microsoft\Windows NT\CurrentVersion\Fonts'
     if (-not (Test-Path $regPath)) { New-Item -Path $regPath -Force | Out-Null }
 
-    # Known single-file direct download registry
+    # Known custom direct-download registries
     $customFonts = @{
-        'monocraft' = @{
-            Filename = 'Monocraft.ttf'
-            Url      = 'https://github.com/IdreesInc/Monocraft/releases/download/v3.0/Monocraft.ttf'
-            RegName  = 'Monocraft (TrueType)'
-        }
-        'comicmono' = @{
-            Filename = 'ComicMono.ttf'
-            Url      = 'https://raw.githubusercontent.com/dtinth/comic-mono-font/master/ComicMono.ttf'
-            RegName  = 'Comic Mono (TrueType)'
-        }
-        'pixelcode' = @{
-            Filename = 'PixelCode.ttf'
-            Url      = 'https://raw.githubusercontent.com/qwerasd205/PixelCode/master/PixelCode.ttf'
-            RegName  = 'Pixel Code (TrueType)'
-        }
+        'monocraft' = @(
+            @{ Filename = 'Monocraft.ttf'; Url = 'https://github.com/IdreesInc/Monocraft/releases/download/v3.0/Monocraft.ttf'; RegName = 'Monocraft (TrueType)' }
+        )
+        'comicmono' = @(
+            @{ Filename = 'ComicMono.ttf'; Url = 'https://raw.githubusercontent.com/dtinth/comic-mono-font/master/ComicMono.ttf'; RegName = 'Comic Mono (TrueType)' }
+        )
+        'pixelcode' = @(
+            @{ Filename = 'PixelCode.ttf'; Url = 'https://raw.githubusercontent.com/qwerasd205/PixelCode/master/PixelCode.ttf'; RegName = 'Pixel Code (TrueType)' }
+        )
+        'aporeticsansmono' = @(
+            @{ Filename = 'aporetic-sans-mono-normalregularupright.ttf'; Url = 'https://raw.githubusercontent.com/protesilaos/aporetic/main/aporetic-sans-mono/TTF/aporetic-sans-mono-normalregularupright.ttf'; RegName = 'Aporetic Sans Mono (TrueType)' },
+            @{ Filename = 'aporetic-sans-mono-normalboldupright.ttf';    Url = 'https://raw.githubusercontent.com/protesilaos/aporetic/main/aporetic-sans-mono/TTF/aporetic-sans-mono-normalboldupright.ttf';    RegName = 'Aporetic Sans Mono Bold (TrueType)' },
+            @{ Filename = 'aporetic-sans-mono-normalregularitalic.ttf';  Url = 'https://raw.githubusercontent.com/protesilaos/aporetic/main/aporetic-sans-mono/TTF/aporetic-sans-mono-normalregularitalic.ttf';  RegName = 'Aporetic Sans Mono Italic (TrueType)' },
+            @{ Filename = 'aporetic-sans-mono-normalbolditalic.ttf';     Url = 'https://raw.githubusercontent.com/protesilaos/aporetic/main/aporetic-sans-mono/TTF/aporetic-sans-mono-normalbolditalic.ttf';     RegName = 'Aporetic Sans Mono Bold Italic (TrueType)' }
+        )
+        'aporeticserifmono' = @(
+            @{ Filename = 'aporetic-serif-mono-normalregularupright.ttf'; Url = 'https://raw.githubusercontent.com/protesilaos/aporetic/main/aporetic-serif-mono/TTF/aporetic-serif-mono-normalregularupright.ttf'; RegName = 'Aporetic Serif Mono (TrueType)' },
+            @{ Filename = 'aporetic-serif-mono-normalboldupright.ttf';    Url = 'https://raw.githubusercontent.com/protesilaos/aporetic/main/aporetic-serif-mono/TTF/aporetic-serif-mono-normalboldupright.ttf';    RegName = 'Aporetic Serif Mono Bold (TrueType)' },
+            @{ Filename = 'aporetic-serif-mono-normalregularitalic.ttf';  Url = 'https://raw.githubusercontent.com/protesilaos/aporetic/main/aporetic-serif-mono/TTF/aporetic-serif-mono-normalregularitalic.ttf';  RegName = 'Aporetic Serif Mono Italic (TrueType)' },
+            @{ Filename = 'aporetic-serif-mono-normalbolditalic.ttf';     Url = 'https://raw.githubusercontent.com/protesilaos/aporetic/main/aporetic-serif-mono/TTF/aporetic-serif-mono-normalbolditalic.ttf';     RegName = 'Aporetic Serif Mono Bold Italic (TrueType)' }
+        )
+        'psudofontligamono' = @(
+            @{ Filename = 'psudoFont_Liga_Mono_-_Regular.ttf';    Url = 'https://raw.githubusercontent.com/psudo-dev/psudofont-liga-mono/main/psudoFont%20Liga%20Mono/psudoFont_Liga_Mono_-_Regular.ttf';    RegName = 'psudoFont Liga Mono (TrueType)' },
+            @{ Filename = 'psudoFont_Liga_Mono_-_Bold.ttf';       Url = 'https://raw.githubusercontent.com/psudo-dev/psudofont-liga-mono/main/psudoFont%20Liga%20Mono/psudoFont_Liga_Mono_-_Bold.ttf';       RegName = 'psudoFont Liga Mono Bold (TrueType)' },
+            @{ Filename = 'psudoFont_Liga_Mono_-_Italic.ttf';     Url = 'https://raw.githubusercontent.com/psudo-dev/psudofont-liga-mono/main/psudoFont%20Liga%20Mono/psudoFont_Liga_Mono_-_Italic.ttf';     RegName = 'psudoFont Liga Mono Italic (TrueType)' },
+            @{ Filename = 'psudoFont_Liga_Mono_-_BoldItalic.ttf'; Url = 'https://raw.githubusercontent.com/psudo-dev/psudofont-liga-mono/main/psudoFont%20Liga%20Mono/psudoFont_Liga_Mono_-_BoldItalic.ttf'; RegName = 'psudoFont Liga Mono Bold Italic (TrueType)' }
+        )
     }
 
     # Aliases to canonical font names
     $aliases = @{
-        'monoone'         = 'IntelOneMono'
-        'mono-one'        = 'IntelOneMono'
-        'mono one'        = 'IntelOneMono'
-        'intel-one-mono'  = 'IntelOneMono'
-        'intelonemono'    = 'IntelOneMono'
-        'intel one mono'  = 'IntelOneMono'
-        'jetbrains-mono'  = 'JetBrainsMono'
-        'jetbrains'       = 'JetBrainsMono'
-        'fira-code'       = 'FiraCode'
-        'fira'            = 'FiraCode'
-        'cascadia-code'   = 'CascadiaCode'
-        'cascadia'        = 'CascadiaCode'
-        'geist-mono'      = 'GeistMono'
-        'geist'           = 'GeistMono'
-        'victor-mono'     = 'VictorMono'
+        'monoone'              = 'IntelOneMono'
+        'mono-one'             = 'IntelOneMono'
+        'mono one'             = 'IntelOneMono'
+        'intel-one-mono'       = 'IntelOneMono'
+        'intelonemono'         = 'IntelOneMono'
+        'intel one mono'       = 'IntelOneMono'
+        'jetbrains-mono'       = 'JetBrainsMono'
+        'jetbrains'            = 'JetBrainsMono'
+        'fira-code'            = 'FiraCode'
+        'fira'                 = 'FiraCode'
+        'cascadia-code'        = 'CascadiaCode'
+        'cascadia'             = 'CascadiaCode'
+        'geist-mono'           = 'GeistMono'
+        'geist'                = 'GeistMono'
+        'victor-mono'          = 'VictorMono'
+        'fantasque'            = 'FantasqueSansMono'
+        'fantasque-sans'       = 'FantasqueSansMono'
+        'daddytime'            = 'DaddyTimeMono'
+        'daddy-time'           = 'DaddyTimeMono'
+        'gohu'                 = 'Gohu'
+        'gohufont'             = 'Gohu'
+        'aporetic'             = 'AporeticSansMono'
+        'aporetic-sans'        = 'AporeticSansMono'
+        'aporeticsans'         = 'AporeticSansMono'
+        'aporetic-sans-mono'   = 'AporeticSansMono'
+        'aporetic-serif'       = 'AporeticSerifMono'
+        'aporeticserif'        = 'AporeticSerifMono'
+        'aporetic-serif-mono'  = 'AporeticSerifMono'
+        'psudo'                = 'PsudoFontLigaMono'
+        'psudofont'            = 'PsudoFontLigaMono'
+        'psudo-font'           = 'PsudoFontLigaMono'
+        'psudofont-liga-mono'  = 'PsudoFontLigaMono'
+        'psudofontligamono'    = 'PsudoFontLigaMono'
     }
 
     foreach ($font in $Desired) {
         if ([string]::IsNullOrWhiteSpace($font)) { continue }
         $key = $font.Trim().ToLower()
         $cleanFont = if ($aliases.ContainsKey($key)) { $aliases[$key] } else { $font.Trim() }
+        $lookupKey = $cleanFont.ToLower()
 
         # Check if font files already exist in user fonts directory
-        $prefix = if ($cleanFont -ieq 'IntelOneMono') { 'IntoneMono' } else { $cleanFont }
-        $existing = @(Get-ChildItem $fontsDir -Filter "*$prefix*.ttf" -ErrorAction SilentlyContinue)
+        $prefix = if ($cleanFont -ieq 'IntelOneMono') { 'IntoneMono' }
+                  elseif ($cleanFont -ieq 'Hermit') { 'Hurmit' }
+                  elseif ($cleanFont -ieq 'FantasqueSansMono') { 'Fantasque' }
+                  elseif ($cleanFont -ieq 'DaddyTimeMono') { 'DaddyTime' }
+                  elseif ($cleanFont -ieq 'AporeticSansMono') { 'aporetic-sans-mono' }
+                  elseif ($cleanFont -ieq 'AporeticSerifMono') { 'aporetic-serif-mono' }
+                  elseif ($cleanFont -ieq 'PsudoFontLigaMono') { 'psudoFont_Liga_Mono' }
+                  else { $cleanFont }
+        $existing = @(Get-ChildItem $fontsDir -Filter "*$prefix*" -ErrorAction SilentlyContinue | Where-Object { $_.Extension -in @('.ttf', '.otf') })
         if ($existing.Count -gt 0) {
             Write-SKIP "$cleanFont (already installed - $($existing.Count) file(s))"
             foreach ($f in $existing) {
-                $regName = [System.IO.Path]::GetFileNameWithoutExtension($f.Name) + ' (TrueType)'
+                $type = if ($f.Extension -ieq '.otf') { 'OpenType' } else { 'TrueType' }
+                $regName = [System.IO.Path]::GetFileNameWithoutExtension($f.Name) + " ($type)"
                 New-ItemProperty -Path $regPath -Name $regName -Value $f.FullName -PropertyType String -Force | Out-Null
             }
             continue
         }
 
-        # Case 1: Custom single-file direct download
-        if ($customFonts.ContainsKey($key)) {
-            $meta = $customFonts[$key]
-            $dest = Join-Path $fontsDir $meta.Filename
-            Write-INFO "Downloading $cleanFont (single TTF via curl)..."
-            curl.exe -fLo $dest -s $meta.Url
-            if ($LASTEXITCODE -eq 0 -and (Test-Path $dest)) {
-                New-ItemProperty -Path $regPath -Name $meta.RegName -Value $dest -PropertyType String -Force | Out-Null
-                Write-OK "$cleanFont installed ($([math]::Round((Get-Item $dest).Length/1KB, 1)) KB)."
+        # Case 1: Custom direct download
+        if ($customFonts.ContainsKey($lookupKey)) {
+            $fileList = $customFonts[$lookupKey]
+            Write-INFO "Downloading $cleanFont ($($fileList.Count) file(s) via curl)..."
+            $successCount = 0
+            foreach ($item in $fileList) {
+                $dest = Join-Path $fontsDir $item.Filename
+                if (-not (Test-Path $dest)) {
+                    curl.exe -fLo $dest -s $item.Url
+                }
+                if (Test-Path $dest) {
+                    New-ItemProperty -Path $regPath -Name $item.RegName -Value $dest -PropertyType String -Force | Out-Null
+                    $successCount++
+                }
+            }
+            if ($successCount -gt 0) {
+                Write-OK "$cleanFont installed ($successCount files)."
             } else {
                 Write-FAIL "$cleanFont download failed."
             }
             continue
         }
 
-        # Case 2: Generic / Smart Nerd Font download (fetches archive & extracts ONLY core TTFs)
-        Write-INFO "Downloading $cleanFont (Nerd Font lightweight archive)..."
+        # Case 2: Generic / Smart Nerd Font download (fetches archive & extracts both Standard and Mono TTFs/OTFs)
+        Write-INFO "Downloading $cleanFont (Nerd Font Standard + Mono)..."
         $zipUrl = "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/$cleanFont.zip"
         $tmpZip = Join-Path $env:TEMP "$($cleanFont)_nf.zip"
         curl.exe -fLo $tmpZip -s $zipUrl
         if ($LASTEXITCODE -eq 0 -and (Test-Path $tmpZip)) {
             $allEntries = @(tar.exe -tf $tmpZip 2>$null)
-            # Smart filter: Pick clean standard Regular, Bold, Italic (ignore mono/propo/oblique bloat)
+            # Pick both Standard and Mono variants for Regular, Bold, Italic (ignore Propo and Windows-compatible bloat)
             $targets = @($allEntries | Where-Object {
                 $_ -match '\.(ttf|otf)$' -and
                 $_ -match '-(Regular|Bold|Italic)\.' -and
-                $_ -notmatch 'NerdFont(Mono|Propo)-'
+                $_ -notmatch '(Propo|Windows\s*Compatible)'
             })
             if (-not $targets -or $targets.Count -eq 0) {
                 $targets = @($allEntries | Where-Object {
                     $_ -match '\.(ttf|otf)$' -and
-                    $_ -match '(Regular|Bold)' -and
-                    $_ -notmatch 'NerdFont(Mono|Propo)-'
+                    $_ -match '(Regular|Bold|Italic)' -and
+                    $_ -notmatch '(Propo|Windows\s*Compatible)'
                 })
             }
             if (-not $targets -or $targets.Count -eq 0) {
-                $targets = @($allEntries | Where-Object { $_ -match '\.(ttf|otf)$' } | Select-Object -First 2)
+                $targets = @($allEntries | Where-Object { $_ -match '\.(ttf|otf)$' -and $_ -notmatch 'Propo' } | Select-Object -First 4)
             }
 
             if ($targets -and $targets.Count -gt 0) {
@@ -672,15 +719,17 @@ function Invoke-Fonts {
                     & tar.exe -xf $tmpZip -C $fontsDir $t
                     $installedFile = Join-Path $fontsDir $t
                     if (Test-Path $installedFile) {
-                        $regName = [System.IO.Path]::GetFileNameWithoutExtension($t) + ' (TrueType)'
+                        $ext = [System.IO.Path]::GetExtension($t)
+                        $type = if ($ext -ieq '.otf') { 'OpenType' } else { 'TrueType' }
+                        $regName = [System.IO.Path]::GetFileNameWithoutExtension($t) + " ($type)"
                         New-ItemProperty -Path $regPath -Name $regName -Value $installedFile -PropertyType String -Force | Out-Null
                     }
                 }
                 Remove-Item $tmpZip -Force -EA SilentlyContinue
-                Write-OK "$cleanFont installed ($($targets.Count) files)."
+                Write-OK "$cleanFont installed ($($targets.Count) files - Standard + Mono)."
             } else {
                 Remove-Item $tmpZip -Force -EA SilentlyContinue
-                Write-FAIL "$cleanFont archive did not contain recognizable TTF files."
+                Write-FAIL "$cleanFont archive did not contain recognizable TTF/OTF files."
             }
         } else {
             Remove-Item $tmpZip -Force -EA SilentlyContinue

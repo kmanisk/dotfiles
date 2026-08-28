@@ -6,6 +6,14 @@
         {
             "command": 
             {
+                "action": "copy",
+                "singleLine": false
+            },
+            "id": "User.copy.644BA8F2"
+        },
+        {
+            "command": 
+            {
                 "action": "movePane",
                 "index": 5
             },
@@ -14,10 +22,17 @@
         {
             "command": 
             {
-                "action": "copy",
-                "singleLine": false
+                "action": "adjustFontSize",
+                "delta": -1
             },
-            "id": "User.copy.644BA8F2"
+            "id": "User.adjustFontSize.E2698FAA"
+        },
+        {
+            "command": 
+            {
+                "action": "quakeMode"
+            },
+            "id": "User.quakeMode.F1E129A4"
         },
         {
             "command": 
@@ -30,17 +45,9 @@
         {
             "command": 
             {
-                "action": "quakeMode"
+                "action": "newTab"
             },
-            "id": "User.quakeMode.F1E129A4"
-        },
-        {
-            "command": 
-            {
-                "action": "adjustFontSize",
-                "delta": -1
-            },
-            "id": "User.adjustFontSize.E2698FAA"
+            "id": "User.newTab.5DEADB41"
         },
         {
             "command": "paste",
@@ -49,9 +56,9 @@
         {
             "command": 
             {
-                "action": "newTab"
+                "action": "scrollUp"
             },
-            "id": "User.newTab.5DEADB41"
+            "id": "User.scrollUp.0"
         },
         {
             "command": 
@@ -60,13 +67,6 @@
                 "index": 2
             },
             "id": "User.newTab.CCE909E3"
-        },
-        {
-            "command": 
-            {
-                "action": "scrollUp"
-            },
-            "id": "User.scrollUp.0"
         },
         {
             "command": 
@@ -83,17 +83,17 @@
         {
             "command": 
             {
-                "action": "commandPalette"
-            },
-            "id": "User.commandPalette.D3F0B923"
-        },
-        {
-            "command": 
-            {
                 "action": "clearBuffer",
                 "clear": "all"
             },
             "id": "User.clearBuffer.87C324ED"
+        },
+        {
+            "command": 
+            {
+                "action": "commandPalette"
+            },
+            "id": "User.commandPalette.D3F0B923"
         },
         {
             "command": 
@@ -107,13 +107,6 @@
         {
             "command": 
             {
-                "action": "prevTab"
-            },
-            "id": "User.prevTab.0"
-        },
-        {
-            "command": 
-            {
                 "action": "moveFocus",
                 "direction": "left"
             },
@@ -122,18 +115,9 @@
         {
             "command": 
             {
-                "action": "newTab",
-                "index": 4
+                "action": "prevTab"
             },
-            "id": "User.newTab.F4C304FB"
-        },
-        {
-            "command": 
-            {
-                "action": "moveFocus",
-                "direction": "up"
-            },
-            "id": "User.moveFocus.6CD791B"
+            "id": "User.prevTab.0"
         },
         {
             "command": 
@@ -147,11 +131,31 @@
         {
             "command": 
             {
+                "action": "moveFocus",
+                "direction": "up"
+            },
+            "id": "User.moveFocus.6CD791B"
+        },
+        {
+            "command": 
+            {
+                "action": "newTab",
+                "index": 4
+            },
+            "id": "User.newTab.F4C304FB"
+        },
+        {
+            "command": 
+            {
                 "action": "splitPane",
                 "split": "right",
                 "splitMode": "duplicate"
             },
             "id": "User.splitPane.FEF0D40B"
+        },
+        {
+            "command": "closePane",
+            "id": "User.closePane"
         },
         {
             "command": 
@@ -160,10 +164,6 @@
                 "index": 5
             },
             "id": "User.newTab.663EF760"
-        },
-        {
-            "command": "closePane",
-            "id": "User.closePane"
         },
         {
             "command": 
@@ -229,10 +229,6 @@
                 "action": "closeTab"
             },
             "id": "User.closeTab.0"
-        },
-        {
-            "command": "toggleShaderEffects",
-            "id": "User.toggleShaderEffects"
         }
     ],
     "alwaysShowTabs": true,
@@ -246,20 +242,28 @@
     "keybindings": 
     [
         {
-            "id": "User.newTab.F4C304FB",
-            "keys": "alt+shift+c"
+            "id": "User.find",
+            "keys": "alt+f"
+        },
+        {
+            "id": "Terminal.ToggleShaderEffects",
+            "keys": "alt+1"
         },
         {
             "id": null,
             "keys": "ctrl+shift+w"
         },
         {
-            "id": null,
-            "keys": "ctrl+v"
+            "id": "User.newTab.F4C304FB",
+            "keys": "alt+shift+c"
         },
         {
             "id": null,
             "keys": "ctrl+shift+f"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+v"
         },
         {
             "id": null,
@@ -270,20 +274,16 @@
             "keys": "alt+down"
         },
         {
-            "id": "User.scrollUp.0",
-            "keys": "ctrl+alt+k"
+            "id": null,
+            "keys": "ctrl+shift+4"
         },
         {
             "id": null,
             "keys": "ctrl+shift+t"
         },
         {
-            "id": null,
-            "keys": "ctrl+shift+4"
-        },
-        {
-            "id": null,
-            "keys": "alt+shift+plus"
+            "id": "User.scrollUp.0",
+            "keys": "ctrl+alt+k"
         },
         {
             "id": null,
@@ -291,11 +291,15 @@
         },
         {
             "id": null,
-            "keys": "ctrl+shift+5"
+            "keys": "alt+shift+plus"
         },
         {
             "id": null,
             "keys": "ctrl+shift+2"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+5"
         },
         {
             "id": "User.splitPane.10B260D2",
@@ -306,20 +310,20 @@
             "keys": "ctrl+tab"
         },
         {
-            "id": null,
-            "keys": "ctrl+c"
-        },
-        {
             "id": "User.adjustFontSize.E04D5229",
             "keys": "alt+shift+u"
         },
         {
             "id": null,
-            "keys": "ctrl+shift+k"
+            "keys": "ctrl+c"
         },
         {
             "id": null,
             "keys": "ctrl+shift+tab"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+k"
         },
         {
             "id": null,
@@ -358,8 +362,12 @@
             "keys": "alt+shift+a"
         },
         {
+            "id": "User.splitPane.A6751878",
+            "keys": "alt+shift+d"
+        },
+        {
             "id": null,
-            "keys": "ctrl+minus"
+            "keys": "alt+n"
         },
         {
             "id": null,
@@ -367,11 +375,7 @@
         },
         {
             "id": null,
-            "keys": "alt+n"
-        },
-        {
-            "id": "User.splitPane.A6751878",
-            "keys": "alt+shift+d"
+            "keys": "ctrl+minus"
         },
         {
             "id": null,
@@ -386,12 +390,12 @@
             "keys": "alt+w"
         },
         {
-            "id": null,
-            "keys": "ctrl+shift+1"
-        },
-        {
             "id": "User.commandPalette.D3F0B923",
             "keys": "alt+p"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+1"
         },
         {
             "id": null,
@@ -414,20 +418,20 @@
             "keys": "alt+d"
         },
         {
-            "id": null,
-            "keys": "win+sc(41)"
-        },
-        {
             "id": "User.moveFocus.6CD791B",
             "keys": "ctrl+k"
         },
         {
             "id": null,
-            "keys": "ctrl+shift+h"
+            "keys": "win+sc(41)"
         },
         {
             "id": "Terminal.OpenNewTabProfile0",
             "keys": "alt+shift+p"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+shift+h"
         },
         {
             "id": null,
@@ -450,28 +454,24 @@
             "keys": "alt+c"
         },
         {
-            "id": "User.find",
-            "keys": "alt+f"
+            "id": "Terminal.ToggleShaderEffects",
+            "keys": "f1"
         },
         {
             "id": "User.moveFocus.F747588A",
             "keys": "ctrl+j"
         },
         {
-            "id": "User.toggleShaderEffects",
-            "keys": "f1"
-        },
-        {
             "id": "User.splitPane.FEF0D40B",
             "keys": "alt+v"
         },
         {
-            "id": "Terminal.OpenNewTabProfile0",
-            "keys": "alt+t"
-        },
-        {
             "id": "User.adjustFontSize.E2698FAA",
             "keys": "alt+shift+y"
+        },
+        {
+            "id": "Terminal.OpenNewTabProfile0",
+            "keys": "alt+t"
         },
         {
             "id": "User.moveFocus.2A0DA8E0",
@@ -486,20 +486,20 @@
             "keys": "alt+k"
         },
         {
-            "id": "User.moveFocus.87C324ED",
-            "keys": "ctrl+l"
-        },
-        {
             "id": "User.newTab.1FA5EB5",
             "keys": "alt+shift+b"
         },
         {
-            "id": "User.closeOtherTabs.0",
-            "keys": "alt+shift+w"
+            "id": "User.moveFocus.87C324ED",
+            "keys": "ctrl+l"
         },
         {
             "id": "User.moveFocus.F747588A",
             "keys": "alt+shift+j"
+        },
+        {
+            "id": "User.closeOtherTabs.0",
+            "keys": "alt+shift+w"
         },
         {
             "id": "User.paste",
@@ -510,7 +510,7 @@
             "keys": "alt+shift+q"
         },
         {
-            "id": "User.toggleShaderEffects",
+            "id": "Terminal.ToggleShaderEffects",
             "keys": "ctrl+\\"
         },
         {
@@ -565,11 +565,11 @@
                 "autoMarkPrompts": true,
                 "bellStyle": "none",
                 "colorScheme": "GruvboxDarkHard",
-                "experimental.retroTerminalEffect": false,
+                "experimental.retroTerminalEffect": true,
                 "font": 
                 {
                     "cellHeight": "1.2",
-                    "face": "Iosevka Nerd Font",
+                    "face": "Pixel Code",
                     "size": 16,
                     "weight": "normal"
                 },

@@ -4,7 +4,16 @@
     "Monocraft",
     "ComicMono",
     "PixelCode",
-    "IntelOneMono"
+    "IntelOneMono",
+    "FantasqueSansMono",
+    "DaddyTimeMono",
+    "VictorMono",
+    "Gohu",
+    "Agave",
+    "Hermit",
+    "AporeticSansMono",
+    "AporeticSerifMono",
+    "PsudoFontLigaMono"
   ],
   "scoop": {
     "mini": [
@@ -18,8 +27,7 @@
       "extras/windows-terminal",
       "gcc",
       "git",
-      "fd",
-      "extras/emacs"
+      "fd"
     ],
     "full": [
       "git",
