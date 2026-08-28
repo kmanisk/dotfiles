@@ -558,6 +558,70 @@ function Invoke-MachineDefaults {
 }
 
 # ==============================================================================
+# FONTS (Lightweight Single TTF Downloads via curl)
+# ==============================================================================
+
+function Invoke-Fonts {
+    Write-Section "Coding Fonts (Single TTF)"
+    $fontsDir = Join-Path $env:LOCALAPPDATA 'Microsoft\Windows\Fonts'
+    if (-not (Test-Path $fontsDir)) {
+        New-Item -ItemType Directory -Path $fontsDir -Force | Out-Null
+    }
+
+    $fonts = @(
+        @{
+            Name     = 'Monocraft.ttf'
+            RegName  = 'Monocraft (TrueType)'
+            Url      = 'https://github.com/IdreesInc/Monocraft/releases/download/v3.0/Monocraft.ttf'
+        },
+        @{
+            Name     = 'ComicMono.ttf'
+            RegName  = 'Comic Mono (TrueType)'
+            Url      = 'https://raw.githubusercontent.com/dtinth/comic-mono-font/master/ComicMono.ttf'
+        }
+    )
+
+    $regPath = 'HKCU:\Software\Microsoft\Windows NT\CurrentVersion\Fonts'
+    if (-not (Test-Path $regPath)) { New-Item -Path $regPath -Force | Out-Null }
+
+    # Minimal Iosevka Nerd Font check
+    $iosevkaReg = Join-Path $fontsDir 'IosevkaNerdFont-Regular.ttf'
+    if (-not (Test-Path $iosevkaReg)) {
+        Write-INFO "Downloading Iosevka Nerd Font..."
+        $zipPath = "$env:TEMP\Iosevka.zip"
+        curl.exe -fLo $zipPath -s 'https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Iosevka.zip'
+        if (Test-Path $zipPath) {
+            Expand-Archive -Path $zipPath -DestinationPath "$env:TEMP\iosevka_tmp" -Force
+            if (Test-Path "$env:TEMP\iosevka_tmp\IosevkaNerdFont-Regular.ttf") {
+                Copy-Item "$env:TEMP\iosevka_tmp\IosevkaNerdFont-*.ttf" $fontsDir -Force -EA SilentlyContinue
+            }
+            Remove-Item $zipPath -Force -EA SilentlyContinue
+            Remove-Item "$env:TEMP\iosevka_tmp" -Recurse -Force -EA SilentlyContinue
+            Write-OK "Iosevka Nerd Font installed."
+        }
+    } else {
+        Write-SKIP "Iosevka Nerd Font (already installed)"
+    }
+
+    foreach ($f in $fonts) {
+        $dest = Join-Path $fontsDir $f.Name
+        if (-not (Test-Path $dest)) {
+            Write-INFO "Downloading $($f.Name)..."
+            curl.exe -fLo $dest -s $f.Url
+            if ($LASTEXITCODE -eq 0 -and (Test-Path $dest)) {
+                New-ItemProperty -Path $regPath -Name $f.RegName -Value $dest -PropertyType String -Force | Out-Null
+                Write-OK "$($f.Name) installed."
+            } else {
+                Write-FAIL "$($f.Name) download failed."
+            }
+        } else {
+            New-ItemProperty -Path $regPath -Name $f.RegName -Value $dest -PropertyType String -Force | Out-Null
+            Write-SKIP "$($f.Name) (already installed)"
+        }
+    }
+}
+
+# ==============================================================================
 # MAIN
 # ==============================================================================
 
@@ -602,6 +666,7 @@ Invoke-ChocoPackages  -Desired $chocoPkgs
 if ($isFull) { Invoke-PipEssentials }
 Invoke-VSCodeExtensions
 Invoke-PackagePins
+Invoke-Fonts
 if ($isFull) { Invoke-MachineDefaults }
 
 Write-Host ""

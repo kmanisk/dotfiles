@@ -1,439 +1,413 @@
 // Zed settings
 // Docs: https://zed.dev/docs/configuring-zed
 {
-  // ─────────────────────────────────────────────────
-  // General / Window
-  // ─────────────────────────────────────────────────
-  "instrumentation": {
-    "performance_profiler": {
-      "enabled": false
-    }
-  },
-  "show_wrap_guides": true,
-  "auto_update": false,
-  "proxy": "",
-  "base_keymap": "VSCode",
-  "when_closing_with_no_tabs": "keep_window_open",
-  "bottom_dock_layout": "contained",
-  "session": {
-    "trust_all_worktrees": true
-  },
-  "horizontal_scroll_margin": 1,
-  "vertical_scroll_margin": 1,
-  // ─────────────────────────────────────────────────
-  // Theme & Icons
-  // ─────────────────────────────────────────────────
-  "icon_theme": "JetBrains Icons Dark",
-  "theme": {
-    "mode": "system",
-    "light": "Gruvbox Light",
-    "dark": "Base16 Everforest"
-  },
-
-  // ─────────────────────────────────────────────────
-  // UI Font
-  // ─────────────────────────────────────────────────
-  "ui_font_family": "Iosevka Nerd Font",
-  "ui_font_size": 19.0,
-
-  // ─────────────────────────────────────────────────
-  // Editor (Buffer) Font
-  // ─────────────────────────────────────────────────
-  "buffer_font_family": "Iosevka Nerd Font",
-  "buffer_font_fallbacks": [
-    "JetBrainsMono NF",
-    "Josefin Sans"
-  ],
-  "buffer_font_size": 25.0,        // <- change this to adjust editor code font size
-  "buffer_font_features": {
-    "liga": true,                   // enable ligatures
-    "calt": true                    // contextual alternates (coding ligatures: ->, =>, !=, ===)
-  },
-  "buffer_font_weight": 370,
-  "buffer_line_height": {
-    "custom": 1.35                  // Iosevka sweet spot
-  },
-
-  // ─────────────────────────────────────────────────
-  // Editor Behaviour
-  // ─────────────────────────────────────────────────
-  "preferred_line_length": 60,
-  "soft_wrap": "editor_width",
-  "hard_tabs": false,
-  "tab_size": 4,
-  "colorize_brackets": false,
-  "show_edit_predictions": true,
-  "show_signature_help_after_edits": true,
-  "auto_signature_help": true,
-  "mouse_wheel_zoom": true,
-  "hover_popover_enabled": true,
-  "selection_highlight": false,
-  "scroll_beyond_last_line": "off",
-  "cursor_blink": false,
-  "cursor_shape": "bar",
-  "multi_cursor_modifier": "alt",
-
-  // ─────────────────────────────────────────────────
-  // Gutter
-  // ─────────────────────────────────────────────────
-  "gutter": {
-    "line_numbers": true,
-    "folds": false,
-    "code_actions": false,
-    "runnables": false,
-    "min_line_number_digits": 0       // minimal compact gutter width
-  },
-  "relative_line_numbers": "enabled",
-
-  // ─────────────────────────────────────────────────
-  // Minimap
-  // ─────────────────────────────────────────────────
-  "minimap": {
-    "show": "never"
-  },
-
-  // ─────────────────────────────────────────────────
-  // Scrollbar
-  // ─────────────────────────────────────────────────
-  "scrollbar": {
-    "show": "never",
-    "axes": {
-      "horizontal": false,
-      "vertical": false
-    }
-  },
-
-  // ─────────────────────────────────────────────────
-  // Indentation Guides
-  // ─────────────────────────────────────────────────
-  "indent_guides": {
-    "enabled": true,
-    "coloring": "fixed"
-  },
-
-  // ─────────────────────────────────────────────────
-  // Inlay Hints
-  // ─────────────────────────────────────────────────
-  "inlay_hints": {
-    "enabled": false
-  },
-
-  // ─────────────────────────────────────────────────
-  // Tabs & Tab Bar
-  // ─────────────────────────────────────────────────
-  "preview_tabs": {
-    "enabled": false
-  },
-  "tabs": {
-    "git_status": true
-  },
-  "tab_bar": {
-    "show_nav_history_buttons": false,
-    "show_tab_bar_buttons": false
-  },
-
-  // ─────────────────────────────────────────────────
-  // Toolbar
-  // ─────────────────────────────────────────────────
-  "toolbar": {
-    "breadcrumbs": false,
-    "quick_actions": false
-  },
-
-  // ─────────────────────────────────────────────────
-  // Status Bar & Centered Layout (Zen Mode)
-  // ─────────────────────────────────────────────────
-  "status_bar": {
-    "active_language_button": false,
-    "cursor_position_button": false,
-    "line_endings_button": false,
-    "experimental.show": false
-  },
-  "centered_layout": {
-    "left_padding": 0.15,
-    "right_padding": 0.15
-  },
-
-  // ─────────────────────────────────────────────────
-  // Title Bar
-  // ─────────────────────────────────────────────────
-  "title_bar": {
-    "show_sign_in": false,
-    "show_onboarding_banner": false,
-    "show_project_items": false,
-    "show_branch_name": false,
-    "show_user_menu": false,
-    "show_user_picture": false
-  },
-
-  // ─────────────────────────────────────────────────
-  // Git (Version Control)
-  // ─────────────────────────────────────────────────
-  "git": {
-    // To re-enable git modified line indicators in the gutter, change "hide" to "tracked_files" or uncomment below:
-    // "git_gutter": "tracked_files",
-    "git_gutter": "hide"
-  },
-
-  // ─────────────────────────────────────────────────
-  // Vim Mode
-  // ─────────────────────────────────────────────────
-  "vim_mode": true,
-  "vim": {
-    "use_system_clipboard": "always"
-  },
-
-  // ─────────────────────────────────────────────────
-  // Which-key (keybinding hints)
-  // ─────────────────────────────────────────────────
-  "which_key": {
-    "enabled": true
-  },
-
-  // ─────────────────────────────────────────────────
-  // Autosave
-  // ─────────────────────────────────────────────────
-  "autosave": {
-    "after_delay": {
-      "milliseconds": 1000
-    }
-  },
-  "autosave_delay": 1500,
-  "autosave_on_focus_change": true,
-  "autosave_on_window_change": true,
-  "autosave_on_build": true,
-  "autosave_on_build_delay": 1500,
-  "autosave_on_build_events": [
-    "build",
-    "run",
-    "debug"
-  ],
-  "autosave_on_build_events_delay": 1500,
-
-  // ─────────────────────────────────────────────────
-  // Terminal
-  // ─────────────────────────────────────────────────
-  "terminal": {
-    "shell": { "program": "pwsh.exe" },
-    "font_family": "Iosevka Nerd Font",
-    "font_size": 22.0,
-    "font_fallbacks": ["monospace"],
-    "line_height": { "custom": 1.0 },
-    "copy_on_select": true,
-    "default_width": 187
-  },
-
-  // ─────────────────────────────────────────────────
-  // Code Formatter (global default: Prettier)
-  // ─────────────────────────────────────────────────
-  "format_on_save": "on",
-  "remove_trailing_whitespace_on_save": true,
-  "ensure_final_newline_on_save": true,
-  "formatter": {
-    "language_server": {
-      "name": "prettier"
-    }
-  },
-
-  // ─────────────────────────────────────────────────
-  // Prettier Options
-  // Ported from VSCode prettier.* settings
-  // ─────────────────────────────────────────────────
-  "prettier": {
-    "semi": true,
-    "useTabs": true,
-    "singleQuote": false,
-    "jsxSingleQuote": false,
-    "arrowParens": "avoid",
-    "trailingComma": "all"
-  },
-
-  // ─────────────────────────────────────────────────
-  // Per-Language Overrides
-  // ─────────────────────────────────────────────────
-  "languages": {
-    "Rust": {
-      "formatter": "language_server",
-      "tab_size": 4,
-      "hard_tabs": true
-    },
-    "Python": {
-      "formatter": "language_server",
-      "tab_size": 4,
-      "hard_tabs": true
-    },
-    "Go": {
-      "formatter": "language_server",
-      "tab_size": 4,
-      "hard_tabs": true
-    },
-    "C": {
-      "formatter": "language_server",
-      "tab_size": 4,
-      "hard_tabs": true
-    },
-    "C++": {
-      "formatter": "language_server",
-      "tab_size": 4,
-      "hard_tabs": true
-    },
-    "Lua": {
-      "formatter": "language_server",
-      "tab_size": 4,
-      "hard_tabs": true
-    },
-    "JavaScript": {
-      "formatter": "language_server",
-      "tab_size": 4,
-      "hard_tabs": true
-    },
-    "TypeScript": {
-      "formatter": "language_server",
-      "tab_size": 4,
-      "hard_tabs": true
-    },
-    "TSX": {
-      "formatter": "language_server",
-      "tab_size": 4,
-      "hard_tabs": true
-    },
-    "JSON": {
-      "formatter": "language_server",
-      "tab_size": 4,
-      "hard_tabs": true
-    },
-    "HTML": {
-      "formatter": "language_server",
-      "tab_size": 4,
-      "hard_tabs": true
-    },
-    "CSS": {
-      "formatter": "language_server",
-      "tab_size": 4,
-      "hard_tabs": true
-    },
-    // Java: Prettier has no Java support — must use the language server (jdtls)
-    "Java": {
-      "formatter": "language_server",
-      "tab_size": 4,
-      "hard_tabs": false
-    }
-  },
-
-  // ─────────────────────────────────────────────────
-  // LSP (Language Server Protocol) Config
-  // ─────────────────────────────────────────────────
-  "lsp": {
-    // Rust: use clippy for on-save checks
-    "rust-analyzer": {
-      "initialization_options": {
-        "check": {
-          "command": "clippy"
+    // ─────────────────────────────────────────────────
+    // General / Window
+    // ─────────────────────────────────────────────────
+    "instrumentation": {
+        "performance_profiler": {
+            "enabled": false
         }
-      }
     },
-    // Lua: expose vim globals so diagnostics do not complain
-    "lua-language-server": {
-      "settings": {
-        "Lua": {
-          "diagnostics": {
-            "globals": ["vim"]
-          }
+    "show_wrap_guides": true,
+    "auto_update": false,
+    "base_keymap": "VSCode",
+    "when_closing_with_no_tabs": "keep_window_open",
+    "bottom_dock_layout": "contained",
+    "session": {
+        "trust_all_worktrees": true
+    },
+    "horizontal_scroll_margin": 1,
+    "vertical_scroll_margin": 1,
+    // ─────────────────────────────────────────────────
+    // Theme & Icons
+    // ─────────────────────────────────────────────────
+    "icon_theme": "JetBrains Icons Dark",
+    "theme": {
+        "mode": "system",
+        "light": "Gruvbox Light",
+        "dark": "Base16 Embers"
+    },
+    // ─────────────────────────────────────────────────
+    // UI Font
+    // ─────────────────────────────────────────────────
+    "ui_font_family": "Iosevka Nerd Font",
+    "ui_font_size": 19.0,
+    // ─────────────────────────────────────────────────
+    // Editor (Buffer) Font
+    // ─────────────────────────────────────────────────
+    "buffer_font_family": "Iosevka Nerd Font Mono",
+    "buffer_font_fallbacks": [
+        "JetBrainsMono NF",
+        "Josefin Sans"
+    ],
+    "buffer_font_size": 25.0, // <- change this to adjust editor code font size
+    "buffer_font_features": {
+        "liga": true, // enable ligatures
+        "calt": true // contextual alternates (coding ligatures: ->, =>, !=, ===)
+    },
+    "buffer_font_weight": 370,
+    "buffer_line_height": {
+        "custom": 1.35 // Iosevka sweet spot
+    },
+    // ─────────────────────────────────────────────────
+    // Editor Behaviour
+    // ─────────────────────────────────────────────────
+    "preferred_line_length": 60,
+    "soft_wrap": "editor_width",
+    "hard_tabs": false,
+    "tab_size": 4,
+    "colorize_brackets": false,
+    "show_edit_predictions": true,
+    "show_signature_help_after_edits": true,
+    "auto_signature_help": true,
+    "mouse_wheel_zoom": true,
+    "hover_popover_enabled": true,
+    "selection_highlight": false,
+    "scroll_beyond_last_line": "off",
+    "cursor_blink": false,
+    "cursor_shape": "bar",
+    "multi_cursor_modifier": "alt",
+    // ─────────────────────────────────────────────────
+    // Gutter
+    // ─────────────────────────────────────────────────
+    "gutter": {
+        "line_numbers": true,
+        "folds": false,
+        "code_actions": false,
+        "runnables": false,
+        "min_line_number_digits": 0 // minimal compact gutter width
+    },
+    "relative_line_numbers": "enabled",
+    // ─────────────────────────────────────────────────
+    // Minimap
+    // ─────────────────────────────────────────────────
+    "minimap": {
+        "show": "never"
+    },
+    // ─────────────────────────────────────────────────
+    // Scrollbar
+    // ─────────────────────────────────────────────────
+    "scrollbar": {
+        "show": "never",
+        "axes": {
+            "horizontal": false,
+            "vertical": false
         }
-      }
     },
-    // Go: enable unused-param analysis + staticcheck
-    "gopls": {
-      "initialization_options": {
-        "analyses": {
-          "unusedparams": true
+    // ─────────────────────────────────────────────────
+    // Indentation Guides
+    // ─────────────────────────────────────────────────
+    "indent_guides": {
+        "enabled": true,
+        "coloring": "fixed"
+    },
+    // ─────────────────────────────────────────────────
+    // Inlay Hints
+    // ─────────────────────────────────────────────────
+    "inlay_hints": {
+        "enabled": false
+    },
+    // ─────────────────────────────────────────────────
+    // Tabs & Tab Bar
+    // ─────────────────────────────────────────────────
+    "preview_tabs": {
+        "enabled": false
+    },
+    "tabs": {
+        "git_status": true
+    },
+    "tab_bar": {
+        "show_nav_history_buttons": false,
+        "show_tab_bar_buttons": false
+    },
+    // ─────────────────────────────────────────────────
+    // Toolbar
+    // ─────────────────────────────────────────────────
+    "toolbar": {
+        "breadcrumbs": false,
+        "quick_actions": false
+    },
+    // ─────────────────────────────────────────────────
+    // Status Bar & Centered Layout (Zen Mode)
+    // ─────────────────────────────────────────────────
+    "status_bar": {
+        "active_language_button": false,
+        "cursor_position_button": false,
+        "line_endings_button": false
+    },
+    "centered_layout": {
+        "left_padding": 0.15,
+        "right_padding": 0.15
+    },
+    // ─────────────────────────────────────────────────
+    // Title Bar
+    // ─────────────────────────────────────────────────
+    "title_bar": {
+        "show_sign_in": false,
+        "show_project_items": false,
+        "show_branch_name": false,
+        "show_user_menu": false
+    },
+    // ─────────────────────────────────────────────────
+    // Git (Version Control)
+    // ─────────────────────────────────────────────────
+    "git": {
+        // To re-enable git modified line indicators in the gutter, change "hide" to "tracked_files" or uncomment below:
+        // "git_gutter": "tracked_files",
+        "git_gutter": "hide"
+    },
+    // ─────────────────────────────────────────────────
+    // Vim Mode
+    // ─────────────────────────────────────────────────
+    "vim_mode": true,
+    "vim": {
+        "use_system_clipboard": "always"
+    },
+    // ─────────────────────────────────────────────────
+    // Which-key (keybinding hints)
+    // ─────────────────────────────────────────────────
+    "which_key": {
+        "enabled": true
+    },
+    // ─────────────────────────────────────────────────
+    // Autosave
+    // ─────────────────────────────────────────────────
+    "autosave": {
+        "after_delay": {
+            "milliseconds": 500
+        }
+    },
+    // ─────────────────────────────────────────────────
+    // Terminal
+    // ─────────────────────────────────────────────────
+    "terminal": {
+        "shell": {
+            "program": "pwsh.exe"
         },
-        "staticcheck": true
-      }
-    }
-  },
-
-  // ─────────────────────────────────────────────────
-  // AI Agent Panel
-  // ─────────────────────────────────────────────────
-  "agent": {
-    "sidebar_side": "right",
-    "default_height": 318.0,
-    "favorite_models": [],
-    "model_parameters": []
-  },
-
-  // ─────────────────────────────────────────────────
-  // Panel Dock Layout
-  // ─────────────────────────────────────────────────
-  "project_panel": {
-    "auto_fold_dirs": false,
-    "button": true,
-    "dock": "right",
-    "git_status": true,
-    "hide_root": true,
-    "scrollbar": {
-      "show": "never"
+        "font_family": "Iosevka Nerd Font",
+        "font_size": 22.0,
+        "font_fallbacks": [
+            "monospace"
+        ],
+        "line_height": {
+            "custom": 1.0
+        },
+        "copy_on_select": true,
+        "default_width": 187
     },
-    "indent_guides": {
-      "show": "never"
-    }
-  },
-  "outline_panel": {
-    "dock": "right",
-    "scrollbar": {
-      "show": "never"
+    // ─────────────────────────────────────────────────
+    // Code Formatter
+    // ─────────────────────────────────────────────────
+    "format_on_save": "on",
+    "remove_trailing_whitespace_on_save": true,
+    "ensure_final_newline_on_save": true,
+    "formatter": "language_server",
+    // ─────────────────────────────────────────────────
+    // Per-Language Overrides
+    // ─────────────────────────────────────────────────
+    "languages": {
+        "Rust": {
+            "formatter": "language_server",
+            "tab_size": 4,
+            "hard_tabs": true
+        },
+        "Python": {
+            "formatter": "language_server",
+            "tab_size": 4,
+            "hard_tabs": true
+        },
+        "Go": {
+            "formatter": "language_server",
+            "tab_size": 4,
+            "hard_tabs": true
+        },
+        "C": {
+            "formatter": "language_server",
+            "tab_size": 4,
+            "hard_tabs": true
+        },
+        "C++": {
+            "formatter": "language_server",
+            "tab_size": 4,
+            "hard_tabs": true
+        },
+        "Lua": {
+            "formatter": "language_server",
+            "tab_size": 4,
+            "hard_tabs": true
+        },
+        "JavaScript": {
+            "formatter": "language_server",
+            "tab_size": 4,
+            "hard_tabs": true
+        },
+        "TypeScript": {
+            "formatter": "language_server",
+            "tab_size": 4,
+            "hard_tabs": true
+        },
+        "TSX": {
+            "formatter": "language_server",
+            "tab_size": 4,
+            "hard_tabs": true
+        },
+        "JSON": {
+            "formatter": "language_server",
+            "tab_size": 4,
+            "hard_tabs": true
+        },
+        "HTML": {
+            "formatter": "language_server",
+            "tab_size": 4,
+            "hard_tabs": true
+        },
+        "CSS": {
+            "formatter": "language_server",
+            "tab_size": 4,
+            "hard_tabs": true
+        },
+        // Java: Prettier has no Java support — must use the language server (jdtls)
+        "Java": {
+            "formatter": "language_server",
+            "tab_size": 4,
+            "hard_tabs": false
+        }
     },
-    "indent_guides": {
-      "show": "never"
+    // ─────────────────────────────────────────────────
+    // LSP (Language Server Protocol) Config
+    // ─────────────────────────────────────────────────
+    "lsp": {
+        // Rust: use clippy for on-save checks
+        "rust-analyzer": {
+            "initialization_options": {
+                "check": {
+                    "command": "clippy"
+                }
+            }
+        },
+        // Lua: expose vim globals so diagnostics do not complain
+        "lua-language-server": {
+            "settings": {
+                "Lua": {
+                    "diagnostics": {
+                        "globals": [
+                            "vim"
+                        ]
+                    }
+                }
+            }
+        },
+        // Go: enable unused-param analysis + staticcheck
+        "gopls": {
+            "initialization_options": {
+                "analyses": {
+                    "unusedparams": true
+                },
+                "staticcheck": true
+            }
+        }
+    },
+    // ─────────────────────────────────────────────────
+    // Language Models (Google Gemini 3.7 Flash)
+    // ─────────────────────────────────────────────────
+    "language_models": {
+        "google": {
+            "available_models": [
+                {
+                    "name": "gemini-3.7-flash",
+                    "display_name": "Gemini 3.7 Flash",
+                    "max_tokens": 1000000
+                },
+                {
+                    "name": "gemini-2.5-pro",
+                    "display_name": "Gemini 2.5 Pro",
+                    "max_tokens": 1000000
+                }
+            ]
+        }
+    },
+    "agent": {
+        "default_profile": "write",
+        "default_model": {
+            "provider": "google",
+            "model": "gemini-3.7-flash"
+        },
+        "inline_assistant_model": {
+            "provider": "google",
+            "model": "gemini-3.7-flash"
+        },
+        "favorite_models": []
+    },
+    // ─────────────────────────────────────────────────
+    // Panel Dock Layout
+    // ─────────────────────────────────────────────────
+    "project_panel": {
+        "auto_fold_dirs": false,
+        "button": true,
+        "dock": "right",
+        "git_status": true,
+        "hide_root": true,
+        "scrollbar": {
+            "show": "never"
+        },
+        "indent_guides": {
+            "show": "never"
+        }
+    },
+    "outline_panel": {
+        "dock": "right",
+        "scrollbar": {
+            "show": "never"
+        },
+        "indent_guides": {
+            "show": "never"
+        }
+    },
+    "collaboration_panel": {
+        "button": false,
+        "dock": "left"
+    },
+    "notification_panel": {
+        "dock": "left"
+    },
+    "chat_panel": {
+        "dock": "left"
+    },
+    // ─────────────────────────────────────────────────
+    // File Scan Exclusions
+    // Files/dirs hidden from the project panel & search
+    // ─────────────────────────────────────────────────
+    "file_scan_exclusions": [
+        "**/.git",
+        "**/.svn",
+        "**/.hg",
+        "**/CVS",
+        "**/.DS_Store",
+        "**/Thumbs.db",
+        "**/.classpath",
+        "**/.settings",
+        "**/out",
+        "**/dist",
+        "**/.husky",
+        "**/.turbo",
+        "**/.vscode-test",
+        "**/.vscode",
+        "**/.next",
+        "**/.storybook",
+        "**/.tap",
+        "**/.nyc_output",
+        "**/report",
+        "**/node_modules",
+        "**/*.class",
+        "**/*.exe",
+        "**/*.pdb"
+    ],
+    // ─────────────────────────────────────────────────
+    // Telemetry (all off)
+    // ─────────────────────────────────────────────────
+    "telemetry": {
+        "diagnostics": false,
+        "metrics": false
     }
-  },
-  "collaboration_panel": {
-    "button": false,
-    "dock": "left"
-  },
-  "notification_panel": {
-    "dock": "left"
-  },
-  "chat_panel": {
-    "dock": "left"
-  },
-
-  // ─────────────────────────────────────────────────
-  // File Scan Exclusions
-  // Files/dirs hidden from the project panel & search
-  // ─────────────────────────────────────────────────
-  "file_scan_exclusions": [
-    "**/.git",
-    "**/.svn",
-    "**/.hg",
-    "**/CVS",
-    "**/.DS_Store",
-    "**/Thumbs.db",
-    "**/.classpath",
-    "**/.settings",
-    "**/out",
-    "**/dist",
-    "**/.husky",
-    "**/.turbo",
-    "**/.vscode-test",
-    "**/.vscode",
-    "**/.next",
-    "**/.storybook",
-    "**/.tap",
-    "**/.nyc_output",
-    "**/report",
-    "**/node_modules",
-    "**/*.class",
-    "**/*.exe",
-    "**/*.pdb"
-  ],
-
-  // ─────────────────────────────────────────────────
-  // Telemetry (all off)
-  // ─────────────────────────────────────────────────
-  "telemetry": {
-    "diagnostics": false,
-    "metrics": false
-  }
 }

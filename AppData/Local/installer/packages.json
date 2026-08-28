@@ -36,7 +36,6 @@
       "extras/neovide",
       "grep",
       "ripgrep",
-      "extras/nexusfont",
       "vlc",
       "extras/crystaldiskinfo",
       "extras/winaero-tweaker",
@@ -48,12 +47,9 @@
       "main/sudo",
       "main/gh",
       "extras/revouninstaller",
-      "fd",
-      "extras/emacs"
+      "fd"
     ],
-    "global": [
-        "nerd-fonts/Iosevka-NF"
-    ]
+    "global": []
   },
   "winget": {
     "mini": [

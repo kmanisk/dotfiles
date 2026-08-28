@@ -13,8 +13,6 @@
 
       // Sidebar / Explorer toggles
       "alt-e": "workspace::ToggleRightDock",
-      "alt-s": "workspace::ToggleRightDock",
-      "alt-d": "workspace::ToggleRightDock",
 
       // Command Palette & Quick Access
       "alt-p": "command_palette::Toggle",
@@ -50,9 +48,9 @@
         }
       ],
 
-      // AI Assistant / Panel
-      "alt-l": "assistant::ToggleFocus",
-      "shift-alt-l": "assistant::ToggleFocus",
+      // AI Assistant / Panel (Toggle Left Dock with alt-l)
+      "alt-l": "workspace::ToggleLeftDock",
+      "space a i": "workspace::ToggleLeftDock",
 
       // Git Panel
       "shift-alt-g": "git_panel::ToggleFocus",
@@ -115,15 +113,19 @@
       "alt-y": "editor::Copy",
       "alt-u": "editor::Paste",
 
-      // Insert Line After (matches VSCode alt+;)
-      "alt-;": "editor::NewlineBelow",
-
       // Code Folding (matches VSCode ctrl+alt+f / ctrl+alt+u)
       "ctrl-alt-f": "editor::Fold",
       "ctrl-alt-u": "editor::UnfoldLines",
 
       // Toggle Comments (matches VSCode ctrl+/)
-      "ctrl-/": "editor::ToggleComments"
+      "ctrl-/": "editor::ToggleComments",
+
+      // AI Assistant (Toggle Left Dock with alt-l)
+      "alt-l": "workspace::ToggleLeftDock",
+
+      // Inline AI Assistant (generate / edit code in-place)
+      "ctrl-enter": "assistant::InlineAssist",
+      "space i a": "assistant::InlineAssist"
     }
   },
 
@@ -137,6 +139,8 @@
       "ctrl-`": "workspace::ToggleBottomDock",
 
       // Sidebar & Navigation
+      "alt-l": "workspace::ToggleLeftDock",
+      "space a i": "workspace::ToggleLeftDock",
       "space e": "workspace::ToggleRightDock",
       "space s": "workspace::ToggleRightDock",
       "space g q": "workspace::ToggleRightDock",
@@ -198,6 +202,10 @@
       // Format & Comment
       "space f d": "editor::Format",
       "space /": "editor::ToggleComments",
+
+      // Outline / Buffer Symbols Toggle
+      "space c s": "outline::Toggle",
+      "ctrl-shift-o": "outline::Toggle",
 
       // Go to excerpts
       "g f": "editor::OpenExcerpts"
@@ -385,6 +393,7 @@
       // Tab: accept AI prediction if one is showing, otherwise indent normally
       "tab": ["editor::AcceptEditPrediction", { "fallback_action": "editor::Tab" }],
       "alt-i": "editor::ShowCompletions",
+      "alt-l": "workspace::ToggleLeftDock",
       "ctrl-p": "editor::Paste",
       "ctrl-m": "editor::Paste"
     }
@@ -498,6 +507,28 @@
       "g w": "vim::HelixJumpToWord",
       "space j": "vim::HelixJumpToWord",
       "space p e": "diagnostics::Deploy"
+    }
+  },
+
+  // =============================================================================
+  //                   Assistant / AI Window Keybindings
+  // =============================================================================
+  {
+    "context": "AssistantPanel || AgentPanel || ContextEditor",
+    "bindings": {
+      "ctrl-;": "workspace::ToggleBottomDock",
+      "ctrl-`": "workspace::ToggleBottomDock",
+      "alt-l": "workspace::ToggleLeftDock",
+      "space a i": "workspace::ToggleLeftDock",
+      "alt-w": "pane::CloseActiveItem",
+      "ctrl-w": "pane::CloseActiveItem",
+      "space q": "pane::CloseActiveItem",
+      "alt-j": "pane::ActivateNextItem",
+      "alt-k": "pane::ActivatePreviousItem",
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-l": "workspace::ActivatePaneRight",
+      "ctrl-k": "workspace::ActivatePaneUp",
+      "ctrl-j": "workspace::ActivatePaneDown"
     }
   }
 ]

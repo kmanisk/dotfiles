@@ -1074,8 +1074,14 @@ scoop update *
 |	time=1787757614
 |coop update * 
 |	time=1787759013
-scoop update * 
+|coop update * 
 |	time=1787759495
 taskkill /f /im pwsh.exe
 |	time=1787759499
+|coop update * 
+|	time=1787759720
+|coop update * 
+|	time=1787759750
+taskkill /F /IM pwsh.exe
+|	time=1787759752
 scoop update * 
