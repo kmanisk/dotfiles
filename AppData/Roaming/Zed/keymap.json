@@ -13,26 +13,20 @@
 
       // Sidebar / Explorer toggles
       "alt-e": "workspace::ToggleRightDock",
+      "alt-s": "multi_workspace::ToggleWorkspaceSidebar",
 
       // Command Palette & Quick Access
       "alt-p": "command_palette::Toggle",
       "alt-f": "file_finder::Toggle",
       "alt-o": "workspace::Open",
+      "alt-shift-t": "agent::ToggleSearch",
       "alt-shift-x": "zed::Extensions",
 
       // Window & Item Closing
       "alt-w": "pane::CloseActiveItem",
 
       // Themes & Settings
-      "space t h": "theme_selector::Toggle",
       "ctrl-s ctrl-k": "zed::OpenKeymap",
-      "space o c": "zed::OpenSettings",
-      "space o s": "zed::OpenSettings",
-      "space o k": "zed::OpenKeymap",
-
-      // Zen / Centered Layout & Zoom
-      "space z z": "workspace::ToggleCenteredLayout",
-      "space z f": "workspace::ToggleZoom",
 
       // Tasks (Code Runner)
       "alt-r": [
@@ -50,7 +44,6 @@
 
       // AI Assistant / Panel (Toggle Left Dock with alt-l)
       "alt-l": "workspace::ToggleLeftDock",
-      "space a i": "workspace::ToggleLeftDock",
 
       // Git Panel
       "shift-alt-g": "git_panel::ToggleFocus",
@@ -122,10 +115,10 @@
 
       // AI Assistant (Toggle Left Dock with alt-l)
       "alt-l": "workspace::ToggleLeftDock",
+      "alt-s": "multi_workspace::ToggleWorkspaceSidebar",
 
       // Inline AI Assistant (generate / edit code in-place)
-      "ctrl-enter": "assistant::InlineAssist",
-      "space i a": "assistant::InlineAssist"
+      "ctrl-enter": "assistant::InlineAssist"
     }
   },
 
@@ -138,8 +131,14 @@
       "ctrl-;": "workspace::ToggleBottomDock",
       "ctrl-`": "workspace::ToggleBottomDock",
 
+      // Themes & AI
+      "space t h": "theme_selector::Toggle",
+      "space i a": "assistant::InlineAssist",
+
       // Sidebar & Navigation
       "alt-l": "workspace::ToggleLeftDock",
+      "alt-s": "multi_workspace::ToggleWorkspaceSidebar",
+      "space a s": "multi_workspace::ToggleWorkspaceSidebar",
       "space a i": "workspace::ToggleLeftDock",
       "space e": "workspace::ToggleRightDock",
       "space s": "workspace::ToggleRightDock",
@@ -517,6 +516,9 @@
     "bindings": {
       "ctrl-;": "workspace::ToggleBottomDock",
       "ctrl-`": "workspace::ToggleBottomDock",
+      "alt-shift-t": "agent::ToggleSearch",
+      "escape": "agent::DismissThreadSearch",
+      "alt-s": "multi_workspace::ToggleWorkspaceSidebar",
       "alt-l": "workspace::ToggleLeftDock",
       "space a i": "workspace::ToggleLeftDock",
       "alt-w": "pane::CloseActiveItem",
