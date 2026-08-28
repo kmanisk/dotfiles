@@ -83,11 +83,11 @@
             <WordsStyle name="RAW BYTE STRING" styleID="6" fgColor="A6DA95" bgColor="24273A" fontName="" fontStyle="0" fontSize="" keywordClass="instre1" />
             <WordsStyle name="BYTE CHARACTER" styleID="23" fgColor="A6DA95" bgColor="24273A" fontName="" fontStyle="0" fontSize="" />
             <WordsStyle name="DEFAULT" styleID="32" fgColor="B8C0E0" bgColor="24273A" fontName="" fontStyle="0" fontSize="" />
-            <WordsStyle name="NUMBER" styleID="5" fgColor="B8C0E0" bgColor="24273A" fontName="" fontStyle="0" fontSize="" />
-            <WordsStyle name="RAW STRING" styleID="14" fgColor="B8C0E0" bgColor="24273A" fontName="" fontStyle="0" fontSize="" />
-            <WordsStyle name="OPERATOR" styleID="16" fgColor="B8C0E0" bgColor="24273A" fontName="" fontStyle="1" fontSize="" />
-            <WordsStyle name="BYTE STRING" styleID="21" fgColor="B8C0E0" bgColor="24273A" fontName="" fontStyle="0" fontSize="" />
-            <WordsStyle name="RAW BYTE STRING" styleID="22" fgColor="B8C0E0" bgColor="24273A" fontName="" fontStyle="0" fontSize="" />
+            <WordsStyle name="NUMBER" styleID="5" fgColor="C6A0F6" bgColor="24273A" fontName="" fontStyle="0" fontSize="" />
+            <WordsStyle name="RAW STRING" styleID="14" fgColor="A6DA95" bgColor="24273A" fontName="" fontStyle="0" fontSize="" />
+            <WordsStyle name="OPERATOR" styleID="16" fgColor="EE99A0" bgColor="24273A" fontName="" fontStyle="1" fontSize="" />
+            <WordsStyle name="BYTE STRING" styleID="21" fgColor="A6DA95" bgColor="24273A" fontName="" fontStyle="0" fontSize="" />
+            <WordsStyle name="RAW BYTE STRING" styleID="22" fgColor="A6DA95" bgColor="24273A" fontName="" fontStyle="0" fontSize="" />
             <WordsStyle name="C STRING" styleID="24" fgColor="B8C0E0" bgColor="24273A" fontName="" fontStyle="0" fontSize="" />
             <WordsStyle name="RAW C STRING" styleID="25" fgColor="B8C0E0" bgColor="24273A" fontName="" fontStyle="0" fontSize="" />
         </LexerType>
@@ -268,10 +268,10 @@
             <WordsStyle name="BOOLEAN NULL" styleID="5" fgColor="A6DA95" bgColor="24273A" fontName="" fontStyle="1" fontSize="" keywordClass="instre1" />
             <WordsStyle name="OPERATOR" styleID="10" fgColor="EE99A0" bgColor="24273A" fontName="" fontStyle="1" fontSize="" />
             <WordsStyle name="DEFAULT" styleID="0" fgColor="B8C0E0" bgColor="24273A" fontName="" fontStyle="0" fontSize="" />
-            <WordsStyle name="NUMBER" styleID="1" fgColor="B8C0E0" bgColor="24273A" fontName="" fontStyle="0" fontSize="" />
+            <WordsStyle name="NUMBER" styleID="1" fgColor="A6DA95" bgColor="24273A" fontName="" fontStyle="0" fontSize="" />
             <WordsStyle name="STRING" styleID="2" fgColor="B8C0E0" bgColor="24273A" fontName="" fontStyle="0" fontSize="" />
             <WordsStyle name="STRING EOL" styleID="3" fgColor="B8C0E0" bgColor="24273A" fontName="" fontStyle="0" fontSize="" />
-            <WordsStyle name="OPERATOR" styleID="8" fgColor="B8C0E0" bgColor="24273A" fontName="" fontStyle="0" fontSize="" />
+            <WordsStyle name="OPERATOR" styleID="8" fgColor="EE99A0" bgColor="24273A" fontName="" fontStyle="1" fontSize="" />
             <WordsStyle name="URI" styleID="9" fgColor="B8C0E0" bgColor="24273A" fontName="" fontStyle="0" fontSize="" />
             <WordsStyle name="LD KEYWORD" styleID="12" fgColor="B8C0E0" bgColor="24273A" fontName="" fontStyle="0" fontSize="" keywordClass="instre2" />
             <WordsStyle name="ERROR" styleID="13" fgColor="B8C0E0" bgColor="24273A" fontName="" fontStyle="0" fontSize="" />
@@ -315,14 +315,14 @@
             <WordsStyle name="INSTRUCTION WORD" styleID="5" fgColor="B8C0E0" bgColor="24273A" fontName="" fontStyle="1" fontSize="" keywordClass="instre1" />
             <WordsStyle name="TYPE WORD" styleID="16" fgColor="B8C0E0" bgColor="24273A" fontName="" fontStyle="0" fontSize="" keywordClass="type1" />
             <WordsStyle name="WINDOW INSTRUCTION" styleID="19" fgColor="B8C0E0" bgColor="24273A" fontName="" fontStyle="1" fontSize="" />
-            <WordsStyle name="NUMBER" styleID="4" fgColor="B8C0E0" bgColor="24273A" fontName="" fontStyle="0" fontSize="" />
+            <WordsStyle name="NUMBER" styleID="4" fgColor="C6A0F6" bgColor="24273A" fontName="" fontStyle="0" fontSize="" />
             <WordsStyle name="STRING" styleID="6" fgColor="B8C0E0" bgColor="24273A" fontName="" fontStyle="0" fontSize="" />
             <WordsStyle name="STRING RAW" styleID="20" fgColor="B8C0E0" bgColor="24273A" fontName="" fontStyle="0" fontSize="" />
             <WordsStyle name="CHARACTER" styleID="7" fgColor="B8C0E0" bgColor="24273A" fontName="" fontStyle="0" fontSize="" />
             <WordsStyle name="OPERATOR" styleID="10" fgColor="B8C0E0" bgColor="24273A" fontName="" fontStyle="1" fontSize="" />
             <WordsStyle name="VERBATIM" styleID="13" fgColor="B8C0E0" bgColor="24273A" fontName="" fontStyle="0" fontSize="" />
-            <WordsStyle name="REGEX" styleID="14" fgColor="B8C0E0" bgColor="24273A" fontName="" fontStyle="1" fontSize="" />
-            <WordsStyle name="COMMENT" styleID="1" fgColor="B8C0E0" bgColor="24273A" fontName="" fontStyle="0" fontSize="" />
+            <WordsStyle name="REGEX" styleID="14" fgColor="91D7E3" bgColor="24273A" fontName="" fontStyle="0" fontSize="" />
+            <WordsStyle name="COMMENT" styleID="1" fgColor="8AADF4" bgColor="24273A" fontName="" fontStyle="0" fontSize="" />
             <WordsStyle name="COMMENT LINE" styleID="2" fgColor="B8C0E0" bgColor="24273A" fontName="" fontStyle="0" fontSize="" />
             <WordsStyle name="COMMENT DOC" styleID="3" fgColor="B8C0E0" bgColor="24273A" fontName="" fontStyle="0" fontSize="" />
             <WordsStyle name="COMMENT LINE DOC" styleID="15" fgColor="B8C0E0" bgColor="24273A" fontName="" fontStyle="0" fontSize="" />
@@ -1988,7 +1988,7 @@
     </LexerStyles>
     <GlobalStyles>
         <!-- Attention : Don't modify the name of styleID="0" -->
-        <WidgetStyle name="Global override" styleID="0" fgColor="B8C0E0" bgColor="24273A" fontName="JetBrainsMono NF" fontStyle="0" fontSize="10" />
+        <WidgetStyle name="Global override" styleID="0" fgColor="B8C0E0" bgColor="24273A" fontName="Agave Nerd Font Mono" fontStyle="0" fontSize="10" />
         <WidgetStyle name="Default Style" styleID="32" fgColor="B8C0E0" bgColor="24273A" fontName="Consolas" fontStyle="0" fontSize="10" />
         <WidgetStyle name="Indent guideline style" styleID="37" fgColor="8AADF4" bgColor="24273A" fontName="" fontStyle="0" fontSize="" />
         <WidgetStyle name="Brace highlight style" styleID="34" fgColor="B8C0E0" bgColor="C6A0F6" fontName="" fontStyle="1" fontSize="10" />
