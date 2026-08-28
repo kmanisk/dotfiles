@@ -151,10 +151,9 @@
       "space g v": "pane::SplitVertical",
       "space g h": "pane::SplitHorizontal",
 
-      // Zoom, Zen & Fullscreen Mode
+      // Zen & Fullscreen Mode
       "space z z": "workspace::ToggleCenteredLayout",
-      "space z f": "workspace::ToggleZoom",
-      "space z F": "zed::ToggleFullScreen",
+      "space z f": "zed::ToggleFullScreen",
       "f11": "zed::ToggleFullScreen",
 
       // Folds
