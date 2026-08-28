@@ -31,15 +31,17 @@
     // ─────────────────────────────────────────────────
     // UI Font
     // ─────────────────────────────────────────────────
-    "ui_font_family": "Hurmit Nerd Font Mono",
+    // "ui_font_family": "Hurmit Nerd Font Mono",
+    "ui_font_family": "Pixel Code",
     "ui_font_size": 19.0,
     // ─────────────────────────────────────────────────
     // Editor (Buffer) Font
     // ─────────────────────────────────────────────────
-    "buffer_font_family": "",
+    "buffer_font_family": "Pixel Code",
     "buffer_font_fallbacks": [
-        "JetBrainsMono NF",
-        "Josefin Sans"
+        "Iosevka Nerd Font Mono",
+        "Aporetic Sans Mono",
+        "FantasqueSansM Nerd Font Mono"
     ],
     "buffer_font_size": 25.0, // <- change this to adjust editor code font size
     "buffer_font_features": {
