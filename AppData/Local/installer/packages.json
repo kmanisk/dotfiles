@@ -87,6 +87,7 @@
       "extras/reshade",
       "extras/revouninstaller",
       "extras/telegram",
+      "versions/thorium-avx2",
       "extras/vifm",
       "extras/vlc",
       "extras/vscode",

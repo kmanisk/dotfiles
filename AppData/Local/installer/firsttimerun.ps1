@@ -245,6 +245,24 @@ function Verify-Python {
 #endregion
 
 
+#region Mouse Cursor
+
+function Install-MouseCursor {
+
+    Write-Section "Checking Mouse Cursor"
+
+    $cursorScript = "$PSScriptRoot\appconfigs\mouse\Aero\install.ps1"
+    if (Test-Path $cursorScript) {
+        & $cursorScript
+    } else {
+        Write-Host "Cursor install script not found at: $cursorScript" -ForegroundColor Yellow
+    }
+
+}
+
+#endregion
+
+
 #region Main
 
 Write-Section "Starting Windows Bootstrap"
@@ -262,6 +280,8 @@ Install-Winget
 Install-CoreTools
 
 Verify-Python
+
+Install-MouseCursor
 
 Write-Section "Bootstrap Completed Successfully"
 
