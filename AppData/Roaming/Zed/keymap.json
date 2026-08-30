@@ -9,6 +9,7 @@
       "ctrl-shift-;": "workspace::NewTerminal",
       "alt-e": "project_panel::ToggleFocus",
       "alt-l": "workspace::ToggleLeftDock",
+      "alt-d": "workspace::ToggleLeftDock",
       "alt-p": "command_palette::Toggle",
       "alt-f": "file_finder::Toggle",
       "alt-o": "workspace::Open",
@@ -72,6 +73,7 @@
       "ctrl-alt-u": "editor::UnfoldLines",
       "ctrl-/": "editor::ToggleComments",
       "alt-l": "workspace::ToggleLeftDock",
+      "alt-d": "workspace::ToggleLeftDock",
       "ctrl-enter": "assistant::InlineAssist",
       "alt-i": "editor::ShowCompletions"
     }
@@ -87,6 +89,7 @@
       "space t h": "theme_selector::Toggle",
       "space i a": "assistant::InlineAssist",
       "alt-l": "workspace::ToggleLeftDock",
+      "alt-d": "workspace::ToggleLeftDock",
       "space r t": "task::Spawn",
       "space r r": "task::Rerun",
       "alt-e": "project_panel::ToggleFocus",
@@ -137,10 +140,16 @@
   {
     "context": "Editor && vim_mode == normal && !VimWaiting && !menu",
     "bindings": {
-      "ctrl-;": "workspace::ToggleBottomDock",
-      "space w": "workspace::Save",
+      // Save & Close (Always formats on space w / ctrl-s)
+      "space w": [
+        "editor::Format",
+        "workspace::Save"
+      ],
+      "ctrl-s": [
+        "editor::Format",
+        "workspace::Save"
+      ],
       "space W": "workspace::SaveWithoutFormat",
-      "ctrl-s": "workspace::Save",
       "space q": "pane::CloseActiveItem",
       "ctrl-w": "pane::CloseActiveItem",
       "space c t": "pane::CloseInactiveItems",
@@ -261,6 +270,7 @@
       "j k": "vim::NormalBefore",
       "alt-i": "editor::ShowCompletions",
       "alt-l": "workspace::ToggleLeftDock",
+      "alt-d": "workspace::ToggleLeftDock",
       "ctrl-p": "editor::Paste"
     }
   },
@@ -374,6 +384,7 @@
       "alt-shift-t": "agent::ToggleSearch",
       "escape": "agent::DismissThreadSearch",
       "alt-l": "workspace::ToggleLeftDock",
+      "alt-d": "workspace::ToggleLeftDock",
       "alt-w": "pane::CloseActiveItem",
       "alt-j": "pane::ActivateNextItem",
       "alt-k": "pane::ActivatePreviousItem",
