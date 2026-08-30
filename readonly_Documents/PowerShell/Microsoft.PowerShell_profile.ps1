@@ -546,13 +546,13 @@ $PSReadLineOptions = @{
 Set-PSReadLineOption @PSReadLineOptions
 if ($Host.Name -notmatch 'ConsoleHost') {
     # Disable predictive suggestions for non-interactive shells
-    #Set-PSReadLineOption -PredictionSource HistoryAndPlugin -PredictionViewStyle ListView # Optional
+    #Set-PSReadLineOption -PredictionSource History -PredictionViewStyle ListView # Optional
     Set-PSReadLineOption -PredictionSource None
 }
 else {
     # Enable predictive suggestions for interactive shells
-    Set-PSReadLineOption -PredictionSource HistoryAndPlugin -PredictionViewStyle ListView # Optional
-    #Set-PSReadLineOption -PredictionSource HistoryAndPlugin
+    Set-PSReadLineOption -PredictionSource History -PredictionViewStyle ListView # Optional
+    #Set-PSReadLineOption -PredictionSource History
     #Set-PSReadLineOption -PredictionViewStyle ListView
     #can use -EditMode Emacs or Vi mode for folloing the windows one will use windows like home end keybinds   
     Set-PSReadLineOption -EditMode Windows
@@ -967,7 +967,7 @@ function dallm {
 }
 Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
 Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
-Set-PSReadLineOption -PredictionSource HistoryAndPlugin
+Set-PSReadLineOption -PredictionSource History
 Set-PSReadLineOption -MaximumHistoryCount 10000
 # Custom completion for common commands
 $scriptblock = {
@@ -1013,7 +1013,7 @@ Set-PSReadLineOption -AddToHistoryHandler {
 }
 
 # Improved prediction settings
-Set-PSReadLineOption -PredictionSource HistoryAndPlugin
+Set-PSReadLineOption -PredictionSource History
 Set-PSReadLineOption -MaximumHistoryCount 10000
 # Network Utilities
 function Get-PubIP { (Invoke-WebRequest http://ifconfig.me/ip).Content }
@@ -2221,4 +2221,5 @@ EXAMPLES:
     }
 }
 Set-Alias -Name fman -Value fontmanage
+
 

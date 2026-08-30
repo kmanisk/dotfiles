@@ -52,7 +52,7 @@
     "theme": {
         "mode": "system",
         "light": "Gruvbox Light",
-        "dark": "Base16 Humanoid dark"
+        "dark": "VSCode Dark Polished"
     },
     // ─────────────────────────────────────────────────────────────────────────────
     // 3. GENERAL & WINDOW
@@ -147,6 +147,9 @@
     "toolbar": {
         "breadcrumbs": false,
         "quick_actions": false
+    },
+    "sticky_scroll": {
+        "enabled": true
     },
     "status_bar": {
         "experimental.show": false,
