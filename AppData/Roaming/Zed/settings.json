@@ -12,7 +12,8 @@
         "Aporetic Sans Mono",
         "FantasqueSansM Nerd Font Mono"
     ],
-    "buffer_font_size": 26.0, // <- Change this to adjust editor code size
+    "buffer_font_size": 24.0, // <- Change this to adjust editor code size
+    // "buffer_font_size": 30.0, // <- Change this to adjust editor code size
     "buffer_font_weight": 400, // Regular = 400, Medium = 500, SemiBold = 600, Bold = 700
     "buffer_line_height": {
         "custom": 1.4 // Line height spacing (1.35 - 1.4 sweet spot)
@@ -52,7 +53,7 @@
     "theme": {
         "mode": "system",
         "light": "Gruvbox Light",
-        "dark": "Hipster Green Dark"
+        "dark": "Ayu Mirage"
     },
     // ─────────────────────────────────────────────────────────────────────────────
     // 3. GENERAL & WINDOW

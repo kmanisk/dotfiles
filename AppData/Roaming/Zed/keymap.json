@@ -5,48 +5,26 @@
   {
     "context": "Workspace",
     "bindings": {
-      // Toggle / Hide Bottom Dock (Terminal, Diagnostics, Task output, etc.)
       "ctrl-;": "workspace::ToggleBottomDock",
       "ctrl-shift-;": "workspace::NewTerminal",
-
-      // Sidebar / Explorer toggles
-      "alt-e": "workspace::ToggleRightDock",
-      "alt-s": "multi_workspace::ToggleWorkspaceSidebar",
-
-      // Command Palette & Quick Access
+      "alt-e": "project_panel::ToggleFocus",
+      "alt-l": "workspace::ToggleLeftDock",
       "alt-p": "command_palette::Toggle",
       "alt-f": "file_finder::Toggle",
       "alt-o": "workspace::Open",
-      "alt-shift-t": "agent::ToggleSearch",
       "alt-shift-x": "zed::Extensions",
-
-      // Window & Item Closing (Global)
       "alt-w": "pane::CloseActiveItem",
-
-      // Themes & Settings
-      "ctrl-s ctrl-k": "zed::OpenKeymap",
+      "ctrl-k ctrl-s": "zed::OpenKeymap",
       "ctrl-,": "zed::OpenSettings",
-      "ctrl-alt-,": null,
-
-      // Tasks (Code Runner)
       "alt-r": [
         "task::Spawn",
         {
           "task_name": "run file"
         }
       ],
-
-      // AI Assistant / Panel
-      "alt-l": "workspace::ToggleLeftDock",
-
-      // Git Panel
       "shift-alt-g": "git_panel::ToggleFocus",
-
-      // Pane Resizing
-      "shift-alt-[": "vim::ResizePaneLeft",
-      "shift-alt-]": "vim::ResizePaneRight",
-
-      // Move current editor to pane in direction
+      "alt-{": "vim::ResizePaneLeft",
+      "alt-}": "vim::ResizePaneRight",
       "ctrl-alt-h": [
         "workspace::MoveItemToPaneInDirection",
         { "direction": "left" }
@@ -85,36 +63,17 @@
   {
     "context": "Editor",
     "bindings": {
-      // Toggle Bottom Dock
       "ctrl-;": "workspace::ToggleBottomDock",
-
-      // Font Zoom
       "alt-shift-y": "zed::DecreaseBufferFontSize",
       "alt-shift-u": "zed::IncreaseBufferFontSize",
-
-      // Clipboard
       "alt-y": "editor::Copy",
       "alt-u": "editor::Paste",
-
-      // Code Folding
       "ctrl-alt-f": "editor::Fold",
       "ctrl-alt-u": "editor::UnfoldLines",
-
-      // Toggle Comments
       "ctrl-/": "editor::ToggleComments",
-
-      // Docks & Sidebars
       "alt-l": "workspace::ToggleLeftDock",
-      "alt-s": "multi_workspace::ToggleWorkspaceSidebar",
-
-      // Inline AI Assistant
       "ctrl-enter": "assistant::InlineAssist",
-
-      // Show Suggestions / Autocomplete
-      "alt-i": "editor::ShowCompletions",
-
-      // Disable default Settings shortcut
-      "ctrl-alt-,": null
+      "alt-i": "editor::ShowCompletions"
     }
   },
 
@@ -125,17 +84,11 @@
     "context": "Editor && (vim_mode == normal || vim_mode == visual) && !VimWaiting && !menu",
     "bindings": {
       "ctrl-;": "workspace::ToggleBottomDock",
-
-      // Themes & AI
       "space t h": "theme_selector::Toggle",
       "space i a": "assistant::InlineAssist",
-
-      // Sidebar & Navigation
       "alt-l": "workspace::ToggleLeftDock",
-      "alt-s": "multi_workspace::ToggleWorkspaceSidebar",
-      "space a s": "multi_workspace::ToggleWorkspaceSidebar",
-      "alt-e": "workspace::ToggleRightDock",
-      "space e": "workspace::ToggleRightDock",
+      "alt-e": "project_panel::ToggleFocus",
+      "space e": "project_panel::ToggleFocus",
       "space g q": "workspace::ToggleRightDock",
       "space o r": "projects::OpenRecent",
       "space x": "zed::Extensions",
@@ -144,55 +97,35 @@
       "space o g": "zed::OpenSettings",
       "space n f": "workspace::NewFile",
       "space t t": "workspace::NewTerminal",
-
-      // Splits
       "alt-v": "pane::SplitVertical",
       "alt-h": "pane::SplitHorizontal",
       "space g v": "pane::SplitVertical",
       "space g h": "pane::SplitHorizontal",
-
-      // Zen & Fullscreen Mode
       "space z z": "workspace::ToggleCenteredLayout",
       "space z f": "zed::ToggleFullScreen",
       "f11": "zed::ToggleFullScreen",
-
-      // Folds
       "space r f": "editor::ToggleFoldRecursive",
       "z a": "editor::ToggleFold",
-
-      // Git & Panels (Gitsigns style)
       "space h r": "editor::RevertSelectedHunks",
       "space h d": "editor::ToggleHunkDiff",
       "space h p": "editor::ToggleHunkDiff",
       "space g h d": "editor::ToggleHunkDiff",
       "space g h r": "editor::RevertSelectedHunks",
       "space l g": "git_panel::ToggleFocus",
-
-      // Breakpoints & Debug
       "space b": "editor::ToggleBreakpoint",
-
-      // Inlay Hints & Wrap
       "space i h": "editor::ToggleInlayHints",
       "space u w": "editor::ToggleSoftWrap",
-
-      // Previews
       "space m p": "markdown::OpenPreview",
-      "space m P": "markdown::OpenPreviewToTheSide",
-
-      // Search & Files
+      "space m v": "markdown::OpenPreviewToTheSide",
       "space f g": "pane::DeploySearch",
       "space f f": "file_finder::Toggle",
       "space o f": "workspace::Open",
       "space o e": "editor::RevealInFileManager",
-
-      // Format & Comment
+      "space c p": "editor::CopyPath",
+      "space c n": "editor::CopyRelativePath",
       "space f d": "editor::Format",
       "space /": "editor::ToggleComments",
-
-      // Outline / Symbols
       "space c s": "outline::Toggle",
-
-      // Go to excerpts
       "g f": "editor::OpenExcerpts"
     }
   },
@@ -204,8 +137,6 @@
     "context": "Editor && vim_mode == normal && !VimWaiting && !menu",
     "bindings": {
       "ctrl-;": "workspace::ToggleBottomDock",
-
-      // Save & Close
       "space w": "workspace::Save",
       "space W": "workspace::SaveWithoutFormat",
       "ctrl-s": "workspace::Save",
@@ -213,52 +144,37 @@
       "ctrl-w": "pane::CloseActiveItem",
       "space c t": "pane::CloseInactiveItems",
       "space c l": "pane::CloseItemsToTheLeft",
-      "space n": "editor::NewlineBelow",
-      "space N": "editor::NewlineAbove",
-
-      // Selection & Clipboard
+      "space n f": "workspace::NewFile",
+      "space f n": "workspace::NewFile",
+      "space n n": "editor::NewlineBelow",
+      "space n k": "editor::NewlineAbove",
+      "space enter": "editor::NewlineBelow",
       "space s a": "editor::SelectAll",
       "space y a": [
         "editor::SelectAll",
         "editor::Copy"
       ],
-
-      // Number Increment & Decrement
       "+": "vim::Increment",
       "-": "vim::Decrement",
       "ctrl-a": "vim::Increment",
       "ctrl-x": "vim::Decrement",
-
-      // Paste on new line (gp)
       "g p": [
         "editor::NewlineBelow",
         "editor::Paste"
       ],
-
-      // Paste directly from clipboard (immune to dd/x deletions)
       "p": "editor::Paste",
-
-      // Redo
       "U": "vim::Redo",
-
-      // Hover
       "shift-l": "editor::Hover",
-
-      // Tab / Item switching
       "shift-j": "pane::ActivateNextItem",
       "shift-k": "pane::ActivatePreviousItem",
       "alt-j": "pane::ActivateNextItem",
       "alt-k": "pane::ActivatePreviousItem",
-
-      // Window / Pane navigation
       "ctrl-h": "workspace::ActivatePaneLeft",
       "ctrl-l": "workspace::ActivatePaneRight",
       "ctrl-k": "workspace::ActivatePaneUp",
       "ctrl-j": "workspace::ActivatePaneDown",
-
-      // LSP / Code Actions
       "space c a": "editor::ToggleCodeActions",
-      "space c r": "editor::Rename",
+      "space r v": "editor::Rename",
       "g d": "editor::GoToDefinition",
       "g D": "editor::GoToDefinitionSplit",
       "g i": "editor::GoToImplementation",
@@ -266,42 +182,30 @@
       "g t": "editor::GoToTypeDefinition",
       "g T": "editor::GoToTypeDefinitionSplit",
       "g r": "editor::FindAllReferences",
-
-      // Code Runner
       "space r f": [
         "task::Spawn",
         {
           "task_name": "run file"
         }
       ],
-
-      // Diagnostics / Problems
       "] d": "editor::GoToDiagnostic",
       "[ d": "editor::GoToPreviousDiagnostic",
       "space v p": "diagnostics::Deploy",
-
-      // Git Navigation
       "] h": "editor::GoToHunk",
       "[ h": "editor::GoToPreviousHunk",
-
-      // Word Jump (Hop / Flash style with labels)
       "s": "vim::HelixJumpToWord",
       "S": "vim::HelixJumpToWord",
-
-      // Join Lines (matches Neovim <leader>j / J)
       "space j": "vim::JoinLines",
-
-      // 2-Character Leap / Sneak Search (Across Whole File)
       "g s": "vim::PushSneak",
       "g S": "vim::PushSneakBackward"
     }
   },
 
   // =============================================================================
-  //                   Empty Pane / Shared Screen
+  //                   Empty Pane
   // =============================================================================
   {
-    "context": "EmptyPane || SharedScreen",
+    "context": "EmptyPane",
     "bindings": {
       "ctrl-;": "workspace::ToggleBottomDock",
       "space o r": "projects::OpenRecent"
@@ -317,20 +221,16 @@
       "ctrl-;": "workspace::ToggleBottomDock",
       "g c": "editor::ToggleComments",
       "space /": "editor::ToggleComments",
-      // Delete selection without copying to register or clipboard
       "x": "editor::Delete",
       "p": "editor::Paste",
       "space c a": "editor::ToggleCodeActions",
+      "space r v": "editor::Rename",
       "s": "vim::HelixJumpToWord",
-      "S": ["vim::PushAddSurrounds", {}],
+      "S": "vim::PushAddSurrounds",
       "g s": "vim::PushSneak",
       "g S": "vim::PushSneakBackward",
-
-      // Move selected lines up/down
       "shift-j": "editor::MoveLineDown",
       "shift-k": "editor::MoveLineUp",
-
-      // Indent & Outdent
       "<": "editor::Outdent",
       ">": "editor::Indent"
     }
@@ -338,7 +238,6 @@
 
   // =============================================================================
   //                   Editor (Operator-Pending Mode - Vim)
-  //                   Allows chaining y, d, c with gs (2-Char Sneak)
   // =============================================================================
   {
     "context": "Editor && vim_mode == operator",
@@ -357,7 +256,6 @@
     "context": "Editor && vim_mode == insert",
     "bindings": {
       "ctrl-;": "workspace::ToggleBottomDock",
-      // Escape to Normal Mode with jk
       "j k": "vim::NormalBefore",
       "alt-i": "editor::ShowCompletions",
       "alt-l": "workspace::ToggleLeftDock",
@@ -392,17 +290,31 @@
       "a": "project_panel::NewFile",
       "A": "project_panel::NewDirectory",
       "r": "project_panel::Rename",
+      "f2": "project_panel::Rename",
       "d": "project_panel::Delete",
+      "delete": "project_panel::Delete",
       "x": "project_panel::Cut",
       "c": "project_panel::Copy",
       "p": "project_panel::Paste",
-      "l": "project_panel::Open",
-      "z a": "project_panel::CollapseAllEntries",
-      "o e": "project_panel::RevealInFileManager",
+      "c p": "project_panel::CopyPath",
+      "c n": "project_panel::CopyRelativePath",
       "y y": "project_panel::CopyPath",
       "y f": "project_panel::Duplicate",
-      "q": "workspace::ToggleRightDock",
-      "space e": "workspace::ToggleRightDock",
+      "l": "project_panel::OpenPermanent",
+      "enter": "project_panel::OpenPermanent",
+      "right": "project_panel::OpenPermanent",
+      "h": "project_panel::CollapseSelectedEntry",
+      "left": "project_panel::CollapseSelectedEntry",
+      "j": "menu::SelectNext",
+      "down": "menu::SelectNext",
+      "k": "menu::SelectPrevious",
+      "up": "menu::SelectPrevious",
+      "z a": "project_panel::CollapseAllEntries",
+      "o e": "project_panel::RevealInFileManager",
+      "escape": "project_panel::ToggleFocus",
+      "q": "project_panel::ToggleFocus",
+      "space e": "project_panel::ToggleFocus",
+      "alt-e": "project_panel::ToggleFocus",
       "ctrl-h": "workspace::ActivatePaneLeft",
       "ctrl-l": "workspace::ActivatePaneRight",
       "ctrl-k": "workspace::ActivatePaneUp",
@@ -428,7 +340,7 @@
   //                   Run Nearest Task
   // =============================================================================
   {
-    "context": "EmptyPane || SharedScreen || vim_mode == normal",
+    "context": "EmptyPane || vim_mode == normal",
     "bindings": {
       "space r t": [
         "editor::SpawnNearestTask",
@@ -457,7 +369,7 @@
       "g l": "vim::SelectNext",
       "g L": "vim::SelectPrevious",
       "g a": "editor::SelectAllMatches",
-      "g shift-a": "editor::FindAllReferences",
+      "g A": "editor::FindAllReferences",
       "g f": "project_symbols::Toggle",
       "space p e": "diagnostics::Deploy"
     }
@@ -467,12 +379,9 @@
   //                   Assistant / AI Window Keybindings
   // =============================================================================
   {
-    "context": "AssistantPanel || AgentPanel || ContextEditor",
+    "context": "AgentPanel || AssistantPanel",
     "bindings": {
       "ctrl-;": "workspace::ToggleBottomDock",
-      "alt-shift-t": "agent::ToggleSearch",
-      "escape": "agent::DismissThreadSearch",
-      "alt-s": "multi_workspace::ToggleWorkspaceSidebar",
       "alt-l": "workspace::ToggleLeftDock",
       "alt-w": "pane::CloseActiveItem",
       "alt-j": "pane::ActivateNextItem",
