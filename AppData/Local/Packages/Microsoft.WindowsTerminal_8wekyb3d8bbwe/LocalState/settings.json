@@ -209,7 +209,6 @@
   "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
   "experimental.enableColorSelection": true,
   "firstWindowPreference": "defaultProfile",
-  "initialPosition": ",",
   "keybindings": [
     {
       "id": "User.find",
@@ -860,5 +859,8 @@
   ],
   "useAcrylicInTabRow": true,
   "warning.largePaste": false,
-  "useAtlasEngine": true
+  "useAtlasEngine": true,
+  "centerOnLaunch": true,
+  "initialCols": 100,
+  "initialRows": 28
 }
