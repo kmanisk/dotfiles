@@ -450,13 +450,7 @@
       "g s": "vim::PushSneak",
       "g S": "vim::PushSneakBackward",
       "g i": "editor::ToggleCodeActions",
-      "g d": "editor::OpenExcerpts",
-      "g c": [
-        "editor::ToggleComments",
-        {
-          "advance_downwards": false
-        }
-      ]
+      "g d": "editor::OpenExcerpts"
     }
   },
   {
