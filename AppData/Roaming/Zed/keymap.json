@@ -9,7 +9,7 @@
       "ctrl-shift-;": "workspace::NewTerminal",
       "alt-e": "project_panel::ToggleFocus",
       "alt-l": "workspace::ToggleLeftDock",
-      "alt-d": "workspace::ToggleLeftDock",
+      "alt-d": "multi_workspace::ToggleWorkspaceSidebar",
       "alt-p": "command_palette::Toggle",
       "alt-f": "file_finder::Toggle",
       "alt-o": "workspace::Open",
@@ -73,7 +73,7 @@
       "ctrl-alt-u": "editor::UnfoldLines",
       "ctrl-/": "editor::ToggleComments",
       "alt-l": "workspace::ToggleLeftDock",
-      "alt-d": "workspace::ToggleLeftDock",
+      "alt-d": "multi_workspace::ToggleWorkspaceSidebar",
       "ctrl-enter": "assistant::InlineAssist",
       "alt-i": "editor::ShowCompletions"
     }
@@ -89,7 +89,7 @@
       "space t h": "theme_selector::Toggle",
       "space i a": "assistant::InlineAssist",
       "alt-l": "workspace::ToggleLeftDock",
-      "alt-d": "workspace::ToggleLeftDock",
+      "alt-d": "multi_workspace::ToggleWorkspaceSidebar",
       "space r t": "task::Spawn",
       "space r r": "task::Rerun",
       "alt-e": "project_panel::ToggleFocus",
@@ -275,7 +275,7 @@
       "j k": "vim::NormalBefore",
       "alt-i": "editor::ShowCompletions",
       "alt-l": "workspace::ToggleLeftDock",
-      "alt-d": "workspace::ToggleLeftDock",
+      "alt-d": "multi_workspace::ToggleWorkspaceSidebar",
       "ctrl-p": "editor::Paste"
     }
   },
@@ -389,7 +389,7 @@
       "alt-shift-t": "agent::ToggleSearch",
       "escape": "agent::DismissThreadSearch",
       "alt-l": "workspace::ToggleLeftDock",
-      "alt-d": "workspace::ToggleLeftDock",
+      "alt-d": "multi_workspace::ToggleWorkspaceSidebar",
       "alt-w": "pane::CloseActiveItem",
       "alt-j": "pane::ActivateNextItem",
       "alt-k": "pane::ActivatePreviousItem",
