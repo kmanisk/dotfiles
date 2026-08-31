@@ -82,6 +82,7 @@ function Update-SessionPath {
         "$scoop\shims"
         "$scoop\apps\python\current"
         "$scoop\apps\python\current\Scripts"
+        "$env:LOCALAPPDATA\Microsoft\WindowsApps"
         "$env:ChocolateyInstall\bin"
         'C:\ProgramData\chocolatey\bin'
     )
@@ -201,7 +202,7 @@ function Step-ScoopBuckets {
     if (-not (Test-Cmd 'scoop')) { Write-SKIP "Scoop not available  -  skipping buckets."; return }
     if (-not (Test-Cmd 'git')) { Write-WARN "Git not available  -  skipping buckets (will retry after Git install)."; return }
 
-    $official = @('main', 'extras', 'java', 'nonportable')
+    $official = @('main', 'extras', 'versions', 'java', 'nonportable')
     $custom = [ordered]@{
         'rilo' = 'https://github.com/kmanisk/scoop-bucket'
     }
@@ -372,11 +373,11 @@ function Step-ChezmoiInit {
     $src = "$env:USERPROFILE\.local\share\chezmoi"
     if (Test-StepDone 'ChezmoiInit') {
         Write-SKIP "chezmoi already initialised  -  applying latest changes..."
-        chezmoi apply
+        chezmoi apply --force
         return
     }
-    if (Test-Path "$src\.git") { chezmoi apply }
-    else { chezmoi init --apply kmanisk }
+    if (Test-Path "$src\.git") { chezmoi apply --force }
+    else { chezmoi init --apply --force kmanisk }
     if ($LASTEXITCODE -eq 0) { Write-OK "chezmoi applied."; Set-StepDone 'ChezmoiInit' }
     else { Write-WARN "chezmoi exited $LASTEXITCODE  -  re-run to retry." }
 }

@@ -505,7 +505,7 @@ function Invoke-Fonts {
             @{ Filename = 'ComicMono.ttf'; Url = 'https://raw.githubusercontent.com/dtinth/comic-mono-font/master/ComicMono.ttf'; RegName = 'Comic Mono (TrueType)' }
         )
         'pixelcode' = @(
-            @{ Filename = 'PixelCode.ttf'; Url = 'https://raw.githubusercontent.com/qwerasd205/PixelCode/master/PixelCode.ttf'; RegName = 'Pixel Code (TrueType)' }
+            @{ Filename = 'PixelCode.ttf'; ZipUrl = 'https://github.com/qwerasd205/PixelCode/releases/latest/download/ttf.zip'; ZipInnerPath = 'ttf/PixelCode.ttf'; RegName = 'Pixel Code (TrueType)' }
         )
         'aporeticsansmono' = @(
             @{ Filename = 'aporetic-sans-mono-normalregularupright.ttf'; Url = 'https://raw.githubusercontent.com/protesilaos/aporetic/main/aporetic-sans-mono/TTF/aporetic-sans-mono-normalregularupright.ttf'; RegName = 'Aporetic Sans Mono (TrueType)' },
@@ -598,7 +598,24 @@ function Invoke-Fonts {
             foreach ($item in $fileList) {
                 $dest = Join-Path $fontsDir $item.Filename
                 if (-not (Test-Path $dest)) {
-                    curl.exe -fLo $dest -s $item.Url
+                    if ($item.ZipUrl) {
+                        $tmpZ = Join-Path $env:TEMP "$($cleanFont)_custom.zip"
+                        curl.exe -fLo $tmpZ -s $item.ZipUrl
+                        if (Test-Path $tmpZ) {
+                            $inner = if ($item.ZipInnerPath) { $item.ZipInnerPath } else { $item.Filename }
+                            & tar.exe -xf $tmpZ -C $fontsDir $inner
+                            $extracted = Join-Path $fontsDir $inner
+                            if ((Test-Path $extracted) -and ($extracted -ne $dest)) {
+                                Move-Item -Path $extracted -Destination $dest -Force -EA SilentlyContinue
+                                # clean up subfolder if any
+                                $subDir = Split-Path $extracted
+                                if ($subDir -ne $fontsDir -and (Test-Path $subDir)) { Remove-Item $subDir -Recurse -Force -EA SilentlyContinue }
+                            }
+                            Remove-Item $tmpZ -Force -EA SilentlyContinue
+                        }
+                    } elseif ($item.Url) {
+                        curl.exe -fLo $dest -s $item.Url
+                    }
                 }
                 if (Test-Path $dest) {
                     New-ItemProperty -Path $regPath -Name $item.RegName -Value $dest -PropertyType String -Force | Out-Null
