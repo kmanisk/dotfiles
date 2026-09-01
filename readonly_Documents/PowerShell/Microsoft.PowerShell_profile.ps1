@@ -52,6 +52,16 @@ function chu{
 function scclear{
     scoop cache rm *
 }
+function nogroup {
+    & "$HOME\AppData\Local\installer\Disable-ExplorerGroupBy.ps1"
+}
+function groupgui {
+    if ($PSVersionTable.PSVersion.Major -ge 6) {
+        Start-Process powershell.exe -ArgumentList "-NoProfile -STA -WindowStyle Hidden -File `"$HOME\AppData\Local\installer\ExplorerGroupManager.ps1`""
+    } else {
+        & "$HOME\AppData\Local\installer\ExplorerGroupManager.ps1"
+    }
+}
 
 Set-Alias -Name word -Value "C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"
 Set-Alias -Name xl -Value "C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE"
