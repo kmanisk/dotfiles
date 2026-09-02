@@ -204,10 +204,19 @@ try {
             cmd /c $File
         }
 
-        # HTML / HTM (Live Reloading Server)
+        # HTML / HTM (Auto-Detect Dev Server / Live Server)
         { $_ -in "html", "htm" } {
+            if (Test-Path "package.json") {
+                try {
+                    $pkg = Get-Content "package.json" -Raw | ConvertFrom-Json -ErrorAction SilentlyContinue
+                    if ($pkg.scripts.dev) {
+                        npm run dev
+                        return
+                    }
+                } catch {}
+            }
             if (Get-Command live-server -ErrorAction SilentlyContinue) {
-                live-server --port=5500 --entry-file=$File $dir
+                live-server --port=5500 --wait=150 --entry-file=$File $dir
             } elseif (Get-Command browser-sync -ErrorAction SilentlyContinue) {
                 browser-sync start --server --files $dir --startPath (Split-Path -Leaf $File)
             } else {
