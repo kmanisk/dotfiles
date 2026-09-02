@@ -53,7 +53,7 @@ else
     -- ------------------------------
     if vim.g.neovide then
         -- Font name + size + ligatures
-        vim.opt.guifont = "Iosevka Nerd Font Mono:h17"
+        vim.opt.guifont = "Iosevka NF:h14"
     end
     -- ------------------------------
     -- Load mappings after everything else

@@ -204,9 +204,15 @@ try {
             cmd /c $File
         }
 
-        # HTML
-        "html" {
-            Start-Process $File
+        # HTML / HTM (Live Reloading Server)
+        { $_ -in "html", "htm" } {
+            if (Get-Command live-server -ErrorAction SilentlyContinue) {
+                live-server --port=5500 --entry-file=$File $dir
+            } elseif (Get-Command browser-sync -ErrorAction SilentlyContinue) {
+                browser-sync start --server --files $dir --startPath (Split-Path -Leaf $File)
+            } else {
+                Start-Process $File
+            }
         }
 
         default {

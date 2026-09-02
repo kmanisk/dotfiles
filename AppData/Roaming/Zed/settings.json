@@ -6,8 +6,8 @@
     // ─────────────────────────────────────────────────────────────────────────────
     // Editor (Buffer) Font
     // "buffer_font_family": "CozetteVector",
-    "buffer_font_family": "Departure Mono",
-    // "buffer_font_family": "FantasqueSansM Nerd Font Mono",
+    // "buffer_font_family": "Departure Mono",
+    "buffer_font_family": "FantasqueSansM Nerd Font Mono",
     "buffer_font_fallbacks": [
         "Iosevka Nerd Font Mono",
         "Aporetic Sans Mono",
@@ -54,7 +54,7 @@
     "theme": {
         "mode": "system",
         "light": "Gruvbox Light",
-        "dark": "Hipster Green Dark"
+        "dark": "Forest Night"
     },
     // ─────────────────────────────────────────────────────────────────────────────
     // 3. GENERAL & WINDOW
@@ -82,7 +82,7 @@
     "soft_wrap": "editor_width",
     "hard_tabs": false,
     "tab_size": 4,
-    "colorize_brackets": false,
+    "colorize_brackets": true,
     "show_completions_on_input": true,
     "show_completion_documentation": true,
     "show_edit_predictions": true,
@@ -239,35 +239,104 @@
             "tab_size": 4,
             "hard_tabs": true
         },
-        "JavaScript": {
-            "formatter": "language_server",
-            "tab_size": 4,
-            "hard_tabs": true
-        },
-        "TypeScript": {
-            "formatter": "language_server",
-            "tab_size": 4,
-            "hard_tabs": true
-        },
-        "TSX": {
-            "formatter": "language_server",
-            "tab_size": 4,
-            "hard_tabs": true
-        },
-        "JSON": {
-            "formatter": "language_server",
-            "tab_size": 4,
-            "hard_tabs": true
-        },
         "HTML": {
-            "formatter": "language_server",
-            "tab_size": 4,
-            "hard_tabs": true
+            "language_servers": [
+                "vscode-html-language-server",
+                "emmet-language-server",
+                "!vtsls",
+                "..."
+            ],
+            "prettier": {
+                "allowed": true
+            },
+            "format_on_save": "on",
+            "tab_size": 2,
+            "hard_tabs": false
         },
         "CSS": {
-            "formatter": "language_server",
-            "tab_size": 4,
-            "hard_tabs": true
+            "language_servers": [
+                "css-language-server",
+                "emmet-language-server",
+                "tailwindcss-language-server",
+                "..."
+            ],
+            "prettier": {
+                "allowed": true
+            },
+            "format_on_save": "on",
+            "tab_size": 2,
+            "hard_tabs": false
+        },
+        "SCSS": {
+            "language_servers": [
+                "css-language-server",
+                "emmet-language-server",
+                "tailwindcss-language-server",
+                "..."
+            ],
+            "prettier": {
+                "allowed": true
+            },
+            "format_on_save": "on",
+            "tab_size": 2,
+            "hard_tabs": false
+        },
+        "JavaScript": {
+            "language_servers": [
+                "vtsls",
+                "emmet-language-server",
+                "tailwindcss-language-server",
+                "eslint",
+                "..."
+            ],
+            "prettier": {
+                "allowed": true
+            },
+            "format_on_save": "on",
+            "tab_size": 2,
+            "hard_tabs": false
+        },
+        "TypeScript": {
+            "language_servers": [
+                "vtsls",
+                "emmet-language-server",
+                "tailwindcss-language-server",
+                "eslint",
+                "..."
+            ],
+            "prettier": {
+                "allowed": true
+            },
+            "format_on_save": "on",
+            "tab_size": 2,
+            "hard_tabs": false
+        },
+        "TSX": {
+            "language_servers": [
+                "vtsls",
+                "emmet-language-server",
+                "tailwindcss-language-server",
+                "eslint",
+                "..."
+            ],
+            "prettier": {
+                "allowed": true
+            },
+            "format_on_save": "on",
+            "tab_size": 2,
+            "hard_tabs": false
+        },
+        "JSON": {
+            "language_servers": [
+                "json-language-server",
+                "..."
+            ],
+            "prettier": {
+                "allowed": true
+            },
+            "format_on_save": "on",
+            "tab_size": 2,
+            "hard_tabs": false
         },
         "Java": {
             "formatter": "language_server",
@@ -279,6 +348,39 @@
     // 14. LSP (LANGUAGE SERVER PROTOCOL) CONFIG
     // ─────────────────────────────────────────────────────────────────────────────
     "lsp": {
+        "emmet-language-server": {
+            "initialization_options": {
+                "showExpandedAbbreviation": "always",
+                "showAbbreviationSuggestions": true,
+                "showSuggestionsAsSnippets": true
+            }
+        },
+        "tailwindcss-language-server": {
+            "settings": {
+                "includeLanguages": {
+                    "html": "html",
+                    "javascript": "javascriptreact",
+                    "typescript": "typescriptreact"
+                }
+            }
+        },
+        "vtsls": {
+            "settings": {
+                "typescript": {
+                    "suggest": {
+                        "completeFunctionCalls": true
+                    },
+                    "preferences": {
+                        "includePackageJsonAutoImports": "auto"
+                    }
+                },
+                "javascript": {
+                    "suggest": {
+                        "completeFunctionCalls": true
+                    }
+                }
+            }
+        },
         "rust-analyzer": {
             "initialization_options": {
                 "check": {

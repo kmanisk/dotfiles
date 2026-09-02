@@ -10,9 +10,37 @@ map("i", "jk", "<ESC>")
 -- map("i", "<C-y>", '<Esc>"+yyi', opts)
 -- For nvim-cmp or other completion plugins
 map("i", "<C-y>", "cmp.mapping.confirm({ select = true })", opts)
--- Map 'jk' to 'zz' in normal mode
+-- Motion & Navigation Screen Centering (zz)
 map("n", "j", "jzz", opts)
 map("n", "k", "kzz", opts)
+map({ "n", "v" }, "<C-d>", "<C-d>zz", { desc = "Scroll down and center" })
+map({ "n", "v" }, "<C-u>", "<C-u>zz", { desc = "Scroll up and center" })
+map({ "n", "v" }, "<C-f>", "<C-f>zz", { desc = "Page down and center" })
+map({ "n", "v" }, "<C-b>", "<C-b>zz", { desc = "Page up and center" })
+map({ "n", "v" }, "}", "}zz", { desc = "Next paragraph and center" })
+map({ "n", "v" }, "{", "{zz", { desc = "Prev paragraph and center" })
+map({ "n", "v" }, "G", "Gzz", { desc = "End of buffer and center" })
+map({ "n", "v" }, "gg", "ggzz", { desc = "Start of buffer and center" })
+map({ "n", "v" }, "%", "%zz", { desc = "Matching bracket and center" })
+
+-- Search Centering (keep cursor centered during search navigation)
+map("n", "n", "nzzzv", { desc = "Next search match and center" })
+map("n", "N", "Nzzzv", { desc = "Prev search match and center" })
+map("n", "*", "*zzzv", { desc = "Search word forward and center" })
+map("n", "#", "#zzzv", { desc = "Search word backward and center" })
+map("n", "g*", "g*zzzv", { desc = "Search word forward and center" })
+map("n", "g#", "g#zzzv", { desc = "Search word backward and center" })
+
+-- Jump List & Change List Centering
+map("n", "<C-o>", "<C-o>zz", { desc = "Jump back and center" })
+map("n", "<C-i>", "<C-i>zz", { desc = "Jump forward and center" })
+map("n", "g;", "g;zz", { desc = "Prev change and center" })
+map("n", "g,", "g,zz", { desc = "Next change and center" })
+
+-- Paste & Visual Paste
+map("n", "p", "pzz", { desc = "Paste and center" })
+map("n", "P", "Pzz", { desc = "Paste before and center" })
+map("x", "p", [["_dP]], { desc = "Paste without overwriting register" })
 
 -- Map 'jk' to escape terminal mode
 map("t", "jk", [[<C-\><C-n>]], { noremap = true, silent = true })

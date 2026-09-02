@@ -23,6 +23,12 @@
           "task_name": "run file"
         }
       ],
+      "alt-s": [
+        "task::Spawn",
+        {
+          "task_name": "live server"
+        }
+      ],
       "shift-alt-g": "git_panel::ToggleFocus",
       "alt-{": "vim::ResizePaneLeft",
       "alt-}": "vim::ResizePaneRight",
@@ -75,7 +81,8 @@
       "alt-l": "workspace::ToggleLeftDock",
       "alt-d": "multi_workspace::ToggleWorkspaceSidebar",
       "ctrl-enter": "assistant::InlineAssist",
-      "alt-i": "editor::ShowCompletions"
+      "alt-i": "editor::ShowCompletions",
+      "ctrl-space": "editor::ShowCompletions"
     }
   },
 
@@ -130,7 +137,32 @@
       "space f d": "editor::Format",
       "space /": "editor::ToggleComments",
       "space c s": "outline::Toggle",
-      "g f": "editor::OpenExcerpts"
+      "g f": "editor::OpenExcerpts",
+      // Harpoon-Style Buffer Slots (1 to 5)
+      "space 1": [
+        "pane::ActivateItem",
+        0
+      ],
+      "space 2": [
+        "pane::ActivateItem",
+        1
+      ],
+      "space 3": [
+        "pane::ActivateItem",
+        2
+      ],
+      "space 4": [
+        "pane::ActivateItem",
+        3
+      ],
+      "space 5": [
+        "pane::ActivateItem",
+        4
+      ],
+      // Quick Alternate File & Buffer Switcher
+      "space space": "pane::AlternateFile",
+      "space ,": "tab_switcher::Toggle",
+      "space r c": "pane::ReopenClosedItem"
     }
   },
 
@@ -198,6 +230,18 @@
         "task::Spawn",
         {
           "task_name": "run file"
+        }
+      ],
+      "space l s": [
+        "task::Spawn",
+        {
+          "task_name": "live server"
+        }
+      ],
+      "space n d": [
+        "task::Spawn",
+        {
+          "task_name": "npm dev"
         }
       ],
       "] d": "editor::GoToDiagnostic",
@@ -274,9 +318,23 @@
       "ctrl-;": "workspace::ToggleBottomDock",
       "j k": "vim::NormalBefore",
       "alt-i": "editor::ShowCompletions",
+      "ctrl-space": "editor::ShowCompletions",
       "alt-l": "workspace::ToggleLeftDock",
       "alt-d": "multi_workspace::ToggleWorkspaceSidebar",
       "ctrl-p": "editor::Paste"
+    }
+  },
+
+  // =============================================================================
+  //                   Completion Menu (VS Code Parity)
+  // =============================================================================
+  {
+    "context": "Editor && showing_completions",
+    "bindings": {
+      "tab": "editor::ConfirmCompletion",
+      "enter": "editor::ConfirmCompletion",
+      "ctrl-n": "editor::ContextMenuNext",
+      "ctrl-p": "editor::ContextMenuPrev"
     }
   },
 

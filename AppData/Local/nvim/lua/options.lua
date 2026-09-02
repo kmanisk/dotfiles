@@ -87,8 +87,8 @@ vim.g.neovide_animation_fps = 100 -- Increase FPS for faster animations
 vim.g.neovide_scroll_animation_length = 0.3 -- Faster scroll animations
 vim.g.neovide_cursor_animation_length = 0.05 -- Faster cursor animations
 vim.g.neovide_cursor_trail_size = 0.5 -- Smaller cursor trail
--- Set JetBrains Nerd Font with a specific size
-vim.o.guifont = "JetBrainsMono Nerd Font:h14" -- Replace with desired size (e.g., 14)
+-- Set Iosevka Nerd Font with a specific size
+vim.o.guifont = "Iosevka NF:h14" -- Replace with desired size (e.g., 14)
 -- Set background (dark or light)
 o.background = "dark" -- or "light"
 

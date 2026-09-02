@@ -1,9 +1,21 @@
-// tasks.json (Windows)
-// Confirmed path from your setup: %APPDATA%\Zed\tasks.json
 [
   {
     "label": "run file",
     "command": "Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force; & \"$env:APPDATA\\Zed\\run-file.ps1\" -File \"$ZED_FILE\"",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always"
+  },
+  {
+    "label": "live server",
+    "command": "live-server --port=5500 \"$ZED_WORKTREE_ROOT\"",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always"
+  },
+  {
+    "label": "npm dev",
+    "command": "npm run dev",
     "use_new_terminal": false,
     "allow_concurrent_runs": false,
     "reveal": "always"
