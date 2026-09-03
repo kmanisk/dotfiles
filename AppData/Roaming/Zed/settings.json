@@ -8,13 +8,13 @@
     // "buffer_font_family": "CozetteVector",
     // "buffer_font_family": "Departure Mono",
     // "buffer_font_family": "Share Tech Mono",
-    "buffer_font_family": "Terminess Nerd Font",
+    "buffer_font_family": "FantasqueSansM Nerd Font",
     "buffer_font_fallbacks": [
         "Iosevka Nerd Font Mono",
         "Aporetic Sans Mono",
         "FantasqueSansM Nerd Font Mono"
     ],
-    "buffer_font_size": 24.0, // <- Change this to adjust editor code size
+    "buffer_font_size": 26.0, // <- Change this to adjust editor code size
     // "buffer_font_size": 30.0, // <- Change this to adjust editor code size
     "buffer_font_weight": 400, // Regular = 400, Medium = 500, SemiBold = 600, Bold = 700
     "buffer_line_height": {
@@ -56,7 +56,7 @@
     "theme": {
         "mode": "system",
         "light": "Gruvbox Light",
-        "dark": "Hipster Green Dark"
+        "dark": "Analog Dream: Magnetic Night"
     },
     // ─────────────────────────────────────────────────────────────────────────────
     // 3. GENERAL & WINDOW
@@ -422,8 +422,8 @@
                     "max_tokens": 1000000
                 },
                 {
-                    "name": "gemini-2.5-pro",
-                    "display_name": "Gemini 2.5 Pro",
+                    "name": "gemini-3.5-flash-lite",
+                    "display_name": "Gemini 3.5 Flash-Lite",
                     "max_tokens": 1000000
                 }
             ]
@@ -435,11 +435,11 @@
             "effort": "medium",
             "enable_thinking": true,
             "provider": "google",
-            "model": "gemini-3.6-flash"
+            "model": "gemini-3.7-flash"
         },
         "inline_assistant_model": {
             "provider": "google",
-            "model": "gemini-3.6-flash"
+            "model": "gemini-3.5-flash-lite"
         },
         "favorite_models": []
     },
@@ -528,7 +528,6 @@
     // "buffer_font_family": "psudoFont Liga Mono",        // Custom Ligature Coding Mono
     // "buffer_font_size": 24.0,
     // "buffer_line_height": { "custom": 1.40 },
-
     // ── [BLOCK B: Size 23.0 | Line-Height 1.35] (Mainframe / Cyberpunk / Script) ─
     // "buffer_font_family": "3270 Nerd Font",             // IBM 3270 Mainframe Green Terminal
     // "buffer_font_family": "Share Tech Mono",            // Cyberpunk / Matrix HUD Display
@@ -540,7 +539,6 @@
     // "buffer_font_family": "DaddyTimeMono Nerd Font Mono", // Casual Retro Monospace
     // "buffer_font_size": 23.0,
     // "buffer_line_height": { "custom": 1.35 },
-
     // ── [BLOCK C: Size 22.0 | Line-Height 1.30] (Early Mac / 90s Pixel / Hacker) ─
     // "buffer_font_family": "Departure Mono",             // Early Macintosh / DEC VT Hybrid
     // "buffer_font_family": "ProggyClean Nerd Font",      // Classic 90s C/C++ Developer Console
@@ -552,25 +550,21 @@
     // "buffer_font_family": "OCR-B 10 BT",                // European Standard OCR Monospace
     // "buffer_font_size": 22.0,
     // "buffer_line_height": { "custom": 1.30 },
-
     // ── [BLOCK D: Size 22.0 | Line-Height 1.25] (Linux TTY / X11 Console) ───────
     // "buffer_font_family": "Terminess Nerd Font",        // Pure Linux TTY Console (Terminus)
     // "buffer_font_family": "GohuFont 14 Nerd Font Mono", // Authentic X11 Unix Bitmap Console 14px
     // "buffer_font_family": "GohuFont 11 Nerd Font Mono", // Ultra Compact X11 Bitmap Console 11px
     // "buffer_font_size": 22.0,
     // "buffer_line_height": { "custom": 1.25 },
-
     // ── [BLOCK E: Size 24.0 | Line-Height 1.35] (6x13 DOS / IRC Bitmap Pixel) ───
     // "buffer_font_family": "CozetteVector",              // 6x13 DOS / IRC Bitmap Pixel Vector
     // "buffer_font_family": "CozetteCrossedSevenVector",  // Cozette with Crossed 7 & Z
     // "buffer_font_size": 24.0,
     // "buffer_line_height": { "custom": 1.35 },
-
     // ── [BLOCK F: Size 26.0 | Line-Height 1.20] (DEC VT320 Scanlines) ───────────
     // "buffer_font_family": "VT323",                      // Phosphor Green CRT Terminal
     // "buffer_font_size": 26.0,
     // "buffer_line_height": { "custom": 1.20 },
-
     // ── [BLOCK G: Size 21.0 | Line-Height 1.30] (Vintage Windows / Typewriter) ──
     // "buffer_font_family": "Lucida Console",             // Windows 95/NT System Console
     // "buffer_font_family": "Courier New",                // Mechanical Typewriter Standard

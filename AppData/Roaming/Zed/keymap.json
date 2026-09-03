@@ -253,7 +253,15 @@
       "S": "vim::HelixJumpToWord",
       "space j": "vim::JoinLines",
       "g s": "vim::PushSneak",
-      "g S": "vim::PushSneakBackward"
+      "g S": "vim::PushSneakBackward",
+      "x": [
+        "workspace::SendKeystrokes",
+        "\" _ x"
+      ],
+      "shift-x": [
+        "workspace::SendKeystrokes",
+        "\" _ shift-x"
+      ]
     }
   },
 
@@ -279,8 +287,14 @@
       "space /": "editor::ToggleComments",
       "d": "editor::Delete",
       "D": "editor::Delete",
-      "x": "editor::Delete",
-      "X": "editor::Delete",
+      "x": [
+        "workspace::SendKeystrokes",
+        "\" _ x"
+      ],
+      "shift-x": [
+        "workspace::SendKeystrokes",
+        "\" _ shift-x"
+      ],
       "delete": "editor::Delete",
       "backspace": "editor::Delete",
       "space c a": "editor::ToggleCodeActions",
@@ -334,7 +348,7 @@
       "tab": "editor::ConfirmCompletion",
       "enter": "editor::ConfirmCompletion",
       "ctrl-n": "editor::ContextMenuNext",
-      "ctrl-p": "editor::ContextMenuPrev"
+      "ctrl-p": "editor::ContextMenuPrevious"
     }
   },
 
