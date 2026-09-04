@@ -52,10 +52,10 @@
   },
 
   // =============================================================================
-  //                           Workspace || Terminal
+  //                     Pane || Workspace || Terminal || Search
   // =============================================================================
   {
-    "context": "Workspace || Terminal",
+    "context": "Pane || Workspace || Terminal || ProjectSearchBar || BufferSearchBar || ProjectSearch",
     "bindings": {
       "ctrl-;": "workspace::ToggleBottomDock",
       "alt-w": "pane::CloseActiveItem",

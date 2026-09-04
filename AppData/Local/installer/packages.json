@@ -17,7 +17,18 @@
     "PixelCode",
     "PsudoFontLigaMono",
     "VictorMono",
-    "DepartureMono"
+    "DepartureMono",
+    "3270NerdFont-Condensed",
+    "3270NerdFont",
+    "3270NerdFont-SemiCondensed",
+    "ProFontIIxNerdFont",
+    "ProFontWindowsNerdFont",
+    "ProggyCleanCENerdFont",
+    "ProggyCleanNerdFont",
+    "ProggyCleanSZNerdFont",
+    "ShareTechMono",
+    "TerminessNerdFont",
+    "VT323"
   ],
   "scoop": {
     "mini": [
