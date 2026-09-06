@@ -759,6 +759,73 @@ function cadd {
     chezmoi add $Path
 }
 
+function cadd-secret {
+    param (
+        [Parameter(Mandatory = $true)]
+        [string]$Path
+    )
+    chezmoi add --encrypt $Path
+}
+Set-Alias -Name cenc -Value cadd-secret
+
+function sec {
+    [CmdletBinding()]
+    param(
+        [Parameter(Position = 0)]
+        [string]$Name = "new 1.txt",
+        [switch]$Clip
+    )
+    $resolved = $Name
+    if (-not (Test-Path $resolved)) {
+        $docPath = Join-Path $HOME "Documents\$Name"
+        if (Test-Path $docPath) {
+            $resolved = $docPath
+        }
+    }
+    $content = (chezmoi cat $resolved 2>$null) -join "`n"
+    if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($content)) {
+        Write-Warning "Secret not found or unable to decrypt: $Name"
+        return
+    }
+    if ($Clip) {
+        $content | Set-Clipboard
+        Write-Host "Decrypted secret copied to clipboard!" -ForegroundColor Green
+    } else {
+        $content
+    }
+}
+
+function gtok {
+    [CmdletBinding()]
+    param([switch]$Clip, [switch]$Raw)
+    $content = (chezmoi cat "$HOME\Documents\new 1.txt" 2>$null) -join "`n"
+    if ($Raw) {
+        if ($Clip) {
+            $content | Set-Clipboard
+            Write-Host "Full secret file copied to clipboard!" -ForegroundColor Green
+        } else {
+            $content
+        }
+        return
+    }
+    if ($content -match 'ghp_[a-zA-Z0-9]+') {
+        $tok = $matches[0]
+        if ($Clip) {
+            $tok | Set-Clipboard
+            Write-Host "GitHub token copied to clipboard!" -ForegroundColor Green
+        } else {
+            $tok
+        }
+    } else {
+        if ($Clip) {
+            $content | Set-Clipboard
+            Write-Host "Copied to clipboard!" -ForegroundColor Green
+        } else {
+            $content
+        }
+    }
+}
+
 function dfor {
     $deletedFiles = chezmoi status | Where-Object { $_ -match '^\s*D' }
     foreach ($file in $deletedFiles) {
