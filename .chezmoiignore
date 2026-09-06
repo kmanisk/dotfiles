@@ -1,0 +1,14 @@
+# ==============================================================================
+# Sensitive Files & Command Histories
+# ==============================================================================
+AppData/Local/clink/clink_history
+AppData/Local/installer/userdata/**
+**/*history*
+**/*.tmp
+**/*.log
+
+# ==============================================================================
+# Transient / State Files that cause constant git noise
+# ==============================================================================
+scoop/persist/windows-terminal/settings/state.json
+scoop/persist/windows-terminal/settings/elevated-state.json

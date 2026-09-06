@@ -120,18 +120,13 @@ function cadd {
 }
 
 function dfor {
-	$deletedFiles = chezmoi status | Where-Object { $_ -match '^DA' }
-	foreach ($file in $deletedFiles) {
-		# Remove "DA" and get the absolute path
-		$filePath = $file.Trim() -replace '^DA\s*', ''
-		$absolutePath = Join-Path $env:USERPROFILE $filePath
-
-		# Output the absolute path
-		Write-Host $absolutePath
-
-		# Forget the file in chezmoi
-		chezmoi forget $absolutePath
-	}
+    $deletedFiles = chezmoi status | Where-Object { $_ -match '^\s*D' }
+    foreach ($file in $deletedFiles) {
+        $filePath = $file.Trim() -replace '^[A-Z\s]+\s*', ''
+        $absolutePath = Join-Path $env:USERPROFILE $filePath
+        Write-Host "Forgetting: $absolutePath" -ForegroundColor Yellow
+        chezmoi forget $absolutePath
+    }
 }
 
 function size {
@@ -152,18 +147,8 @@ function size {
 }
 
 function madd {
-	$modifiedFiles = chezmoi status | Where-Object { $_ -match 'MM' }
-	foreach ($file in $modifiedFiles) {
-		# Remove "MM" and get the absolute path
-		$filePath = $file.Trim() -replace '^MM\s*', ''
-		$absolutePath = Join-Path $env:USERPROFILE $filePath
-        
-		# Output the absolute path
-		Write-Host $absolutePath
-        
-		# Add the file to chezmoi
-		chezmoi add $absolutePath
-	}
+    Write-Host "Re-adding modified files to chezmoi..." -ForegroundColor Cyan
+    chezmoi re-add
 }
 function dpush {
 	Write-Host "Starting automation"
@@ -263,10 +248,10 @@ Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock $scriptblock
 
 #Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
 function kvim {
-	nvim -u "C:\Users\Manisk\AppData\Local\kvim\init.lua"
+	nvim -u "$env:LOCALAPPDATA\kvim\init.lua"
 }
 function kvimc {
-	cd "C:\Users\Manisk\AppData\Local\kvim"
+	cd "$env:LOCALAPPDATA\kvim"
 }
 
 # Custom functions for PSReadLine
@@ -305,9 +290,9 @@ function prompt {
 $adminSuffix = if ($isAdmin) { " [ADMIN]" } else { "" }
 $Host.UI.RawUI.WindowTitle = "PowerShell {0}$adminSuffix" -f $PSVersionTable.PSVersion.ToString()
 
-function local { cd "C:\Users\Manisk\AppData\Local\" }
+function local { cd "$env:LOCALAPPDATA\" }
 function test1 { cd "G:\" }
-function roam { cd "C:\Users\Manisk\AppData\Roaming" }
+function roam { cd "$env:APPDATA" }
 # Quick File Creation
 function nf { param($name) New-Item -ItemType "file" -Path . -Name $name }
 
@@ -324,11 +309,11 @@ function mkcd { param($dir) mkdir $dir -Force; Set-Location $dir }
 Set-Alias -Name ':q' -Value exit
 #function lab {cd "c:\new"}
 Set-PSReadLineOption -EditMode Vi
-function edit { cd "C:\Users\Manisk\AppData\Local\nvim" }
+function edit { cd "$env:LOCALAPPDATA\nvim" }
 Set-Alias -Name gna -Value Get-NetAdapter
-function spshell { cd "C:\Users\Manisk\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup" }
-function cod { cd "C:\Users\Manisk\Coding\" }
-function cods { cd "C:\Users\Manisk\Coding\" }
+function spshell { cd "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup" }
+function cod { if (Test-Path "D:\coding") { cd "D:\coding" } else { cd "$env:USERPROFILE\Coding" } }
+function cods { if (Test-Path "D:\coding") { cd "D:\coding" } else { cd "$env:USERPROFILE\Coding" } }
 # Reload the PowerShell profile
 function reload-profile {
 	& $PROFILE
@@ -486,7 +471,7 @@ function trash($path) {
 		Write-Host "Error: Item '$fullPath' does not exist."
 	}
 }
-function home { cd "C:\Users\Manisk" }
+function home { cd "$env:USERPROFILE" }
 # Navigation Shortcuts
 function docs { Set-Location -Path $HOME\Documents }
 function doc { Set-Location -Path $HOME\Documents }
@@ -498,7 +483,7 @@ function dot { Set-Location -Path $Home\.local\share\chezmoi\ }
 # Quick Access to Editing the Profile
 function ep { nvim $PROFILE }
 function dotf { cd "G:\dotfiles" }
-function eueli { nvim "C:\Users\Manisk\AppData\Roaming\ueli\config.json" }
+function eueli { nvim "$env:APPDATA\ueli\config.json" }
 # Simplified Process Management
 function k9 { Stop-Process -Name $args[0] }
 
@@ -674,7 +659,7 @@ Set-PSReadLineKeyHandler -Key Ctrl+Shift+b `
 }
 
 
-Set-Alias lvim 'C:\Users\Manisk\.local\bin\lvim.ps1'
+Set-Alias lvim "$env:USERPROFILE\.local\bin\lvim.ps1"
 Invoke-Expression (&starship init powershell)
 
 #oh-my-posh init pwsh --config ~/jandedobbeleer.omp.json | Invoke-Expression

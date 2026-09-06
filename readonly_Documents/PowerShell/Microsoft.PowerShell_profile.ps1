@@ -525,7 +525,7 @@ function shutit {
 }
 
 #with logo
-#fastfetch --logo C:\Users\Manisk\.config\fastfetch\logo.txt
+#fastfetch --logo $env:USERPROFILE\.config\fastfetch\logo.txt
 #with default
 #fastfetch
 
@@ -548,31 +548,26 @@ $PSReadLineOptions = @{
         Keyword = '#8367c7'  # Violet (pastel)
         Error = '#FF6347'  # Tomato (keeping it close to red for visibility)
     }
-    PredictionSource = 'History'
-    PredictionViewStyle = 'ListView'
     BellStyle = 'None'
 }
 
 Set-PSReadLineOption @PSReadLineOptions
-if ($Host.Name -notmatch 'ConsoleHost') {
-    # Disable predictive suggestions for non-interactive shells
-    #Set-PSReadLineOption -PredictionSource History -PredictionViewStyle ListView # Optional
-    Set-PSReadLineOption -PredictionSource None
+if (($Host.Name -match 'ConsoleHost') -and (-not [Console]::IsOutputRedirected)) {
+    try {
+        Set-PSReadLineOption -PredictionSource History -PredictionViewStyle ListView
+    } catch {}
+    Set-PSReadLineOption -EditMode Windows
 }
 else {
-    # Enable predictive suggestions for interactive shells
-    Set-PSReadLineOption -PredictionSource History -PredictionViewStyle ListView # Optional
-    #Set-PSReadLineOption -PredictionSource History
-    #Set-PSReadLineOption -PredictionViewStyle ListView
-    #can use -EditMode Emacs or Vi mode for folloing the windows one will use windows like home end keybinds   
-    Set-PSReadLineOption -EditMode Windows
-    
+    try {
+        Set-PSReadLineOption -PredictionSource None
+    } catch {}
 }
 
 # Alias zi to cdi
 #Set-Alias -Name zi -Value cdi
 #Set-Alias -Name z -Value cd
-Set-Alias ng "C:\Users\Manisk\scoop\shims\neovide.exe"
+Set-Alias ng "$env:USERPROFILE\scoop\shims\neovide.exe"
 Set-Alias -Name vim -Value nvim
 Set-Alias -Name nivm -Value nvim
 Set-Alias -Name vi -Value nvim
@@ -765,16 +760,11 @@ function cadd {
 }
 
 function dfor {
-    $deletedFiles = chezmoi status | Where-Object { $_ -match '^DA' }
+    $deletedFiles = chezmoi status | Where-Object { $_ -match '^\s*D' }
     foreach ($file in $deletedFiles) {
-        # Remove "DA" and get the absolute path
-        $filePath = $file.Trim() -replace '^DA\s*', ''
+        $filePath = $file.Trim() -replace '^[A-Z\s]+\s*', ''
         $absolutePath = Join-Path $env:USERPROFILE $filePath
-
-        # Output the absolute path
-        Write-Host $absolutePath
-
-        # Forget the file in chezmoi
+        Write-Host "Forgetting: $absolutePath" -ForegroundColor Yellow
         chezmoi forget $absolutePath
     }
 }
@@ -797,18 +787,8 @@ function size {
 }
 
 function madd {
-    $modifiedFiles = chezmoi status | Where-Object { $_ -match 'MM' }
-    foreach ($file in $modifiedFiles) {
-        # Remove "MM" and get the absolute path
-        $filePath = $file.Trim() -replace '^MM\s*', ''
-        $absolutePath = Join-Path $env:USERPROFILE $filePath
-        
-        # Output the absolute path
-        Write-Host $absolutePath
-        
-        # Add the file to chezmoi
-        chezmoi add $absolutePath
-    }
+    Write-Host "Re-adding modified files to chezmoi..." -ForegroundColor Cyan
+    chezmoi re-add
 }
 function lgall {
     git add .
@@ -977,7 +957,6 @@ function dallm {
 }
 Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
 Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
-Set-PSReadLineOption -PredictionSource History
 Set-PSReadLineOption -MaximumHistoryCount 10000
 # Custom completion for common commands
 $scriptblock = {
@@ -1008,10 +987,10 @@ Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock $scriptblock
 
 #Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
 function kvim {
-    nvim -u "C:\Users\Manisk\AppData\Local\kvim\init.lua"
+    nvim -u "$env:LOCALAPPDATA\kvim\init.lua"
 }
 function kvimc {
-    cd "C:\Users\Manisk\AppData\Local\kvim"
+    cd "$env:LOCALAPPDATA\kvim"
 }
 
 # Custom functions for PSReadLine
@@ -1023,7 +1002,6 @@ Set-PSReadLineOption -AddToHistoryHandler {
 }
 
 # Improved prediction settings
-Set-PSReadLineOption -PredictionSource History
 Set-PSReadLineOption -MaximumHistoryCount 10000
 # Network Utilities
 function Get-PubIP { (Invoke-WebRequest http://ifconfig.me/ip).Content }
@@ -1059,9 +1037,9 @@ function prompt {
 $adminSuffix = if ($isAdmin) { " [ADMIN]" } else { "" }
 $Host.UI.RawUI.WindowTitle = "PowerShell {0}$adminSuffix" -f $PSVersionTable.PSVersion.ToString()
 
-function local { cd "C:\Users\Manisk\AppData\Local\" }
+function local { cd "$env:LOCALAPPDATA\" }
 function test1 { cd "G:\" }
-function roam { cd "C:\Users\Manisk\AppData\Roaming" }
+function roam { cd "$env:APPDATA" }
 # Quick File Creation
 function nf { param($name) New-Item -ItemType "file" -Path . -Name $name }
 
@@ -1079,11 +1057,11 @@ Set-Alias -Name ':q' -Value exit
 #function lab {cd "c:\new"}
 #edited here
 Set-PSReadLineOption -EditMode Vi
-function edit { cd "C:\Users\Manisk\AppData\Local\nvim" }
+function edit { cd "$env:LOCALAPPDATA\nvim" }
 Set-Alias -Name gna -Value Get-NetAdapter
-function spshell { cd "C:\Users\Manisk\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup" }
-function cod { cd "C:\Users\Manisk\Coding\" }
-function cods { cd "C:\Users\Manisk\Coding\" }
+function spshell { cd "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup" }
+function cod { if (Test-Path "D:\coding") { cd "D:\coding" } else { cd "$env:USERPROFILE\Coding" } }
+function cods { if (Test-Path "D:\coding") { cd "D:\coding" } else { cd "$env:USERPROFILE\Coding" } }
 # Reload the PowerShell profile
 function reload-profile {
     & $PROFILE
@@ -1278,7 +1256,7 @@ function trash($path) {
         Write-Host "Error: Item '$fullPath' does not exist."
     }
 }
-function home { cd "C:\Users\Manisk" }
+function home { cd "$env:USERPROFILE" }
 # Navigation Shortcuts
 function docs { Set-Location -Path $HOME\Documents }
 function doc { Set-Location -Path $HOME\Documents }
@@ -1401,7 +1379,7 @@ Set-PSReadLineKeyHandler -Key Ctrl+Shift+b `
 }
 
 
-Set-Alias lvim 'C:\Users\Manisk\.local\bin\lvim.ps1'
+Set-Alias lvim "$env:USERPROFILE\.local\bin\lvim.ps1"
 
 # Prompt Configuration
 # Uncomment only one of the following blocks to enable the desired prompt.
