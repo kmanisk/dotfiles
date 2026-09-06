@@ -137,7 +137,6 @@
       "space f d": "editor::Format",
       "space /": "editor::ToggleComments",
       "space c s": "outline::Toggle",
-      "g f": "editor::OpenExcerpts",
       // Harpoon-Style Buffer Slots (1 to 5)
       "space 1": [
         "pane::ActivateItem",
@@ -223,6 +222,9 @@
       "g t": "editor::GoToTypeDefinition",
       "g T": "editor::GoToTypeDefinitionSplit",
       "g r": "editor::FindAllReferences",
+      "g f": "editor::OpenSelectedFilename",
+      "g x": "editor::OpenUrl",
+      "g z": "editor::OpenUrl",
       // Tasks & Code Runner
       "space r t": "task::Spawn",
       "space r r": "task::Rerun",
@@ -446,7 +448,9 @@
       "g L": "vim::SelectPrevious",
       "g a": "editor::SelectAllMatches",
       "g A": "editor::FindAllReferences",
-      "g f": "project_symbols::Toggle",
+      "g f": "editor::OpenSelectedFilename",
+      "g x": "editor::OpenUrl",
+      "g z": "editor::OpenUrl",
       "space p e": "diagnostics::Deploy"
     }
   },

@@ -18,27 +18,29 @@
     // "buffer_font_size": 30.0, // <- Change this to adjust editor code size
     "buffer_font_weight": 400, // Regular = 400, Medium = 500, SemiBold = 600, Bold = 700
     "buffer_line_height": {
-        "custom": 1.4 // Line height spacing (1.35 - 1.4 sweet spot)
+        "custom": 1.43 // Line height spacing (1.35 - 1.4 sweet spot)
+        // "custom": 1.4 // Line height spacing (1.35 - 1.4 sweet spot)
     },
     "buffer_font_features": {
         "liga": true, // Enable standard ligatures
         "calt": true // Contextual alternates (coding ligatures: ->, =>, !=, ===)
     },
     // UI Font (Sidebars, Menus, Status Bar, Tabs)
-    // "ui_font_family": "Iosevka Nerd Font Mono",
-    "ui_font_family": "IntoneMono Nerd Font",
+    "ui_font_family": "FantasqueSansM Nerd Font Mono",
+    "agent_ui_font_size": 26,
+    // "ui_font_family": "IntoneMono Nerd Font",
     "ui_font_fallbacks": [
         "Segoe UI",
         "system-ui"
     ],
-    "ui_font_size": 19.0,
+    "ui_font_size": 22.0,
     "ui_font_weight": 400,
     // Terminal Font
     "terminal": {
         "shell": {
             "program": "pwsh.exe"
         },
-        "font_family": "Iosevka Nerd Font",
+        "font_family": "VictorMono Nerd Font",
         "font_fallbacks": [
             "monospace"
         ],
@@ -56,7 +58,7 @@
     "theme": {
         "mode": "system",
         "light": "Gruvbox Light",
-        "dark": "Analog Dream: Magnetic Night"
+        "dark": "Webstorm Darker Theme"
     },
     // ─────────────────────────────────────────────────────────────────────────────
     // 3. GENERAL & WINDOW
@@ -430,16 +432,16 @@
         }
     },
     "agent": {
-        "default_profile": "write",
+        "default_profile": "ask",
         "default_model": {
             "effort": "medium",
             "enable_thinking": true,
             "provider": "google",
-            "model": "gemini-3.7-flash"
+            "model": "gemini-3.6-flash"
         },
         "inline_assistant_model": {
             "provider": "google",
-            "model": "gemini-3.5-flash-lite"
+            "model": "gemini-3.5-flash"
         },
         "favorite_models": []
     },
