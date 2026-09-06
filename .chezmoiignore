@@ -12,3 +12,29 @@ AppData/Local/installer/userdata/**
 # ==============================================================================
 scoop/persist/windows-terminal/settings/state.json
 scoop/persist/windows-terminal/settings/elevated-state.json
+
+# ==============================================================================
+# Conditional: Ignore Heavy Gaming Folders on Mini Profile or Work Machines
+# ==============================================================================
+{{- if or (eq .profile "mini") .isWork }}
+AppData/Roaming/DarkSoulsIII/**
+AppData/Roaming/EldenRing/**
+AppData/Roaming/Sekiro/**
+AppData/Roaming/dot_1911/**
+AppData/Roaming/Goldberg*/**
+readonly_Documents/Battlefield 1/**
+readonly_Documents/Eidos/**
+readonly_Documents/Hitman Blood Money Demo/**
+readonly_Documents/Max Payne Savegames/**
+readonly_Documents/My Games/**
+readonly_Documents/Need for Speed*/**
+{{- end }}
+
+# ==============================================================================
+# Conditional: Ignore Windows-Specific Paths on Non-Windows OS (Linux / WSL / macOS)
+# ==============================================================================
+{{- if ne .chezmoi.os "windows" }}
+AppData/**
+readonly_Documents/**
+scoop/**
+{{- end }}

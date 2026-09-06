@@ -1,0 +1,16 @@
+{{- $email := promptStringOnce . "email" "Git email address" "mathewmanisk699@gmail.com" -}}
+{{- $name := promptStringOnce . "name" "Git user name" "Kumar Manisk" -}}
+{{- $profile := promptChoiceOnce . "profile" "Installation profile (mini/full)" (list "mini" "full") "full" -}}
+{{- $isWork := promptBoolOnce . "isWork" "Is this a work machine" false -}}
+
+[data]
+    email = {{ $email | quote }}
+    name = {{ $name | quote }}
+    profile = {{ $profile | quote }}
+    isWork = {{ $isWork }}
+
+[diff]
+    exclude = ["scripts"]
+
+[status]
+    exclude = ["scripts"]

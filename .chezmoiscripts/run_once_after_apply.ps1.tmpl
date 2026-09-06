@@ -693,24 +693,18 @@ Update-SessionPath
 $config = Get-PackageConfig
 if (-not $config) { Write-FAIL "Cannot continue without packages.json."; exit 0 }
 
-# Read profile from file setup.ps1 wrote -- avoids prompting twice in one run
+# Profile loaded declaratively from chezmoi data
+$isFull = {{ if hasKey . "profile" }}{{ eq .profile "full" }}{{ else }}$false{{ end }}
+$profileVal = if ($isFull) { 'full' } else { 'mini' }
+
+# Fallback to temp file if setup.ps1 wrote an override
 $PROFILE_FILE = "$env:TEMP\dotfiles-profile-choice.txt"
-$isFull = $false
 if (Test-Path $PROFILE_FILE) {
     $saved = (Get-Content $PROFILE_FILE -Raw).Trim()
-    $isFull = $saved -eq 'full'
-    Write-SKIP "Using saved profile: $saved"
-} else {
-    $choice = ''
-    while ($choice -notin @('mini','m','full','f')) {
-        $choice = (Read-Host "     Install profile  [mini / full]").Trim().ToLower()
-        if ($choice -notin @('mini','m','full','f')) { Write-Host "     Type 'mini' or 'full'." -ForegroundColor Red }
-    }
-    $isFull = $choice -in @('full','f')
-    $profileVal = if ($isFull) { 'full' } else { 'mini' }
-    Set-Content $PROFILE_FILE -Value $profileVal -Encoding ASCII
-    Write-OK "Profile '$profileVal' saved."
+    if ($saved -eq 'full') { $isFull = $true; $profileVal = 'full' }
+    elseif ($saved -eq 'mini') { $isFull = $false; $profileVal = 'mini' }
 }
+Write-OK "Active install profile: $profileVal (isFull: $isFull)"
 
 $fontPkgs   = Get-Prop $config 'fonts'
 $scoopPkgs  = if ($isFull) { Get-Prop $config.scoop  'full'   } else { Get-Prop $config.scoop  'mini'   }
