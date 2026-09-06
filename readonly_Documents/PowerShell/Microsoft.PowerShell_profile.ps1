@@ -752,11 +752,20 @@ function st { chezmoi status }
 function chm { chezmoi managed }
 
 function cadd {
+    [CmdletBinding()]
     param (
-        [Parameter(Mandatory = $true)]
-        [string]$Path
+        [Parameter(Mandatory = $true, Position = 0)]
+        [string]$Path,
+        [switch]$Encrypt
     )
-    chezmoi add $Path
+    $sourcePath = chezmoi source-path $Path 2>$null
+    $isAlreadyEncrypted = ($LASTEXITCODE -eq 0) -and ($sourcePath -match 'encrypted_|\.age$')
+
+    if ($Encrypt -or $isAlreadyEncrypted) {
+        chezmoi add --encrypt $Path
+    } else {
+        chezmoi add $Path
+    }
 }
 
 function cadd-secret {
