@@ -8,7 +8,7 @@
   },
   {
     "label": "live server",
-    "command": "live-server --port=5500 --wait=150 \"$ZED_WORKTREE_ROOT\"",
+    "command": "cmd /c \"live-server --port=5500 --wait=150 \"%ZED_WORKTREE_ROOT%\"\"",
     "use_new_terminal": false,
     "allow_concurrent_runs": false,
     "reveal": "always"
@@ -19,5 +19,14 @@
     "use_new_terminal": false,
     "allow_concurrent_runs": false,
     "reveal": "always"
+  },
+  {
+    "label": "open roadmap",
+    "command": "zed",
+    "args": ["D:/coding/MasterRoadmap2026.md"],
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "never"
   }
 ]
+

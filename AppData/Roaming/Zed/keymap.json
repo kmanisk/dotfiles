@@ -23,12 +23,7 @@
           "task_name": "run file"
         }
       ],
-      "alt-s": [
-        "task::Spawn",
-        {
-          "task_name": "live server"
-        }
-      ],
+
       "shift-alt-g": "git_panel::ToggleFocus",
       "alt-{": "vim::ResizePaneLeft",
       "alt-}": "vim::ResizePaneRight",
@@ -107,6 +102,7 @@
       "space o k": "zed::OpenKeymap",
       "space o s": "zed::OpenSettingsFile",
       "space o g": "zed::OpenSettings",
+      "space o m": ["task::Spawn", {"task_name": "open roadmap"}],
       "space n f": "workspace::NewFile",
       "space t t": "workspace::NewTerminal",
       "alt-v": "pane::SplitVertical",
@@ -161,7 +157,13 @@
       // Quick Alternate File & Buffer Switcher
       "space space": "pane::AlternateFile",
       "space ,": "tab_switcher::Toggle",
-      "space r c": "pane::ReopenClosedItem"
+      "space r c": "pane::ReopenClosedItem",
+      "space l s": [
+        "task::Spawn",
+        {
+          "task_name": "live server"
+        }
+      ]
     }
   },
 
@@ -473,6 +475,92 @@
       "ctrl-l": "workspace::ActivatePaneRight",
       "ctrl-k": "workspace::ActivatePaneUp",
       "ctrl-j": "workspace::ActivatePaneDown"
+    }
+  },
+
+  // =============================================================================
+  //                   Markdown Preview
+  // =============================================================================
+  {
+    "context": "MarkdownPreview",
+    "bindings": {
+      // Pane navigation
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-l": "workspace::ActivatePaneRight",
+      "ctrl-k": "workspace::ActivatePaneUp",
+      "ctrl-j": "workspace::ActivatePaneDown",
+      // Scroll & Vim motions
+      "j": "markdown::ScrollDown",
+      "k": "markdown::ScrollUp",
+      "ctrl-d": "markdown::ScrollPageDown",
+      "ctrl-u": "markdown::ScrollPageUp",
+      "ctrl-f": "markdown::ScrollPageDown",
+      "ctrl-b": "markdown::ScrollPageUp",
+      "ctrl-e": "markdown::ScrollDown",
+      "ctrl-y": "markdown::ScrollUp",
+      "g g": "markdown::ScrollToTop",
+      "shift-g": "markdown::ScrollToBottom",
+      // Search in preview
+      "/": "buffer_search::Deploy",
+      "n": "search::SelectNextMatch",
+      "shift-n": "search::SelectPreviousMatch",
+      // Docks & panels
+      "ctrl-;": "workspace::ToggleBottomDock",
+      "ctrl-shift-;": "workspace::NewTerminal",
+      "alt-e": "project_panel::ToggleFocus",
+      "alt-l": "workspace::ToggleLeftDock",
+      "alt-d": "multi_workspace::ToggleWorkspaceSidebar",
+      "alt-w": "pane::CloseActiveItem",
+      "alt-j": "pane::ActivateNextItem",
+      "alt-k": "pane::ActivatePreviousItem",
+      "shift-alt-g": "git_panel::ToggleFocus",
+      // Space leader — themes, settings, files
+      "space t h": "theme_selector::Toggle",
+      "space o s": "zed::OpenSettingsFile",
+      "space o g": "zed::OpenSettings",
+      "space o k": "zed::OpenKeymap",
+      "space o r": "projects::OpenRecent",
+      "space o m": ["task::Spawn", {"task_name": "open roadmap"}],
+      "space o f": "workspace::Open",
+      "space o e": "editor::RevealInFileManager",
+      "space f f": "file_finder::Toggle",
+      "space f g": "pane::DeploySearch",
+      "space x": "zed::Extensions",
+      // Space leader — splits & layout
+      "space g v": "pane::SplitVertical",
+      "space g h": "pane::SplitHorizontal",
+      "space z z": "workspace::ToggleCenteredLayout",
+      "space z f": "zed::ToggleFullScreen",
+      "f11": "zed::ToggleFullScreen",
+      "alt-v": "pane::SplitVertical",
+      "alt-h": "pane::SplitHorizontal",
+      // Space leader — panels
+      "space e": "project_panel::ToggleFocus",
+      "space g q": "workspace::ToggleRightDock",
+      "space l g": "git_panel::ToggleFocus",
+      // Space leader — markdown preview toggle (close/reopen)
+      "space m p": "markdown::OpenPreview",
+      "space m v": "markdown::OpenPreviewToTheSide",
+      // Space leader — terminal
+      "space t t": "workspace::NewTerminal",
+      // Space leader — buffer tabs (harpoon-style)
+      "space 1": ["pane::ActivateItem", 0],
+      "space 2": ["pane::ActivateItem", 1],
+      "space 3": ["pane::ActivateItem", 2],
+      "space 4": ["pane::ActivateItem", 3],
+      "space 5": ["pane::ActivateItem", 4],
+      "space space": "pane::AlternateFile",
+      "space ,": "tab_switcher::Toggle",
+      "space q": "pane::CloseActiveItem",
+      // Space leader — tasks
+      "space r t": "task::Spawn",
+      "space r r": "task::Rerun",
+      "space n f": "workspace::NewFile",
+      // Space leader — copy path
+      "space c p": "editor::CopyPath",
+      "space c n": "editor::CopyRelativePath",
+      // AI assist
+      "space i a": "assistant::InlineAssist"
     }
   }
 ]

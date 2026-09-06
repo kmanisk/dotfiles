@@ -56,9 +56,9 @@
     // ─────────────────────────────────────────────────────────────────────────────
     "icon_theme": "JetBrains Icons Dark",
     "theme": {
-        "mode": "system",
-        "light": "Gruvbox Light",
-        "dark": "Webstorm Darker Theme"
+        "mode": "dark",
+        "light": "VSCode Light+",
+        "dark": "Lydia"
     },
     // ─────────────────────────────────────────────────────────────────────────────
     // 3. GENERAL & WINDOW
