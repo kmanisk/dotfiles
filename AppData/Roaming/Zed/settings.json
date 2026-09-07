@@ -100,6 +100,9 @@
     "cursor_blink": false,
     "cursor_shape": "bar",
     "multi_cursor_modifier": "alt",
+    "markdown_preview": {
+        "limit_content_width": false
+    },
     // ─────────────────────────────────────────────────────────────────────────────
     // 5. GUTTER & LINE NUMBERS
     // ─────────────────────────────────────────────────────────────────────────────
