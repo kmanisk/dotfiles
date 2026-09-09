@@ -4,6 +4,22 @@
     {
       "class": "Gnome-terminal",
       "command": "gnome-terminal"
+    },
+    {
+      "class": "Alacritty",
+      "command": "alacritty"
+    },
+    {
+      "class": "Brave-origin",
+      "command": "brave-origin"
+    },
+    {
+      "class": "steam",
+      "command": "steam"
+    },
+    {
+      "class": "zed",
+      "command": "zed"
     }
   ],
   "window_swallow_criteria": {},

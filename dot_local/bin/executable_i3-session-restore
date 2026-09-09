@@ -14,6 +14,7 @@ if [ "$1" = "--all" ]; then
         ws_num=$(basename "$f" | sed -E 's/workspace_([0-9]+)_layout\.json/\1/')
         if [ -n "$ws_num" ]; then
             i3-resurrect restore -w "$ws_num"
+            sleep 0.5
             ((count++))
         fi
     done
