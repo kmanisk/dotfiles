@@ -215,11 +215,8 @@ bindsym Mod1+Shift+7 exec --no-startup-id ~/.local/bin/i3-session-save
 bindsym Mod1+Shift+8 exec --no-startup-id ~/.local/bin/i3-session-restore
 bindsym Mod1+F12 exec --no-startup-id ~/.local/bin/i3-session-menu
 
-# Power / Shutdown Menu (Hyprland / Rofi style):
+# Power / Shutdown Menu:
 bindsym Mod1+Escape exec --no-startup-id ~/.local/bin/powermenu
-bindsym Mod1+F4 exec --no-startup-id ~/.local/bin/powermenu
-bindsym $mod+Shift+e exec --no-startup-id ~/.local/bin/powermenu
-bindsym XF86PowerOff exec --no-startup-id ~/.local/bin/powermenu
 
 
 #
