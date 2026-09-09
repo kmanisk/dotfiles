@@ -28,7 +28,7 @@ alert = #FF0000
 [bar/example]
 monitor = ${env:MONITOR:}
 width = 100%
-height = 22
+height = 28
 radius = 0.0
 fixed-center = true
 top = yes
@@ -56,11 +56,12 @@ padding-right = 0
 module-margin-left = 0
 module-margin-right = 0
 
-font-0 = Hack:pixelsize=9;3
-font-2 = "Wuncon Siji:pixelsize=10;3"
-font-1 = Weather Icons:style=Regular:size=10;2
-font-3 = FontAwesome5Free:style=Solid:pixelsize=10;3
-font-4 = FontAwesome5Brands:style=Solid:pixelsize=10;3
+font-0 = "Iosevka Nerd Font:pixelsize=11;3"
+font-1 = Weather Icons:style=Regular:size=11;2
+font-2 = "Wuncon Siji:pixelsize=11;3"
+font-3 = FontAwesome5Free:style=Solid:pixelsize=11;3
+font-4 = FontAwesome5Brands:style=Solid:pixelsize=11;3
+font-5 = Hack:pixelsize=11;3
 
 
 modules-left = i3 sp2 info-hackspeed sp2
@@ -69,7 +70,7 @@ modules-right = weather sp1 linux-ver sp1 updates sp2 date sp2
 tray-position = right
 tray-padding = 0
 tray-detached = false
-tray-maxsize = 14
+tray-maxsize = 18
 tray-scale = 1.0
 tray-background = ${colors.background-alt}
 tray-foreground = ${colors.foreground-alt}

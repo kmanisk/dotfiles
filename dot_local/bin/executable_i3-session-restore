@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# Restore i3 session layout and programs using i3-resurrect
+export PATH="$HOME/.local/bin:$PATH"
+save_dir="${HOME}/.i3/i3-resurrect"
+
+if [ "$1" = "--all" ]; then
+    if [ ! -d "$save_dir" ]; then
+        command -v notify-send >/dev/null && notify-send -i dialog-warning "i3 Session" "No saved sessions found"
+        exit 1
+    fi
+    count=0
+    for f in "$save_dir"/workspace_*_layout.json; do
+        [ -e "$f" ] || continue
+        ws_num=$(basename "$f" | sed -E 's/workspace_([0-9]+)_layout\.json/\1/')
+        if [ -n "$ws_num" ]; then
+            i3-resurrect restore -w "$ws_num"
+            ((count++))
+        fi
+    done
+    command -v notify-send >/dev/null && notify-send -i view-restore "i3 Session" "Restored $count workspace session(s)"
+else
+    curr_ws=$(i3-msg -t get_workspaces 2>/dev/null | jq -r '.[] | select(.focused==true).num')
+    if [ -n "$curr_ws" ]; then
+        if [ -f "$save_dir/workspace_${curr_ws}_layout.json" ]; then
+            i3-resurrect restore -w "$curr_ws"
+            command -v notify-send >/dev/null && notify-send -i view-restore "i3 Session" "Restored workspace $curr_ws"
+        else
+            command -v notify-send >/dev/null && notify-send -i dialog-warning "i3 Session" "No saved session for workspace $curr_ws"
+        fi
+    fi
+fi

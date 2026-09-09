@@ -63,5 +63,12 @@ scoop/**
 .config/zed/**
 .config/yazi/**
 .config/btop/**
+.config/gtk-3.0/**
+.config/gtk-4.0/**
+.config/fish/**
+.local/bin/**
+.Xresources
+.imwheelrc
+.bashrc
 {{- end }}
 

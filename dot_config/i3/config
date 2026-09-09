@@ -1,5 +1,5 @@
 set $mod Mod4
-font pango:Hack 9
+font pango:Iosevka Nerd Font 11
 floating_modifier $mod
 
 # ==============================================================================
@@ -188,13 +188,22 @@ bindsym $mod+z scratchpad show
 bindsym $mod+Shift+z move scratchpad
 
 # ==============================================================================
-# SESSION & CONFIG RELOAD
+# SESSION & CONFIG RELOAD (with i3-resurrect session manager)
 # ==============================================================================
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 bindsym Mod1+r restart
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
-bindsym Mod1+F4 exec "i3-nagbar -t warning -m 'Exit i3 session?' -b 'Yes, exit' 'i3-msg exit'"
+
+# Quick session save / restore:
+bindsym $mod+Control+s exec --no-startup-id ~/.local/bin/i3-session-save
+bindsym $mod+Control+r exec --no-startup-id ~/.local/bin/i3-session-restore
+bindsym $mod+Control+Shift+s exec --no-startup-id ~/.local/bin/i3-session-save --all
+bindsym $mod+Control+Shift+r exec --no-startup-id ~/.local/bin/i3-session-restore --all
+bindsym $mod+Shift+Escape exec --no-startup-id ~/.local/bin/i3-session-menu
+bindsym $mod+F12 exec --no-startup-id ~/.local/bin/i3-session-menu
+
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Exit i3 session?' -b 'Save & Exit' '~/.local/bin/i3-session-save --all && i3-msg exit' -b 'Exit without saving' 'i3-msg exit'"
+bindsym Mod1+F4 exec "i3-nagbar -t warning -m 'Exit i3 session?' -b 'Save & Exit' '~/.local/bin/i3-session-save --all && i3-msg exit' -b 'Exit without saving' 'i3-msg exit'"
 
 
 #
@@ -284,6 +293,7 @@ exec --no-startup-id dex -a -s /etc/xdg/autostart/:~/.config/autostart/
 exec --no-startup-id blueman-applet
 exec_always --no-startup-id gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 exec_always --no-startup-id gsettings set org.gnome.desktop.interface gtk-theme 'cachyos-nord'
+exec_always --no-startup-id xrdb -merge ~/.Xresources
 
 exec_always mkfifo /tmp/xobpipe && tail -f /tmp/xobpipe | xob -t 2170 & disown
 #exec ~/.i3/launch.sh
