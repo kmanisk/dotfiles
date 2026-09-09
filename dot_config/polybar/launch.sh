@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+STATE_FILE="$HOME/.config/polybar/bar_state"
+
 # Terminate already running bar instances
 killall -q polybar
 
@@ -13,4 +15,10 @@ if type "xrandr" >/dev/null 2>&1; then
   done
 else
   polybar --reload example </dev/null >/dev/null 2>&1 &
+fi
+
+# Check saved state: if previously hidden and not forced show, hide bar
+if [ -f "$STATE_FILE" ] && [ "$(cat "$STATE_FILE" 2>/dev/null)" = "hidden" ] && [ "$1" != "--show" ]; then
+    sleep 0.3
+    polybar-msg cmd hide >/dev/null 2>&1
 fi

@@ -93,7 +93,11 @@ if [[ -n "$IMAGE_URL" ]]; then
     if curl -s -L --max-time 15 "$IMAGE_URL" -o "$TEMP_FILE" && file "$TEMP_FILE" | grep -qiE 'image|bitmap'; then
         cp "$TEMP_FILE" "$CACHE_DIR/${CATEGORY}_$(date +%s).jpg"
         mv "$TEMP_FILE" "$WALLPAPER_FILE"
+        if [[ -d "$HOME/.local/share/chezmoi/dot_config/i3" ]]; then
+            cp -f "$WALLPAPER_FILE" "$HOME/.local/share/chezmoi/dot_config/i3/wallpaper.png" 2>/dev/null || true
+        fi
         feh --bg-fill "$WALLPAPER_FILE"
+        chmod +x "$HOME/.fehbg" 2>/dev/null || true
         command -v notify-send >/dev/null && notify-send -i preferences-desktop-wallpaper "Wallpaper Applied!" "${DISPLAY_NAME}\nSource: ${SOURCE}"
         exit 0
     fi
@@ -106,7 +110,11 @@ fi
 CACHED_IMG=$(find "$CACHE_DIR" -type f \( -name "*.jpg" -o -name "*.png" \) 2>/dev/null | shuf -n 1)
 if [[ -n "$CACHED_IMG" && -f "$CACHED_IMG" ]]; then
     cp "$CACHED_IMG" "$WALLPAPER_FILE"
+    if [[ -d "$HOME/.local/share/chezmoi/dot_config/i3" ]]; then
+        cp -f "$WALLPAPER_FILE" "$HOME/.local/share/chezmoi/dot_config/i3/wallpaper.png" 2>/dev/null || true
+    fi
     feh --bg-fill "$WALLPAPER_FILE"
+    chmod +x "$HOME/.fehbg" 2>/dev/null || true
     command -v notify-send >/dev/null && notify-send -i preferences-desktop-wallpaper "Wallpaper Applied" "Loaded from offline cache (${DISPLAY_NAME})"
     exit 0
 fi

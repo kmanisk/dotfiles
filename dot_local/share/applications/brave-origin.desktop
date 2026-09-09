@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Name=Brave Web Browser
+GenericName=Web Browser
+Comment=Access the Internet
+Exec=/home/manisk/.local/bin/brave-origin %U
+Icon=brave-origin
+Terminal=false
+Type=Application
+Categories=Network;WebBrowser;
+MimeType=text/html;text/xml;application/xhtml_xml;application/x-mimearchive;x-scheme-handler/http;x-scheme-handler/https;
+StartupNotify=true
+StartupWMClass=brave-browser

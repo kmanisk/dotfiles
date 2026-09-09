@@ -16,7 +16,7 @@ if maim -s "$FILE" 2>/dev/null; then
         else
             xclip -selection clipboard -t image/png -i "$FILE"
         fi
-        notify-send -t 2500 -i camera-photo "Screenshot Captured" "Image copied to clipboard! Paste with Ctrl+V"
+        notify-send -t 1500 -i camera-photo "Screenshot Captured"
     fi
     rm -f "$FILE"
 fi

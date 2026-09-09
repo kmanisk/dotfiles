@@ -15,8 +15,8 @@ bindsym Mod1+space exec "pkill rofi || rofi -show drun"
 bindsym Control+space exec "rofi -show combi -modi window,run,drun -combi-modi window,run,drun"
 
 # Browser
-bindsym Mod1+b exec brave-origin
-bindsym $mod+w exec brave-origin
+bindsym Mod1+b exec prime-run brave-origin
+bindsym $mod+w exec prime-run brave-origin
 
 # Text Editor
 bindsym $mod+Shift+t exec $term -e nvim
@@ -45,6 +45,8 @@ bindsym Mod1+Shift+2 exec blueman-manager
 bindsym Mod1+3 exec pavucontrol
 bindsym Mod1+Shift+3 exec pavucontrol
 bindsym Mod1+n exec pamixer -t
+# Audio Output Switcher between Laptop Speakers and Bluetooth (Alt + Shift + p)
+bindsym Mod1+Shift+p exec --no-startup-id /home/manisk/.local/bin/toggle-audio-sink
 # Night Light Toggle (Alt + Shift + n)
 bindsym Mod1+Shift+n exec --no-startup-id /home/manisk/.local/bin/toggle-nightlight
 # Night Light Temperature Slider (Alt + Shift + [ / ' and Alt + Shift + Up / Down)
@@ -309,11 +311,11 @@ bindsym Mod1+0 exec --no-startup-id /home/manisk/.local/bin/toggle-bar
 exec xrandr --output eDP-1 --mode 1920x1200 --rate 165.00
 #exec xrandr --auto --output HDMI-1 --mode 1920x1080 --above HDMI-2
 
-exec feh --bg-fill ~/.config/i3/wallpaper.png
+exec_always --no-startup-id sh -c 'sleep 0.5 && ~/.fehbg'
 
 exec --no-startup-id dunst
 exec --no-startup-id picom
-exec --no-startup-id redshift
+exec --no-startup-id ~/.local/bin/auto-nightlight
 exec --no-startup-id dex -a -s /etc/xdg/autostart/:~/.config/autostart/
 exec --no-startup-id blueman-applet
 exec_always --no-startup-id gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'

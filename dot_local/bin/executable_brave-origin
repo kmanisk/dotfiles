@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Brave Browser GPU Launcher (forces NVIDIA dedicated GPU with Vulkan ANGLE)
+exec /home/manisk/.local/bin/prime-run /usr/sbin/brave-origin "$@"

@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# ==============================================================================
+# Enhanced NVIDIA PRIME Render Offload Wrapper
+# Configures OpenGL, EGL, and Vulkan (including wgpu, Zed, Alacritty, Brave, Steam)
+# to bind to the dedicated NVIDIA GeForce RTX 5050 Laptop GPU
+# ==============================================================================
+
+export __NV_PRIME_RENDER_OFFLOAD=1
+export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
+export __VK_LAYER_NV_optimus=NVIDIA_only
+export VK_DRIVER_FILES=/usr/share/vulkan/icd.d/nvidia_icd.json
+export VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json
+export __GLX_VENDOR_LIBRARY_NAME=nvidia
+export LIBVA_DRIVER_NAME=nvidia
+export NVD_BACKEND=direct
+
+exec "$@"
