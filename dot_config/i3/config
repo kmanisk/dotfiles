@@ -207,13 +207,13 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 bindsym Mod1+r restart
 
-# Quick session save / restore:
-bindsym $mod+Control+s exec --no-startup-id ~/.local/bin/i3-session-save
-bindsym $mod+Control+r exec --no-startup-id ~/.local/bin/i3-session-restore
-bindsym $mod+Control+Shift+s exec --no-startup-id ~/.local/bin/i3-session-save --all
-bindsym $mod+Control+Shift+r exec --no-startup-id ~/.local/bin/i3-session-restore --all
-bindsym $mod+Shift+Escape exec --no-startup-id ~/.local/bin/i3-session-menu
-bindsym $mod+F12 exec --no-startup-id ~/.local/bin/i3-session-menu
+# Quick session save / restore (Simple Alt + Numbers):
+bindsym Mod1+7 exec --no-startup-id ~/.local/bin/i3-session-save --all
+bindsym Mod1+8 exec --no-startup-id ~/.local/bin/i3-session-restore --all
+bindsym Mod1+9 exec --no-startup-id ~/.local/bin/i3-session-menu
+bindsym Mod1+Shift+7 exec --no-startup-id ~/.local/bin/i3-session-save
+bindsym Mod1+Shift+8 exec --no-startup-id ~/.local/bin/i3-session-restore
+bindsym Mod1+F12 exec --no-startup-id ~/.local/bin/i3-session-menu
 
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Exit i3 session?' -b 'Save & Exit' '~/.local/bin/i3-session-save --all && i3-msg exit' -b 'Exit without saving' 'i3-msg exit'"
 bindsym Mod1+F4 exec "i3-nagbar -t warning -m 'Exit i3 session?' -b 'Save & Exit' '~/.local/bin/i3-session-save --all && i3-msg exit' -b 'Exit without saving' 'i3-msg exit'"
@@ -294,11 +294,8 @@ bindsym $mod+Shift+p exec gnome-calculator
 #bindsym $mod+p exec ~/.scripts/dmshot
 
 # Random Wallpaper Switcher (Gaming, Creepy, Creative, Nature)
-bindsym Mod1+8 exec --no-startup-id /home/manisk/.local/bin/random-wallpaper
-bindsym Mod1+Shift+8 exec --no-startup-id /home/manisk/.local/bin/wallpaper-menu
-bindsym Mod1+asterisk exec --no-startup-id /home/manisk/.local/bin/wallpaper-menu
-bindsym $mod+Control+w exec --no-startup-id /home/manisk/.local/bin/random-wallpaper
-bindsym $mod+Control+Shift+w exec --no-startup-id /home/manisk/.local/bin/wallpaper-menu
+bindsym Mod1+Shift+w exec --no-startup-id /home/manisk/.local/bin/random-wallpaper
+bindsym Mod1+Control+w exec --no-startup-id /home/manisk/.local/bin/wallpaper-menu
 bindsym $mod+F9 exec --no-startup-id /home/manisk/.local/bin/wallpaper-menu
 # Toggle Bottom Bar (Polybar)
 bindsym Mod1+0 exec --no-startup-id /home/manisk/.local/bin/toggle-bar
