@@ -203,12 +203,12 @@ bindsym Mod1+F4 exec "i3-nagbar -t warning -m 'Exit i3 session?' -b 'Yes, exit' 
 exec_always --no-startup-id ~/.config/polybar/launch.sh
 
 # class                 border  backgr. text    indicator child_border
-client.focused          #000000 #000000 #ffffff #000000   #000000
-client.focused_inactive #000000 #000000 #ffffff #000000   #000000
-client.unfocused        #000000 #000000 #888888 #000000   #000000
-client.urgent           #000000 #000000 #ffffff #000000   #000000
-client.placeholder      #000000 #000000 #ffffff #000000   #000000
-client.background       #ffffff
+client.focused          #5294e2 #1e1e2e #ffffff #5294e2   #5294e2
+client.focused_inactive #282a36 #1e1e2e #abb2bf #282a36   #282a36
+client.unfocused        #1e1e2e #181825 #6c7086 #1e1e2e   #1e1e2e
+client.urgent           #e06c75 #e06c75 #ffffff #e06c75   #e06c75
+client.placeholder      #181825 #181825 #ffffff #181825   #181825
+client.background       #181825
 
 ########################################################################
 ########################################################################
