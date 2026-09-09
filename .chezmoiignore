@@ -70,5 +70,6 @@ scoop/**
 .Xresources
 .imwheelrc
 .bashrc
+.config/picom/**
 {{- end }}
 
