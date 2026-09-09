@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 export PATH="$HOME/.local/bin:$PATH"
 
-options="🎲 Random Wallpaper\n🎮 Gaming\n💀 Creepy & Dark\n🎨 Creative & Cyberpunk\n🌌 Nature & Space\n📐 Minimalist"
+options="🎲 Random Wallpaper\n🎮 Gaming Wallpaper\n💀 Creepy & Dark Wallpaper\n🌍 Earth & Nature Wallpaper"
 chosen=$(echo -e "$options" | rofi -dmenu -i -p "Wallpaper")
 
 case "$chosen" in
@@ -14,13 +14,7 @@ case "$chosen" in
     *"Creepy"*)
         ~/.local/bin/random-wallpaper creepy
         ;;
-    *"Creative"*)
-        ~/.local/bin/random-wallpaper creative
-        ;;
-    *"Nature"*)
-        ~/.local/bin/random-wallpaper nature
-        ;;
-    *"Minimalist"*)
-        ~/.local/bin/random-wallpaper minimal
+    *"Earth"*)
+        ~/.local/bin/random-wallpaper earth
         ;;
 esac
