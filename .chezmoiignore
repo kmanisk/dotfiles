@@ -53,9 +53,9 @@ scoop/**
 {{- end }}
 
 # ==============================================================================
-# Conditional: Ignore Linux-Specific Paths on Windows OS
+# Conditional: Ignore Linux-Specific Paths on Non-Linux OS (Windows, macOS, etc.)
 # ==============================================================================
-{{- if eq .chezmoi.os "windows" }}
+{{- if ne .chezmoi.os "linux" }}
 .config/i3/**
 .config/polybar/**
 .config/rofi/**

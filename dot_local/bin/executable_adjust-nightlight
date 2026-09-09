@@ -34,11 +34,9 @@ if (( NEW_TEMP >= 6500 )); then
     redshift -x -m randr >/dev/null 2>&1
     echo "off" > "$STATE_FILE"
     echo "100" > /tmp/xobpipe 2>/dev/null || true
-    notify-send -h string:x-canonical-private-synchronous:nightlight -h int:value:100 -t 1500 -i preferences-desktop-display "Night Light" "6500K (Neutral Daylight)"
 else
     redshift -x -m randr >/dev/null 2>&1
     redshift -m randr -O "$NEW_TEMP" >/dev/null 2>&1
     echo "on" > "$STATE_FILE"
     echo "$PERCENT" > /tmp/xobpipe 2>/dev/null || true
-    notify-send -h string:x-canonical-private-synchronous:nightlight -h int:value:"$PERCENT" -t 1500 -i preferences-desktop-display "Night Light Slider" "${NEW_TEMP}K (Warmth: $(( 100 - PERCENT ))%)"
 fi

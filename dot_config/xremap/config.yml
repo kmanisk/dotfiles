@@ -27,8 +27,11 @@ keymap:
       CapsLock-l: Right
       CapsLock-o: C-Left
       CapsLock-p: C-Right
-      CapsLock-LEFTBRACE: PageUp
-      CapsLock-APOSTROPHE: PageDown
+      # Brightness (CapsLock + [ and CapsLock + ')
+      CapsLock-LEFTBRACE:
+        launch: ["/home/manisk/.local/bin/change-brightness", "+5%"]
+      CapsLock-APOSTROPHE:
+        launch: ["/home/manisk/.local/bin/change-brightness", "5%-"]
       # Actions
       CapsLock-n: Enter
       CapsLock-SEMICOLON: [End, Enter]
@@ -55,11 +58,11 @@ keymap:
       CapsLock-0: F10
       CapsLock-MINUS: F11
       CapsLock-EQUAL: F12
-      # Brightness
+      # Fallback Brightness (] and \)
       CapsLock-RIGHTBRACE:
-        launch: ["brightnessctl", "set", "+10%"]
+        launch: ["/home/manisk/.local/bin/change-brightness", "+5%"]
       CapsLock-BACKSLASH:
-        launch: ["brightnessctl", "set", "10%-"]
+        launch: ["/home/manisk/.local/bin/change-brightness", "5%-"]
       # Passthrough
       CapsLock-a: a
       CapsLock-b: b

@@ -47,13 +47,16 @@ bindsym Mod1+Shift+3 exec pavucontrol
 bindsym Mod1+n exec pamixer -t
 # Night Light Toggle (Alt + Shift + n)
 bindsym Mod1+Shift+n exec --no-startup-id /home/manisk/.local/bin/toggle-nightlight
-# Night Light Temperature Slider (Alt + Shift + Up / Down)
+# Night Light Temperature Slider (Alt + Shift + [ / ' and Alt + Shift + Up / Down)
+bindsym Mod1+Shift+bracketleft exec --no-startup-id /home/manisk/.local/bin/adjust-nightlight +250
+bindsym Mod1+braceleft exec --no-startup-id /home/manisk/.local/bin/adjust-nightlight +250
+bindsym Mod1+Shift+apostrophe exec --no-startup-id /home/manisk/.local/bin/adjust-nightlight -250
+bindsym Mod1+quotedbl exec --no-startup-id /home/manisk/.local/bin/adjust-nightlight -250
 bindsym Mod1+Shift+Up exec --no-startup-id /home/manisk/.local/bin/adjust-nightlight +250
 bindsym Mod1+Shift+Down exec --no-startup-id /home/manisk/.local/bin/adjust-nightlight -250
 
-# Screen Lock
+# Screen Lock (Super + l)
 bindsym $mod+l exec "sleep 0.1 && i3lock --blur 5"
-bindsym $mod+m exec "sleep 0.1 && i3lock --blur 5"
 
 # ==============================================================================
 # WINDOW MANAGEMENT
@@ -287,7 +290,7 @@ bindsym $mod+Control+w exec --no-startup-id /home/manisk/.local/bin/random-wallp
 bindsym $mod+Control+Shift+w exec --no-startup-id /home/manisk/.local/bin/wallpaper-menu
 bindsym $mod+F9 exec --no-startup-id /home/manisk/.local/bin/wallpaper-menu
 # Toggle Bottom Bar (Polybar)
-bindsym Mod1+9 exec --no-startup-id /home/manisk/.local/bin/toggle-bar
+bindsym Mod1+0 exec --no-startup-id /home/manisk/.local/bin/toggle-bar
 
 ########################################################################
 ########################################################################
