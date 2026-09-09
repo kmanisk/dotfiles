@@ -328,7 +328,7 @@ exec --no-startup-id sh -c 'sleep 1.2 && ~/.local/bin/i3-session-restore --all'
 exec_always --no-startup-id gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 exec_always --no-startup-id gsettings set org.gnome.desktop.interface gtk-theme 'cachyos-nord'
 exec_always --no-startup-id xrdb -merge ~/.Xresources
-exec_always --no-startup-id asusctl profile set Performance -a && asusctl profile set Quiet -b
+exec_always --no-startup-id asusctl profile set Balanced -a && asusctl profile set Quiet -b
 
 # Toggle Compositor (Picom) for competitive gaming (Alt + Shift + o)
 bindsym Mod1+Shift+o exec --no-startup-id "pkill picom && notify-send -t 1500 'Picom' 'Compositor Disabled (Gaming Mode)' || (picom -b && notify-send -t 1500 'Picom' 'Compositor Enabled')"
