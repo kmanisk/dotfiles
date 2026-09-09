@@ -261,7 +261,8 @@ for_window [class="zenity"] floating enable
 for_window [class="cachyos-welcome"] floating enable
 
 # Gaming & Fullscreen window rules (prevents tiling breakage and input issues)
-for_window [class="^Steam$" title="^Steam$"] floating enable
+for_window [class="(?i)^steam$"] floating enable
+for_window [class="(?i)^steam$" title="^Sign in to Steam$"] floating enable, move position center
 for_window [class="^cs2$"] floating enable, border none, fullscreen enable
 for_window [class="^steam_app_.*"] floating enable, border none
 for_window [class="gamescope"] floating enable, border none, fullscreen enable

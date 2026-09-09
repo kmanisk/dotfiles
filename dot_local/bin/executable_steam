@@ -1,3 +1,13 @@
 #!/usr/bin/env bash
-# Steam GPU Launcher (forces NVIDIA dedicated GPU for Steam & Games)
-exec /home/manisk/.local/bin/prime-run /usr/bin/steam "$@"
+# Steam Launcher
+# Prevent PRIME offload variables from breaking Chromium Embedded Framework (CEF) / steamwebhelper
+unset __NV_PRIME_RENDER_OFFLOAD
+unset __NV_PRIME_RENDER_OFFLOAD_PROVIDER
+unset __VK_LAYER_NV_optimus
+unset VK_DRIVER_FILES
+unset VK_ICD_FILENAMES
+unset __GLX_VENDOR_LIBRARY_NAME
+unset LIBVA_DRIVER_NAME
+unset NVD_BACKEND
+
+exec /usr/bin/steam "$@"
