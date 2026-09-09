@@ -31,7 +31,7 @@ bindsym $mod+e exec $term -e yazi
 bindsym Mod1+m exec spotify
 
 # System Monitor (btop)
-bindsym Control+Shift+Escape exec $term --class btop -e btop
+bindsym Control+Shift+Escape exec $term --class btop -e btop --force-utf
 
 # ==============================================================================
 # SYSTEM UTILITIES
@@ -281,8 +281,9 @@ exec --no-startup-id dunst
 exec --no-startup-id picom
 exec --no-startup-id redshift
 exec --no-startup-id dex -a -s /etc/xdg/autostart/:~/.config/autostart/
-exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id blueman-applet
+exec_always --no-startup-id gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+exec_always --no-startup-id gsettings set org.gnome.desktop.interface gtk-theme 'cachyos-nord'
 
 exec_always mkfifo /tmp/xobpipe && tail -f /tmp/xobpipe | xob -t 2170 & disown
 #exec ~/.i3/launch.sh
