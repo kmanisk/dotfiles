@@ -1,10 +1,19 @@
 [user]
 	email = {{ .email }}
 	name = {{ .name }}
+{{- if eq .chezmoi.os "windows" }}
 [credential "helperselector"]
 	selected = manager
 [credential]
 	helper = manager
+{{- else }}
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+{{- end }}
 [init]
 	defaultBranch = main
 [filter "lfs"]

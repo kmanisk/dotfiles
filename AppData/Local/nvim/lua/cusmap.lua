@@ -64,9 +64,9 @@ map(
 	{ noremap = true, silent = true, desc = "Find files with Telescope" }
 )
 
-local builtin = require("telescope.builtin")
-
-map("n", "<leader>ff", builtin.find_files, { desc = "[F]ind [F]iles" })
+map("n", "<leader>ff", function()
+	require("telescope.builtin").find_files()
+end, { desc = "[F]ind [F]iles" })
 
 map("n", "<leader>ss", function()
 	require("telescope.builtin").live_grep({

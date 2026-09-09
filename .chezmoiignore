@@ -15,6 +15,7 @@ Documents/new 1.txt
 # ==============================================================================
 # Transient / State Files that cause constant git noise
 # ==============================================================================
+README.md
 scoop/persist/windows-terminal/settings/state.json
 scoop/persist/windows-terminal/settings/elevated-state.json
 
@@ -50,6 +51,7 @@ scoop/**
 .config/es/**
 .config/scoop/**
 .wslconfig
+.chezmoiscripts/**
 {{- end }}
 
 # ==============================================================================
@@ -66,10 +68,23 @@ scoop/**
 .config/gtk-3.0/**
 .config/gtk-4.0/**
 .config/fish/**
+.config/xremap/**
+.config/i3-resurrect/**
+.config/fontconfig/**
+.config/alacritty/**
+.config/dunst/**
+.config/cava/**
+.config/systemd/**
+.config/pipewire/**
+.config/brave*.conf
 .local/bin/**
+.local/share/applications/**
 .Xresources
 .imwheelrc
 .bashrc
+.bash_profile
+.profile
+.xprofile
 .config/picom/**
 {{- end }}
 

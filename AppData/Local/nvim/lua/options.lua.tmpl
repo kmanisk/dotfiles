@@ -15,6 +15,7 @@ o.relativenumber = true
 -- o.swapfile = false
 -- vim.opt.showtabline = 0
 
+{{- if eq .chezmoi.os "windows" }}
 -- Set shell to pwsh or fallback to powershell
 if fn.executable("pwsh") == 1 then
     o.shell = "pwsh"
@@ -30,6 +31,12 @@ o.shellredir = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode"
 o.shellpipe = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode"
 o.shellquote = ""
 o.shellxquote = ""
+{{- else }}
+-- Use default system shell (bash) on Linux
+if fn.executable("bash") == 1 then
+    o.shell = "bash"
+end
+{{- end }}
 -- Enable smart case for search (case-insensitive unless you use uppercase letters)
 o.smartcase = true
 o.ignorecase = true

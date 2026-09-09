@@ -39,9 +39,9 @@ else
         },
     })
 
-    -- Load theme
-    dofile(vim.g.base46_cache .. "defaults")
-    dofile(vim.g.base46_cache .. "statusline")
+    -- Load theme (protected calls for initial bootstrap)
+    pcall(dofile, vim.g.base46_cache .. "defaults")
+    pcall(dofile, vim.g.base46_cache .. "statusline")
     -- Ordinary Neovim setup
     require("options")
     --require("test")
@@ -63,9 +63,11 @@ else
 
     -- Automatically require all Lua files in pluginconfig directory
     local plugin_config_dir = vim.fn.stdpath("config") .. "/lua/plugconfig"
-    for _, file in ipairs(vim.fn.readdir(plugin_config_dir)) do
-        if file:match(".+%.lua$") then
-            require("plugconfig." .. file:match("^(.*)%.lua$"))
+    if vim.fn.isdirectory(plugin_config_dir) == 1 then
+        for _, file in ipairs(vim.fn.readdir(plugin_config_dir)) do
+            if file:match(".+%.lua$") then
+                require("plugconfig." .. file:match("^(.*)%.lua$"))
+            end
         end
     end
 
