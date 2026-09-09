@@ -15,8 +15,8 @@ bindsym Mod1+space exec "pkill rofi || rofi -show drun"
 bindsym Control+space exec "rofi -show combi -modi window,run,drun -combi-modi window,run,drun"
 
 # Browser
-bindsym Mod1+b exec firefox
-bindsym $mod+w exec firefox
+bindsym Mod1+b exec brave-origin
+bindsym $mod+w exec brave-origin
 
 # Text Editor
 bindsym $mod+Shift+t exec $term -e nvim
@@ -264,6 +264,11 @@ bindsym XF86AudioMute exec "amixer sset Master toggle | sed -En '/\[on\]/ s/.*\[
 
 bindsym $mod+Shift+p exec gnome-calculator
 #bindsym $mod+p exec ~/.scripts/dmshot
+
+# Random Wallpaper Switcher (Gaming, Creepy, Creative, Nature)
+bindsym $mod+Control+w exec --no-startup-id ~/.local/bin/random-wallpaper
+bindsym $mod+Control+Shift+w exec --no-startup-id ~/.local/bin/wallpaper-menu
+bindsym $mod+F9 exec --no-startup-id ~/.local/bin/wallpaper-menu
 
 
 
