@@ -7,26 +7,27 @@
     "bindings": {
       "ctrl-;": "workspace::ToggleBottomDock",
       "ctrl-shift-;": "workspace::NewTerminal",
-      "alt-e": "project_panel::ToggleFocus",
-      "alt-l": "workspace::ToggleLeftDock",
-      "alt-d": "multi_workspace::ToggleWorkspaceSidebar",
-      "alt-p": "command_palette::Toggle",
-      "alt-f": "file_finder::Toggle",
-      "alt-o": "workspace::Open",
-      "alt-shift-x": "zed::Extensions",
-      "alt-w": "pane::CloseActiveItem",
+      "ctrl-b": "project_panel::ToggleFocus",
+      "ctrl-shift-e": "project_panel::ToggleFocus",
+      "ctrl-shift-b": "workspace::ToggleLeftDock",
+      "ctrl-shift-d": "multi_workspace::ToggleWorkspaceSidebar",
+      "ctrl-shift-p": "command_palette::Toggle",
+      "ctrl-p": "file_finder::Toggle",
+      "ctrl-o": "workspace::Open",
+      "ctrl-shift-x": "zed::Extensions",
+      "ctrl-w": "pane::CloseActiveItem",
       "ctrl-k ctrl-s": "zed::OpenKeymap",
       "ctrl-,": "zed::OpenSettings",
-      "alt-r": [
+      "ctrl-f5": [
         "task::Spawn",
         {
           "task_name": "run file"
         }
       ],
 
-      "shift-alt-g": "git_panel::ToggleFocus",
-      "alt-{": "vim::ResizePaneLeft",
-      "alt-}": "vim::ResizePaneRight",
+      "ctrl-shift-g": "git_panel::ToggleFocus",
+      "ctrl-\\": "pane::SplitVertical",
+      "ctrl-shift-\\": "pane::SplitHorizontal",
       "ctrl-alt-h": [
         "workspace::MoveItemToPaneInDirection",
         { "direction": "left" }
@@ -53,9 +54,11 @@
     "context": "Pane || Workspace || Terminal || ProjectSearchBar || BufferSearchBar || ProjectSearch",
     "bindings": {
       "ctrl-;": "workspace::ToggleBottomDock",
-      "alt-w": "pane::CloseActiveItem",
-      "alt-j": "pane::ActivateNextItem",
-      "alt-k": "pane::ActivatePreviousItem"
+      "ctrl-w": "pane::CloseActiveItem",
+      "ctrl-tab": "pane::ActivateNextItem",
+      "ctrl-shift-tab": "pane::ActivatePreviousItem",
+      "ctrl-pagedown": "pane::ActivateNextItem",
+      "ctrl-pageup": "pane::ActivatePreviousItem"
     }
   },
 
@@ -66,17 +69,14 @@
     "context": "Editor",
     "bindings": {
       "ctrl-;": "workspace::ToggleBottomDock",
-      "alt-shift-y": "zed::DecreaseBufferFontSize",
-      "alt-shift-u": "zed::IncreaseBufferFontSize",
-      "alt-y": "editor::Copy",
-      "alt-u": "editor::Paste",
+      "ctrl--": "zed::DecreaseBufferFontSize",
+      "ctrl-=": "zed::IncreaseBufferFontSize",
       "ctrl-alt-f": "editor::Fold",
       "ctrl-alt-u": "editor::UnfoldLines",
       "ctrl-/": "editor::ToggleComments",
-      "alt-l": "workspace::ToggleLeftDock",
-      "alt-d": "multi_workspace::ToggleWorkspaceSidebar",
+      "ctrl-shift-b": "workspace::ToggleLeftDock",
+      "ctrl-shift-d": "multi_workspace::ToggleWorkspaceSidebar",
       "ctrl-enter": "assistant::InlineAssist",
-      "alt-i": "editor::ShowCompletions",
       "ctrl-space": "editor::ShowCompletions"
     }
   },
@@ -90,11 +90,8 @@
       "ctrl-;": "workspace::ToggleBottomDock",
       "space t h": "theme_selector::Toggle",
       "space i a": "assistant::InlineAssist",
-      "alt-l": "workspace::ToggleLeftDock",
-      "alt-d": "multi_workspace::ToggleWorkspaceSidebar",
       "space r t": "task::Spawn",
       "space r r": "task::Rerun",
-      "alt-e": "project_panel::ToggleFocus",
       "space e": "project_panel::ToggleFocus",
       "space g q": "workspace::ToggleRightDock",
       "space o r": "projects::OpenRecent",
@@ -105,8 +102,6 @@
       "space o m": ["task::Spawn", {"task_name": "open roadmap"}],
       "space n f": "workspace::NewFile",
       "space t t": "workspace::NewTerminal",
-      "alt-v": "pane::SplitVertical",
-      "alt-h": "pane::SplitHorizontal",
       "space g v": "pane::SplitVertical",
       "space g h": "pane::SplitHorizontal",
       "space z z": "workspace::ToggleCenteredLayout",
@@ -209,8 +204,6 @@
       "shift-l": "editor::Hover",
       "shift-j": "pane::ActivateNextItem",
       "shift-k": "pane::ActivatePreviousItem",
-      "alt-j": "pane::ActivateNextItem",
-      "alt-k": "pane::ActivatePreviousItem",
       "ctrl-h": "workspace::ActivatePaneLeft",
       "ctrl-l": "workspace::ActivatePaneRight",
       "ctrl-k": "workspace::ActivatePaneUp",
@@ -335,10 +328,9 @@
     "bindings": {
       "ctrl-;": "workspace::ToggleBottomDock",
       "j k": "vim::NormalBefore",
-      "alt-i": "editor::ShowCompletions",
       "ctrl-space": "editor::ShowCompletions",
-      "alt-l": "workspace::ToggleLeftDock",
-      "alt-d": "multi_workspace::ToggleWorkspaceSidebar",
+      "ctrl-shift-b": "workspace::ToggleLeftDock",
+      "ctrl-shift-d": "multi_workspace::ToggleWorkspaceSidebar",
       "ctrl-p": "editor::Paste"
     }
   },
@@ -368,8 +360,8 @@
       "ctrl-l": "workspace::ActivatePaneRight",
       "ctrl-k": "workspace::ActivatePaneUp",
       "ctrl-j": "workspace::ActivatePaneDown",
-      "alt-j": "pane::ActivateNextItem",
-      "alt-k": "pane::ActivatePreviousItem"
+      "ctrl-pagedown": "pane::ActivateNextItem",
+      "ctrl-pageup": "pane::ActivatePreviousItem"
     }
   },
 
@@ -407,7 +399,7 @@
       "escape": "workspace::ToggleRightDock",
       "q": "workspace::ToggleRightDock",
       "space e": "workspace::ToggleRightDock",
-      "alt-e": "workspace::ToggleRightDock",
+      "ctrl-b": "workspace::ToggleRightDock",
       "ctrl-h": "workspace::ActivatePaneLeft",
       "ctrl-l": "workspace::ActivatePaneRight",
       "ctrl-k": "workspace::ActivatePaneUp",
@@ -464,13 +456,13 @@
     "context": "AgentPanel || AssistantPanel",
     "bindings": {
       "ctrl-;": "workspace::ToggleBottomDock",
-      "alt-shift-t": "agent::ToggleSearch",
+      "ctrl-shift-t": "agent::ToggleSearch",
       "escape": "agent::DismissThreadSearch",
-      "alt-l": "workspace::ToggleLeftDock",
-      "alt-d": "multi_workspace::ToggleWorkspaceSidebar",
-      "alt-w": "pane::CloseActiveItem",
-      "alt-j": "pane::ActivateNextItem",
-      "alt-k": "pane::ActivatePreviousItem",
+      "ctrl-shift-b": "workspace::ToggleLeftDock",
+      "ctrl-shift-d": "multi_workspace::ToggleWorkspaceSidebar",
+      "ctrl-w": "pane::CloseActiveItem",
+      "ctrl-tab": "pane::ActivateNextItem",
+      "ctrl-shift-tab": "pane::ActivatePreviousItem",
       "ctrl-h": "workspace::ActivatePaneLeft",
       "ctrl-l": "workspace::ActivatePaneRight",
       "ctrl-k": "workspace::ActivatePaneUp",
@@ -507,13 +499,13 @@
       // Docks & panels
       "ctrl-;": "workspace::ToggleBottomDock",
       "ctrl-shift-;": "workspace::NewTerminal",
-      "alt-e": "project_panel::ToggleFocus",
-      "alt-l": "workspace::ToggleLeftDock",
-      "alt-d": "multi_workspace::ToggleWorkspaceSidebar",
-      "alt-w": "pane::CloseActiveItem",
-      "alt-j": "pane::ActivateNextItem",
-      "alt-k": "pane::ActivatePreviousItem",
-      "shift-alt-g": "git_panel::ToggleFocus",
+      "ctrl-b": "project_panel::ToggleFocus",
+      "ctrl-shift-b": "workspace::ToggleLeftDock",
+      "ctrl-shift-d": "multi_workspace::ToggleWorkspaceSidebar",
+      "ctrl-w": "pane::CloseActiveItem",
+      "ctrl-tab": "pane::ActivateNextItem",
+      "ctrl-shift-tab": "pane::ActivatePreviousItem",
+      "ctrl-shift-g": "git_panel::ToggleFocus",
       // Space leader — themes, settings, files
       "space t h": "theme_selector::Toggle",
       "space o s": "zed::OpenSettingsFile",
@@ -532,8 +524,6 @@
       "space z z": "workspace::ToggleCenteredLayout",
       "space z f": "zed::ToggleFullScreen",
       "f11": "zed::ToggleFullScreen",
-      "alt-v": "pane::SplitVertical",
-      "alt-h": "pane::SplitHorizontal",
       // Space leader — panels
       "space e": "project_panel::ToggleFocus",
       "space g q": "workspace::ToggleRightDock",

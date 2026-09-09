@@ -45,6 +45,8 @@ bindsym Mod1+Shift+2 exec blueman-manager
 bindsym Mod1+3 exec pavucontrol
 bindsym Mod1+Shift+3 exec pavucontrol
 bindsym Mod1+n exec pamixer -t
+# Night Light Toggle (Alt + Shift + n)
+bindsym Mod1+Shift+n exec --no-startup-id /home/manisk/.local/bin/toggle-nightlight
 
 # Screen Lock
 bindsym $mod+l exec "sleep 0.1 && i3lock --blur 5"

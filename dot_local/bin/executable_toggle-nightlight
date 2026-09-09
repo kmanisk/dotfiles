@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# ==============================================================================
+# Night Light Toggle for i3wm (using Redshift)
+# ==============================================================================
+export DISPLAY="${DISPLAY:-:0}"
+export PATH="$HOME/.local/bin:$PATH"
+
+STATE_FILE="/tmp/nightlight_state"
+WARM_TEMP=4200
+
+if [[ -f "$STATE_FILE" ]] && [[ "$(cat "$STATE_FILE")" == "on" ]]; then
+    redshift -x -m randr >/dev/null 2>&1
+    echo "off" > "$STATE_FILE"
+    notify-send -t 2000 -i preferences-desktop-display "Night Light" "Disabled (6500K Daytime)"
+else
+    redshift -x -m randr >/dev/null 2>&1
+    redshift -m randr -O "$WARM_TEMP" >/dev/null 2>&1
+    echo "on" > "$STATE_FILE"
+    notify-send -t 2000 -i preferences-desktop-display "Night Light" "Enabled (Warm ${WARM_TEMP}K)"
+fi
