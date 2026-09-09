@@ -275,8 +275,8 @@ bindsym Mod1+asterisk exec --no-startup-id /home/manisk/.local/bin/wallpaper-men
 bindsym $mod+Control+w exec --no-startup-id /home/manisk/.local/bin/random-wallpaper
 bindsym $mod+Control+Shift+w exec --no-startup-id /home/manisk/.local/bin/wallpaper-menu
 bindsym $mod+F9 exec --no-startup-id /home/manisk/.local/bin/wallpaper-menu
-
-
+# Toggle Bottom Bar (Polybar)
+bindsym Mod1+9 exec --no-startup-id /home/manisk/.local/bin/toggle-bar
 
 ########################################################################
 ########################################################################

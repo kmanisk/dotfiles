@@ -27,6 +27,7 @@ alert = #e06c75
 separator = #444444
 
 [bar/example]
+enable-ipc = true
 monitor = ${env:MONITOR:}
 width = 100%
 height = 26

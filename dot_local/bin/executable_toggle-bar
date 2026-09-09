@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# ==============================================================================
+# Toggle Bottom Bar (Polybar)
+# ==============================================================================
+export DISPLAY="${DISPLAY:-:0}"
+export PATH="$HOME/.local/bin:$PATH"
+
+if pgrep -x polybar >/dev/null; then
+    polybar-msg cmd toggle 2>/dev/null || "$HOME/.config/polybar/launch.sh"
+else
+    "$HOME/.config/polybar/launch.sh"
+fi
