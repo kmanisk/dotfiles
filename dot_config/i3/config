@@ -260,9 +260,29 @@ for_window [class="imv"] floating enable
 for_window [class="zenity"] floating enable
 for_window [class="cachyos-welcome"] floating enable
 
-# Gaming & Fullscreen window rules (prevents tiling breakage and input issues)
-for_window [class="(?i)^steam$"] floating enable
+# ==============================================================================
+# Steam & Gaming Rules (Dedicated Workspace + Floating Popups)
+# Prevents Steam from ever covering running windows or stealing focus on launch
+# ==============================================================================
+# Send all Steam windows to dedicated Gaming Workspace (Workspace 5: Alt + g)
+assign [class="(?i)^steam$"] workspace number $ws5
+for_window [class="(?i)^steam$"] move to workspace number $ws5
+no_focus [class="(?i)^steam$"]
+
+# Floating configuration:
+# 1. Main Steam library window opens floating and centered at comfortable size
+for_window [class="(?i)^steam$" title="^Steam$"] floating enable, resize set 1300 850, move position center
+# 2. All Steam dialogs, friends list, chat, news, updater, and settings float
+for_window [class="(?i)^steam$" title="^Friends List$"] floating enable, resize set 320 700
+for_window [class="(?i)^steam$" title=".* - Chat$"] floating enable
+for_window [class="(?i)^steam$" title="^Settings$"] floating enable
+for_window [class="(?i)^steam$" title="^Steam - News.*"] floating enable
+for_window [class="(?i)^steam$" title="^Screenshot Uploader$"] floating enable
+for_window [class="(?i)^steam$" title="^Steam Guard.*"] floating enable, move position center
 for_window [class="(?i)^steam$" title="^Sign in to Steam$"] floating enable, move position center
+for_window [class="(?i)^steam$" window_role="pop-up"] floating enable
+
+# Game window rules (prevent tiling breakage and input glitches)
 for_window [class="^cs2$"] floating enable, border none, fullscreen enable
 for_window [class="^steam_app_.*"] floating enable, border none
 for_window [class="gamescope"] floating enable, border none, fullscreen enable
