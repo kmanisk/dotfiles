@@ -1,0 +1,43 @@
+[
+  {
+    "label": "run file",
+    {{- if eq .chezmoi.os "windows" }}
+    "command": "Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force; & \"$env:APPDATA\\Zed\\run-file.ps1\" -File \"$ZED_FILE\"",
+    {{- else }}
+    "command": "bash -c '\"$ZED_FILE\"'",
+    {{- end }}
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always"
+  },
+  {
+    "label": "live server",
+    {{- if eq .chezmoi.os "windows" }}
+    "command": "cmd /c \"live-server --port=5500 --wait=150 \"%ZED_WORKTREE_ROOT%\"\"",
+    {{- else }}
+    "command": "live-server --port=5500 --wait=150 \"$ZED_WORKTREE_ROOT\"",
+    {{- end }}
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always"
+  },
+  {
+    "label": "npm dev",
+    "command": "npm run dev",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always"
+  },
+  {
+    "label": "open roadmap",
+    "command": "zed",
+    {{- if eq .chezmoi.os "windows" }}
+    "args": ["D:/coding/MasterRoadmap2026.md"],
+    {{- else }}
+    "args": ["~/coding/MasterRoadmap2026.md"],
+    {{- end }}
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "never"
+  }
+]

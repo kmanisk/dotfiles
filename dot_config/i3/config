@@ -1,0 +1,288 @@
+set $mod Mod4
+font pango:Hack 9
+floating_modifier $mod
+
+# ==============================================================================
+# TERMINAL & APPLICATION LAUNCHERS
+# ==============================================================================
+set $term alacritty
+bindsym $mod+Return exec $term
+bindsym Mod1+Return exec $term
+
+# App Launcher (Rofi)
+bindsym Mod1+p exec "pkill rofi || rofi -show drun"
+bindsym Mod1+space exec "pkill rofi || rofi -show drun"
+bindsym Control+space exec "rofi -show combi -modi window,run,drun -combi-modi window,run,drun"
+
+# Browser
+bindsym Mod1+b exec firefox
+bindsym $mod+w exec firefox
+
+# Text Editor
+bindsym $mod+Shift+t exec $term -e nvim
+bindsym Mod1+Shift+t exec $term -e nvim
+bindsym $mod+r exec $term -e nvim
+
+# File Manager
+bindsym Mod1+e exec $term -e yazi
+bindsym $mod+e exec $term -e yazi
+
+# Spotify
+bindsym Mod1+m exec spotify
+
+# System Monitor (btop)
+bindsym Control+Shift+Escape exec $term --class btop -e btop
+
+# ==============================================================================
+# SYSTEM UTILITIES
+# ==============================================================================
+bindsym Mod1+1 exec $term --class nmtui -e nmtui
+bindsym Mod1+2 exec blueman-manager
+bindsym Mod1+Shift+2 exec blueman-manager
+bindsym Mod1+3 exec pavucontrol
+bindsym Mod1+Shift+3 exec pavucontrol
+bindsym Mod1+n exec pamixer -t
+
+# Screen Lock
+bindsym $mod+l exec "sleep 0.1 && i3lock --blur 5"
+bindsym $mod+m exec "sleep 0.1 && i3lock --blur 5"
+
+# ==============================================================================
+# WINDOW MANAGEMENT
+# ==============================================================================
+# Kill / Close window
+bindsym Mod1+w kill
+bindsym $mod+c kill
+bindsym $mod+q kill
+
+# Fullscreen & Floating
+bindsym $mod+a fullscreen toggle
+bindsym $mod+f fullscreen toggle
+bindsym $mod+d floating toggle
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+bindsym $mod+Shift+a focus parent
+
+# Layout & Split
+bindsym $mod+b split h
+bindsym $mod+v split v
+bindsym $mod+t split toggle
+bindsym $mod+s layout stacking
+bindsym $mod+Shift+w layout tabbed
+
+# ==============================================================================
+# FOCUS MOVEMENT (hjkl & Arrows)
+# ==============================================================================
+# ALT + hjkl for focus (from Hyprland config)
+bindsym Mod1+h focus left
+bindsym Mod1+j focus down
+bindsym Mod1+k focus up
+bindsym Mod1+l focus right
+
+
+
+# ==============================================================================
+# WINDOW MOVEMENT (SUPER + Shift + hjkl & Arrows)
+# ==============================================================================
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# ==============================================================================
+# WINDOW RESIZING (ALT + Shift + hjkl & Mod + Arrows)
+# ==============================================================================
+# Direct instant resize (like in Hyprland)
+bindsym Mod1+Shift+h resize shrink width 50 px or 5 ppt
+bindsym Mod1+Shift+l resize grow width 50 px or 5 ppt
+bindsym Mod1+Shift+k resize shrink height 50 px or 5 ppt
+bindsym Mod1+Shift+j resize grow height 50 px or 5 ppt
+
+bindsym $mod+Right resize grow width 30 px or 3 ppt
+bindsym $mod+Left resize shrink width 30 px or 3 ppt
+bindsym $mod+Up resize shrink height 30 px or 3 ppt
+bindsym $mod+Down resize grow height 30 px or 3 ppt
+
+# Modal resize
+mode "resize" {
+        bindsym Left resize shrink width 5 px or 5 ppt
+        bindsym Down resize grow height 5 px or 5 ppt
+        bindsym Up resize shrink height 5 px or 5 ppt
+        bindsym Right resize grow width 5 px or 5 ppt
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+bindsym $mod+Shift+m mode "resize"
+
+# ==============================================================================
+# WORKSPACE MANAGEMENT
+# ==============================================================================
+# Define names for default workspaces
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+# Home-row Workspace Switching (ALT + a/s/d/f/g)
+bindsym Mod1+a workspace number $ws1
+bindsym Mod1+s workspace number $ws2
+bindsym Mod1+d workspace number $ws3
+bindsym Mod1+f workspace number $ws4
+bindsym Mod1+g workspace number $ws5
+
+# Home-row Move Window (ALT + Shift + a/s/d/f/g)
+bindsym Mod1+Shift+a move container to workspace number $ws1
+bindsym Mod1+Shift+s move container to workspace number $ws2
+bindsym Mod1+Shift+d move container to workspace number $ws3
+bindsym Mod1+Shift+f move container to workspace number $ws4
+bindsym Mod1+Shift+g move container to workspace number $ws5
+
+# Standard Number Workspace Switching ($mod + 1..0)
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
+
+# Standard Number Move Window ($mod + Shift + 1..0)
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10
+
+# Sequential Workspace Navigation (Bracket keys)
+bindsym $mod+bracketleft workspace prev
+bindsym $mod+bracketright workspace next
+bindsym $mod+Shift+bracketleft move container to workspace prev; workspace prev
+bindsym $mod+Shift+bracketright move container to workspace next; workspace next
+
+# Back and Forth with last workspace
+bindsym $mod+Tab workspace back_and_forth
+
+# Scratchpad (ALT+z or Mod+z)
+bindsym Mod1+z scratchpad show
+bindsym Mod1+Shift+z move scratchpad
+bindsym $mod+z scratchpad show
+bindsym $mod+Shift+z move scratchpad
+
+# ==============================================================================
+# SESSION & CONFIG RELOAD
+# ==============================================================================
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r restart
+bindsym Mod1+r restart
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+bindsym Mod1+F4 exec "i3-nagbar -t warning -m 'Exit i3 session?' -b 'Yes, exit' 'i3-msg exit'"
+
+
+#
+# Status Bar:
+#
+exec_always --no-startup-id ~/.config/polybar/launch.sh
+
+# class                 border  backgr. text    indicator child_border
+client.focused          #000000 #000000 #ffffff #000000   #000000
+client.focused_inactive #000000 #000000 #ffffff #000000   #000000
+client.unfocused        #000000 #000000 #888888 #000000   #000000
+client.urgent           #000000 #000000 #ffffff #000000   #000000
+client.placeholder      #000000 #000000 #ffffff #000000   #000000
+client.background       #ffffff
+
+########################################################################
+########################################################################
+####
+####                   Workplaces layout
+####
+########################################################################
+########################################################################
+
+exec --no-startup-id "i3-msg 'workspace 1; exec alacritty'"
+
+########################################################################
+########################################################################
+####
+####                   Floated windows
+####
+########################################################################
+########################################################################
+
+for_window [title="Calculator"] floating enable
+for_window [title="Timer"] floating enable
+for_window [class="^.*"] border pixel 1
+for_window [class="librewolf"] border none
+for_window [class="firefox"] border none
+for_window [class="mpv"] floating enable
+for_window [class="imv"] floating enable
+for_window [class="zenity"] floating enable
+for_window [class="cachyos-welcome"] floating enable
+
+
+########################################################################
+########################################################################
+####
+####                   HOTKEYS
+####
+########################################################################
+########################################################################
+
+
+bindsym XF86AudioRaiseVolume exec "pamixer -ui 3 && pamixer --get-volume > /tmp/xobpipe"
+bindsym XF86AudioLowerVolume exec "pamixer -ud 3 && pamixer --get-volume > /tmp/xobpipe"
+# mute sound
+bindsym XF86AudioMute exec "amixer sset Master toggle | sed -En '/\[on\]/ s/.*\[([0-9]+)%\].*/\1/ p; /\[off\]/ s/.*/0/p' | head -1 > /tmp/xobpipe"
+
+bindsym $mod+Shift+p exec gnome-calculator
+#bindsym $mod+p exec ~/.scripts/dmshot
+
+
+
+########################################################################
+########################################################################
+####
+####                   AUTOLOAD
+####
+########################################################################
+########################################################################
+
+## Here is a language switcher by pressing capslock button,
+## and the capslock functionality available by using shift+capslock.
+## Uncomment to enable 'us' to/from 'ru' switch. change to language(s) you prefer more.
+
+#exec_always setxkbmap -option grp:caps_toggle "us,ru" -option "grp:caps_toggle,grp_led:caps"
+
+exec xrandr --output eDP-1 --mode 1920x1200 --rate 165.00
+#exec xrandr --auto --output HDMI-1 --mode 1920x1080 --above HDMI-2
+
+exec feh --bg-fill ~/.config/i3/wallpaper.png
+
+exec --no-startup-id dunst
+exec --no-startup-id picom
+exec --no-startup-id redshift
+exec --no-startup-id dex -a -s /etc/xdg/autostart/:~/.config/autostart/
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec --no-startup-id blueman-applet
+
+exec_always mkfifo /tmp/xobpipe && tail -f /tmp/xobpipe | xob -t 2170 & disown
+#exec ~/.i3/launch.sh

@@ -7,6 +7,11 @@ AppData/Local/installer/userdata/**
 **/*.tmp
 **/*.log
 
+{{- if not (stat (joinPath .chezmoi.homeDir ".config/chezmoi/key.txt")) }}
+.test-secret.txt
+Documents/new 1.txt
+{{- end }}
+
 # ==============================================================================
 # Transient / State Files that cause constant git noise
 # ==============================================================================
@@ -16,7 +21,11 @@ scoop/persist/windows-terminal/settings/elevated-state.json
 # ==============================================================================
 # Conditional: Ignore Heavy Gaming Folders on Mini Profile or Work Machines
 # ==============================================================================
-{{- if or (eq .profile "mini") .isWork }}
+{{- $profile := "full" }}
+{{- if hasKey . "profile" }}{{ $profile = .profile }}{{ end }}
+{{- $isWork := false }}
+{{- if hasKey . "isWork" }}{{ $isWork = .isWork }}{{ end }}
+{{- if or (eq $profile "mini") $isWork }}
 AppData/Roaming/DarkSoulsIII/**
 AppData/Roaming/EldenRing/**
 AppData/Roaming/Sekiro/**
@@ -35,6 +44,24 @@ readonly_Documents/Need for Speed*/**
 # ==============================================================================
 {{- if ne .chezmoi.os "windows" }}
 AppData/**
-readonly_Documents/**
+Documents/**
 scoop/**
+.config/winfetch/**
+.config/es/**
+.config/scoop/**
+.wslconfig
 {{- end }}
+
+# ==============================================================================
+# Conditional: Ignore Linux-Specific Paths on Windows OS
+# ==============================================================================
+{{- if eq .chezmoi.os "windows" }}
+.config/i3/**
+.config/polybar/**
+.config/rofi/**
+.config/nvim/**
+.config/zed/**
+.config/yazi/**
+.config/btop/**
+{{- end }}
+

@@ -30,7 +30,11 @@
     "agent_ui_font_size": 26,
     // "ui_font_family": "IntoneMono Nerd Font",
     "ui_font_fallbacks": [
+        {{- if eq .chezmoi.os "windows" }}
         "Segoe UI",
+        {{- else }}
+        "Cantarell",
+        {{- end }}
         "system-ui"
     ],
     "ui_font_size": 22.0,
@@ -38,7 +42,11 @@
     // Terminal Font
     "terminal": {
         "shell": {
+            {{- if eq .chezmoi.os "windows" }}
             "program": "pwsh.exe"
+            {{- else }}
+            "program": "bash"
+            {{- end }}
         },
         "font_family": "VictorMono Nerd Font",
         "font_fallbacks": [
