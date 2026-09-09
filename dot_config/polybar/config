@@ -66,7 +66,7 @@ font-5 = Hack:pixelsize=11;3
 
 
 modules-left = i3 sp2 info-hackspeed sp2
-modules-right = weather sp1 linux-ver sp1 updates sp2 date sp2
+modules-right = backlight sp1 weather sp1 linux-ver sp1 updates sp2 date sp2
 
 tray-position = right
 tray-padding = 1
@@ -240,3 +240,13 @@ compositing-border = over
 [global/wm]
 margin-top = 5
 margin-bottom = 5
+
+[module/backlight]
+type = custom/script
+exec = brightnessctl -m 2>/dev/null | cut -d, -f4
+interval = 1
+format-prefix = "☀ "
+format-prefix-foreground = ${colors.secondary}
+label = %output%
+scroll-up = ~/.local/bin/change-brightness +5%
+scroll-down = ~/.local/bin/change-brightness 5%-

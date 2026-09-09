@@ -3,18 +3,26 @@
 # Night Light Toggle for i3wm (using Redshift)
 # ==============================================================================
 export DISPLAY="${DISPLAY:-:0}"
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.gemini/antigravity-cli/bin:$HOME/.local/bin:$PATH"
 
 STATE_FILE="/tmp/nightlight_state"
-WARM_TEMP=4200
+TEMP_FILE="/tmp/nightlight_temp"
+
+CURRENT_TEMP=4200
+if [[ -f "$TEMP_FILE" ]]; then
+    CURRENT_TEMP=$(cat "$TEMP_FILE" 2>/dev/null)
+fi
 
 if [[ -f "$STATE_FILE" ]] && [[ "$(cat "$STATE_FILE")" == "on" ]]; then
     redshift -x -m randr >/dev/null 2>&1
     echo "off" > "$STATE_FILE"
-    notify-send -t 2000 -i preferences-desktop-display "Night Light" "Disabled (6500K Daytime)"
+    echo "0" > /tmp/xobpipe 2>/dev/null || true
+    notify-send -h string:x-canonical-private-synchronous:nightlight -h int:value:0 -t 1500 -i preferences-desktop-display "Night Light" "Disabled (6500K Normal)"
 else
     redshift -x -m randr >/dev/null 2>&1
-    redshift -m randr -O "$WARM_TEMP" >/dev/null 2>&1
+    redshift -m randr -O "$CURRENT_TEMP" >/dev/null 2>&1
     echo "on" > "$STATE_FILE"
-    notify-send -t 2000 -i preferences-desktop-display "Night Light" "Enabled (Warm ${WARM_TEMP}K)"
+    PERCENT=$(( (CURRENT_TEMP - 2000) * 100 / 4500 ))
+    echo "$PERCENT" > /tmp/xobpipe 2>/dev/null || true
+    notify-send -h string:x-canonical-private-synchronous:nightlight -h int:value:"$PERCENT" -t 1500 -i preferences-desktop-display "Night Light" "Enabled (${CURRENT_TEMP}K)"
 fi

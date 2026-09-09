@@ -47,6 +47,9 @@ bindsym Mod1+Shift+3 exec pavucontrol
 bindsym Mod1+n exec pamixer -t
 # Night Light Toggle (Alt + Shift + n)
 bindsym Mod1+Shift+n exec --no-startup-id /home/manisk/.local/bin/toggle-nightlight
+# Night Light Temperature Slider (Alt + Shift + Up / Down)
+bindsym Mod1+Shift+Up exec --no-startup-id /home/manisk/.local/bin/adjust-nightlight +250
+bindsym Mod1+Shift+Down exec --no-startup-id /home/manisk/.local/bin/adjust-nightlight -250
 
 # Screen Lock
 bindsym $mod+l exec "sleep 0.1 && i3lock --blur 5"
@@ -266,6 +269,12 @@ bindsym XF86AudioRaiseVolume exec "pamixer -ui 3 && pamixer --get-volume > /tmp/
 bindsym XF86AudioLowerVolume exec "pamixer -ud 3 && pamixer --get-volume > /tmp/xobpipe"
 # mute sound
 bindsym XF86AudioMute exec "amixer sset Master toggle | sed -En '/\[on\]/ s/.*\[([0-9]+)%\].*/\1/ p; /\[off\]/ s/.*/0/p' | head -1 > /tmp/xobpipe"
+
+# Screen Brightness (Hardware keys & on-screen slider)
+bindsym XF86MonBrightnessUp exec --no-startup-id /home/manisk/.local/bin/change-brightness +5%
+bindsym XF86MonBrightnessDown exec --no-startup-id /home/manisk/.local/bin/change-brightness 5%-
+bindsym Mod1+Control+Up exec --no-startup-id /home/manisk/.local/bin/change-brightness +5%
+bindsym Mod1+Control+Down exec --no-startup-id /home/manisk/.local/bin/change-brightness 5%-
 
 bindsym $mod+Shift+p exec gnome-calculator
 #bindsym $mod+p exec ~/.scripts/dmshot
