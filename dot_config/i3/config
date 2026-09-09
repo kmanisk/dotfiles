@@ -215,8 +215,11 @@ bindsym Mod1+Shift+7 exec --no-startup-id ~/.local/bin/i3-session-save
 bindsym Mod1+Shift+8 exec --no-startup-id ~/.local/bin/i3-session-restore
 bindsym Mod1+F12 exec --no-startup-id ~/.local/bin/i3-session-menu
 
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Exit i3 session?' -b 'Save & Exit' '~/.local/bin/i3-session-save --all && i3-msg exit' -b 'Exit without saving' 'i3-msg exit'"
-bindsym Mod1+F4 exec "i3-nagbar -t warning -m 'Exit i3 session?' -b 'Save & Exit' '~/.local/bin/i3-session-save --all && i3-msg exit' -b 'Exit without saving' 'i3-msg exit'"
+# Power / Shutdown Menu (Hyprland / Rofi style):
+bindsym Mod1+Escape exec --no-startup-id ~/.local/bin/powermenu
+bindsym Mod1+F4 exec --no-startup-id ~/.local/bin/powermenu
+bindsym $mod+Shift+e exec --no-startup-id ~/.local/bin/powermenu
+bindsym XF86PowerOff exec --no-startup-id ~/.local/bin/powermenu
 
 
 #
@@ -322,8 +325,9 @@ exec_always --no-startup-id sh -c 'sleep 0.5 && ~/.fehbg'
 exec --no-startup-id dunst
 exec --no-startup-id picom
 exec --no-startup-id ~/.local/bin/auto-nightlight
-exec --no-startup-id dex -a -s /etc/xdg/autostart/:~/.config/autostart/
 exec --no-startup-id blueman-applet
+# Auto-restore previous workspace session on login / startup
+exec --no-startup-id sh -c 'sleep 1.2 && ~/.local/bin/i3-session-restore --all'
 exec_always --no-startup-id gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 exec_always --no-startup-id gsettings set org.gnome.desktop.interface gtk-theme 'cachyos-nord'
 exec_always --no-startup-id xrdb -merge ~/.Xresources
