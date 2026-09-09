@@ -37,6 +37,9 @@ bindsym Control+Shift+Escape exec $term --class btop -e btop --force-utf
 # SYSTEM UTILITIES
 # ==============================================================================
 bindsym Mod1+1 exec $term --class nmtui -e nmtui
+# Interactive region screenshot to clipboard (Alt + Shift + 1)
+bindsym Mod1+Shift+1 exec --no-startup-id /home/manisk/.local/bin/screenshot-region
+bindsym Mod1+exclam exec --no-startup-id /home/manisk/.local/bin/screenshot-region
 bindsym Mod1+2 exec blueman-manager
 bindsym Mod1+Shift+2 exec blueman-manager
 bindsym Mod1+3 exec pavucontrol
@@ -266,9 +269,12 @@ bindsym $mod+Shift+p exec gnome-calculator
 #bindsym $mod+p exec ~/.scripts/dmshot
 
 # Random Wallpaper Switcher (Gaming, Creepy, Creative, Nature)
-bindsym $mod+Control+w exec --no-startup-id ~/.local/bin/random-wallpaper
-bindsym $mod+Control+Shift+w exec --no-startup-id ~/.local/bin/wallpaper-menu
-bindsym $mod+F9 exec --no-startup-id ~/.local/bin/wallpaper-menu
+bindsym Mod1+8 exec --no-startup-id /home/manisk/.local/bin/random-wallpaper
+bindsym Mod1+Shift+8 exec --no-startup-id /home/manisk/.local/bin/wallpaper-menu
+bindsym Mod1+asterisk exec --no-startup-id /home/manisk/.local/bin/wallpaper-menu
+bindsym $mod+Control+w exec --no-startup-id /home/manisk/.local/bin/random-wallpaper
+bindsym $mod+Control+Shift+w exec --no-startup-id /home/manisk/.local/bin/wallpaper-menu
+bindsym $mod+F9 exec --no-startup-id /home/manisk/.local/bin/wallpaper-menu
 
 
 
@@ -299,6 +305,7 @@ exec --no-startup-id blueman-applet
 exec_always --no-startup-id gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 exec_always --no-startup-id gsettings set org.gnome.desktop.interface gtk-theme 'cachyos-nord'
 exec_always --no-startup-id xrdb -merge ~/.Xresources
+exec_always --no-startup-id asusctl profile set Balanced -a && asusctl profile set Quiet -b
 
 exec_always mkfifo /tmp/xobpipe && tail -f /tmp/xobpipe | xob -t 2170 & disown
 #exec ~/.i3/launch.sh
