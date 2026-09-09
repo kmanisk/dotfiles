@@ -62,7 +62,7 @@ font-1 = Weather Icons:style=Regular:size=11;2
 font-2 = "Wuncon Siji:pixelsize=11;3"
 font-3 = FontAwesome5Free:style=Solid:pixelsize=11;3
 font-4 = FontAwesome5Brands:style=Solid:pixelsize=11;3
-font-5 = Hack:pixelsize=11;3
+font-5 = "Iosevka Nerd Font Mono:pixelsize=11;3"
 
 
 modules-left = i3 sp2 info-hackspeed sp2
