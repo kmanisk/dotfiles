@@ -260,6 +260,14 @@ for_window [class="imv"] floating enable
 for_window [class="zenity"] floating enable
 for_window [class="cachyos-welcome"] floating enable
 
+# Gaming & Fullscreen window rules (prevents tiling breakage and input issues)
+for_window [class="^Steam$" title="^Steam$"] floating enable
+for_window [class="^cs2$"] floating enable, border none, fullscreen enable
+for_window [class="^steam_app_.*"] floating enable, border none
+for_window [class="gamescope"] floating enable, border none, fullscreen enable
+for_window [window_role="pop-up"] floating enable
+focus_on_window_activation smart
+
 
 ########################################################################
 ########################################################################
@@ -321,7 +329,10 @@ exec --no-startup-id blueman-applet
 exec_always --no-startup-id gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 exec_always --no-startup-id gsettings set org.gnome.desktop.interface gtk-theme 'cachyos-nord'
 exec_always --no-startup-id xrdb -merge ~/.Xresources
-exec_always --no-startup-id asusctl profile set Balanced -a && asusctl profile set Quiet -b
+exec_always --no-startup-id asusctl profile set Performance -a && asusctl profile set Quiet -b
+
+# Toggle Compositor (Picom) for competitive gaming (Alt + Shift + o)
+bindsym Mod1+Shift+o exec --no-startup-id "pkill picom && notify-send -t 1500 'Picom' 'Compositor Disabled (Gaming Mode)' || (picom -b && notify-send -t 1500 'Picom' 'Compositor Enabled')"
 
 exec_always mkfifo /tmp/xobpipe && tail -f /tmp/xobpipe | xob -t 2170 & disown
 #exec ~/.i3/launch.sh
