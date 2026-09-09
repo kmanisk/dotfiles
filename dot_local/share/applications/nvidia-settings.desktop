@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=NVIDIA Settings
+GenericName=NVIDIA X Server Settings
+Comment=Configure NVIDIA Graphics & GPU Settings
+Exec=nvidia-settings
+Icon=nvidia-settings
+Terminal=false
+Categories=Settings;HardwareSettings;System;
+Keywords=nvidia;graphics;gpu;settings;vibrance;performance;

@@ -259,6 +259,7 @@ for_window [class="mpv"] floating enable
 for_window [class="imv"] floating enable
 for_window [class="zenity"] floating enable
 for_window [class="cachyos-welcome"] floating enable
+for_window [class="(?i)^nvidia-settings$"] floating enable, move position center
 
 # ==============================================================================
 # Steam & Gaming Rules (Dedicated Workspace + Floating Popups)
@@ -352,6 +353,9 @@ exec_always --no-startup-id asusctl profile set Balanced -a && asusctl profile s
 
 # Toggle Compositor (Picom) for competitive gaming (Alt + Shift + o)
 bindsym Mod1+Shift+o exec --no-startup-id "pkill picom && notify-send -t 1500 'Picom' 'Compositor Disabled (Gaming Mode)' || (picom -b && notify-send -t 1500 'Picom' 'Compositor Enabled')"
+
+# Toggle Digital Vibrance / High Saturation (Alt + Shift + v)
+bindsym Mod1+Shift+v exec --no-startup-id ~/.local/bin/toggle-vibrance
 
 exec_always mkfifo /tmp/xobpipe && tail -f /tmp/xobpipe | xob -t 2170 & disown
 #exec ~/.i3/launch.sh
