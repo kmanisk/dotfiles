@@ -317,7 +317,7 @@ bindsym Mod1+0 exec --no-startup-id /home/manisk/.local/bin/toggle-bar
 
 #exec_always setxkbmap -option grp:caps_toggle "us,ru" -option "grp:caps_toggle,grp_led:caps"
 
-exec xrandr --output eDP-1 --mode 1920x1200 --rate 165.00
+exec_always --no-startup-id ~/.local/bin/setup-display
 #exec xrandr --auto --output HDMI-1 --mode 1920x1080 --above HDMI-2
 
 exec_always --no-startup-id sh -c 'sleep 0.5 && ~/.fehbg'
