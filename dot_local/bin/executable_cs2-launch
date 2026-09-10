@@ -46,12 +46,12 @@ GAME_ENV=(
 # 6. Launch via Gamescope (Stretched 4:3 1440x1080 -> 1920x1200 @ 165Hz)
 if command -v gamescope >/dev/null 2>&1; then
     exec env ENABLE_GAMESCOPE_WSI=0 \
-      taskset -c 0-11 gamemoderun gamescope \
+      taskset -c 0-11 gamescope \
       -w 1440 -h 1080 \
       -W 1920 -H 1200 \
       -r 165 -f -S stretch \
       --immediate-flips \
-      -- "${GAME_ENV[@]}" $MANGOHUD_WRAPPER "$@" -novid -nojoy
+      -- gamemoderun "${GAME_ENV[@]}" $MANGOHUD_WRAPPER "$@" -novid -nojoy
 else
     exec taskset -c 0-11 gamemoderun "${GAME_ENV[@]}" $MANGOHUD_WRAPPER "$@" -novid -nojoy
 fi
