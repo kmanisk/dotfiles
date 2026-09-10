@@ -15,8 +15,20 @@ chezmoi init --apply https://github.com/kmanisk/dotfiles.git
 sudo reboot
 ```
 
+Sync anytime:
+
+```bash
+chezmoi apply
+```
+
 ## Windows
 
 ```powershell
 powershell -ExecutionPolicy Bypass -Command "Invoke-RestMethod https://github.com/kmanisk/dotfiles/raw/master/AppData/Local/installer/setup.ps1 -OutFile $env:TEMP\setup.ps1; & $env:TEMP\setup.ps1"
+```
+
+Sync anytime:
+
+```powershell
+chezmoi apply
 ```
