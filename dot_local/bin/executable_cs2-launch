@@ -1,35 +1,58 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# CS2 Low-Latency Launcher (Hybrid Optimus Mode)
+# CS2 Ultra-Low Latency Native Launcher (ASUS TUF F16 + RTX 5050)
+# ==============================================================================
 # - Hardware: ASUS TUF F16 (i5-13450HX + RTX 5050 Laptop)
-# - CPU Pinning: taskset -c 0-11 (Physical P-cores only, excluding E-cores 12-15)
-# - GPU Offload: NVIDIA PRIME Render Offload on RTX 5050
-# - Resolution: Stretched 4:3 1600x1200 -> 1920x1200 @ 165Hz via Gamescope
-# - Latency: Immediate flips, gamemoderun, bar suspended during gameplay
+# - Rendering: Direct Native Vulkan via NVIDIA PRIME Offload (Zero Gamescope Lag)
+# - CPU Pinning: Physical P-cores 0-11 (Bypasses E-cores to eliminate micro-stutters)
+# - Power: Sets ASUS Performance mode for full 75W+ GPU & 4.6GHz CPU boost
+# - Compositor: Disables Picom during gameplay for direct hardware frame scanout
+# - Display: Hardware panel scaler set to Full (Stretched 4:3 with 0ms overhead)
 # ==============================================================================
 
-# 1. Force dedicated NVIDIA GPU via PRIME Offload (Hybrid Mode)
+# 1. Force dedicated NVIDIA RTX 5050 via PRIME Offload & explicit Vulkan ICD
 export __NV_PRIME_RENDER_OFFLOAD=1
 export __GLX_VENDOR_LIBRARY_NAME=nvidia
 export __VK_LAYER_NV_optimus=NVIDIA_only
+if [ -f /usr/share/vulkan/icd.d/nvidia_icd.json ]; then
+    export VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json
+fi
 
-# 2. Suspend status bar polling to eliminate frame-time spikes
-trap 'polybar-msg cmd show 2>/dev/null || true' EXIT
+# 2. Save current ASUS profile & elevate to Performance mode for max wattage/clocks
+PREV_PROFILE=$(asusctl profile get 2>/dev/null | awk '/Active profile:/ {print $3}')
+asusctl profile set Performance >/dev/null 2>&1 || true
+
+# 3. Enable hardware stretched scaling on internal display (0ms latency, no black bars)
+xrandr --output eDP-1 --set "scaling mode" "Full" 2>/dev/null || true
+
+# 4. Disable desktop compositor (Picom) & hide Polybar to eliminate frame jitter
+pkill -x picom 2>/dev/null || true
 polybar-msg cmd hide 2>/dev/null || true
 
-# 3. MangoHud Benchmark Support (Optional)
-# If MANGOHUD=1 or ENABLE_MANGOHUD=1 is passed, wrap the game in mangohud inside gamescope.
-# Explicitly unset MANGOHUD for gamescope's outer compositor to prevent duplicate/stretched HUD.
+# 5. Cleanup & restoration handler on game exit
+cleanup() {
+    # Restore Polybar
+    polybar-msg cmd show 2>/dev/null || true
+    # Restore Picom compositor
+    pgrep -x picom >/dev/null || picom -b 2>/dev/null || true
+    # Restore previous ASUS power profile
+    if [ -n "$PREV_PROFILE" ]; then
+        asusctl profile set "$PREV_PROFILE" >/dev/null 2>&1 || true
+    fi
+}
+trap cleanup EXIT INT TERM
+
+# 6. MangoHud Overlay Support (MANGOHUD=1)
 if [ "${MANGOHUD:-0}" = "1" ] || [ "${ENABLE_MANGOHUD:-0}" = "1" ]; then
     MANGOHUD_WRAPPER="mangohud"
 else
     MANGOHUD_WRAPPER=""
 fi
 
-# 4. Game Launch Strategy
-# If gamescope is installed and not bypassed: run with immediate flips, cursor grab, and 4:3 stretched scaling
-if command -v gamescope >/dev/null 2>&1 && [ "${NO_GAMESCOPE:-0}" != "1" ]; then
-    exec env MANGOHUD=0 taskset -c 0-11 gamemoderun gamescope \
+# 7. Launch Strategy (Native Direct Scanout by default)
+if [ "${USE_GAMESCOPE:-0}" = "1" ] && command -v gamescope >/dev/null 2>&1; then
+    # Optional fallback to Gamescope if explicitly requested
+    taskset -c 0-11 gamemoderun gamescope \
       -w 1440 -h 1080 \
       -W 1920 -H 1200 \
       -r 165 -f -S stretch \
@@ -37,6 +60,6 @@ if command -v gamescope >/dev/null 2>&1 && [ "${NO_GAMESCOPE:-0}" != "1" ]; then
       --immediate-flips \
       -- $MANGOHUD_WRAPPER "$@" -novid -nojoy
 else
-    # Direct native fallback (zero compositor overhead)
-    exec taskset -c 0-11 gamemoderun $MANGOHUD_WRAPPER "$@" -novid -nojoy
+    # Native direct Vulkan execution: lowest input lag, max FPS, direct mouse input
+    taskset -c 0-11 gamemoderun $MANGOHUD_WRAPPER "$@" -novid -nojoy
 fi
