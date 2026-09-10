@@ -25,6 +25,15 @@ trap cleanup EXIT INT TERM HUP
 # 2. Hide status bar
 polybar-msg cmd hide 2>/dev/null || true
 
+# 2.5 Ensure competitive 1344x1008 video config exists even after game reinstall
+CS2_USER_CFG_DIR=$(find "$HOME/.local/share/Steam/userdata" -maxdepth 3 -type d -path "*/730/local/cfg" 2>/dev/null | head -n1)
+if [ -n "$CS2_USER_CFG_DIR" ] && [ -f "$HOME/.config/cs2/cs2_video.txt" ]; then
+    if [ ! -f "$CS2_USER_CFG_DIR/cs2_video.txt" ]; then
+        echo "==> Restoring backed-up competitive cs2_video.txt..."
+        cp "$HOME/.config/cs2/cs2_video.txt" "$CS2_USER_CFG_DIR/cs2_video.txt"
+    fi
+fi
+
 # 3. Set ASUS power profile to Balanced as requested
 asusctl profile set Balanced >/dev/null 2>&1 || true
 
