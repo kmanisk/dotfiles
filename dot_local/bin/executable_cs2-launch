@@ -21,7 +21,7 @@ polybar-msg cmd hide 2>/dev/null || true
 # If gamescope is installed: run with immediate flips and 4:3 stretched scaling
 if command -v gamescope >/dev/null 2>&1; then
     exec taskset -c 0-11 gamemoderun gamescope \
-      -w 1600 -h 1200 \
+      -w 1440 -h 1080 \
       -W 1920 -H 1200 \
       -r 165 -f -S stretch \
       --immediate-flips \
