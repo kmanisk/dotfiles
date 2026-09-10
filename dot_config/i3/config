@@ -248,9 +248,9 @@ assign [class="(?i)^steam$"] workspace number $ws5
 for_window [class="(?i)^steam$"] move to workspace number $ws5
 no_focus [class="(?i)^steam$"]
 
-# Floating configuration:
-# 1. Main Steam library window opens floating and centered at comfortable size
-for_window [class="(?i)^steam$" title="^Steam$"] floating enable, resize set 1300 850, move position center
+# Window layout configuration:
+# 1. Main Steam library window opens tiled (fills entire workspace)
+for_window [class="(?i)^steam$" title="^Steam$"] floating disable
 # 2. All Steam dialogs, friends list, chat, news, updater, and settings float
 for_window [class="(?i)^steam$" title="^Friends List$"] floating enable, resize set 320 700
 for_window [class="(?i)^steam$" title=".* - Chat$"] floating enable
