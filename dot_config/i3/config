@@ -22,6 +22,9 @@ bindsym $mod+e exec thunar
 # Spotify (Windows + m)
 bindsym $mod+m exec spotify
 
+# Steam (Windows + Shift + g)
+bindsym $mod+Shift+g exec steam
+
 # Task Manager (TMOG in floating window)
 bindsym Control+Shift+Escape exec --no-startup-id /usr/bin/TaskManagerOG
 
@@ -226,16 +229,10 @@ for_window [instance="(?i)^AppRun\.wrapped$"] floating enable, resize set 1200 7
 for_window [instance="(?i)^pkg-float$"] floating enable, resize set 1250 780, move position center
 
 # ==============================================================================
-# Steam & Gaming Rules (Dedicated Workspace + Floating Popups)
-# Prevents Steam from ever covering running windows or stealing focus on launch
+# Steam & Gaming Rules
 # ==============================================================================
-# Send all Steam windows to dedicated Gaming Workspace (Workspace 5: Alt + g)
-assign [class="(?i)^steam$"] workspace number $ws5
-for_window [class="(?i)^steam$"] move to workspace number $ws5
-no_focus [class="(?i)^steam$"]
-
 # Window layout configuration:
-# 1. Main Steam library window opens tiled (fills entire workspace)
+# 1. Main Steam library window opens tiled
 for_window [class="(?i)^steam$" title="^Steam$"] floating disable
 # 2. All Steam dialogs, friends list, chat, news, updater, and settings float
 for_window [class="(?i)^steam$" title="^Friends List$"] floating enable, resize set 320 700
@@ -253,7 +250,7 @@ assign [class="^steam_app_.*"] workspace number $ws5
 for_window [class="(?i)^(cs2|gamescope)$"] move to workspace number $ws5, floating enable, border none, fullscreen enable
 for_window [class="^steam_app_.*"] move to workspace number $ws5, floating enable, border none, fullscreen enable
 for_window [window_role="pop-up"] floating enable
-focus_on_window_activation smart
+focus_on_window_activation focus
 mouse_warping none
 
 
