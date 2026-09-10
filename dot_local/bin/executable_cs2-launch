@@ -12,10 +12,13 @@
 
 # 1. Polybar & Display cleanup handler
 cleanup() {
-    xrandr --output eDP-1 --mode 1920x1200 --rate 165.00 2>/dev/null || true
+    trap - EXIT INT TERM HUP
+    echo "==> Restoring native display resolution (1920x1200 @ 165Hz)..."
+    xrandr --output eDP-1 --mode 1920x1200 --rate 165.00 2>/dev/null || xrandr --output eDP-1 --auto 2>/dev/null || true
+    sh "$HOME/.fehbg" 2>/dev/null || true
     polybar-msg cmd show 2>/dev/null || true
 }
-trap cleanup EXIT INT TERM
+trap cleanup EXIT INT TERM HUP
 
 # 2. Hide status bar
 polybar-msg cmd hide 2>/dev/null || true
@@ -46,16 +49,20 @@ xrandr --output eDP-1 --mode 1440x1080 --rate 164.85 2>/dev/null || true
 
 # 8. Launch CS2 natively on the dedicated NVIDIA GPU (No Gamescope overhead)
 if [ "${USE_GAMESCOPE:-0}" = "1" ] && command -v gamescope >/dev/null 2>&1; then
-    exec env ENABLE_GAMESCOPE_WSI=0 \
+    env ENABLE_GAMESCOPE_WSI=0 \
       taskset -c 0-11 gamescope \
       -w 1440 -h 1080 -W 1920 -H 1200 -r 165 -o 165 -f -S stretch \
-      --force-grab-cursor --force-windows-fullscreen --immediate-flips \
+      --force-grab-cursor --immediate-flips \
       -- gamemoderun env __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia __VK_LAYER_NV_optimus=NVIDIA_only \
       $MANGOHUD_WRAPPER "$@" -fullscreen -novid -nojoy +fps_max 0 +fps_max_ui 0
+    GAME_EXIT=$?
 else
-    exec taskset -c 0-11 gamemoderun env \
+    taskset -c 0-11 gamemoderun env \
       __NV_PRIME_RENDER_OFFLOAD=1 \
       __GLX_VENDOR_LIBRARY_NAME=nvidia \
       __VK_LAYER_NV_optimus=NVIDIA_only \
       $MANGOHUD_WRAPPER "$@" -fullscreen -w 1440 -h 1080 -vulkan -novid -nojoy +fps_max 0 +fps_max_ui 0
+    GAME_EXIT=$?
 fi
+
+exit ${GAME_EXIT:-0}
