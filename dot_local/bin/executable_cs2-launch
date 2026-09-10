@@ -29,11 +29,14 @@ if [ -n "$BT_CARD" ]; then
     pactl set-card-profile "$BT_CARD" a2dp-sink-sbc_xq 2>/dev/null || true
 fi
 
-# 4. Disable desktop compositor (Picom) & hide Polybar to eliminate frame jitter
+# 4. Enforce hardware stretched scaling (Full) so 4:3 resolutions fill the screen without black bars
+xrandr --output eDP-1 --set "scaling mode" "Full" 2>/dev/null || true
+
+# 5. Disable desktop compositor (Picom) & hide Polybar to eliminate frame jitter
 pkill -x picom 2>/dev/null || true
 polybar-msg cmd hide 2>/dev/null || true
 
-# 5. Cleanup & restoration handler on game exit
+# 6. Cleanup & restoration handler on game exit
 cleanup() {
     # Guarantee display is always restored to native 1920x1200 @ 165Hz (prevents desync/black screens)
     xrandr --output eDP-1 --mode 1920x1200 --rate 165.00 2>/dev/null || true
@@ -44,14 +47,14 @@ cleanup() {
 }
 trap cleanup EXIT INT TERM
 
-# 6. MangoHud Overlay Support (MANGOHUD=1)
+# 7. MangoHud Overlay Support (MANGOHUD=1)
 if [ "${MANGOHUD:-0}" = "1" ] || [ "${ENABLE_MANGOHUD:-0}" = "1" ]; then
     MANGOHUD_WRAPPER="mangohud"
 else
     MANGOHUD_WRAPPER=""
 fi
 
-# 7. Launch Strategy (Native Direct Scanout by default)
+# 8. Launch Strategy (Native Direct Scanout by default)
 if [ "${USE_GAMESCOPE:-0}" = "1" ] && command -v gamescope >/dev/null 2>&1; then
     # Optional fallback to Gamescope if explicitly requested
     taskset -c 0-11 gamemoderun gamescope \
