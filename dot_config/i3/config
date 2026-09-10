@@ -321,6 +321,7 @@ bindsym $mod+Shift+p exec gnome-calculator
 #bindsym $mod+p exec ~/.scripts/dmshot
 
 # Random Wallpaper Switcher (Gaming, Creepy, Creative, Nature)
+bindsym Mod1+9 exec --no-startup-id /home/manisk/.local/bin/random-wallpaper
 bindsym Mod1+Shift+w exec --no-startup-id /home/manisk/.local/bin/random-wallpaper
 bindsym Mod1+Control+w exec --no-startup-id /home/manisk/.local/bin/wallpaper-menu
 bindsym $mod+F9 exec --no-startup-id /home/manisk/.local/bin/wallpaper-menu
