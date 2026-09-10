@@ -1,24 +1,29 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# CS2 Low-Latency Launcher (Hybrid Optimus Mode + Gamescope Stretched 4:3)
+# CS2 High-FPS Native Launcher (ASUS TUF F16 + RTX 5050 Laptop)
 # ==============================================================================
-# - Hardware: ASUS TUF F16 (i5-13450HX + RTX 5050 Laptop)
-# - Gamescope runs on Intel iGPU (drives internal eDP-1 at native 1920x1200 @ 165Hz)
-# - CS2 renders on dedicated NVIDIA RTX 5050 via PRIME Offload
-# - ENABLE_GAMESCOPE_WSI=0 prevents swapchain crash with -S stretch on NVIDIA 555+/610+
+# - Hardware: ASUS TUF F16 (i5-13450HX + RTX 5050)
+# - Rendering: Direct Native Vulkan on dedicated NVIDIA RTX 5050 (250+ FPS)
+# - Stretched 4:3: Zero-lag Hardware Panel Scaling via Intel Display Controller
 # - CPU Pinning: Physical P-cores 0-11 (Bypasses E-cores to eliminate micro-stutters)
 # - Audio: Low-latency PulseAudio streaming (30ms) & SBC-XQ Bluetooth codec
 # - Power: ASUS Balanced mode
 # ==============================================================================
 
-# 1. Polybar cleanup handler
-trap 'polybar-msg cmd show 2>/dev/null || true' EXIT INT TERM
+# 1. Polybar & Display cleanup handler
+cleanup() {
+    xrandr --output eDP-1 --mode 1920x1200 --rate 165.00 2>/dev/null || true
+    polybar-msg cmd show 2>/dev/null || true
+}
+trap cleanup EXIT INT TERM
+
+# 2. Hide status bar
 polybar-msg cmd hide 2>/dev/null || true
 
-# 2. Set ASUS power profile to Balanced as requested
+# 3. Set ASUS power profile to Balanced as requested
 asusctl profile set Balanced >/dev/null 2>&1 || true
 
-# 3. Audio latency optimization: stream unbuffered 30ms frames and ensure SBC-XQ codec
+# 4. Audio latency optimization: stream unbuffered 30ms frames and ensure SBC-XQ codec
 export SDL_AUDIO_DRIVER=pulseaudio
 export PULSE_LATENCY_MSEC=30
 BT_CARD=$(pactl list cards short 2>/dev/null | grep bluez_card | awk '{print $2}' | head -n1)
@@ -26,35 +31,31 @@ if [ -n "$BT_CARD" ]; then
     pactl set-card-profile "$BT_CARD" a2dp-sink-sbc_xq 2>/dev/null || true
 fi
 
-# 4. MangoHud Overlay Support (MANGOHUD=1)
+# 5. MangoHud Overlay Support (MANGOHUD=1)
 if [ "${MANGOHUD:-0}" = "1" ] || [ "${ENABLE_MANGOHUD:-0}" = "1" ]; then
     MANGOHUD_WRAPPER="mangohud"
 else
     MANGOHUD_WRAPPER=""
 fi
 
-# 5. PRIME offload only for the inner game — NOT for gamescope itself
-GAME_ENV=(
-    env
-    __NV_PRIME_RENDER_OFFLOAD=1
-    __GLX_VENDOR_LIBRARY_NAME=nvidia
-    __VK_LAYER_NV_optimus=NVIDIA_only
-    VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json
-    MANGOHUD=0
-)
+# 6. Set Hardware Panel Scaler to "Full" for 4:3 stretched with 0ms lag
+xrandr --output eDP-1 --set "scaling mode" "Full" 2>/dev/null || true
 
-# 6. Launch via Gamescope (Stretched 4:3 1440x1080 -> 1920x1200 @ 165Hz)
-if [ "${NO_GAMESCOPE:-0}" != "1" ] && command -v gamescope >/dev/null 2>&1; then
+# 7. Switch screen mode to 1440x1080 @ 165Hz so panel hardware stretches edge-to-edge
+xrandr --output eDP-1 --mode 1440x1080 --rate 164.85 2>/dev/null || true
+
+# 8. Launch CS2 natively on the dedicated NVIDIA GPU (No Gamescope overhead)
+if [ "${USE_GAMESCOPE:-0}" = "1" ] && command -v gamescope >/dev/null 2>&1; then
     exec env ENABLE_GAMESCOPE_WSI=0 \
       taskset -c 0-11 gamescope \
-      -w 1440 -h 1080 \
-      -W 1920 -H 1200 \
-      -r 165 -o 165 -f -S stretch \
-      --force-grab-cursor \
-      --force-windows-fullscreen \
-      --immediate-flips \
-      -- gamemoderun "${GAME_ENV[@]}" $MANGOHUD_WRAPPER "$@" -fullscreen -novid -nojoy +fps_max 0 +fps_max_ui 0
+      -w 1440 -h 1080 -W 1920 -H 1200 -r 165 -o 165 -f -S stretch \
+      --force-grab-cursor --force-windows-fullscreen --immediate-flips \
+      -- gamemoderun env __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia __VK_LAYER_NV_optimus=NVIDIA_only \
+      $MANGOHUD_WRAPPER "$@" -fullscreen -novid -nojoy +fps_max 0 +fps_max_ui 0
 else
-    exec taskset -c 0-11 gamemoderun "${GAME_ENV[@]}" $MANGOHUD_WRAPPER "$@" -fullscreen -novid -nojoy +fps_max 0 +fps_max_ui 0
+    exec taskset -c 0-11 gamemoderun env \
+      __NV_PRIME_RENDER_OFFLOAD=1 \
+      __GLX_VENDOR_LIBRARY_NAME=nvidia \
+      __VK_LAYER_NV_optimus=NVIDIA_only \
+      $MANGOHUD_WRAPPER "$@" -fullscreen -w 1440 -h 1080 -vulkan -novid -nojoy +fps_max 0 +fps_max_ui 0
 fi
-
