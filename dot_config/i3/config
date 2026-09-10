@@ -32,7 +32,7 @@ bindsym $mod+Shift+1 exec $term --class nmtui -e nmtui
 bindsym $mod+Shift+2 exec blueman-manager
 bindsym $mod+Shift+3 exec pavucontrol
 bindsym $mod+Shift+s exec --no-startup-id /home/manisk/.local/bin/screenshot-region
-bindsym $mod+Shift+p exec --no-startup-id /home/manisk/.local/bin/toggle-audio-sink
+bindsym $mod+Control+p exec --no-startup-id /home/manisk/.local/bin/toggle-audio-sink
 bindsym $mod+Shift+n exec --no-startup-id /home/manisk/.local/bin/toggle-nightlight
 bindsym $mod+Control+bracketleft exec --no-startup-id /home/manisk/.local/bin/adjust-nightlight +250
 bindsym $mod+Control+apostrophe exec --no-startup-id /home/manisk/.local/bin/adjust-nightlight -250
@@ -107,6 +107,20 @@ set $ws7 "7"
 set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
+
+# Top-Row Right-Hand Workspace Switching (Windows + y u i o p)
+bindsym $mod+y workspace number $ws1
+bindsym $mod+u workspace number $ws2
+bindsym $mod+i workspace number $ws3
+bindsym $mod+o workspace number $ws4
+bindsym $mod+p workspace number $ws5
+
+# Top-Row Right-Hand Move Window (Windows + Shift + y u i o p)
+bindsym $mod+Shift+y move container to workspace number $ws1
+bindsym $mod+Shift+u move container to workspace number $ws2
+bindsym $mod+Shift+i move container to workspace number $ws3
+bindsym $mod+Shift+o move container to workspace number $ws4
+bindsym $mod+Shift+p move container to workspace number $ws5
 
 # Standard Number Workspace Switching (Windows + 1..0)
 bindsym $mod+1 workspace number $ws1
