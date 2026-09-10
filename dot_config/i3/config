@@ -316,6 +316,9 @@ bindsym Mod1+0 exec --no-startup-id /home/manisk/.local/bin/toggle-bar
 # Enable Ctrl+Alt+Backspace emergency shortcut to immediately kill hung Xorg
 exec_always --no-startup-id setxkbmap -option terminate:ctrl_alt_bksp
 
+# Emergency game kill switch: Ctrl+Alt+Delete terminates CS2, Gamescope, Steam
+bindsym Control+Mod1+Delete exec --no-startup-id ~/.local/bin/killgame
+
 exec_always --no-startup-id ~/.local/bin/setup-display
 #exec xrandr --auto --output HDMI-1 --mode 1920x1080 --above HDMI-2
 

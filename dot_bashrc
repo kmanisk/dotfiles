@@ -37,6 +37,7 @@ alias ep="nvim ~/.bashrc"
 alias editdot="nvim ~/.local/share/chezmoi"
 alias rel="source ~/.bashrc && echo 'Bashrc reloaded!'"
 alias envs="echo \$PATH | tr ':' '\n'"
+alias kg="killgame"
 
 # Modern CLI Replacements
 command -v bat >/dev/null 2>&1 && alias cat="bat"
