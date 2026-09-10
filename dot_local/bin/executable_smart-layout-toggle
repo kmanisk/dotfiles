@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 smart-layout-toggle:
-Intelligently toggles the active workspace between Tiled and Stacking (or Tabbed) layouts.
+Intelligently toggles the active workspace between Tiled (split) and Tabbed (side-by-side tabs).
 Handles autotiling split nesting, multi-window consolidation, and single-window prep.
 """
 import argparse
@@ -75,7 +75,7 @@ def get_tiled_leaves(node):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--mode", choices=["stacking", "tabbed"], default="stacking")
+    parser.add_argument("--mode", choices=["tabbed", "stacking"], default="tabbed")
     args = parser.parse_args()
     target_mode = args.mode
 
@@ -101,15 +101,15 @@ def main():
     if n == 1:
         leaf = leaves[0]
         parent = find_parent_container(ws, leaf["id"])
-        is_stacked = (parent and parent.get("layout") in ("stacked", "tabbed")) or (ws.get("layout") in ("stacked", "tabbed"))
-        if is_stacked:
+        is_tabbed = (parent and parent.get("layout") in ("tabbed", "stacked")) or (ws.get("layout") in ("tabbed", "stacked"))
+        if is_tabbed:
             # Switch back to tiled (splith)
             cmds = [f'[con_id="{leaf["id"]}"] layout splith']
             if parent and parent.get("type") != "workspace":
                 cmds.append(f'[con_id="{parent["id"]}"] layout splith')
             i3_msg(*cmds)
         else:
-            # Switch to target_mode (stacking / tabbed) so subsequent windows become stacked tabs
+            # Switch to target_mode (tabbed side-by-side) so subsequent windows become side-by-side tabs
             cmds = [f'[con_id="{leaf["id"]}"] layout {target_mode}']
             if parent and parent.get("type") != "workspace":
                 cmds.append(f'[con_id="{parent["id"]}"] layout {target_mode}')
@@ -120,18 +120,26 @@ def main():
     parents = [find_parent_container(ws, leaf["id"]) for leaf in leaves]
     parent_ids = {p["id"] for p in parents if p}
 
-    # Check if they already share a single stacked/tabbed parent
+    # Check if they already share a single parent
     if len(parent_ids) == 1:
         common_parent = parents[0]
-        if common_parent.get("layout") in ("stacked", "tabbed"):
-            # CURRENTLY STACKED -> Toggle to TILED (splith)
+        cur_layout = common_parent.get("layout")
+        if cur_layout == target_mode:
+            # ALREADY TABBED -> Toggle to TILED (splith)
             i3_msg(
                 f'[con_id="{common_parent["id"]}"] layout splith',
                 f'[con_id="{focused_id}"] focus'
             )
             sys.exit(0)
+        elif cur_layout in ("tabbed", "stacked"):
+            # CURRENTLY STACKED (top-down) -> Switch to TABBED (side-by-side)
+            i3_msg(
+                f'[con_id="{common_parent["id"]}"] layout {target_mode}',
+                f'[con_id="{focused_id}"] focus'
+            )
+            sys.exit(0)
 
-    # CURRENTLY TILED -> Merge all windows into one stacked/tabbed container
+    # CURRENTLY TILED -> Merge all windows into one side-by-side tabbed container
     root_leaf = leaves[0]
     cmds = [f'[con_id="{root_leaf["id"]}"] mark --add "_smart_tab_root"']
     for other in leaves[1:]:

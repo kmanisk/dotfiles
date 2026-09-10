@@ -22,8 +22,8 @@ bindsym $mod+e exec thunar
 # Spotify
 bindsym Mod1+m exec spotify
 
-# System Monitor (btop in floating window)
-bindsym Control+Shift+Escape exec --no-startup-id $term --class btop,btop -e btop --force-utf
+# Task Manager (TMOG in floating window)
+bindsym Control+Shift+Escape exec --no-startup-id /usr/bin/TaskManagerOG
 
 # ==============================================================================
 # SYSTEM UTILITIES
@@ -71,9 +71,9 @@ bindsym Mod1+j focus down
 bindsym Mod1+k focus up
 bindsym Mod1+l focus right
 
-# Move between stacked tabs (Alt + Shift + j / k)
-bindsym Mod1+Shift+j focus down
-bindsym Mod1+Shift+k focus up
+# Move between tabs (Alt + Shift + j / k)
+bindsym Mod1+Shift+j focus next
+bindsym Mod1+Shift+k focus prev
 
 # ==============================================================================
 # WINDOW MOVEMENT (Control + Shift + hjkl)
@@ -235,6 +235,8 @@ for_window [class="zenity"] floating enable
 for_window [class="cachyos-welcome"] floating enable
 for_window [class="(?i)^nvidia-settings$"] floating enable, move position center
 for_window [class="(?i)^btop$"] floating enable, resize set 1150 720
+for_window [class="(?i)^Task Manager TMOG$"] floating enable, resize set 1200 750, move position center
+for_window [instance="(?i)^AppRun\.wrapped$"] floating enable, resize set 1200 750, move position center
 
 # ==============================================================================
 # Steam & Gaming Rules (Dedicated Workspace + Floating Popups)
