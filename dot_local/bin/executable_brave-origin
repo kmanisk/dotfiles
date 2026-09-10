@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
-# Brave Browser GPU Launcher (forces NVIDIA dedicated GPU with Vulkan ANGLE and 120% UI scale)
-exec /home/manisk/.local/bin/prime-run /usr/sbin/brave-origin --force-device-scale-factor=1.2 "$@"
+# Brave Browser GPU Launcher (forces NVIDIA dedicated GPU with Vulkan ANGLE and 145% UI scale)
+exec /home/manisk/.local/bin/prime-run /usr/sbin/brave-origin --force-device-scale-factor=1.45 "$@"
