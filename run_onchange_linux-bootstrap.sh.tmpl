@@ -199,6 +199,14 @@ if [ ! -x "$HOME/.local/zed.app/bin/zed" ] && ! command -v zed >/dev/null 2>&1; 
     curl -f https://zed.dev/install.sh | sh
 fi
 
+# Setup local wallpapers store and default fehbg if missing
+mkdir -p "$HOME/.local/share/wallpapers"
+if [ ! -f "$HOME/.fehbg" ]; then
+    echo '#!/bin/sh' > "$HOME/.fehbg"
+    echo 'feh --no-fehbg --bg-fill "$HOME/.config/i3/wallpaper.png"' >> "$HOME/.fehbg"
+    chmod +x "$HOME/.fehbg"
+fi
+
 # 5. ASUS Laptop Hardware Controls (battery limit 60%, static red RGB, balanced profile)
 if command -v asusctl >/dev/null 2>&1; then
     echo "==> Applying ASUS TUF hardware tuning (60% battery care, static red aura)..."

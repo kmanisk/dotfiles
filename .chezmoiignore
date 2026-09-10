@@ -20,6 +20,7 @@ install.sh
 linux-bootstrap.sh
 idle-bench.ps1
 benchmarks/**
+.fehbg
 scoop/persist/windows-terminal/settings/state.json
 scoop/persist/windows-terminal/settings/elevated-state.json
 
