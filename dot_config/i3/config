@@ -1,5 +1,5 @@
 set $mod Mod4
-font pango:Iosevka Nerd Font 11
+font pango:Iosevka Nerd Font 13
 floating_modifier $mod
 
 # ==============================================================================
@@ -272,8 +272,7 @@ for_window [class="imv"] floating enable
 for_window [class="zenity"] floating enable
 for_window [class="cachyos-welcome"] floating enable
 for_window [class="(?i)^nvidia-settings$"] floating enable, move position center
-for_window [class="(?i)^btop$"] floating enable, resize set 1150 720, move position center
-for_window [instance="(?i)^btop$"] floating enable, resize set 1150 720, move position center
+for_window [class="(?i)^btop$"] floating enable, resize set 1150 720
 
 # ==============================================================================
 # Steam & Gaming Rules (Dedicated Workspace + Floating Popups)
@@ -361,11 +360,13 @@ exec --no-startup-id picom
 exec --no-startup-id ~/.local/bin/auto-nightlight
 exec --no-startup-id blueman-applet
 # Autotiling: automatically switch horizontal/vertical splits based on focused window dimensions
-exec_always --no-startup-id pkill -x autotiling; autotiling
+exec_always --no-startup-id sh -c 'pkill -x autotiling; sleep 0.2; exec autotiling'
 # Auto-restore previous workspace session on login / startup
 exec --no-startup-id sh -c 'sleep 1.2 && ~/.local/bin/i3-session-restore --all'
 exec_always --no-startup-id gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 exec_always --no-startup-id gsettings set org.gnome.desktop.interface gtk-theme 'cachyos-nord'
+exec_always --no-startup-id gsettings set org.gnome.desktop.interface text-scaling-factor 1.2
+exec_always --no-startup-id gsettings set org.gnome.desktop.interface font-name 'Iosevka Nerd Font 13'
 exec_always --no-startup-id xrdb -merge ~/.Xresources
 exec_always --no-startup-id asusctl profile set Balanced -a && asusctl profile set Quiet -b
 
