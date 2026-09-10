@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+# ==============================================================================
+# Bluetooth Profile Switcher (Hands-Free HFP vs High-Fidelity A2DP)
+# ==============================================================================
+
+BT_CARD=$(pactl list cards short | grep bluez_card | awk '{print $2}' | head -n1)
+
+if [ -z "$BT_CARD" ]; then
+    notify-send -u low "Bluetooth Audio" "No Bluetooth audio device connected"
+    exit 1
+fi
+
+CURRENT=$(pactl list cards | awk -v card="$BT_CARD" '$0 ~ "Name: " card {f=1} f && /Active Profile:/ {print $3; exit}')
+
+set_handsfree() {
+    pactl set-card-profile "$BT_CARD" headset-head-unit 2>/dev/null || pactl set-card-profile "$BT_CARD" headset-head-unit-cvsd 2>/dev/null
+    sleep 0.3
+    BT_INPUT=$(pw-cli ls Node 2>/dev/null | grep -E 'node.name = "bluez_input' | head -n1 | awk -F'"' '{print $2}')
+    if [ -n "$BT_INPUT" ]; then
+        wpctl set-default "$BT_INPUT" 2>/dev/null || true
+    fi
+    notify-send -t 2500 "Bluetooth Audio" "Hands-Free Mode (HFP)\nHeadset mic & sound active"
+}
+
+set_hifi() {
+    pactl set-card-profile "$BT_CARD" a2dp-sink 2>/dev/null || pactl set-card-profile "$BT_CARD" a2dp-sink-sbc 2>/dev/null
+    sleep 0.3
+    INTERNAL_MIC=$(pw-cli ls Node 2>/dev/null | grep -E 'node.name = "alsa_input.*analog-stereo"' | head -n1 | awk -F'"' '{print $2}')
+    if [ -n "$INTERNAL_MIC" ]; then
+        wpctl set-default "$INTERNAL_MIC" 2>/dev/null || true
+    fi
+    notify-send -t 2500 "Bluetooth Audio" "High Fidelity Stereo (A2DP)\nStereo sound active (laptop mic)"
+}
+
+case "${1:-toggle}" in
+    handsfree|hfp|mic)
+        set_handsfree
+        ;;
+    hifi|a2dp|stereo)
+        set_hifi
+        ;;
+    toggle)
+        if [[ "$CURRENT" == *"headset"* ]]; then
+            set_hifi
+        else
+            set_handsfree
+        fi
+        ;;
+    status)
+        echo "Card: $BT_CARD"
+        echo "Profile: $CURRENT"
+        ;;
+    *)
+        echo "Usage: bt-profile [handsfree|hifi|toggle|status]"
+        exit 1
+        ;;
+esac
