@@ -10,53 +10,46 @@ bindsym Mod1+Return exec $term
 # App Launcher (Rofi)
 bindsym Mod1+space exec "pkill rofi || rofi -show drun"
 
-# Browser
-bindsym Mod1+b exec brave-origin
+# Browser (Windows + Shift + b)
+bindsym $mod+Shift+b exec brave-origin
 
 # Text Editor
-bindsym Mod1+Shift+t exec $term -e nvim
+bindsym $mod+Shift+t exec $term -e nvim
 
 # File Manager
 bindsym $mod+e exec thunar
 
-# Spotify
-bindsym Mod1+m exec spotify
+# Spotify (Windows + m)
+bindsym $mod+m exec spotify
 
 # Task Manager (TMOG in floating window)
 bindsym Control+Shift+Escape exec --no-startup-id /usr/bin/TaskManagerOG
 
 # ==============================================================================
-# SYSTEM UTILITIES
+# SYSTEM UTILITIES (Windows + Shift + Numbers)
 # ==============================================================================
-bindsym Mod1+1 exec $term --class nmtui -e nmtui
-# Interactive region screenshot to clipboard (Alt + Shift + 1)
-bindsym Mod1+Shift+1 exec --no-startup-id /home/manisk/.local/bin/screenshot-region
-bindsym Mod1+2 exec blueman-manager
-bindsym Mod1+3 exec pavucontrol
-bindsym Mod1+n exec pamixer -t
-# Audio Output Switcher between Laptop Speakers and Bluetooth (Alt + Shift + p)
-bindsym Mod1+Shift+p exec --no-startup-id /home/manisk/.local/bin/toggle-audio-sink
-# Bluetooth Mic / Hands-Free Toggle (Alt + Shift + m)
-bindsym Mod1+Shift+m exec --no-startup-id /home/manisk/.local/bin/bt-profile toggle
-# Night Light Toggle (Alt + Shift + n)
-bindsym Mod1+Shift+n exec --no-startup-id /home/manisk/.local/bin/toggle-nightlight
-# Night Light Temperature Slider (Alt + Shift + [ / ')
-bindsym Mod1+Shift+bracketleft exec --no-startup-id /home/manisk/.local/bin/adjust-nightlight +250
-bindsym Mod1+Shift+apostrophe exec --no-startup-id /home/manisk/.local/bin/adjust-nightlight -250
+bindsym $mod+Shift+1 exec $term --class nmtui -e nmtui
+bindsym $mod+Shift+2 exec blueman-manager
+bindsym $mod+Shift+3 exec pavucontrol
+bindsym $mod+Shift+s exec --no-startup-id /home/manisk/.local/bin/screenshot-region
+bindsym $mod+Shift+p exec --no-startup-id /home/manisk/.local/bin/toggle-audio-sink
+bindsym $mod+Shift+n exec --no-startup-id /home/manisk/.local/bin/toggle-nightlight
+bindsym $mod+Control+bracketleft exec --no-startup-id /home/manisk/.local/bin/adjust-nightlight +250
+bindsym $mod+Control+apostrophe exec --no-startup-id /home/manisk/.local/bin/adjust-nightlight -250
 
-# Screen Lock (Super + l)
-bindsym $mod+l exec "sleep 0.1 && i3lock --blur 5"
+# Screen Lock (Windows + Ctrl + l)
+bindsym $mod+Control+l exec "sleep 0.1 && i3lock --blur 5"
 
 # ==============================================================================
 # WINDOW MANAGEMENT
 # ==============================================================================
-# Kill / Close window
-bindsym Mod1+q kill
+# Kill / Close window (Windows + q)
+bindsym $mod+q kill
 
 # Smart Layout Toggle: Toggle between Tiling and Stacking (groups existing windows or prepares single window)
 bindsym $mod+a exec --no-startup-id ~/.local/bin/smart-layout-toggle
 bindsym $mod+f fullscreen toggle
-bindsym Mod1+Shift+space floating toggle
+bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 bindsym $mod+Shift+a focus parent
 
@@ -65,25 +58,20 @@ bindsym $mod+b split h
 bindsym $mod+v split v
 
 # ==============================================================================
-# FOCUS MOVEMENT (hjkl & Arrows)
+# FOCUS MOVEMENT (Windows + hjkl & Arrows)
 # ==============================================================================
-# ALT + hjkl for focus (from Hyprland config)
-bindsym Mod1+h focus left
-bindsym Mod1+j focus down
-bindsym Mod1+k focus up
-bindsym Mod1+l focus right
-
-# Move between tabs (Alt + Shift + j / k)
-bindsym Mod1+Shift+j focus next
-bindsym Mod1+Shift+k focus prev
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
 
 # ==============================================================================
-# WINDOW MOVEMENT (Control + Shift + hjkl)
+# WINDOW MOVEMENT (Windows + Shift + hjkl)
 # ==============================================================================
-bindsym Control+Shift+h move left
-bindsym Control+Shift+j move down
-bindsym Control+Shift+k move up
-bindsym Control+Shift+l move right
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
 
 # ==============================================================================
 # WINDOW RESIZING (Mod + Arrows)
@@ -120,21 +108,7 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
 
-# Home-row Workspace Switching (ALT + a/s/d/f/g)
-bindsym Mod1+a workspace number $ws1
-bindsym Mod1+s workspace number $ws2
-bindsym Mod1+d workspace number $ws3
-bindsym Mod1+f workspace number $ws4
-bindsym Mod1+g workspace number $ws5
-
-# Home-row Move Window (ALT + Shift + a/s/d/f/g)
-bindsym Mod1+Shift+a move container to workspace number $ws1
-bindsym Mod1+Shift+s move container to workspace number $ws2
-bindsym Mod1+Shift+d move container to workspace number $ws3
-bindsym Mod1+Shift+f move container to workspace number $ws4
-bindsym Mod1+Shift+g move container to workspace number $ws5
-
-# Standard Number Workspace Switching ($mod + 1..0)
+# Standard Number Workspace Switching (Windows + 1..0)
 bindsym $mod+1 workspace number $ws1
 bindsym $mod+2 workspace number $ws2
 bindsym $mod+3 workspace number $ws3
@@ -146,17 +120,17 @@ bindsym $mod+8 workspace number $ws8
 bindsym $mod+9 workspace number $ws9
 bindsym $mod+0 workspace number $ws10
 
-# Standard Number Move Window ($mod + Shift + 1..0)
-bindsym $mod+Shift+1 move container to workspace number $ws1
-bindsym $mod+Shift+2 move container to workspace number $ws2
-bindsym $mod+Shift+3 move container to workspace number $ws3
-bindsym $mod+Shift+4 move container to workspace number $ws4
-bindsym $mod+Shift+5 move container to workspace number $ws5
-bindsym $mod+Shift+6 move container to workspace number $ws6
-bindsym $mod+Shift+7 move container to workspace number $ws7
-bindsym $mod+Shift+8 move container to workspace number $ws8
-bindsym $mod+Shift+9 move container to workspace number $ws9
-bindsym $mod+Shift+0 move container to workspace number $ws10
+# Move Window to Workspace (Windows + Ctrl + 1..0)
+bindsym $mod+Control+1 move container to workspace number $ws1
+bindsym $mod+Control+2 move container to workspace number $ws2
+bindsym $mod+Control+3 move container to workspace number $ws3
+bindsym $mod+Control+4 move container to workspace number $ws4
+bindsym $mod+Control+5 move container to workspace number $ws5
+bindsym $mod+Control+6 move container to workspace number $ws6
+bindsym $mod+Control+7 move container to workspace number $ws7
+bindsym $mod+Control+8 move container to workspace number $ws8
+bindsym $mod+Control+9 move container to workspace number $ws9
+bindsym $mod+Control+0 move container to workspace number $ws10
 
 # Sequential Workspace Navigation (Bracket keys)
 bindsym $mod+bracketleft workspace prev
@@ -167,11 +141,9 @@ bindsym $mod+Shift+bracketright move container to workspace next; workspace next
 # Back and Forth with last workspace
 bindsym $mod+Tab workspace back_and_forth
 
-# Scratchpad
-# Alt + Shift + z : Move focused window into scratchpad
-# Alt + z         : Show / toggle scratchpad window
-bindsym Mod1+Shift+z move scratchpad
-bindsym Mod1+z scratchpad show
+# Scratchpad (Windows + z / Windows + Shift + z)
+bindsym $mod+Shift+z move scratchpad
+bindsym $mod+z scratchpad show
 
 # ==============================================================================
 # SESSION & CONFIG RELOAD (with i3-resurrect session manager)
@@ -191,8 +163,8 @@ bindsym Mod1+Shift+9 exec --no-startup-id ~/.local/bin/i3-session-menu
 bindsym Mod1+Control+7 exec --no-startup-id ~/.local/bin/i3-session-save
 bindsym Mod1+Control+8 exec --no-startup-id ~/.local/bin/i3-session-restore
 
-# Power / Shutdown Menu:
-bindsym Mod1+Escape exec --no-startup-id ~/.local/bin/powermenu
+# Power / Shutdown Menu (Windows + Escape)
+bindsym $mod+Escape exec --no-startup-id ~/.local/bin/powermenu
 
 
 #
@@ -287,20 +259,20 @@ bindsym XF86AudioLowerVolume exec "pamixer -ud 3 && pamixer --get-volume > /tmp/
 # mute sound
 bindsym XF86AudioMute exec "amixer sset Master toggle | sed -En '/\[on\]/ s/.*\[([0-9]+)%\].*/\1/ p; /\[off\]/ s/.*/0/p' | head -1 > /tmp/xobpipe"
 
-# Screen Brightness (Hardware keys & on-screen slider)
+# Screen Brightness (Hardware keys & Windows + Ctrl + Up/Down)
 bindsym XF86MonBrightnessUp exec --no-startup-id /home/manisk/.local/bin/change-brightness +5%
 bindsym XF86MonBrightnessDown exec --no-startup-id /home/manisk/.local/bin/change-brightness 5%-
-bindsym Mod1+Control+Up exec --no-startup-id /home/manisk/.local/bin/change-brightness +5%
-bindsym Mod1+Control+Down exec --no-startup-id /home/manisk/.local/bin/change-brightness 5%-
+bindsym $mod+Control+Up exec --no-startup-id /home/manisk/.local/bin/change-brightness +5%
+bindsym $mod+Control+Down exec --no-startup-id /home/manisk/.local/bin/change-brightness 5%-
 
-bindsym $mod+Shift+p exec gnome-calculator
+bindsym $mod+c exec gnome-calculator
 #bindsym $mod+p exec ~/.scripts/dmshot
 
 # Random Wallpaper Switcher (Gaming, Creepy, Creative, Nature)
 bindsym Mod1+Shift+w exec --no-startup-id /home/manisk/.local/bin/random-wallpaper
 bindsym Mod1+Control+w exec --no-startup-id /home/manisk/.local/bin/wallpaper-menu
-# Toggle Bottom Bar (Polybar)
-bindsym Mod1+0 exec --no-startup-id /home/manisk/.local/bin/toggle-bar
+# Toggle Bottom Bar (Polybar) (Windows + Shift + 0)
+bindsym $mod+Shift+0 exec --no-startup-id /home/manisk/.local/bin/toggle-bar
 
 ########################################################################
 ########################################################################
