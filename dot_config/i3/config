@@ -208,13 +208,18 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 bindsym Mod1+r restart
 
-# Quick session save / restore (Simple Alt + Numbers):
-bindsym Mod1+7 exec --no-startup-id ~/.local/bin/i3-session-save --all
-bindsym Mod1+8 exec --no-startup-id ~/.local/bin/i3-session-restore --all
-bindsym Mod1+9 exec --no-startup-id ~/.local/bin/i3-session-menu
-bindsym Mod1+Shift+7 exec --no-startup-id ~/.local/bin/i3-session-save
-bindsym Mod1+Shift+8 exec --no-startup-id ~/.local/bin/i3-session-restore
+# Safe session save / restore (Alt + Shift + Numbers):
+# Alt + Shift + 7 : Save all active workspaces session
+# Alt + Shift + 8 : Restore all workspaces session
+# Alt + Shift + 9 : Session Manager interactive menu
+bindsym Mod1+Shift+7 exec --no-startup-id ~/.local/bin/i3-session-save --all
+bindsym Mod1+Shift+8 exec --no-startup-id ~/.local/bin/i3-session-restore --all
+bindsym Mod1+Shift+9 exec --no-startup-id ~/.local/bin/i3-session-menu
 bindsym Mod1+F12 exec --no-startup-id ~/.local/bin/i3-session-menu
+
+# Per-workspace quick save / restore (Alt + Ctrl + Numbers):
+bindsym Mod1+Control+7 exec --no-startup-id ~/.local/bin/i3-session-save
+bindsym Mod1+Control+8 exec --no-startup-id ~/.local/bin/i3-session-restore
 
 # Power / Shutdown Menu:
 bindsym Mod1+Escape exec --no-startup-id ~/.local/bin/powermenu
