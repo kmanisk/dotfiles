@@ -29,23 +29,14 @@ if [ -n "$BT_CARD" ]; then
     pactl set-card-profile "$BT_CARD" a2dp-sink-sbc_xq 2>/dev/null || true
 fi
 
-# 4. Register high-refresh 4:3 resolutions (1440x1080 & 1600x1200 @ 165Hz) and enable hardware stretch
-if ! xrandr | grep -q "1440x1080_165.00"; then
-    xrandr --newmode "1440x1080_165.00" 393.00 1440 1560 1720 2000 1080 1083 1087 1192 -hsync +vsync 2>/dev/null || true
-    xrandr --addmode eDP-1 "1440x1080_165.00" 2>/dev/null || true
-fi
-if ! xrandr | grep -q "1600x1200_165.00"; then
-    xrandr --newmode "1600x1200_165.00" 489.00 1600 1744 1920 2240 1200 1203 1207 1324 -hsync +vsync 2>/dev/null || true
-    xrandr --addmode eDP-1 "1600x1200_165.00" 2>/dev/null || true
-fi
-xrandr --output eDP-1 --set "scaling mode" "Full" 2>/dev/null || true
-
-# 5. Disable desktop compositor (Picom) & hide Polybar to eliminate frame jitter
+# 4. Disable desktop compositor (Picom) & hide Polybar to eliminate frame jitter
 pkill -x picom 2>/dev/null || true
 polybar-msg cmd hide 2>/dev/null || true
 
-# 6. Cleanup & restoration handler on game exit
+# 5. Cleanup & restoration handler on game exit
 cleanup() {
+    # Guarantee display is always restored to native 1920x1200 @ 165Hz (prevents desync/black screens)
+    xrandr --output eDP-1 --mode 1920x1200 --rate 165.00 2>/dev/null || true
     # Restore Polybar
     polybar-msg cmd show 2>/dev/null || true
     # Restore Picom compositor
@@ -53,14 +44,14 @@ cleanup() {
 }
 trap cleanup EXIT INT TERM
 
-# 7. MangoHud Overlay Support (MANGOHUD=1)
+# 6. MangoHud Overlay Support (MANGOHUD=1)
 if [ "${MANGOHUD:-0}" = "1" ] || [ "${ENABLE_MANGOHUD:-0}" = "1" ]; then
     MANGOHUD_WRAPPER="mangohud"
 else
     MANGOHUD_WRAPPER=""
 fi
 
-# 8. Launch Strategy (Native Direct Scanout by default)
+# 7. Launch Strategy (Native Direct Scanout by default)
 if [ "${USE_GAMESCOPE:-0}" = "1" ] && command -v gamescope >/dev/null 2>&1; then
     # Optional fallback to Gamescope if explicitly requested
     taskset -c 0-11 gamemoderun gamescope \

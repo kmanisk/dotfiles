@@ -9,16 +9,3 @@ export GDK_SCALE=1
 export GDK_DPI_SCALE=1.2
 export QT_AUTO_SCREEN_SCALE_FACTOR=1
 export QT_SCALE_FACTOR=1.2
-
-# Add custom 165Hz 4:3 resolutions for competitive gaming & hardware scaling
-if command -v xrandr >/dev/null 2>&1; then
-    if ! xrandr | grep -q "1440x1080_165.00"; then
-        xrandr --newmode "1440x1080_165.00" 393.00 1440 1560 1720 2000 1080 1083 1087 1192 -hsync +vsync 2>/dev/null || true
-        xrandr --addmode eDP-1 "1440x1080_165.00" 2>/dev/null || true
-    fi
-    if ! xrandr | grep -q "1600x1200_165.00"; then
-        xrandr --newmode "1600x1200_165.00" 489.00 1600 1744 1920 2240 1200 1203 1207 1324 -hsync +vsync 2>/dev/null || true
-        xrandr --addmode eDP-1 "1600x1200_165.00" 2>/dev/null || true
-    fi
-    xrandr --output eDP-1 --set "scaling mode" "Full" 2>/dev/null || true
-fi
