@@ -83,6 +83,8 @@ fi
 # ------------------------------------------------------------------------------
 # 3. Download, Cache, Save & Apply via feh
 # ------------------------------------------------------------------------------
+MAX_CACHE_FILES=25
+
 if [[ -n "$IMAGE_URL" ]]; then
     if curl -s -L --max-time 15 "$IMAGE_URL" -o "$TEMP_FILE" && file "$TEMP_FILE" | grep -qiE 'image|bitmap'; then
         cp "$TEMP_FILE" "$CACHE_DIR/${CATEGORY}_$(date +%s).jpg"
@@ -92,6 +94,11 @@ if [[ -n "$IMAGE_URL" ]]; then
         fi
         feh --bg-fill "$WALLPAPER_FILE"
         chmod +x "$HOME/.fehbg" 2>/dev/null || true
+
+        # Prune cache: keep only the newest $MAX_CACHE_FILES images to prevent disk bloat
+        find "$CACHE_DIR" -maxdepth 1 -type f \( -name "*.jpg" -o -name "*.png" \) -printf '%T@ %p\n' 2>/dev/null | \
+            sort -rn | tail -n +$((MAX_CACHE_FILES + 1)) | cut -d' ' -f2- | xargs -r rm -f
+
         command -v notify-send >/dev/null && notify-send -i preferences-desktop-wallpaper "Wallpaper Applied!" "${DISPLAY_NAME}\nSource: ${SOURCE}"
         exit 0
     fi

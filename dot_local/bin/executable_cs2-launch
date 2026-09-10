@@ -1,22 +1,19 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# CS2 Ultra-Low Latency Native Launcher (ASUS TUF F16 + RTX 5050)
+# CS2 Low-Latency Launcher (Hybrid Optimus Mode + Gamescope Stretched 4:3)
 # ==============================================================================
 # - Hardware: ASUS TUF F16 (i5-13450HX + RTX 5050 Laptop)
-# - Rendering: Direct Native Vulkan via NVIDIA PRIME Offload (Zero Gamescope Lag)
+# - Gamescope runs on Intel iGPU (drives internal eDP-1 at native 1920x1200 @ 165Hz)
+# - CS2 renders on dedicated NVIDIA RTX 5050 via PRIME Offload
+# - ENABLE_GAMESCOPE_WSI=0 prevents swapchain crash with -S stretch on NVIDIA 555+/610+
 # - CPU Pinning: Physical P-cores 0-11 (Bypasses E-cores to eliminate micro-stutters)
-# - Power: Sets ASUS Performance mode for full 75W+ GPU & 4.6GHz CPU boost
-# - Compositor: Disables Picom during gameplay for direct hardware frame scanout
-# - Display: Hardware panel scaler set to Full (Stretched 4:3 with 0ms overhead)
+# - Audio: Low-latency PulseAudio streaming (30ms) & SBC-XQ Bluetooth codec
+# - Power: ASUS Balanced mode
 # ==============================================================================
 
-# 1. Force dedicated NVIDIA RTX 5050 via PRIME Offload & explicit Vulkan ICD
-export __NV_PRIME_RENDER_OFFLOAD=1
-export __GLX_VENDOR_LIBRARY_NAME=nvidia
-export __VK_LAYER_NV_optimus=NVIDIA_only
-if [ -f /usr/share/vulkan/icd.d/nvidia_icd.json ]; then
-    export VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json
-fi
+# 1. Polybar cleanup handler
+trap 'polybar-msg cmd show 2>/dev/null || true' EXIT INT TERM
+polybar-msg cmd hide 2>/dev/null || true
 
 # 2. Set ASUS power profile to Balanced as requested
 asusctl profile set Balanced >/dev/null 2>&1 || true
@@ -29,42 +26,33 @@ if [ -n "$BT_CARD" ]; then
     pactl set-card-profile "$BT_CARD" a2dp-sink-sbc_xq 2>/dev/null || true
 fi
 
-# 4. Enforce hardware stretched scaling (Full) so 4:3 resolutions fill the screen without black bars
-xrandr --output eDP-1 --set "scaling mode" "Full" 2>/dev/null || true
-
-# 5. Disable desktop compositor (Picom) & hide Polybar to eliminate frame jitter
-pkill -x picom 2>/dev/null || true
-polybar-msg cmd hide 2>/dev/null || true
-
-# 6. Cleanup & restoration handler on game exit
-cleanup() {
-    # Guarantee display is always restored to native 1920x1200 @ 165Hz (prevents desync/black screens)
-    xrandr --output eDP-1 --mode 1920x1200 --rate 165.00 2>/dev/null || true
-    # Restore Polybar
-    polybar-msg cmd show 2>/dev/null || true
-    # Restore Picom compositor
-    pgrep -x picom >/dev/null || picom -b 2>/dev/null || true
-}
-trap cleanup EXIT INT TERM
-
-# 7. MangoHud Overlay Support (MANGOHUD=1)
+# 4. MangoHud Overlay Support (MANGOHUD=1)
 if [ "${MANGOHUD:-0}" = "1" ] || [ "${ENABLE_MANGOHUD:-0}" = "1" ]; then
     MANGOHUD_WRAPPER="mangohud"
 else
     MANGOHUD_WRAPPER=""
 fi
 
-# 8. Launch Strategy (Native Direct Scanout by default)
-if [ "${USE_GAMESCOPE:-0}" = "1" ] && command -v gamescope >/dev/null 2>&1; then
-    # Optional fallback to Gamescope if explicitly requested
-    taskset -c 0-11 gamemoderun gamescope \
+# 5. PRIME offload only for the inner game — NOT for gamescope itself
+GAME_ENV=(
+    env
+    __NV_PRIME_RENDER_OFFLOAD=1
+    __GLX_VENDOR_LIBRARY_NAME=nvidia
+    __VK_LAYER_NV_optimus=NVIDIA_only
+    VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json
+    MANGOHUD=0
+)
+
+# 6. Launch via Gamescope (Stretched 4:3 1440x1080 -> 1920x1200 @ 165Hz)
+if command -v gamescope >/dev/null 2>&1; then
+    exec env ENABLE_GAMESCOPE_WSI=0 \
+      taskset -c 0-11 gamemoderun gamescope \
       -w 1440 -h 1080 \
       -W 1920 -H 1200 \
       -r 165 -f -S stretch \
-      --force-grab-cursor \
       --immediate-flips \
-      -- $MANGOHUD_WRAPPER "$@" -novid -nojoy
+      -- "${GAME_ENV[@]}" $MANGOHUD_WRAPPER "$@" -novid -nojoy
 else
-    # Native direct Vulkan execution: lowest input lag, max FPS, direct mouse input
-    taskset -c 0-11 gamemoderun $MANGOHUD_WRAPPER "$@" -novid -nojoy
+    exec taskset -c 0-11 gamemoderun "${GAME_ENV[@]}" $MANGOHUD_WRAPPER "$@" -novid -nojoy
 fi
+
