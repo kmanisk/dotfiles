@@ -313,7 +313,8 @@ bindsym Mod1+0 exec --no-startup-id /home/manisk/.local/bin/toggle-bar
 ## and the capslock functionality available by using shift+capslock.
 ## Uncomment to enable 'us' to/from 'ru' switch. change to language(s) you prefer more.
 
-#exec_always setxkbmap -option grp:caps_toggle "us,ru" -option "grp:caps_toggle,grp_led:caps"
+# Enable Ctrl+Alt+Backspace emergency shortcut to immediately kill hung Xorg
+exec_always --no-startup-id setxkbmap -option terminate:ctrl_alt_bksp
 
 exec_always --no-startup-id ~/.local/bin/setup-display
 #exec xrandr --auto --output HDMI-1 --mode 1920x1080 --above HDMI-2
