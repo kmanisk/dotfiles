@@ -86,5 +86,6 @@ scoop/**
 .profile
 .xprofile
 .config/picom/**
+.config/MangoHud/**
 {{- end }}
 
