@@ -108,21 +108,17 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
 
-# Top-Row Right-Hand Workspace Switching (Windows + u i o p [ ])
+# Top-Row Right-Hand Workspace Switching (Windows + u i o p)
 bindsym $mod+u workspace number $ws1
 bindsym $mod+i workspace number $ws2
 bindsym $mod+o workspace number $ws3
 bindsym $mod+p workspace number $ws4
-bindsym $mod+bracketleft workspace number $ws5
-bindsym $mod+bracketright workspace number $ws6
 
-# Top-Row Right-Hand Move Window (Windows + Shift + u i o p [ ])
+# Top-Row Right-Hand Move Window (Windows + Shift + u i o p)
 bindsym $mod+Shift+u move container to workspace number $ws1
 bindsym $mod+Shift+i move container to workspace number $ws2
 bindsym $mod+Shift+o move container to workspace number $ws3
 bindsym $mod+Shift+p move container to workspace number $ws4
-bindsym $mod+Shift+bracketleft move container to workspace number $ws5
-bindsym $mod+Shift+bracketright move container to workspace number $ws6
 
 # Standard Number Workspace Switching (Windows + 1..0)
 bindsym $mod+1 workspace number $ws1
