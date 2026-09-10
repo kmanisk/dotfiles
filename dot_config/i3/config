@@ -195,7 +195,13 @@ bindsym $mod+Shift+bracketright move container to workspace next; workspace next
 # Back and Forth with last workspace
 bindsym $mod+Tab workspace back_and_forth
 
-# Scratchpad (ALT+z or Mod+z)
+# Scratchpad
+# Make the current focused window a scratchpad
+bindsym $mod+Shift+minus move scratchpad
+# Show the first scratchpad window / toggle it
+bindsym $mod+minus scratchpad show
+
+# Alternative scratchpad shortcuts (Mod+z / Alt+z)
 bindsym Mod1+z scratchpad show
 bindsym Mod1+Shift+z move scratchpad
 bindsym $mod+z scratchpad show
@@ -351,6 +357,8 @@ exec --no-startup-id dunst
 exec --no-startup-id picom
 exec --no-startup-id ~/.local/bin/auto-nightlight
 exec --no-startup-id blueman-applet
+# Autotiling: automatically switch horizontal/vertical splits based on focused window dimensions
+exec_always --no-startup-id pkill -x autotiling; autotiling
 # Auto-restore previous workspace session on login / startup
 exec --no-startup-id sh -c 'sleep 1.2 && ~/.local/bin/i3-session-restore --all'
 exec_always --no-startup-id gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
