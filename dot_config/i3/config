@@ -331,7 +331,8 @@ exec_always --no-startup-id gsettings set org.gnome.desktop.interface gtk-theme 
 exec_always --no-startup-id gsettings set org.gnome.desktop.interface text-scaling-factor 1.2
 exec_always --no-startup-id gsettings set org.gnome.desktop.interface font-name 'CommitMono Nerd Font 11'
 exec_always --no-startup-id xrdb -merge ~/.Xresources
-exec_always --no-startup-id asusctl profile set Balanced -a && asusctl profile set Quiet -b
+exec_always --no-startup-id ~/.local/bin/auto-power-profile
+exec --no-startup-id ~/.local/bin/auto-power-profile --daemon
 
 # Toggle Compositor (Picom) for competitive gaming (Alt + Shift + o)
 bindsym Mod1+Shift+o exec --no-startup-id "pkill picom && notify-send -t 1500 'Picom' 'Compositor Disabled (Gaming Mode)' || (picom -b && notify-send -t 1500 'Picom' 'Compositor Enabled')"
