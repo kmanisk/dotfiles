@@ -58,8 +58,7 @@ semantic_escape_chars = ",│`|:\"' ()[]{}<>\t"
 save_to_clipboard = true
 
 [cursor]
-style = { shape = "Underline", blinking = "Off" }
-unfocused_hollow = true
+style = { shape = "Beam", blinking = "Off" }
 thickness = 0.15
 
 [mouse]

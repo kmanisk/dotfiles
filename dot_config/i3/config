@@ -77,12 +77,13 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 bindsym $mod+Shift+a focus parent
 
-# Layout & Split
+# Layout & Container Style (Tabbed, Stacking, Split Tiling)
 bindsym $mod+b split h
 bindsym $mod+v split v
-bindsym $mod+t split toggle
 bindsym $mod+s layout stacking
+bindsym $mod+Shift+s layout toggle all
 bindsym $mod+Shift+w layout tabbed
+bindsym $mod+Shift+t layout toggle split
 
 # ==============================================================================
 # FOCUS MOVEMENT (hjkl & Arrows)

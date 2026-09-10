@@ -11,6 +11,12 @@ set -gx VISUAL nvim
 # Ensure user binaries are prioritized in PATH
 fish_add_path -m ~/.local/bin
 
+# Cursor Style: Line / Beam cursor instead of block
+set -g fish_cursor_default line
+set -g fish_cursor_insert line
+set -g fish_cursor_replace_one underscore
+set -g fish_cursor_visual block
+
 # ------------------------------------------------------------------------------
 # Prompt & CLI Enhancements (Starship & Zoxide)
 # ------------------------------------------------------------------------------
