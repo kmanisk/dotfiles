@@ -83,7 +83,7 @@ bindsym $mod+v split v
 bindsym $mod+s layout stacking
 bindsym $mod+Shift+s layout toggle all
 bindsym $mod+Shift+w layout tabbed
-bindsym $mod+Shift+t layout toggle split
+bindsym $mod+Shift+e layout toggle split
 
 # ==============================================================================
 # FOCUS MOVEMENT (hjkl & Arrows)
