@@ -25,7 +25,7 @@ if type -q starship
 end
 
 if type -q zoxide
-    zoxide init fish | source
+    zoxide init --cmd cd fish | source
 end
 
 # ------------------------------------------------------------------------------
@@ -318,6 +318,167 @@ end
 
 function size --description "Calculate folder or file size"
     du -sh $argv[1]
+end
+
+# ------------------------------------------------------------------------------
+# Ported from PowerShell 7 Profile (General Utilities)
+# ------------------------------------------------------------------------------
+alias edit="cd ~/.config/nvim"
+alias spshell="cd ~/.config/systemd/user"
+alias sysinfo="fastfetch"
+alias idlebench="idle-bench"
+alias sysidle="idle-bench"
+alias spath="echo \$PATH | tr ' ' '\n'"
+alias Show-PathValues="spath"
+alias Get-PubIP="pubip"
+alias Convert-WebmToMp4="webm2mp4"
+alias fman="font"
+
+function s --description "Search official repos and AUR packages (mirrors PowerShell s)"
+    if test (count $argv) -eq 0
+        echo "Usage: s <query>"
+        return 1
+    end
+    set -l query $argv[1]
+    set_color cyan; echo "== Official Arch Repositories =="; set_color normal
+    pacman -Ss $query
+    set_color green; echo "== AUR Packages =="; set_color normal
+    paru -Ssa $query 2>/dev/null
+end
+
+function imginfo --description "Count photos and videos and calculate total size"
+    set -l target "."
+    if test (count $argv) -ge 1
+        set target $argv[1]
+    end
+    if not test -d "$target"
+        echo "Directory not found: $target"
+        return 1
+    end
+    python3 -c "
+import os, sys
+target = sys.argv[1]
+photo_exts = {'.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tiff', '.heic', '.webp'}
+video_exts = {'.mp4', '.mov', '.avi', '.mkv', '.wmv', '.flv', '.webm', '.m4v'}
+p_count, p_size = 0, 0
+v_count, v_size = 0, 0
+for root, _, files in os.walk(target):
+    for f in files:
+        ext = os.path.splitext(f)[1].lower()
+        try:
+            sz = os.path.getsize(os.path.join(root, f))
+        except OSError:
+            continue
+        if ext in photo_exts:
+            p_count += 1
+            p_size += sz
+        elif ext in video_exts:
+            v_count += 1
+            v_size += sz
+print(f'Total Photos:      {p_count:,}')
+print(f'Total Photo Size:  {p_size / (1024**3):.2f} GB ({p_size / (1024**2):.1f} MB)')
+print(f'Total Videos:      {v_count:,}')
+print(f'Total Video Size:  {v_size / (1024**3):.2f} GB ({v_size / (1024**2):.1f} MB)')
+print(f'Total Media Files: {p_count + v_count:,}')
+print(f'Total Media Size:  {(p_size + v_size) / (1024**3):.2f} GB')
+" "$target"
+end
+
+function shutit --description "Sync dotfiles via dall and safely shutdown"
+    echo "Synchronizing dotfiles before shutdown..."
+    dall "auto sync before shutdown"
+    echo "Shutting down system..."
+    sudo poweroff
+end
+
+function pubip --description "Print public IP address"
+    curl -s https://ifconfig.me/ip
+    echo ""
+end
+
+function isadmin --description "Check if running with root privileges"
+    if test (id -u) -eq 0
+        set_color green; echo "Yes"; set_color normal
+    else
+        set_color red; echo "No"; set_color normal
+    end
+end
+
+function nf --description "Quick file creation"
+    touch $argv[1]
+end
+
+function cod --description "Jump to coding directory"
+    if test -d ~/coding
+        cd ~/coding
+    else if test -d ~/Coding
+        cd ~/Coding
+    else if test -d ~/projects
+        cd ~/projects
+    else
+        mkdir -p ~/coding; and cd ~/coding
+    end
+end
+alias cods="cod"
+
+function cpytree --description "Copy clean directory tree to clipboard"
+    set -l p "."
+    if test (count $argv) -ge 1
+        set p $argv[1]
+    end
+    if type -q tree
+        tree -I "node_modules|next|build|.git|target|dist|__pycache__" "$p" | xclip -selection clipboard
+    else
+        find "$p" -maxdepth 3 -not -path '*/.*' -not -path '*node_modules*' | xclip -selection clipboard
+    end
+    echo "Directory tree copied to clipboard!"
+end
+
+function trash --description "Safely move files/directories to system trash"
+    if type -q gio
+        gio trash $argv
+        echo "Moved to trash: $argv"
+    else
+        echo "gio command not available"
+    end
+end
+
+function k9 --description "Force kill process by name"
+    pkill -9 -f $argv[1]
+    echo "Killed processes matching: $argv[1]"
+end
+
+function font --description "List all installed font families"
+    fc-list : family | sort -u
+end
+
+function mcpedit --description "Edit MCP configuration in nvim"
+    nvim ~/.gemini/antigravity-cli/mcp_config.json
+end
+
+function webm2mp4 --description "Convert WebM to MP4 with high quality using ffmpeg"
+    set -l input $argv[1]
+    if not test -f "$input"
+        echo "File not found: $input"
+        return 1
+    end
+    set -l output (string replace -r '\.webm$' '.mp4' "$input")
+    echo "Converting $input -> $output..."
+    ffmpeg -hide_banner -loglevel error -stats -i "$input" \
+        -map 0:v:0 -map 0:a:0? -c:v libx264 -preset slow -crf 18 \
+        -pix_fmt yuv420p -movflags +faststart -c:a aac -b:a 192k -ac 2 "$output"
+    if test $status -eq 0
+        echo "✔ Done: $output"
+    else
+        echo "✖ ffmpeg failed for $input"
+    end
+end
+
+function fcd --description "Fuzzy find directory with preview and cd"
+    set -l dir (find . -maxdepth 4 -type d -not -path '*/.*' 2>/dev/null | fzf --preview 'lsd -la {} 2>/dev/null || ls -la {}' --height 40% --border)
+    if test -n "$dir"
+        cd "$dir"
+    end
 end
 
 # ------------------------------------------------------------------------------
