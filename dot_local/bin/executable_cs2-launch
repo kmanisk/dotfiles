@@ -41,13 +41,17 @@ else
     MANGOHUD_WRAPPER=""
 fi
 
-# 6. Set Hardware Panel Scaler to "Full" for 4:3 stretched with 0ms lag
-xrandr --output eDP-1 --set "scaling mode" "Full" 2>/dev/null || true
+# 6. Resolution Mode Selection: Defaults to 4:3 stretched (1), set CS2_STRETCH=0 for native
+if [ "${CS2_STRETCH:-1}" = "1" ]; then
+    xrandr --output eDP-1 --set "scaling mode" "Full" 2>/dev/null || true
+    xrandr --output eDP-1 --mode 1440x1080 --rate 164.85 2>/dev/null || true
+    RES_ARGS=(-w 1440 -h 1080)
+else
+    xrandr --output eDP-1 --mode 1920x1200 --rate 165.00 2>/dev/null || true
+    RES_ARGS=(-w 1920 -h 1200)
+fi
 
-# 7. Switch screen mode to 1440x1080 @ 165Hz so panel hardware stretches edge-to-edge
-xrandr --output eDP-1 --mode 1440x1080 --rate 164.85 2>/dev/null || true
-
-# 8. Launch CS2 natively on the dedicated NVIDIA GPU (No Gamescope overhead)
+# 7. Launch CS2 natively on the dedicated NVIDIA GPU (No Gamescope overhead)
 if [ "${USE_GAMESCOPE:-0}" = "1" ] && command -v gamescope >/dev/null 2>&1; then
     env ENABLE_GAMESCOPE_WSI=0 \
       taskset -c 0-11 gamescope \
@@ -61,7 +65,7 @@ else
       __NV_PRIME_RENDER_OFFLOAD=1 \
       __GLX_VENDOR_LIBRARY_NAME=nvidia \
       __VK_LAYER_NV_optimus=NVIDIA_only \
-      $MANGOHUD_WRAPPER "$@" -fullscreen -w 1440 -h 1080 -vulkan -novid -nojoy +fps_max 0 +fps_max_ui 0
+      $MANGOHUD_WRAPPER "$@" -fullscreen "${RES_ARGS[@]}" -vulkan -novid -nojoy +fps_max 0 +fps_max_ui 0
     GAME_EXIT=$?
 fi
 
