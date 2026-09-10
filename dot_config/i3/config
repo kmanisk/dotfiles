@@ -25,7 +25,6 @@ bindsym Mod1+Shift+t exec $term -e nvim
 bindsym $mod+r exec $term -e nvim
 
 # File Manager
-bindsym Mod1+e exec $term -e yazi
 bindsym $mod+e exec $term -e yazi
 
 # Spotify
@@ -90,6 +89,10 @@ bindsym Mod1+j focus down
 bindsym Mod1+k focus up
 bindsym Mod1+l focus right
 
+# Move between stacked tabs (Alt + Shift + j / k)
+bindsym Mod1+Shift+j focus down
+bindsym Mod1+Shift+k focus up
+
 # ALT + Arrow keys for focus
 bindsym Mod1+Left focus left
 bindsym Mod1+Down focus down
@@ -117,8 +120,6 @@ bindsym $mod+Shift+Right move right
 # Direct instant resize (like in Hyprland)
 bindsym Mod1+Shift+h resize shrink width 50 px or 5 ppt
 bindsym Mod1+Shift+l resize grow width 50 px or 5 ppt
-bindsym Mod1+Shift+k resize shrink height 50 px or 5 ppt
-bindsym Mod1+Shift+j resize grow height 50 px or 5 ppt
 
 bindsym $mod+Right resize grow width 30 px or 3 ppt
 bindsym $mod+Left resize shrink width 30 px or 3 ppt
