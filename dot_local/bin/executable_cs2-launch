@@ -14,8 +14,10 @@
 cleanup() {
     trap - EXIT INT TERM HUP
     echo "==> Restoring native display resolution (1920x1200 @ 165Hz)..."
+    xrandr --output eDP-1 --set "scaling mode" "Full aspect" 2>/dev/null || true
     xrandr --output eDP-1 --mode 1920x1200 --rate 165.00 2>/dev/null || xrandr --output eDP-1 --auto 2>/dev/null || true
     sh "$HOME/.fehbg" 2>/dev/null || true
+    i3-msg restart 2>/dev/null || true
     polybar-msg cmd show 2>/dev/null || true
 }
 trap cleanup EXIT INT TERM HUP
