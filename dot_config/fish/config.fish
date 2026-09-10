@@ -55,6 +55,8 @@ alias ep="nvim ~/.config/fish/config.fish"
 alias editdot="nvim ~/.local/share/chezmoi"
 alias rel="source ~/.config/fish/config.fish; and echo 'Fish config reloaded!'"
 alias envs="echo \$PATH | tr ' ' '\n'"
+alias fixtether="setup-tether-dns"
+alias fixtethering="setup-tether-dns"
 
 # Modern CLI Replacements
 if type -q bat
