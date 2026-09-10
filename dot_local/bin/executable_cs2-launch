@@ -41,15 +41,43 @@ else
     MANGOHUD_WRAPPER=""
 fi
 
-# 6. Resolution Mode Selection: Defaults to 4:3 stretched (1), set CS2_STRETCH=0 for native
-if [ "${CS2_STRETCH:-1}" = "1" ]; then
-    xrandr --output eDP-1 --set "scaling mode" "Full" 2>/dev/null || true
-    xrandr --output eDP-1 --mode 1440x1080 --rate 164.85 2>/dev/null || true
-    RES_ARGS=(-w 1440 -h 1080)
-else
-    xrandr --output eDP-1 --mode 1920x1200 --rate 165.00 2>/dev/null || true
-    RES_ARGS=(-w 1920 -h 1200)
+# 6. Resolution Mode Selection: Defaults to 1344x1008 stretched (1008p), set CS2_STRETCH=0 for native
+TARGET_RES="${CS2_RES:-1344x1008}"
+if [ "${CS2_STRETCH:-1}" = "0" ]; then
+    TARGET_RES="native"
 fi
+
+case "$TARGET_RES" in
+    1344|1344x1008)
+        xrandr --output eDP-1 --set "scaling mode" "Full" 2>/dev/null || true
+        xrandr --output eDP-1 --mode "1344x1008_165.00" --rate 164.89 2>/dev/null || true
+        RES_ARGS=(-w 1344 -h 1008)
+        ;;
+    1280|1280x960)
+        xrandr --output eDP-1 --set "scaling mode" "Full" 2>/dev/null || true
+        xrandr --output eDP-1 --mode "1280x960_165.00" --rate 164.80 2>/dev/null || true
+        RES_ARGS=(-w 1280 -h 960)
+        ;;
+    1024|1024x768)
+        xrandr --output eDP-1 --set "scaling mode" "Full" 2>/dev/null || true
+        xrandr --output eDP-1 --mode "1024x768_165.00" --rate 164.78 2>/dev/null || true
+        RES_ARGS=(-w 1024 -h 768)
+        ;;
+    1440|1440x1080)
+        xrandr --output eDP-1 --set "scaling mode" "Full" 2>/dev/null || true
+        xrandr --output eDP-1 --mode "1440x1080" --rate 164.85 2>/dev/null || true
+        RES_ARGS=(-w 1440 -h 1080)
+        ;;
+    native|1920|1920x1200)
+        xrandr --output eDP-1 --mode 1920x1200 --rate 165.00 2>/dev/null || true
+        RES_ARGS=(-w 1920 -h 1200)
+        ;;
+    *)
+        xrandr --output eDP-1 --set "scaling mode" "Full" 2>/dev/null || true
+        xrandr --output eDP-1 --mode "1344x1008_165.00" --rate 164.89 2>/dev/null || true
+        RES_ARGS=(-w 1344 -h 1008)
+        ;;
+esac
 
 # 7. Launch CS2 natively on the dedicated NVIDIA GPU (No Gamescope overhead)
 if [ "${USE_GAMESCOPE:-0}" = "1" ] && command -v gamescope >/dev/null 2>&1; then

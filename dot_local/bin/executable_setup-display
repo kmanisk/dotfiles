@@ -15,6 +15,9 @@ fi
 xrandr --newmode "1440x1080" 393.00 1440 1560 1720 2000 1080 1083 1087 1192 -hsync +vsync 2>/dev/null || true
 xrandr --addmode "$PRIMARY_OUT" "1440x1080" 2>/dev/null || true
 
+xrandr --newmode "1344x1008_165.00" 343.25 1344 1464 1608 1872 1008 1011 1015 1112 -hsync +vsync 2>/dev/null || true
+xrandr --addmode "$PRIMARY_OUT" "1344x1008_165.00" 2>/dev/null || true
+
 xrandr --newmode "1280x960_165.00" 310.25 1280 1392 1528 1776 960 963 967 1060 -hsync +vsync 2>/dev/null || true
 xrandr --addmode "$PRIMARY_OUT" "1280x960_165.00" 2>/dev/null || true
 
