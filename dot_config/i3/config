@@ -266,10 +266,11 @@ for_window [class="(?i)^steam$" window_role="pop-up"] floating enable
 # Game window rules (Always launch CS2, Gamescope, and Steam games in Gaming Workspace 5: Alt + g)
 assign [class="(?i)^(cs2|gamescope)$"] workspace number $ws5
 assign [class="^steam_app_.*"] workspace number $ws5
-for_window [class="(?i)^(cs2|gamescope)$"] move to workspace number $ws5, workspace number $ws5, floating enable, border none, fullscreen enable
-for_window [class="^steam_app_.*"] move to workspace number $ws5, workspace number $ws5, floating enable, border none, fullscreen enable
+for_window [class="(?i)^(cs2|gamescope)$"] move to workspace number $ws5, floating enable, border none, fullscreen enable
+for_window [class="^steam_app_.*"] move to workspace number $ws5, floating enable, border none, fullscreen enable
 for_window [window_role="pop-up"] floating enable
 focus_on_window_activation smart
+mouse_warping none
 
 
 ########################################################################
