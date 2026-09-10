@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# ==============================================================================
+# Emergency Game / Compositor Termination Script (killgame / kg)
+# ==============================================================================
+echo "==> Terminating hung game processes and compositors..."
+
+# 1. Kill CS2, Gamescope, and Steam processes
+killall -9 -v cs2 gamescope gamescopereaper steam steamwebhelper 2>/dev/null || true
+pkill -9 -e -f "gamescope|cs2|steam" 2>/dev/null || true
+
+# 2. Restore Polybar if hidden
+polybar-msg cmd show 2>/dev/null || true
+
+# 3. Guidance message
+echo ""
+echo "==> Done! Return to your desktop by pressing: Ctrl + Alt + F2 (or Ctrl + Alt + Fn + F2)"
+echo "==> If the screen is still black, run: sudo systemctl restart ly@tty2"
