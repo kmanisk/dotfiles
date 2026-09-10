@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 """
 smart-layout-toggle:
-Intelligently toggles the active workspace between Tiled (split) and Tabbed (side-by-side tabs).
-Handles autotiling split nesting, multi-window consolidation, and single-window prep.
+Toggles between Side-by-Side (Horizontal Split) and Top-Bottom (Vertical Split)
+without any upper titlebars or menus.
 """
-import argparse
 import json
 import subprocess
 import sys
@@ -74,11 +73,6 @@ def get_tiled_leaves(node):
 
 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--mode", choices=["tabbed", "stacking"], default="tabbed")
-    args = parser.parse_args()
-    target_mode = args.mode
-
     tree = get_tree()
     focused = find_focused(tree)
     if not focused:
@@ -94,58 +88,47 @@ def main():
 
     # Case 0: Empty workspace
     if n == 0:
-        i3_msg(f"layout toggle {target_mode} splith")
+        i3_msg("layout toggle split")
         sys.exit(0)
 
     # Case 1: Single window
     if n == 1:
         leaf = leaves[0]
         parent = find_parent_container(ws, leaf["id"])
-        is_tabbed = (parent and parent.get("layout") in ("tabbed", "stacked")) or (ws.get("layout") in ("tabbed", "stacked"))
-        if is_tabbed:
-            # Switch back to tiled (splith)
-            cmds = [f'[con_id="{leaf["id"]}"] layout splith']
-            if parent and parent.get("type") != "workspace":
-                cmds.append(f'[con_id="{parent["id"]}"] layout splith')
-            i3_msg(*cmds)
+        cur_layout = parent.get("layout") if parent else ws.get("layout", "splith")
+        if cur_layout == "splith":
+            i3_msg(f'[con_id="{leaf["id"]}"] split v')
         else:
-            # Switch to target_mode (tabbed side-by-side) so subsequent windows become side-by-side tabs
-            cmds = [f'[con_id="{leaf["id"]}"] layout {target_mode}']
-            if parent and parent.get("type") != "workspace":
-                cmds.append(f'[con_id="{parent["id"]}"] layout {target_mode}')
-            i3_msg(*cmds)
+            i3_msg(f'[con_id="{leaf["id"]}"] split h')
         sys.exit(0)
 
     # Case 2: Multiple windows (n >= 2)
     parents = [find_parent_container(ws, leaf["id"]) for leaf in leaves]
     parent_ids = {p["id"] for p in parents if p}
 
-    # Check if they already share a single parent
+    # If all windows share a single parent container
     if len(parent_ids) == 1:
         common_parent = parents[0]
         cur_layout = common_parent.get("layout")
-        if cur_layout == target_mode:
-            # ALREADY TABBED -> Toggle to TILED (splith)
-            i3_msg(
-                f'[con_id="{common_parent["id"]}"] layout splith',
-                f'[con_id="{focused_id}"] focus'
-            )
-            sys.exit(0)
-        elif cur_layout in ("tabbed", "stacked"):
-            # CURRENTLY STACKED (top-down) -> Switch to TABBED (side-by-side)
-            i3_msg(
-                f'[con_id="{common_parent["id"]}"] layout {target_mode}',
-                f'[con_id="{focused_id}"] focus'
-            )
-            sys.exit(0)
+        target_layout = "splitv" if cur_layout == "splith" else "splith"
+        i3_msg(
+            f'[con_id="{common_parent["id"]}"] layout {target_layout}',
+            f'[con_id="{focused_id}"] focus'
+        )
+        sys.exit(0)
 
-    # CURRENTLY TILED -> Merge all windows into one side-by-side tabbed container
+    # If windows are across nested splits (from autotiling):
+    # Consolidate all windows into the root window's container and set layout
     root_leaf = leaves[0]
-    cmds = [f'[con_id="{root_leaf["id"]}"] mark --add "_smart_tab_root"']
+    root_parent = find_parent_container(ws, root_leaf["id"])
+    cur_layout = root_parent.get("layout") if root_parent else "splith"
+    target_layout = "splitv" if cur_layout == "splith" else "splith"
+
+    cmds = [f'[con_id="{root_leaf["id"]}"] mark --add "_smart_split_root"']
     for other in leaves[1:]:
-        cmds.append(f'[con_id="{other["id"]}"] move to mark "_smart_tab_root"')
-    cmds.append(f'[con_id="{root_leaf["id"]}"] unmark "_smart_tab_root"')
-    cmds.append(f'[con_id="{root_leaf["id"]}"] layout {target_mode}')
+        cmds.append(f'[con_id="{other["id"]}"] move to mark "_smart_split_root"')
+    cmds.append(f'[con_id="{root_leaf["id"]}"] unmark "_smart_split_root"')
+    cmds.append(f'[con_id="{root_leaf["id"]}"] layout {target_layout}')
     cmds.append(f'[con_id="{focused_id}"] focus')
     i3_msg(*cmds)
 
