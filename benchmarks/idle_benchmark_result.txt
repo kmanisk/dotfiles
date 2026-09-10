@@ -1,0 +1,50 @@
+================================================================================
+                     SYSTEM IDLE RESOURCE BENCHMARK
+================================================================================
+OS: Arch Linux | Kernel: 7.2.3-1-cachyos | WM: i3wm
+Duration: 15s | Interval: 1.0s | Log File: /home/manisk/idle_benchmark_result.txt
+--------------------------------------------------------------------------------
+[-] Closing background user programs (Steam, Brave, Editors, Media)...
+[+] Allowing 3 seconds for kernel memory and page reclamation to settle...
+[+] System settled. Starting logging window...
+--------------------------------------------------------------------------------
+  Sample  1/15s:   CPU:  0.12%   |   RAM In-Use:   2436 MB (15.6%)   |   Swap: 173 MB
+  Sample  2/15s:   CPU:  0.25%   |   RAM In-Use:   2435 MB (15.6%)   |   Swap: 173 MB
+  Sample  3/15s:   CPU:  0.25%   |   RAM In-Use:   2432 MB (15.6%)   |   Swap: 173 MB
+  Sample  4/15s:   CPU:  0.31%   |   RAM In-Use:   2428 MB (15.6%)   |   Swap: 173 MB
+  Sample  5/15s:   CPU:  0.12%   |   RAM In-Use:   2423 MB (15.5%)   |   Swap: 173 MB
+  Sample  6/15s:   CPU:  0.37%   |   RAM In-Use:   2421 MB (15.5%)   |   Swap: 173 MB
+  Sample  7/15s:   CPU:  0.19%   |   RAM In-Use:   2425 MB (15.6%)   |   Swap: 173 MB
+  Sample  8/15s:   CPU:  0.25%   |   RAM In-Use:   2424 MB (15.6%)   |   Swap: 173 MB
+  Sample  9/15s:   CPU:  0.19%   |   RAM In-Use:   2423 MB (15.5%)   |   Swap: 173 MB
+  Sample 10/15s:   CPU:  0.31%   |   RAM In-Use:   2427 MB (15.6%)   |   Swap: 173 MB
+  Sample 11/15s:   CPU:  0.12%   |   RAM In-Use:   2427 MB (15.6%)   |   Swap: 173 MB
+  Sample 12/15s:   CPU:  0.31%   |   RAM In-Use:   2426 MB (15.6%)   |   Swap: 173 MB
+  Sample 13/15s:   CPU:  0.12%   |   RAM In-Use:   2426 MB (15.6%)   |   Swap: 173 MB
+  Sample 14/15s:   CPU:  0.25%   |   RAM In-Use:   2426 MB (15.6%)   |   Swap: 173 MB
+  Sample 15/15s:   CPU:  0.19%   |   RAM In-Use:   2419 MB (15.5%)   |   Swap: 173 MB
+--------------------------------------------------------------------------------
+BENCHMARK RESULTS (15s IDLE AVERAGE):
+--------------------------------------------------------------------------------
+  CPU Average Usage:       0.22%  (Min: 0.12%, Max: 0.37%)
+  RAM In-Use:              2427 MB (2.37 GB) / 15584 MB (15.6% of total)
+  RAM Available / Free:    13165 MB (12.86 GB) ready for applications/games
+  Swap In-Use:             173 MB
+--------------------------------------------------------------------------------
+TOP MEMORY CONSUMERS AT IDLE:
+--------------------------------------------------------------------------------
+  - alacritty               :   94.2 MB
+  - Xorg                    :   84.2 MB
+  - i3                      :   56.6 MB
+  - picom                   :   42.7 MB
+  - python3                 :   40.4 MB
+  - blueman-applet          :   36.1 MB
+--------------------------------------------------------------------------------
+DIRECT WINDOWS COMPARISON BASELINE:
+--------------------------------------------------------------------------------
+  Metric             Linux (Your Current Arch/i3)    Windows 11 (Clean Idle)
+  RAM In-Use:        ~2.37 GB (2427 MB)               ~4.0 - 5.5 GB (DWM, Defender, Telemetry)
+  CPU At Idle:       ~0.22%                          ~2.0% - 6.0% (Antimalware, SysMain)
+  Memory Available:  ~12.86 GB                         ~10.5 - 12.0 GB (on 16 GB system)
+  Advantage:         Linux gives ~2.4 GB MORE free RAM directly to CS2 / games.
+================================================================================
