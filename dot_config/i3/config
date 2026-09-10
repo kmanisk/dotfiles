@@ -49,7 +49,9 @@ bindsym $mod+Control+l exec "sleep 0.1 && i3lock --blur 5"
 # Kill / Close window (Windows + q)
 bindsym $mod+q kill
 
-# Smart Layout Toggle: Toggle between Tiling and Stacking (groups existing windows or prepares single window)
+# Smart Layout Toggle: Toggle between Tiling and Tabbed mode
+# Bound to Windows + semicolon (comfortable right-hand home row) & Windows + a
+bindsym $mod+semicolon exec --no-startup-id ~/.local/bin/smart-layout-toggle
 bindsym $mod+a exec --no-startup-id ~/.local/bin/smart-layout-toggle
 bindsym $mod+f fullscreen toggle
 bindsym $mod+Shift+space floating toggle
@@ -227,6 +229,8 @@ for_window [class="(?i)^btop$"] floating enable, resize set 1150 720
 for_window [class="(?i)^Task Manager TMOG$"] floating enable, resize set 1200 750, move position center
 for_window [instance="(?i)^AppRun\.wrapped$"] floating enable, resize set 1200 750, move position center
 for_window [instance="(?i)^pkg-float$"] floating enable, resize set 1250 780, move position center
+# Set Workspace 5 to Tabbed mode by default
+for_window [workspace="^5$"] layout tabbed
 
 # ==============================================================================
 # Steam & Gaming Rules
