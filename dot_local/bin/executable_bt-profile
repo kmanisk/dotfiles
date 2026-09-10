@@ -23,7 +23,7 @@ set_handsfree() {
 }
 
 set_hifi() {
-    pactl set-card-profile "$BT_CARD" a2dp-sink 2>/dev/null || pactl set-card-profile "$BT_CARD" a2dp-sink-sbc 2>/dev/null
+    pactl set-card-profile "$BT_CARD" a2dp-sink-sbc_xq 2>/dev/null || pactl set-card-profile "$BT_CARD" a2dp-sink-sbc 2>/dev/null || pactl set-card-profile "$BT_CARD" a2dp-sink 2>/dev/null
     sleep 0.2
     INT_MIC=$(pactl list sources short 2>/dev/null | grep -E "alsa_input.*analog-stereo" | awk '{print $2}' | head -n1)
     if [ -n "$INT_MIC" ]; then
