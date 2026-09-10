@@ -32,6 +32,8 @@ NATIVE_PKGS=(
     dunst
     feh
     thunar
+    kvantum
+    qt5ct
 
     # Shell & CLI Utilities
     fish
@@ -133,6 +135,26 @@ vm.vfs_cache_pressure = 50
 SYSCTL
             sudo sysctl --system >/dev/null 2>&1 || true
         fi
+    fi
+
+    # xremap Service Configuration
+    if command -v xremap >/dev/null 2>&1 || [ -f /usr/bin/xremap ]; then
+        echo "==> Configuring and enabling xremap.service..."
+        sudo tee /etc/systemd/system/xremap.service >/dev/null << XREMAP_SVC
+[Unit]
+Description=xremap key remapper
+After=systemd-udev-settle.service
+
+[Service]
+ExecStart=/usr/bin/xremap --watch $HOME/.config/xremap/config.yml
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target
+XREMAP_SVC
+        sudo systemctl daemon-reload 2>/dev/null || true
+        sudo systemctl enable --now xremap.service 2>/dev/null || true
     fi
 
     # System Services
