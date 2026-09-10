@@ -36,6 +36,8 @@ bindsym Mod1+3 exec pavucontrol
 bindsym Mod1+n exec pamixer -t
 # Audio Output Switcher between Laptop Speakers and Bluetooth (Alt + Shift + p)
 bindsym Mod1+Shift+p exec --no-startup-id /home/manisk/.local/bin/toggle-audio-sink
+# Bluetooth Mic / Hands-Free Toggle (Alt + Shift + m)
+bindsym Mod1+Shift+m exec --no-startup-id /home/manisk/.local/bin/bt-profile toggle
 # Night Light Toggle (Alt + Shift + n)
 bindsym Mod1+Shift+n exec --no-startup-id /home/manisk/.local/bin/toggle-nightlight
 # Night Light Temperature Slider (Alt + Shift + [ / ')
