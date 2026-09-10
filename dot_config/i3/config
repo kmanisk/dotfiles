@@ -8,15 +8,16 @@ floating_modifier $mod
 set $term alacritty
 bindsym $mod+Return exec $term
 bindsym Mod1+Return exec $term
+bindsym Control+Mod1+t exec $term
+bindsym $mod+Shift+Return exec ghostty
+bindsym Mod1+Shift+Return exec ghostty
 
 # App Launcher (Rofi)
-bindsym Mod1+p exec "pkill rofi || rofi -show drun"
 bindsym Mod1+space exec "pkill rofi || rofi -show drun"
-bindsym Control+space exec "rofi -show combi -modi window,run,drun -combi-modi window,run,drun"
 
 # Browser
-bindsym Mod1+b exec prime-run brave-origin
-bindsym $mod+w exec prime-run brave-origin
+bindsym Mod1+b exec brave-origin
+bindsym $mod+w exec brave-origin
 
 # Text Editor
 bindsym $mod+Shift+t exec $term -e nvim

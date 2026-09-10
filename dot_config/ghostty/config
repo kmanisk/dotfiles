@@ -1,0 +1,37 @@
+# ==============================================================================
+# Ghostty Terminal Configuration (Ported from Alacritty)
+# ==============================================================================
+
+# Window & Titlebar Settings
+window-decoration = false
+gtk-titlebar = false
+scrollbar = never
+
+# Font Configuration
+font-family = "Iosevka Nerd Font"
+font-size = 21
+
+# Gruvbox Dark Theme
+theme = Gruvbox Dark
+background = #282828
+foreground = #ebdbb2
+
+# Transparency & Padding
+background-opacity = 0.85
+background-blur = true
+window-padding-x = 8
+window-padding-y = 8
+window-padding-balance = true
+
+# Cursor
+cursor-style = underline
+cursor-style-blink = false
+cursor-click-to-move = true
+
+# Mouse & Clipboard
+mouse-hide-while-typing = true
+copy-on-select = true
+
+# Scrollback & Shell
+scrollback-limit = 10000
+command = /bin/fish

@@ -6,8 +6,12 @@
       "command": "gnome-terminal"
     },
     {
-      "class": "Alacritty",
-      "command": "alacritty"
+      "class": "com.mitchellh.ghostty",
+      "command": "ghostty"
+    },
+    {
+      "class": "ghostty",
+      "command": "ghostty"
     },
     {
       "class": "Brave-origin",
@@ -24,7 +28,8 @@
   ],
   "window_swallow_criteria": {},
   "terminals": [
-    "Gnome-terminal",
-    "Alacritty"
+    "ghostty",
+    "com.mitchellh.ghostty",
+    "Gnome-terminal"
   ]
 }

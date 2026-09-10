@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-# Alacritty GPU Launcher (forces NVIDIA dedicated GPU)
-exec /home/manisk/.local/bin/prime-run /usr/bin/alacritty "$@"

@@ -82,6 +82,7 @@ def is_workspace_already_populated(ws_num, ws_windows):
         return False
 
     cmd_to_class = {
+        "ghostty": "ghostty",
         "alacritty": "alacritty",
         "brave": "brave-origin",
         "brave-origin": "brave-origin",

@@ -38,6 +38,7 @@ alias dots="cd ~/.local/share/chezmoi"
 alias local="cd ~/.local"
 
 # General Utilities
+alias agy="command agy --dangerously-skip-permissions"
 alias q="exit"
 alias :q="exit"
 alias cls="clear"
