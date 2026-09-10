@@ -31,11 +31,11 @@ bindsym Control+Shift+Escape exec --no-startup-id /usr/bin/TaskManagerOG
 bindsym $mod+Shift+1 exec $term --class nmtui -e nmtui
 bindsym $mod+Shift+2 exec blueman-manager
 bindsym $mod+Shift+3 exec pavucontrol
-bindsym $mod+Shift+s exec --no-startup-id /home/manisk/.local/bin/screenshot-region
-bindsym $mod+Control+p exec --no-startup-id /home/manisk/.local/bin/toggle-audio-sink
-bindsym $mod+Shift+n exec --no-startup-id /home/manisk/.local/bin/toggle-nightlight
-bindsym $mod+Control+bracketleft exec --no-startup-id /home/manisk/.local/bin/adjust-nightlight +250
-bindsym $mod+Control+apostrophe exec --no-startup-id /home/manisk/.local/bin/adjust-nightlight -250
+bindsym $mod+Shift+s exec --no-startup-id ~/.local/bin/screenshot-region
+bindsym $mod+Control+p exec --no-startup-id ~/.local/bin/toggle-audio-sink
+bindsym $mod+Shift+n exec --no-startup-id ~/.local/bin/toggle-nightlight
+bindsym $mod+Control+bracketleft exec --no-startup-id ~/.local/bin/adjust-nightlight +250
+bindsym $mod+Control+apostrophe exec --no-startup-id ~/.local/bin/adjust-nightlight -250
 
 # Screen Lock (Windows + Ctrl + l)
 bindsym $mod+Control+l exec "sleep 0.1 && i3lock --blur 5"
@@ -276,19 +276,19 @@ bindsym XF86AudioLowerVolume exec "pamixer -ud 3 && pamixer --get-volume > /tmp/
 bindsym XF86AudioMute exec "amixer sset Master toggle | sed -En '/\[on\]/ s/.*\[([0-9]+)%\].*/\1/ p; /\[off\]/ s/.*/0/p' | head -1 > /tmp/xobpipe"
 
 # Screen Brightness (Hardware keys & Windows + Ctrl + Up/Down)
-bindsym XF86MonBrightnessUp exec --no-startup-id /home/manisk/.local/bin/change-brightness +5%
-bindsym XF86MonBrightnessDown exec --no-startup-id /home/manisk/.local/bin/change-brightness 5%-
-bindsym $mod+Control+Up exec --no-startup-id /home/manisk/.local/bin/change-brightness +5%
-bindsym $mod+Control+Down exec --no-startup-id /home/manisk/.local/bin/change-brightness 5%-
+bindsym XF86MonBrightnessUp exec --no-startup-id ~/.local/bin/change-brightness +5%
+bindsym XF86MonBrightnessDown exec --no-startup-id ~/.local/bin/change-brightness 5%-
+bindsym $mod+Control+Up exec --no-startup-id ~/.local/bin/change-brightness +5%
+bindsym $mod+Control+Down exec --no-startup-id ~/.local/bin/change-brightness 5%-
 
 bindsym $mod+c exec gnome-calculator
 #bindsym $mod+p exec ~/.scripts/dmshot
 
 # Random Wallpaper Switcher (Gaming, Creepy, Creative, Nature)
-bindsym Mod1+Shift+w exec --no-startup-id /home/manisk/.local/bin/random-wallpaper
-bindsym Mod1+Control+w exec --no-startup-id /home/manisk/.local/bin/wallpaper-menu
+bindsym Mod1+Shift+w exec --no-startup-id ~/.local/bin/random-wallpaper
+bindsym Mod1+Control+w exec --no-startup-id ~/.local/bin/wallpaper-menu
 # Toggle Bottom Bar (Polybar) (Windows + Shift + 0)
-bindsym $mod+Shift+0 exec --no-startup-id /home/manisk/.local/bin/toggle-bar
+bindsym $mod+Shift+0 exec --no-startup-id ~/.local/bin/toggle-bar
 
 ########################################################################
 ########################################################################

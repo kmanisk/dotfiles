@@ -82,11 +82,13 @@ NATIVE_PKGS=(
     mangohud
     power-profiles-daemon
 
-    # Fonts
+    # Fonts & Cursors
     ttf-iosevka-nerd
     ttf-font-awesome
     noto-fonts
     noto-fonts-emoji
+    otf-commit-mono-nerd
+    capitaine-cursors
 )
 
 # 2. AUR Packages
@@ -95,6 +97,7 @@ AUR_PKGS=(
     tmog-appimage
     brave-origin-bin
     xremap-x11-bin
+    cachyos-nord-gtk-theme-git
 )
 
 if [ "$HAS_SUDO" -eq 1 ] && command -v pacman >/dev/null 2>&1; then
@@ -184,6 +187,11 @@ fi
 mkdir -p "$HOME/.local/bin"
 ln -sf "$VENV_DIR/bin/i3-resurrect" "$HOME/.local/bin/i3-resurrect"
 ln -sf "$VENV_DIR/bin/autotiling" "$HOME/.local/bin/autotiling"
+ln -sf "$HOME/.local/bin/brave-origin" "$HOME/.local/bin/brave"
+mkdir -p "$HOME/.local/share/applications"
+if [ -f "$HOME/.local/share/applications/brave-origin.desktop" ]; then
+    ln -sf "$HOME/.local/share/applications/brave-origin.desktop" "$HOME/.local/share/applications/brave.desktop"
+fi
 
 # 4. Install Zed Editor if missing
 if [ ! -x "$HOME/.local/zed.app/bin/zed" ] && ! command -v zed >/dev/null 2>&1; then

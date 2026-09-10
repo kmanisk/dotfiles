@@ -5,7 +5,7 @@ Wants=pipewire.service wireplumber.service
 
 [Service]
 Type=simple
-ExecStart=/home/manisk/.local/bin/bt-auto-trust
+ExecStart=%h/.local/bin/bt-auto-trust
 Restart=always
 RestartSec=3
 

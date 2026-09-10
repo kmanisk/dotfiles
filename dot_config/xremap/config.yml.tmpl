@@ -29,9 +29,9 @@ keymap:
       CapsLock-p: C-Right
       # Brightness (CapsLock + [ and CapsLock + ')
       CapsLock-LEFTBRACE:
-        launch: ["/home/manisk/.local/bin/change-brightness", "+5%"]
+        launch: ["{{ .chezmoi.homeDir }}/.local/bin/change-brightness", "+5%"]
       CapsLock-APOSTROPHE:
-        launch: ["/home/manisk/.local/bin/change-brightness", "5%-"]
+        launch: ["{{ .chezmoi.homeDir }}/.local/bin/change-brightness", "5%-"]
       # Actions
       CapsLock-n: Enter
       CapsLock-SEMICOLON: [End, Enter]
@@ -60,9 +60,9 @@ keymap:
       CapsLock-EQUAL: F12
       # Fallback Brightness (] and \)
       CapsLock-RIGHTBRACE:
-        launch: ["/home/manisk/.local/bin/change-brightness", "+5%"]
+        launch: ["{{ .chezmoi.homeDir }}/.local/bin/change-brightness", "+5%"]
       CapsLock-BACKSLASH:
-        launch: ["/home/manisk/.local/bin/change-brightness", "5%-"]
+        launch: ["{{ .chezmoi.homeDir }}/.local/bin/change-brightness", "5%-"]
       # Passthrough
       CapsLock-a: a
       CapsLock-b: b
@@ -99,13 +99,13 @@ keymap:
       RIGHTCTRL-SEMICOLON: [End, Enter]
       # Brightness
       RIGHTCTRL-LEFTBRACE:
-        launch: ["/home/manisk/.local/bin/change-brightness", "+5%"]
+        launch: ["{{ .chezmoi.homeDir }}/.local/bin/change-brightness", "+5%"]
       RIGHTCTRL-APOSTROPHE:
-        launch: ["/home/manisk/.local/bin/change-brightness", "5%-"]
+        launch: ["{{ .chezmoi.homeDir }}/.local/bin/change-brightness", "5%-"]
       RIGHTCTRL-RIGHTBRACE:
-        launch: ["/home/manisk/.local/bin/change-brightness", "+5%"]
+        launch: ["{{ .chezmoi.homeDir }}/.local/bin/change-brightness", "+5%"]
       RIGHTCTRL-BACKSLASH:
-        launch: ["/home/manisk/.local/bin/change-brightness", "5%-"]
+        launch: ["{{ .chezmoi.homeDir }}/.local/bin/change-brightness", "5%-"]
       # F-keys
       RIGHTCTRL-1: F1
       RIGHTCTRL-2: F2

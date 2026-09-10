@@ -16,7 +16,7 @@ CYAN='\033[0;36m'
 BOLD='\033[1m'
 RESET='\033[0m'
 
-THEMES_STORE="/home/manisk/.local/share/grub-themes"
+THEMES_STORE="${HOME}/.local/share/grub-themes"
 GRUBSOULS_DIR="$THEMES_STORE/grubsouls-theme"
 GALLERY_DIR="$GRUBSOULS_DIR/background_galery"
 TARGET_THEME_DIR="/boot/grub/themes/grubsouls"

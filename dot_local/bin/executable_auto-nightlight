@@ -29,7 +29,7 @@ check_and_apply() {
         local current_state
         current_state=$(cat "$STATE_FILE" 2>/dev/null || echo "off")
         if [[ "$current_state" != "on" ]]; then
-            /home/manisk/.local/bin/toggle-nightlight on --silent
+            "$HOME/.local/bin/toggle-nightlight" on --silent
         fi
     else
         # 06..21 -> Daytime mode
@@ -45,7 +45,7 @@ check_and_apply() {
         local current_state
         current_state=$(cat "$STATE_FILE" 2>/dev/null || echo "off")
         if [[ "$current_state" == "on" ]]; then
-            /home/manisk/.local/bin/toggle-nightlight off --silent
+            "$HOME/.local/bin/toggle-nightlight" off --silent
         fi
     fi
 }

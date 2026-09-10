@@ -2,7 +2,7 @@
 # ==============================================================================
 # Adjust Brightness and update on-screen slider (xob + dunst)
 # ==============================================================================
-export PATH="/home/manisk/.gemini/antigravity-cli/bin:/home/manisk/.local/bin:/usr/bin:$PATH"
+export PATH="$HOME/.gemini/antigravity-cli/bin:$HOME/.local/bin:/usr/bin:$PATH"
 STEP="${1:-+5%}"
 
 brightnessctl set "$STEP" >/dev/null 2>&1

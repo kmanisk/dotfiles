@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-exec /home/manisk/.local/bin/pkg clean "$@"
+exec pkg clean "$@"

@@ -7,7 +7,7 @@ Before=shutdown.target reboot.target halt.target exit.target
 Type=oneshot
 RemainAfterExit=yes
 ExecStart=/usr/bin/true
-ExecStop=/home/manisk/.local/bin/i3-session-save --all
+ExecStop=%h/.local/bin/i3-session-save --all
 Environment=DISPLAY=:0
 TimeoutStopSec=10
 

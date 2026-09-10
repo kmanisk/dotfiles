@@ -16,6 +16,8 @@ Documents/new 1.txt
 # Transient / State Files that cause constant git noise
 # ==============================================================================
 README.md
+install.sh
+linux-bootstrap.sh
 scoop/persist/windows-terminal/settings/state.json
 scoop/persist/windows-terminal/settings/elevated-state.json
 
