@@ -6,26 +6,18 @@ floating_modifier $mod
 # TERMINAL & APPLICATION LAUNCHERS
 # ==============================================================================
 set $term alacritty
-bindsym $mod+Return exec $term
 bindsym Mod1+Return exec $term
-bindsym Control+Mod1+t exec $term
-bindsym $mod+Shift+Return exec ghostty
-bindsym Mod1+Shift+Return exec ghostty
-
 # App Launcher (Rofi)
 bindsym Mod1+space exec "pkill rofi || rofi -show drun"
 
 # Browser
 bindsym Mod1+b exec brave-origin
-bindsym $mod+w exec brave-origin
 
 # Text Editor
-bindsym $mod+Shift+t exec $term -e nvim
 bindsym Mod1+Shift+t exec $term -e nvim
-bindsym $mod+r exec $term -e nvim
 
 # File Manager
-bindsym $mod+e exec $term -e yazi
+bindsym $mod+e exec thunar
 
 # Spotify
 bindsym Mod1+m exec spotify
@@ -41,9 +33,7 @@ bindsym Mod1+1 exec $term --class nmtui -e nmtui
 bindsym Mod1+Shift+1 exec --no-startup-id /home/manisk/.local/bin/screenshot-region
 bindsym Mod1+exclam exec --no-startup-id /home/manisk/.local/bin/screenshot-region
 bindsym Mod1+2 exec blueman-manager
-bindsym Mod1+Shift+2 exec blueman-manager
 bindsym Mod1+3 exec pavucontrol
-bindsym Mod1+Shift+3 exec pavucontrol
 bindsym Mod1+n exec pamixer -t
 # Audio Output Switcher between Laptop Speakers and Bluetooth (Alt + Shift + p)
 bindsym Mod1+Shift+p exec --no-startup-id /home/manisk/.local/bin/toggle-audio-sink
@@ -64,15 +54,12 @@ bindsym $mod+l exec "sleep 0.1 && i3lock --blur 5"
 # WINDOW MANAGEMENT
 # ==============================================================================
 # Kill / Close window
-bindsym Mod1+w kill
-bindsym $mod+c kill
-bindsym $mod+q kill
+bindsym Mod1+q kill
 
 # Layout Toggle: Single key to switch between Tiling and Tabbing (remembers split state, no stacking)
 bindsym $mod+a layout toggle tabbed split
 bindsym $mod+f fullscreen toggle
-bindsym $mod+d floating toggle
-bindsym $mod+Shift+space floating toggle
+bindsym Mod1+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 bindsym $mod+Shift+a focus parent
 
@@ -93,33 +80,17 @@ bindsym Mod1+l focus right
 bindsym Mod1+Shift+j focus down
 bindsym Mod1+Shift+k focus up
 
-# ALT + Arrow keys for focus
-bindsym Mod1+Left focus left
-bindsym Mod1+Down focus down
-bindsym Mod1+Up focus up
-bindsym Mod1+Right focus right
-
-
+# ==============================================================================
+# WINDOW MOVEMENT (Control + Shift + hjkl)
+# ==============================================================================
+bindsym Control+Shift+h move left
+bindsym Control+Shift+j move down
+bindsym Control+Shift+k move up
+bindsym Control+Shift+l move right
 
 # ==============================================================================
-# WINDOW MOVEMENT (SUPER + Shift + hjkl & Arrows)
+# WINDOW RESIZING (Mod + Arrows)
 # ==============================================================================
-bindsym $mod+Shift+h move left
-bindsym $mod+Shift+j move down
-bindsym $mod+Shift+k move up
-bindsym $mod+Shift+l move right
-
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
-
-# ==============================================================================
-# WINDOW RESIZING (ALT + Shift + hjkl & Mod + Arrows)
-# ==============================================================================
-# Direct instant resize (like in Hyprland)
-bindsym Mod1+Shift+h resize shrink width 50 px or 5 ppt
-bindsym Mod1+Shift+l resize grow width 50 px or 5 ppt
 
 bindsym $mod+Right resize grow width 30 px or 3 ppt
 bindsym $mod+Left resize shrink width 30 px or 3 ppt
@@ -205,18 +176,11 @@ bindsym $mod+Tab workspace back_and_forth
 bindsym Mod1+Shift+z move scratchpad
 bindsym Mod1+z scratchpad show
 
-# Secondary aliases ($mod+minus / $mod+z)
-bindsym $mod+Shift+minus move scratchpad
-bindsym $mod+minus scratchpad show
-bindsym $mod+Shift+z move scratchpad
-bindsym $mod+z scratchpad show
-
 # ==============================================================================
 # SESSION & CONFIG RELOAD (with i3-resurrect session manager)
 # ==============================================================================
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
-bindsym Mod1+r restart
 
 # Safe session save / restore (Alt + Shift + Numbers):
 # Alt + Shift + 7 : Save all active workspaces session
@@ -225,7 +189,6 @@ bindsym Mod1+r restart
 bindsym Mod1+Shift+7 exec --no-startup-id ~/.local/bin/i3-session-save --all
 bindsym Mod1+Shift+8 exec --no-startup-id ~/.local/bin/i3-session-restore --all
 bindsym Mod1+Shift+9 exec --no-startup-id ~/.local/bin/i3-session-menu
-bindsym Mod1+F12 exec --no-startup-id ~/.local/bin/i3-session-menu
 
 # Per-workspace quick save / restore (Alt + Ctrl + Numbers):
 bindsym Mod1+Control+7 exec --no-startup-id ~/.local/bin/i3-session-save
@@ -333,7 +296,6 @@ bindsym $mod+Shift+p exec gnome-calculator
 #bindsym $mod+p exec ~/.scripts/dmshot
 
 # Random Wallpaper Switcher (Gaming, Creepy, Creative, Nature)
-bindsym Mod1+9 exec --no-startup-id /home/manisk/.local/bin/random-wallpaper
 bindsym Mod1+Shift+w exec --no-startup-id /home/manisk/.local/bin/random-wallpaper
 bindsym Mod1+Control+w exec --no-startup-id /home/manisk/.local/bin/wallpaper-menu
 bindsym $mod+F9 exec --no-startup-id /home/manisk/.local/bin/wallpaper-menu
