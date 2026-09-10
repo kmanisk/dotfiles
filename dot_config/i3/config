@@ -69,8 +69,8 @@ bindsym Mod1+w kill
 bindsym $mod+c kill
 bindsym $mod+q kill
 
-# Fullscreen & Floating
-bindsym $mod+a fullscreen toggle
+# Layout Toggle: Single key to switch between Tiling and Tabbing (remembers split state, no stacking)
+bindsym $mod+a layout toggle tabbed split
 bindsym $mod+f fullscreen toggle
 bindsym $mod+d floating toggle
 bindsym $mod+Shift+space floating toggle
