@@ -229,6 +229,8 @@ for_window [class="(?i)^btop$"] floating enable, resize set 1150 720
 for_window [class="(?i)^Task Manager TMOG$"] floating enable, resize set 1200 750, move position center
 for_window [instance="(?i)^AppRun\.wrapped$"] floating enable, resize set 1200 750, move position center
 for_window [instance="(?i)^pkg-float$"] floating enable, resize set 1250 780, move position center
+# Hide outer edge borders when tabs/windows fill the edge
+hide_edge_borders smart
 # Set Workspace 5 to Tabbed mode by default
 for_window [workspace="^5$"] layout tabbed
 
