@@ -1,0 +1,146 @@
+#!/usr/bin/env python3
+"""
+smart-layout-toggle:
+Intelligently toggles the active workspace between Tiled and Stacking (or Tabbed) layouts.
+Handles autotiling split nesting, multi-window consolidation, and single-window prep.
+"""
+import argparse
+import json
+import subprocess
+import sys
+
+
+def i3_msg(*cmds):
+    cmd = "; ".join(cmds)
+    res = subprocess.run(["i3-msg", cmd], capture_output=True, text=True)
+    return res.stdout
+
+
+def get_tree():
+    res = subprocess.run(["i3-msg", "-t", "get_tree"], capture_output=True, text=True)
+    return json.loads(res.stdout)
+
+
+def find_focused(node):
+    if node.get("focused"):
+        return node
+    for child in node.get("nodes", []) + node.get("floating_nodes", []):
+        res = find_focused(child)
+        if res:
+            return res
+    return None
+
+
+def contains_id(node, target_id):
+    if node.get("id") == target_id:
+        return True
+    for child in node.get("nodes", []) + node.get("floating_nodes", []):
+        if contains_id(child, target_id):
+            return True
+    return False
+
+
+def find_workspace_node(node, focused_id):
+    if node.get("type") == "workspace":
+        if contains_id(node, focused_id):
+            return node
+    for child in node.get("nodes", []) + node.get("floating_nodes", []):
+        res = find_workspace_node(child, focused_id)
+        if res:
+            return res
+    return None
+
+
+def find_parent_container(root, target_id):
+    for child in root.get("nodes", []) + root.get("floating_nodes", []):
+        if child.get("id") == target_id:
+            return root
+        res = find_parent_container(child, target_id)
+        if res:
+            return res
+    return None
+
+
+def get_tiled_leaves(node):
+    leaves = []
+    # Only consider non-floating windows
+    if node.get("type") == "con" and node.get("window") is not None:
+        floating = node.get("floating", "")
+        if not floating or floating in ("auto_off", "user_off"):
+            return [node]
+    for child in node.get("nodes", []):
+        leaves.extend(get_tiled_leaves(child))
+    return leaves
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--mode", choices=["stacking", "tabbed"], default="stacking")
+    args = parser.parse_args()
+    target_mode = args.mode
+
+    tree = get_tree()
+    focused = find_focused(tree)
+    if not focused:
+        sys.exit(0)
+
+    focused_id = focused["id"]
+    ws = find_workspace_node(tree, focused_id)
+    if not ws:
+        sys.exit(0)
+
+    leaves = get_tiled_leaves(ws)
+    n = len(leaves)
+
+    # Case 0: Empty workspace
+    if n == 0:
+        i3_msg(f"layout toggle {target_mode} splith")
+        sys.exit(0)
+
+    # Case 1: Single window
+    if n == 1:
+        leaf = leaves[0]
+        parent = find_parent_container(ws, leaf["id"])
+        is_stacked = (parent and parent.get("layout") in ("stacked", "tabbed")) or (ws.get("layout") in ("stacked", "tabbed"))
+        if is_stacked:
+            # Switch back to tiled (splith)
+            cmds = [f'[con_id="{leaf["id"]}"] layout splith']
+            if parent and parent.get("type") != "workspace":
+                cmds.append(f'[con_id="{parent["id"]}"] layout splith')
+            i3_msg(*cmds)
+        else:
+            # Switch to target_mode (stacking / tabbed) so subsequent windows become stacked tabs
+            cmds = [f'[con_id="{leaf["id"]}"] layout {target_mode}']
+            if parent and parent.get("type") != "workspace":
+                cmds.append(f'[con_id="{parent["id"]}"] layout {target_mode}')
+            i3_msg(*cmds)
+        sys.exit(0)
+
+    # Case 2: Multiple windows (n >= 2)
+    parents = [find_parent_container(ws, leaf["id"]) for leaf in leaves]
+    parent_ids = {p["id"] for p in parents if p}
+
+    # Check if they already share a single stacked/tabbed parent
+    if len(parent_ids) == 1:
+        common_parent = parents[0]
+        if common_parent.get("layout") in ("stacked", "tabbed"):
+            # CURRENTLY STACKED -> Toggle to TILED (splith)
+            i3_msg(
+                f'[con_id="{common_parent["id"]}"] layout splith',
+                f'[con_id="{focused_id}"] focus'
+            )
+            sys.exit(0)
+
+    # CURRENTLY TILED -> Merge all windows into one stacked/tabbed container
+    root_leaf = leaves[0]
+    cmds = [f'[con_id="{root_leaf["id"]}"] mark --add "_smart_tab_root"']
+    for other in leaves[1:]:
+        cmds.append(f'[con_id="{other["id"]}"] move to mark "_smart_tab_root"')
+    cmds.append(f'[con_id="{root_leaf["id"]}"] unmark "_smart_tab_root"')
+    cmds.append(f'[con_id="{root_leaf["id"]}"] layout {target_mode}')
+    cmds.append(f'[con_id="{focused_id}"] focus')
+    i3_msg(*cmds)
+
+
+if __name__ == "__main__":
+    main()

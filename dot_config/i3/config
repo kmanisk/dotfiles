@@ -51,8 +51,8 @@ bindsym $mod+l exec "sleep 0.1 && i3lock --blur 5"
 # Kill / Close window
 bindsym Mod1+q kill
 
-# Layout Toggle: Single key to switch between Tiling and Tabbing (remembers split state, no stacking)
-bindsym $mod+a layout toggle tabbed split
+# Smart Layout Toggle: Toggle between Tiling and Stacking (groups existing windows or prepares single window)
+bindsym $mod+a exec --no-startup-id ~/.local/bin/smart-layout-toggle
 bindsym $mod+f fullscreen toggle
 bindsym Mod1+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
