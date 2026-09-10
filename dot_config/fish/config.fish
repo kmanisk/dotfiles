@@ -81,9 +81,15 @@ alias ga="git add ."
 alias gp="git push"
 alias lgall="git add . && git commit -m 'something' && git push -u origin master"
 
-# Package Management (Arch / CachyOS)
+# Package Management (Arch / CachyOS / Paru / FZF)
 alias pcheck="checkupdates; paru -Qua 2>/dev/null"
 alias uall="paru -Syu"
+alias pki="pkg install"
+alias pkia="pkg aur"
+alias pkr="pkg remove"
+alias pkc="pkg clean"
+alias pkl="pkg list"
+alias pku="pkg update"
 
 # ------------------------------------------------------------------------------
 # Functions Ported from PowerShell Profile

@@ -237,6 +237,7 @@ for_window [class="(?i)^nvidia-settings$"] floating enable, move position center
 for_window [class="(?i)^btop$"] floating enable, resize set 1150 720
 for_window [class="(?i)^Task Manager TMOG$"] floating enable, resize set 1200 750, move position center
 for_window [instance="(?i)^AppRun\.wrapped$"] floating enable, resize set 1200 750, move position center
+for_window [instance="(?i)^pkg-float$"] floating enable, resize set 1250 780, move position center
 
 # ==============================================================================
 # Steam & Gaming Rules (Dedicated Workspace + Floating Popups)
