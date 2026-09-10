@@ -17,14 +17,14 @@
 ;==========================================================
 
 [colors]
-background = #000000
-background-alt = #181818
-foreground = #ffffff
-foreground-alt = #cccccc
-primary = #ffffff
-secondary = #777777
-alert = #e06c75
-separator = #444444
+background = #282828
+background-alt = #3c3836
+foreground = #ebdbb2
+foreground-alt = #a89984
+primary = #d79921
+secondary = #928374
+alert = #cc241d
+separator = #504945
 
 [bar/example]
 enable-ipc = true
@@ -46,7 +46,7 @@ background = ${colors.background}
 line-size = 0
 
 border-top-size = 1
-border-top-color = #222222
+border-top-color = #3c3836
 border-bottom-size = 0
 border-left-size = 0
 border-right-size = 0

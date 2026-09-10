@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# ==============================================================================
+# CS2 Low-Latency Launcher (Hybrid Optimus Mode)
+# - Hardware: ASUS TUF F16 (i5-13450HX + RTX 5050 Laptop)
+# - CPU Pinning: taskset -c 0-11 (Physical P-cores only, excluding E-cores 12-15)
+# - GPU Offload: NVIDIA PRIME Render Offload on RTX 5050
+# - Resolution: Stretched 4:3 1600x1200 -> 1920x1200 @ 165Hz via Gamescope
+# - Latency: Immediate flips, gamemoderun, bar suspended during gameplay
+# ==============================================================================
+
+# 1. Force dedicated NVIDIA GPU via PRIME Offload (Hybrid Mode)
+export __NV_PRIME_RENDER_OFFLOAD=1
+export __GLX_VENDOR_LIBRARY_NAME=nvidia
+export __VK_LAYER_NV_optimus=NVIDIA_only
+
+# 2. Suspend status bar polling to eliminate frame-time spikes
+trap 'polybar-msg cmd show 2>/dev/null || true' EXIT
+polybar-msg cmd hide 2>/dev/null || true
+
+# 3. Game Launch Strategy
+# If gamescope is installed: run with immediate flips and 4:3 stretched scaling
+if command -v gamescope >/dev/null 2>&1; then
+    exec taskset -c 0-11 gamemoderun gamescope \
+      -w 1600 -h 1200 \
+      -W 1920 -H 1200 \
+      -r 165 -f -S stretch \
+      --immediate-flips \
+      -- "$@" -novelocity -nojoy
+else
+    # Direct fallback if gamescope is not yet installed
+    exec taskset -c 0-11 gamemoderun "$@" -novelocity -nojoy
+fi
