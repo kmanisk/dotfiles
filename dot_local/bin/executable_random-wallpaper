@@ -12,7 +12,7 @@ TEMP_FILE="/tmp/random_wallpaper_download_$$.png"
 
 mkdir -p "$CACHE_DIR"
 
-CATEGORIES=("creepy" "gaming" "earth")
+CATEGORIES=("creepy" "gaming")
 CATEGORY="${1:-}"
 
 # If no category or "random" passed, pick one randomly
@@ -31,15 +31,9 @@ case "$CATEGORY" in
         TAGS=("video+games" "gaming" "cyberpunk+2077" "elden+ring" "witcher" "dark+souls" "half-life")
         DISPLAY_NAME="Gaming"
         ;;
-    earth|nature)
-        SUBREDDITS=("EarthPorn" "spaceporn" "SkyPorn" "ExposurePorn" "NatureIsFuckingLit")
-        TAGS=("earth" "nature" "landscape" "mountains" "forest" "space" "ocean")
-        DISPLAY_NAME="Earth & Nature"
-        CATEGORY="earth"
-        ;;
     *)
-        SUBREDDITS=("EarthPorn" "GamingWallpapers" "creepy")
-        TAGS=("landscape" "gaming" "dark+fantasy")
+        SUBREDDITS=("GamingWallpapers" "creepy" "DarkGothicArt" "videogamephotography")
+        TAGS=("gaming" "dark+fantasy" "cyberpunk+2077" "dark")
         DISPLAY_NAME="Random"
         ;;
 esac

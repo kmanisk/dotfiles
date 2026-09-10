@@ -31,8 +31,8 @@ bindsym $mod+e exec $term -e yazi
 # Spotify
 bindsym Mod1+m exec spotify
 
-# System Monitor (btop)
-bindsym Control+Shift+Escape exec $term --class btop -e btop --force-utf
+# System Monitor (btop in floating window)
+bindsym Control+Shift+Escape exec --no-startup-id $term --class btop,btop -e btop --force-utf
 
 # ==============================================================================
 # SYSTEM UTILITIES
@@ -196,16 +196,16 @@ bindsym $mod+Shift+bracketright move container to workspace next; workspace next
 bindsym $mod+Tab workspace back_and_forth
 
 # Scratchpad
-# Make the current focused window a scratchpad
-bindsym $mod+Shift+minus move scratchpad
-# Show the first scratchpad window / toggle it
-bindsym $mod+minus scratchpad show
-
-# Alternative scratchpad shortcuts (Mod+z / Alt+z)
-bindsym Mod1+z scratchpad show
+# Alt + Shift + z : Move focused window into scratchpad
+# Alt + z         : Show / toggle scratchpad window
 bindsym Mod1+Shift+z move scratchpad
-bindsym $mod+z scratchpad show
+bindsym Mod1+z scratchpad show
+
+# Secondary aliases ($mod+minus / $mod+z)
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus scratchpad show
 bindsym $mod+Shift+z move scratchpad
+bindsym $mod+z scratchpad show
 
 # ==============================================================================
 # SESSION & CONFIG RELOAD (with i3-resurrect session manager)
@@ -272,6 +272,8 @@ for_window [class="imv"] floating enable
 for_window [class="zenity"] floating enable
 for_window [class="cachyos-welcome"] floating enable
 for_window [class="(?i)^nvidia-settings$"] floating enable, move position center
+for_window [class="(?i)^btop$"] floating enable, resize set 1150 720, move position center
+for_window [instance="(?i)^btop$"] floating enable, resize set 1150 720, move position center
 
 # ==============================================================================
 # Steam & Gaming Rules (Dedicated Workspace + Floating Popups)
@@ -295,10 +297,11 @@ for_window [class="(?i)^steam$" title="^Steam Guard.*"] floating enable, move po
 for_window [class="(?i)^steam$" title="^Sign in to Steam$"] floating enable, move position center
 for_window [class="(?i)^steam$" window_role="pop-up"] floating enable
 
-# Game window rules (prevent tiling breakage and input glitches)
-for_window [class="^cs2$"] floating enable, border none, fullscreen enable
-for_window [class="^steam_app_.*"] floating enable, border none
-for_window [class="gamescope"] floating enable, border none, fullscreen enable
+# Game window rules (Always launch CS2, Gamescope, and Steam games in Gaming Workspace 5: Alt + g)
+assign [class="(?i)^(cs2|gamescope)$"] workspace number $ws5
+assign [class="^steam_app_.*"] workspace number $ws5
+for_window [class="(?i)^(cs2|gamescope)$"] move to workspace number $ws5, workspace number $ws5, floating enable, border none, fullscreen enable
+for_window [class="^steam_app_.*"] move to workspace number $ws5, workspace number $ws5, floating enable, border none, fullscreen enable
 for_window [window_role="pop-up"] floating enable
 focus_on_window_activation smart
 
