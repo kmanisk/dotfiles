@@ -275,11 +275,9 @@ bindsym XF86AudioLowerVolume exec "pamixer -ud 3 && pamixer --get-volume > /tmp/
 # mute sound
 bindsym XF86AudioMute exec "amixer sset Master toggle | sed -En '/\[on\]/ s/.*\[([0-9]+)%\].*/\1/ p; /\[off\]/ s/.*/0/p' | head -1 > /tmp/xobpipe"
 
-# Screen Brightness (Hardware keys & Windows + Ctrl + Up/Down)
+# Screen Brightness (Hardware keys & xremap)
 bindsym XF86MonBrightnessUp exec --no-startup-id ~/.local/bin/change-brightness +5%
 bindsym XF86MonBrightnessDown exec --no-startup-id ~/.local/bin/change-brightness 5%-
-bindsym $mod+Control+Up exec --no-startup-id ~/.local/bin/change-brightness +5%
-bindsym $mod+Control+Down exec --no-startup-id ~/.local/bin/change-brightness 5%-
 
 bindsym $mod+c exec gnome-calculator
 #bindsym $mod+p exec ~/.scripts/dmshot
