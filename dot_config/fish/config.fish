@@ -500,3 +500,34 @@ bind \cb "commandline -r 'dall'; commandline -f execute"
 alias prun="gamemoderun prime-run"
 alias gscope="gamescope -W 1920 -H 1200 -r 165 --prime -- gamemoderun"
 alias cachy-sync="sudo cachyos-rate-mirrors && sudo pacman -Syu"
+# Fuzzy find: cd to dir or open file in nvim
+function f --description "Fuzzy find: cd to dir or open file in nvim"
+    set -l target (
+        fd --hidden --exclude .git 2>/dev/null | command fzf \
+            --height 40% \
+            --layout reverse \
+            --border \
+            --preview 'if test -d {}; eza --tree --level=2 --icons {}; else; bat --color=always --style=numbers --line-range=:200 {}; end'
+    )
+
+    test -z "$target"; and return
+
+    if test -d "$target"
+        cd "$target"
+    else if test -f "$target"
+        nvim "$target"
+    end
+end
+
+# Fuzzy find directory and cd into it
+function c --description "Fuzzy find directory and cd into it"
+    set -l dir (
+        fd --type d --hidden --exclude .git 2>/dev/null | command fzf \
+            --height 40% \
+            --layout reverse \
+            --border \
+            --preview 'eza --tree --level=2 --icons {}'
+    )
+
+    test -n "$dir"; and cd "$dir"
+end
