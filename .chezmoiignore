@@ -10,7 +10,6 @@ AppData/Local/installer/userdata/**
 key.txt
 
 {{- if not (stat (joinPath .chezmoi.homeDir ".config/chezmoi/key.txt")) }}
-.test-secret.txt
 Documents/new 1.txt
 {{- end }}
 
