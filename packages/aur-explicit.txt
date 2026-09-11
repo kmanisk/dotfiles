@@ -1,0 +1,8 @@
+antigravity-cli
+bibata-cursor-theme-bin
+hyprsession
+hyprshade
+papirus-folders
+tmog-appimage
+xdg-terminal-exec
+xremap-hypr-bin

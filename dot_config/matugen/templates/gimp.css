@@ -1,0 +1,151 @@
+/* =============================================================================
+ * GIMP 3.x Matugen Dark Theme - Generated via Matugen
+ * Separate from GTK theming - only applied to GIMP
+ * Maps Material You tokens to GIMP's theme variables.
+ * Based on /usr/share/gimp/3.0/themes/Default/gimp-dark.css
+ * ============================================================================= */
+
+/* Foreground / Background core */
+@define-color fg-color               {{colors.on_surface.default.hex}};
+@define-color bg-color               {{colors.surface_dim.default.hex}};
+@define-color border-color           {{colors.outline_variant.default.hex}};
+
+/* Foreground variants */
+@define-color dimmed-fg-color        {{colors.on_surface_variant.default.hex}};
+@define-color disabled-fg-color      {{colors.outline.default.hex}};
+@define-color disabled-button-color  {{colors.outline.default.hex}};
+
+/* Background variants — hover/selected use accent for visibility */
+@define-color hover-color            {{colors.primary.default.hex}};
+@define-color widget-bg-color        {{colors.surface_container.default.hex}};
+@define-color selected-color         {{colors.primary.default.hex}};
+@define-color extreme-bg-color       {{colors.surface_container_lowest.default.hex}};
+@define-color extreme-selected-color {{colors.primary.default.hex}};
+
+/* Border variants */
+@define-color strong-border-color    {{colors.outline_variant.default.hex}};
+@define-color stronger-border-color  {{colors.outline.default.hex}};
+@define-color edge-border-color      {{colors.outline_variant.default.hex}};
+
+/* Special cases — sliders use accent for fill */
+@define-color scrollbar-slider-color {{colors.primary.default.hex}};
+@define-color scrollbar-trough-color {{colors.surface_container_lowest.default.hex}};
+@define-color ruler-color            {{colors.shadow.default.hex}};
+
+/* Import GIMP's common dark styles (relative to Default theme) */
+@import url("file:///usr/share/gimp/3.0/themes/Default/common-dark.css");
+
+/* Scales — trough fill must be accent, not gray, for Size/Aspect etc. */
+scale contents trough,
+GimpSpinScale trough,
+scale trough {
+  background-color: @ruler-color;
+  border-color: @strong-border-color;
+}
+scale contents trough highlight,
+GimpSpinScale entry progress,
+scale highlight,
+progressbar trough progress {
+  background-color: @selected-color;
+  background-image: none;
+  border-color: @selected-color;
+}
+
+/* SpinScale labels: left side (Size, Aspect Ratio) has pink bg, must be dark text */
+GimpSpinScale label,
+GimpSpinScale label:checked,
+GimpSpinScale label:active,
+spinbutton label,
+GimpSpinScale > label,
+GimpSpinScale > box > label {
+  color: {{colors.on_primary.default.hex}};
+}
+GimpSpinScale:checked label,
+GimpSpinScale:active label {
+  background-color: @selected-color;
+  color: {{colors.on_primary.default.hex}};
+}
+
+/* Fix contrast: selected background is light pink, text/icons must be dark */
+.view:selected,
+.view:selected:focus,
+.view:selected label,
+list row:selected,
+list row:selected label,
+iconview:selected,
+iconview:selected label {
+  background-color: @selected-color;
+  color: {{colors.on_primary.default.hex}};
+}
+
+notebook header tabs tab:checked,
+notebook header tabs tab:checked label {
+  background-color: @selected-color;
+  color: {{colors.on_primary.default.hex}};
+}
+
+toolbutton button:checked,
+toolbutton button:checked label,
+toolbutton button:checked image,
+toolbutton button.flat:checked,
+toolbutton button.flat:checked label,
+toolbutton button.flat:checked image,
+toolbutton button.flat:active,
+toolbutton button:active {
+  background-color: @selected-color;
+  background-image: none;
+  color: {{colors.on_primary.default.hex}};
+}
+
+button:checked,
+button:checked label,
+button:checked image,
+button.suggested-action,
+button.suggested-action label,
+headerbar button.suggested-action,
+headerbar button.suggested-action label,
+dialog headerbar button.suggested-action,
+messagedialog headerbar button.suggested-action {
+  background-color: @selected-color;
+  background-image: none;
+  color: {{colors.on_primary.default.hex}};
+  border-color: @selected-color;
+}
+
+/* Paintbrush tool options: left labels (Size, Aspect Ratio, Angle, Spacing, Hardness, Force)
+ * have pink @selected-color background with white text in default dark theme.
+ * Force dark text for readability. Right side entries (24.00 etc.) stay dark bg light text.
+ * The left label is a sibling to GimpSpinScale in a GtkBox/Grid, not a child of
+ * GimpSpinScale, so target the dock's grid/box labels and the spin scale labels
+ * with very high specificity to beat * { color:@fg } and common.css. */
+GimpDock box label,
+GimpDock grid label,
+/* Ultimate override for left spin scale labels - must be last and very specific */
+window GimpDock box label,
+window GimpDock grid label,
+dialog GimpDock box label,
+GimpDock GimpSpinScale > box > label,
+GimpDock GimpSpinScale > label,
+GimpDock spinbutton > box > label,
+GimpDock spinbutton > label,
+GimpSpinScale > box > label,
+GimpSpinScale > label,
+GimpSpinScale label,
+spinbutton label,
+GimpDock box label,
+GimpDock grid label,
+GimpDock box > label:first-child,
+GimpDock grid > label:first-child,
+box > label:first-child {
+  background-color: @selected-color;
+  color: {{colors.on_primary.default.hex}};
+  border-radius: 4px;
+  padding: 2px 6px;
+}
+
+/* GIMP dock/tool palette selected states */
+GimpToolPalette toolbutton button:checked,
+GimpDock toolbutton button:checked {
+  background-color: @selected-color;
+  color: {{colors.on_primary.default.hex}};
+}

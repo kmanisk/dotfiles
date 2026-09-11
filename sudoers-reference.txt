@@ -1,0 +1,48 @@
+# ==============================================================================
+# SUDOERS REFERENCE CAPTURE (REFERENCE ONLY - DO NOT AUTOMATICALLY PROPAGATE)
+# ==============================================================================
+# Captured from source machine: CachyOS (manisk)
+#
+# CRITICAL SECURITY WARNING REGARDING agy-nopasswd:
+# The file /etc/sudoers.d/agy-nopasswd contains:
+#     manisk ALL=(ALL) NOPASSWD: ALL
+#
+# REVIEW BEFORE APPLYING ON ANY NEW MACHINE — DO NOT PROPAGATE AUTOMATICALLY!
+# Blanket NOPASSWD access bypasses all administrative authentication barriers.
+# On any fresh or secondary machine, you MUST review whether you want full
+# passwordless sudo or prefer scoped rules (e.g. only for snapper/choom).
+# This file is intentionally NOT managed or deployed by chezmoi apply.
+# ==============================================================================
+
+--- /etc/sudoers.d/00-wayland-env ---
+# Managed by sudoers-nopasswd-automator
+# Drop-in: 00-wayland-env
+# Preserves Wayland session socket paths and theming environment for GUI applications under sudo
+Defaults env_keep += "WAYLAND_DISPLAY XDG_RUNTIME_DIR XDG_CURRENT_DESKTOP XDG_DATA_DIRS GTK_THEME QT_QPA_PLATFORMTHEME QT_QUICK_CONTROLS_STYLE"
+
+--- /etc/sudoers.d/10-installer ---
+%wheel ALL=(ALL) ALL
+
+--- /etc/sudoers.d/99_dusky_manisk_5854 ---
+Defaults:manisk timestamp_type=global, timestamp_timeout=15
+Defaults:manisk env_keep += "HOME USER LOGNAME SHELL PATH TERM COLORTERM LANG LC_ALL LC_CTYPE TZ XDG_RUNTIME_DIR XDG_CONFIG_HOME XDG_CACHE_HOME XDG_STATE_HOME XDG_DATA_HOME XDG_SESSION_TYPE XDG_CURRENT_DESKTOP DBUS_SESSION_BUS_ADDRESS DISPLAY WAYLAND_DISPLAY XAUTHORITY SSH_AUTH_SOCK SSH_AGENT_PID SUDO_ASKPASS PYTHONUNBUFFERED PYTHONUTF8 PYTHONDONTWRITEBYTECODE PAGER SYSTEMD_PAGER GIT_PAGER EDITOR VISUAL QT_QPA_PLATFORMTHEME GTK_THEME XCURSOR_THEME XCURSOR_SIZE MOZ_ENABLE_WAYLAND LIBVA_DRIVER_NAME VDPAU_DRIVER SDL_VIDEODRIVER ZDOTDIR HYPRLAND_INSTANCE_SIGNATURE QT_QPA_PLATFORM XDG_SESSION_ID XDG_SEAT DUSKY_*"
+
+--- /etc/sudoers.d/agy-nopasswd ---
+# CRITICAL: REVIEW BEFORE APPLYING ON ANY NEW MACHINE — DO NOT PROPAGATE AUTOMATICALLY
+manisk ALL=(ALL) NOPASSWD: ALL
+
+--- Scoped NOPASSWD Drop-ins ---
+# /etc/sudoers.d/zzzz-nopasswd-manisk-choom
+manisk ALL=(ALL:ALL) NOPASSWD: /usr/bin/choom
+
+# /etc/sudoers.d/zzzz-nopasswd-manisk-papirus-folders
+manisk ALL=(ALL:ALL) NOPASSWD: /usr/bin/papirus-folders
+
+# /etc/sudoers.d/zzzz-nopasswd-manisk-rfkill
+manisk ALL=(ALL:ALL) NOPASSWD: /usr/bin/rfkill
+
+# /etc/sudoers.d/zzzz-nopasswd-manisk-smartctl
+manisk ALL=(ALL:ALL) NOPASSWD: /usr/bin/smartctl
+
+# /etc/sudoers.d/zzzz-nopasswd-manisk-snapper
+manisk ALL=(ALL) NOPASSWD: /usr/bin/snapper

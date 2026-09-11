@@ -1,0 +1,221 @@
+@import url("../../.config/matugen/generated/waybar-colors.css");
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   TRANSPARENCY TOGGLE
+   ───────────────────────────────────────────────────────────────────────────── */
+
+@define-color glass_surface         alpha(@surface, 0.72);
+@define-color glass_module          alpha(@surface_container_high, 0.35);
+@define-color glass_tooltip         alpha(@surface_container, 0.72);
+
+/* WAYBAR_OPAQUE_SWITCH_START
+
+@define-color glass_surface         @surface;
+@define-color glass_module          @surface_container;
+@define-color glass_tooltip         @surface;
+
+WAYBAR_OPAQUE_SWITCH_END */
+
+* {
+    border: none;
+    border-radius: 0px;
+
+    font-family: "Adwaita Sans", "JetBrainsMono Nerd Font Propo", sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+
+    min-height: 16px;
+    margin: 0;
+}
+
+window#waybar {
+    background: transparent;
+}
+
+.modules-center {
+    background: @glass_surface;
+    border-radius: 20px;
+    padding: 0 6px;
+}
+
+tooltip decoration {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+tooltip,
+tooltip.background,
+.tooltip {
+    background-color: alpha(@surface_container, 0.57);
+    background: linear-gradient(135deg, alpha(@surface_container, 0.57), alpha(@surface_container_high, 0.57));
+    border: 1px solid alpha(@primary, 0.5);
+    border-radius: 12px;
+    box-shadow: none;
+}
+
+tooltip label,
+.tooltip label {
+    color: @on_surface;
+    padding: 8px 12px;
+    font-family: "JetBrainsMono Nerd Font Propo", "JetBrainsMono Nerd Font", monospace;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+#workspaces {
+    padding: 6px 2px;
+    margin: 0 0 0 4px;
+}
+
+#workspaces button {
+    padding: 0px 2px;
+    margin: 0px 2px;
+    border-radius: 45px;
+    background-color: @glass_module;
+    color: alpha(@tertiary, 0.6);
+    transition: all 0.3s ease-in-out;
+}
+
+#workspaces button:not(.empty):not(.active) {
+    color: alpha(@on_surface, 0.85);
+    background-color: alpha(@primary, 0.12);
+    border: 1px solid alpha(@primary, 0.2);
+}
+
+#workspaces button.active {
+    background: linear-gradient(135deg, @primary 0%, @secondary 100%);
+    color: @on_primary;
+    min-height: 16px;
+    min-width: 24px;
+    transition: all 0.3s ease-in-out;
+}
+
+#workspaces button:hover {
+    background: linear-gradient(135deg, @primary 50%, @secondary 100%);
+    color: @on_primary;
+    min-width: 20px;
+    background-size: 400% 400%;
+}
+
+#battery,
+#pulseaudio,
+#network,
+#clock,
+#custom-media,
+#window,
+#custom-launcher,
+#custom-notification,
+#submap,
+#bluetooth,
+#backlight,
+#custom-inhibit-suspend,
+#custom-updates-trigger,
+#custom-updates {
+    background-color: @glass_module;
+    padding: 0px 8px;
+    margin: 3px 3px;
+    border-radius: 45px;
+    border: none;
+    box-shadow: none;
+}
+
+#clock {
+    color: @tertiary;
+    font-size: 12px;
+}
+
+#mpris {
+    color: @tertiary;
+    font-size: 12px;
+    background-color: @glass_surface;
+    padding: 0 6px;
+    margin: 3px 4px;
+    border-radius: 45px;
+}
+
+#pulseaudio,
+#bluetooth,
+#backlight,
+#custom-inhibit-suspend {
+    color: @tertiary;
+    font-size: 12px;
+}
+
+#network {
+    color: @secondary;
+    font-size: 12px;
+}
+
+#battery {
+    color: @secondary;
+    font-size: 12px;
+}
+
+#custom-notification {
+    color: @tertiary;
+    font-size: 12px;
+}
+
+#custom-updates-trigger,
+#custom-updates {
+    color: @secondary;
+    font-size: 12px;
+}
+
+#custom-cava {
+    color: @tertiary;
+    padding: 0 6px;
+    margin: 3px 4px;
+    border-radius: 45px;
+    background-color: @glass_surface;
+}
+
+#custom-mpris-trigger {
+    color: @tertiary;
+    padding: 0 6px;
+    margin: 3px 0 3px 4px;
+    border-radius: 45px;
+    background-color: @glass_surface;
+    font-size: 12px;
+}
+
+#custom-dropdown {
+    padding: 0 6px 0 12px;
+}
+
+#tray {
+    background-color: @glass_surface;
+    padding: 0 6px;
+    margin: 3px 0;
+    border-radius: 45px;
+}
+
+#tray .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray .needs-attention {
+    -gtk-icon-effect: highlight;
+    background-color: @accent;
+}
+
+.hide-tray-drawer {
+    background-color: @glass_surface;
+    border-radius: 20px;
+    margin-right: 8px;
+}
+
+.cava-mpris-drawer,
+.mpris-drawer,
+.battery-drawer,
+.updates-drawer {
+    background-color: transparent;
+}
+
+#hide-tray {
+    background: transparent;
+    border-radius: 20px;
+    margin-right: 8px;
+    padding: 4px 0;
+}

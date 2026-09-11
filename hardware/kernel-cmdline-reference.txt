@@ -1,0 +1,1 @@
+BOOT_IMAGE=/@/boot/vmlinuz-linux-cachyos root=UUID=a719a902-b7be-41fb-84a7-4ffbffd4142f rw rootflags=subvol=@ nowatchdog nvme_load=YES loglevel=3

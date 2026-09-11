@@ -1,0 +1,169 @@
+{
+    "metadata": {
+        "copyright": [
+            "SPDX-FileCopyrightText: 2026 Matugen <dusklinux>"
+        ],
+        "license": "SPDX-License-Identifier: MIT",
+        "revision": 1,
+        "name": "Matugen"
+    },
+    "editor-colors": {
+        "BackgroundColor": "{{colors.surface_container_lowest.default.hex}}",
+        "CodeFolding": "{{colors.surface_dim.default.hex}}",
+        "BracketMatching": "{{colors.primary.default.hex}}",
+        "CurrentLine": "{{colors.surface_dim.default.hex}}",
+        "IconBorder": "{{colors.surface_container_lowest.default.hex}}",
+        "IndentationLine": "{{colors.outline_variant.default.hex}}",
+        "LineNumbers": "{{colors.outline.default.hex}}",
+        "CurrentLineNumber": "{{colors.primary.default.hex}}",
+        "MarkBookmark": "{{colors.primary.default.hex}}",
+        "MarkBreakpointActive": "{{colors.error.default.hex}}",
+        "MarkBreakpointReached": "{{colors.secondary.default.hex}}",
+        "MarkBreakpointDisabled": "{{colors.outline.default.hex}}",
+        "MarkExecution": "{{colors.surface_container_high.default.hex}}",
+        "MarkWarning": "{{colors.secondary.default.hex}}",
+        "MarkError": "{{colors.error.default.hex}}",
+        "ModifiedLines": "{{colors.secondary.default.hex}}",
+        "ReplaceHighlight": "{{colors.primary_container.default.hex}}",
+        "SavedLines": "{{colors.tertiary.default.hex}}",
+        "SearchHighlight": "{{colors.secondary_container.default.hex}}",
+        "TextSelection": "{{colors.primary_container.default.hex}}",
+        "Separator": "{{colors.outline_variant.default.hex}}",
+        "SpellChecking": "{{colors.error.default.hex}}",
+        "TabMarker": "{{colors.outline_variant.default.hex}}",
+        "TemplateBackground": "{{colors.surface_dim.default.hex}}",
+        "TemplatePlaceholder": "{{colors.surface_container.default.hex}}",
+        "TemplateFocusedPlaceholder": "{{colors.surface_container_high.default.hex}}",
+        "TemplateReadOnlyPlaceholder": "{{colors.surface_dim.default.hex}}",
+        "WordWrapMarker": "{{colors.outline_variant.default.hex}}"
+    },
+    "text-styles": {
+        "Normal": {
+            "text-color": "{{colors.on_surface.default.hex}}",
+            "selected-text-color": "{{colors.on_primary_container.default.hex}}",
+            "bold": false,
+            "italic": false,
+            "underline": false,
+            "strike-through": false
+        },
+        "Keyword": {
+            "text-color": "{{colors.primary.default.hex}}",
+            "selected-text-color": "{{colors.on_primary_container.default.hex}}",
+            "bold": true
+        },
+        "Function": {
+            "text-color": "{{colors.secondary.default.hex}}",
+            "selected-text-color": "{{colors.on_primary_container.default.hex}}"
+        },
+        "Variable": {
+            "text-color": "{{colors.tertiary.default.hex}}",
+            "selected-text-color": "{{colors.on_primary_container.default.hex}}"
+        },
+        "ControlFlow": {
+            "text-color": "{{colors.primary_fixed.default.hex}}",
+            "selected-text-color": "{{colors.on_primary_container.default.hex}}",
+            "bold": true
+        },
+        "Operator": {
+            "text-color": "{{colors.outline.default.hex}}",
+            "selected-text-color": "{{colors.on_primary_container.default.hex}}"
+        },
+        "BuiltIn": {
+            "text-color": "{{colors.primary.default.hex}}",
+            "selected-text-color": "{{colors.on_primary_container.default.hex}}"
+        },
+        "Extension": {
+            "text-color": "{{colors.primary.default.hex}}",
+            "selected-text-color": "{{colors.on_primary_container.default.hex}}",
+            "bold": true
+        },
+        "Preprocessor": {
+            "text-color": "{{colors.secondary.default.hex}}",
+            "selected-text-color": "{{colors.on_primary_container.default.hex}}"
+        },
+        "Attribute": {
+            "text-color": "{{colors.tertiary.default.hex}}",
+            "selected-text-color": "{{colors.on_primary_container.default.hex}}"
+        },
+        "Char": {
+            "text-color": "{{colors.tertiary_fixed.default.hex}}",
+            "selected-text-color": "{{colors.on_primary_container.default.hex}}"
+        },
+        "SpecialChar": {
+            "text-color": "{{colors.tertiary_fixed_dim.default.hex}}",
+            "selected-text-color": "{{colors.on_primary_container.default.hex}}"
+        },
+        "String": {
+            "text-color": "{{colors.tertiary.default.hex}}",
+            "selected-text-color": "{{colors.on_primary_container.default.hex}}"
+        },
+        "VerbatimString": {
+            "text-color": "{{colors.tertiary_fixed.default.hex}}",
+            "selected-text-color": "{{colors.on_primary_container.default.hex}}"
+        },
+        "SpecialString": {
+            "text-color": "{{colors.tertiary_fixed.default.hex}}",
+            "selected-text-color": "{{colors.on_primary_container.default.hex}}"
+        },
+        "Import": {
+            "text-color": "{{colors.secondary.default.hex}}",
+            "selected-text-color": "{{colors.on_primary_container.default.hex}}"
+        },
+        "DataType": {
+            "text-color": "{{colors.primary.default.hex}}",
+            "selected-text-color": "{{colors.on_primary_container.default.hex}}"
+        },
+        "DecVal": {
+            "text-color": "{{colors.secondary_fixed.default.hex}}",
+            "selected-text-color": "{{colors.on_primary_container.default.hex}}"
+        },
+        "BaseN": {
+            "text-color": "{{colors.secondary_fixed.default.hex}}",
+            "selected-text-color": "{{colors.on_primary_container.default.hex}}"
+        },
+        "Float": {
+            "text-color": "{{colors.secondary_fixed.default.hex}}",
+            "selected-text-color": "{{colors.on_primary_container.default.hex}}"
+        },
+        "Constant": {
+            "text-color": "{{colors.secondary_fixed_dim.default.hex}}",
+            "selected-text-color": "{{colors.on_primary_container.default.hex}}"
+        },
+        "Comment": {
+            "text-color": "{{colors.outline.default.hex}}",
+            "selected-text-color": "{{colors.outline_variant.default.hex}}",
+            "italic": true
+        },
+        "CommentVar": {
+            "text-color": "{{colors.outline.default.hex}}",
+            "selected-text-color": "{{colors.outline_variant.default.hex}}"
+        },
+        "RegionMarker": {
+            "text-color": "{{colors.primary.default.hex}}",
+            "selected-text-color": "{{colors.on_primary_container.default.hex}}",
+            "background-color": "{{colors.surface_dim.default.hex}}"
+        },
+        "Information": {
+            "text-color": "{{colors.secondary.default.hex}}",
+            "selected-text-color": "{{colors.on_primary_container.default.hex}}"
+        },
+        "Warning": {
+            "text-color": "{{colors.error_container.default.hex}}",
+            "selected-text-color": "{{colors.on_error_container.default.hex}}"
+        },
+        "Alert": {
+            "text-color": "{{colors.error.default.hex}}",
+            "selected-text-color": "{{colors.on_error.default.hex}}",
+            "bold": true
+        },
+        "Error": {
+            "text-color": "{{colors.error.default.hex}}",
+            "selected-text-color": "{{colors.on_error.default.hex}}",
+            "underline": true
+        },
+        "Others": {
+            "text-color": "{{colors.primary.default.hex}}",
+            "selected-text-color": "{{colors.on_primary_container.default.hex}}"
+        }
+    }
+}

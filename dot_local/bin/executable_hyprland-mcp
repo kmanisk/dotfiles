@@ -1,0 +1,134 @@
+#!/usr/bin/env python3
+import json
+import os
+import subprocess
+import sys
+
+def hyprctl(cmd):
+    try:
+        return subprocess.check_output(["hyprctl", "-j", cmd], text=True)
+    except Exception as e:
+        return json.dumps({"error": str(e)})
+
+def read_message():
+    line = sys.stdin.readline()
+    if not line:
+        return None
+    return json.loads(line)
+
+def write_message(msg):
+    sys.stdout.write(json.dumps(msg) + "\n")
+    sys.stdout.flush()
+
+def main():
+    while True:
+        req = read_message()
+        if req is None:
+            break
+        req_id = req.get("id")
+        method = req.get("method")
+        
+        if method == "initialize":
+            write_message({
+                "jsonrpc": "2.0",
+                "id": req_id,
+                "result": {
+                    "protocolVersion": "2024-11-05",
+                    "capabilities": {
+                        "tools": {}
+                    },
+                    "serverInfo": {
+                        "name": "hyprland-mcp",
+                        "version": "1.0.0"
+                    }
+                }
+            })
+        elif method == "notifications/initialized":
+            pass
+        elif method == "tools/list":
+            write_message({
+                "jsonrpc": "2.0",
+                "id": req_id,
+                "result": {
+                    "tools": [
+                        {
+                            "name": "hypr_get_active_window",
+                            "description": "Get information about the currently focused Hyprland window",
+                            "inputSchema": {"type": "object", "properties": {}}
+                        },
+                        {
+                            "name": "hypr_get_workspaces",
+                            "description": "List all active Hyprland workspaces",
+                            "inputSchema": {"type": "object", "properties": {}}
+                        },
+                        {
+                            "name": "hypr_get_clients",
+                            "description": "List all open windows and clients in Hyprland",
+                            "inputSchema": {"type": "object", "properties": {}}
+                        },
+                        {
+                            "name": "hypr_get_monitors",
+                            "description": "Get current monitor configuration and refresh rates",
+                            "inputSchema": {"type": "object", "properties": {}}
+                        },
+                        {
+                            "name": "hypr_dispatch",
+                            "description": "Execute a Hyprland dispatcher (e.g. workspace 5, killactive, togglefloating)",
+                            "inputSchema": {
+                                "type": "object",
+                                "properties": {
+                                    "command": {"type": "string", "description": "Dispatcher command and args"}
+                                },
+                                "required": ["command"]
+                            }
+                        }
+                    ]
+                }
+            })
+        elif method == "tools/call":
+            params = req.get("params", {})
+            name = params.get("name")
+            args = params.get("arguments", {})
+            
+            content = ""
+            if name == "hypr_get_active_window":
+                content = hyprctl("activewindow")
+            elif name == "hypr_get_workspaces":
+                content = hyprctl("workspaces")
+            elif name == "hypr_get_clients":
+                content = hyprctl("clients")
+            elif name == "hypr_get_monitors":
+                content = hyprctl("monitors")
+            elif name == "hypr_dispatch":
+                cmd = args.get("command", "")
+                parts = ["hyprctl", "dispatch"] + cmd.split()
+                try:
+                    res = subprocess.check_output(parts, text=True)
+                    content = res.strip() or "ok"
+                except Exception as e:
+                    content = str(e)
+            else:
+                content = f"Unknown tool: {name}"
+
+            write_message({
+                "jsonrpc": "2.0",
+                "id": req_id,
+                "result": {
+                    "content": [
+                        {"type": "text", "text": content}
+                    ]
+                }
+            })
+        else:
+            if req_id is not None:
+                write_message({
+                    "jsonrpc": "2.0",
+                    "id": req_id,
+                    "error": {
+                        "code": -32601,
+                        "message": f"Method {method} not found"
+                    }
+                })
+
+if __name__ == "__main__":
+    main()

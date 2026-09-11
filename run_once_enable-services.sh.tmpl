@@ -1,0 +1,48 @@
+{{- if eq .chezmoi.os "linux" -}}
+#!/bin/bash
+set -euo pipefail
+
+echo "=========================================="
+echo "==> Chezmoi: Enabling intentional services"
+echo "=========================================="
+
+SERVICES=(
+    "ananicy-cpp.service"
+    "asusd.service"
+    "supergfxd.service"
+    "bluetooth.service"
+    "fstrim.timer"
+    "snapper-cleanup.timer"
+)
+
+for svc in "${SERVICES[@]}"; do
+    if systemctl list-unit-files "$svc" &>/dev/null; then
+        echo "Enabling system service: $svc"
+        sudo systemctl enable --now "$svc" 2>/dev/null || echo "Notice: failed to enable $svc (may need hardware or config)"
+    fi
+done
+
+# Hardware Tuning via asusctl if available
+if command -v asusctl >/dev/null 2>&1; then
+    echo "Configuring ASUS battery limit to 60%..."
+    asusctl battery limit 60 2>/dev/null || true
+    echo "Setting ASUS active profile to Balanced..."
+    asusctl profile set Balanced 2>/dev/null || true
+fi
+
+# Enable user services if user systemd session is active
+USER_SERVICES=(
+    "xremap.service"
+    "hypridle.service"
+    "mako.service"
+)
+
+for usvc in "${USER_SERVICES[@]}"; do
+    if systemctl --user list-unit-files "$usvc" &>/dev/null; then
+        echo "Enabling user service: $usvc"
+        systemctl --user enable "$usvc" 2>/dev/null || true
+    fi
+done
+
+echo "==> Service enablement complete."
+{{- end }}

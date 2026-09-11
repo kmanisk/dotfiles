@@ -1,0 +1,24 @@
+{
+  "artifactReviewPolicy": "always-proceed",
+  "model": "Gemini 3.8 Flash (High)",
+  "permissions": {
+    "allow": [
+      "command(alacritty)",
+      "command(i3-msg)",
+      "command(jq)",
+      "command(ps)",
+      "command(sleep)",
+      "command(ls)",
+      "command(xrandr)",
+      "command(cat)",
+      "command(~/.local/bin/setup-display)",
+      "command(grep)",
+      "command(git -C ~/.local/share/chezmoi grep -i \"terminal\" dot_config/i3/ 2\u003e/dev/null)"
+    ]
+  },
+  "toolPermission": "always-proceed",
+  "trustedWorkspaces": [
+    "/home/manisk/paru",
+    "/home/manisk"
+  ]
+}

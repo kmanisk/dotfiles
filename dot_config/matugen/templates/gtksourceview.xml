@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  =============================================================================
+  Dynamic Material You GtkSourceView 3, 4 & 5 Style Scheme Definition
+  Generated dynamically via Matugen (Arch Linux / Hyprland Rolling Release)
+  =============================================================================
+-->
+<style-scheme id="matugen" _name="Matugen" version="1.0">
+  <author>Dusky Matugen Architect</author>
+  <_description>Dynamic Material You dark color scheme for GtkSourceView</_description>
+
+  <!-- ======================================================================= -->
+  <!-- Palette Definitions                                                     -->
+  <!-- ======================================================================= -->
+  <color name="bg_main"                value="{{colors.surface_container_lowest.default.hex}}"/>
+  <color name="bg_dim"                 value="{{colors.surface_dim.default.hex}}"/>
+  <color name="bg_surface"             value="{{colors.surface.default.hex}}"/>
+  <color name="bg_container_lowest"    value="{{colors.surface_container_lowest.default.hex}}"/>
+  <color name="bg_container_low"       value="{{colors.surface_container_low.default.hex}}"/>
+  <color name="bg_container"           value="{{colors.surface_container.default.hex}}"/>
+  <color name="bg_container_high"      value="{{colors.surface_container_high.default.hex}}"/>
+  <color name="bg_container_highest"   value="{{colors.surface_container_highest.default.hex}}"/>
+  <color name="bg_gutter"              value="{{colors.surface_container_lowest.default.hex}}"/>
+  
+  <color name="fg_main"                value="{{colors.on_surface.default.hex}}"/>
+  <color name="fg_variant"             value="{{colors.on_surface_variant.default.hex}}"/>
+  <color name="fg_gutter"              value="{{colors.outline.default.hex}}"/>
+  <color name="fg_disabled"            value="{{colors.outline_variant.default.hex}}"/>
+  
+  <color name="primary"                value="{{colors.primary.default.hex}}"/>
+  <color name="primary_dim"            value="{{colors.primary_fixed_dim.default.hex}}"/>
+  <color name="on_primary"             value="{{colors.on_primary.default.hex}}"/>
+  <color name="primary_container"      value="{{colors.primary_container.default.hex}}"/>
+  <color name="on_primary_container"   value="{{colors.on_primary_container.default.hex}}"/>
+  
+  <color name="secondary"              value="{{colors.secondary.default.hex}}"/>
+  <color name="on_secondary"           value="{{colors.on_secondary.default.hex}}"/>
+  <color name="secondary_container"    value="{{colors.secondary_container.default.hex}}"/>
+  <color name="on_secondary_container" value="{{colors.on_secondary_container.default.hex}}"/>
+  
+  <color name="tertiary"               value="{{colors.tertiary.default.hex}}"/>
+  <color name="on_tertiary"            value="{{colors.on_tertiary.default.hex}}"/>
+  <color name="tertiary_container"     value="{{colors.tertiary_container.default.hex}}"/>
+  <color name="on_tertiary_container"  value="{{colors.on_tertiary_container.default.hex}}"/>
+  
+  <color name="error"                  value="{{colors.error.default.hex}}"/>
+  <color name="on_error"               value="{{colors.on_error.default.hex}}"/>
+  <color name="error_container"        value="{{colors.error_container.default.hex}}"/>
+  <color name="on_error_container"     value="{{colors.on_error_container.default.hex}}"/>
+  
+  <color name="selection"              value="{{colors.primary_container.default.hex}}"/>
+  <color name="on_selection"          value="{{colors.on_primary_container.default.hex}}"/>
+  <color name="current_line"           value="{{colors.surface_container_low.default.hex}}"/>
+
+  <!-- ======================================================================= -->
+  <!-- Editor Canvas & Interface Styles                                        -->
+  <!-- ======================================================================= -->
+  <style name="text"                  foreground="fg_main" background="bg_main"/>
+  <style name="selection"             foreground="on_selection" background="selection"/>
+  <style name="selection-unfocused"   foreground="fg_main" background="bg_container_high"/>
+  <style name="cursor"                foreground="primary"/>
+  <style name="secondary-cursor"      foreground="secondary"/>
+  <style name="current-line"          background="current_line"/>
+  <style name="line-numbers"          foreground="fg_gutter" background="bg_gutter"/>
+  <style name="current-line-number"   foreground="primary" background="bg_gutter" bold="true"/>
+  <style name="draw-spaces"           foreground="fg_disabled"/>
+  <style name="background-pattern"    background="bg_dim"/>
+  <style name="bracket-match"         foreground="primary" background="bg_container_high" bold="true"/>
+  <style name="bracket-mismatch"      foreground="error" background="error_container" bold="true"/>
+  <style name="search-match"          foreground="on_selection" background="selection"/>
+  <style name="snippet-focus"         background="bg_container_highest"/>
+  <style name="map-overlay"           background="bg_container_high"/>
+
+  <!-- ======================================================================= -->
+  <!-- Canonical Syntax Highlighting Tokens                                    -->
+  <!-- ======================================================================= -->
+  <style name="def:comment"           foreground="fg_gutter" italic="true"/>
+  <style name="def:doc-comment"       foreground="fg_variant" italic="true"/>
+  <style name="def:constant"          foreground="secondary"/>
+  <style name="def:string"            foreground="tertiary"/>
+  <style name="def:special-char"      foreground="tertiary" bold="true"/>
+  <style name="def:special-constant"  foreground="secondary" bold="true"/>
+  <style name="def:boolean"           foreground="secondary" bold="true"/>
+  <style name="def:number"            foreground="tertiary"/>
+  <style name="def:floating-point"    foreground="tertiary"/>
+  <style name="def:decimal"           foreground="tertiary"/>
+  <style name="def:base-n-integer"    foreground="tertiary"/>
+  <style name="def:complex"           foreground="tertiary"/>
+  <style name="def:character"         foreground="tertiary"/>
+  <style name="def:identifier"        foreground="fg_main"/>
+  <style name="def:function"          foreground="secondary" bold="true"/>
+  <style name="def:statement"         foreground="primary" bold="true"/>
+  <style name="def:operator"          foreground="primary_dim"/>
+  <style name="def:keyword"           foreground="primary" bold="true"/>
+  <style name="def:type"              foreground="primary_dim" bold="true"/>
+  <style name="def:preprocessor"      foreground="secondary"/>
+  <style name="def:error"             foreground="error" background="error_container" bold="true"/>
+  <style name="def:warning"           foreground="secondary" bold="true"/>
+  <style name="def:note"              foreground="tertiary" bold="true"/>
+  <style name="def:underlined"        underline="single"/>
+  <style name="def:heading"           foreground="primary" bold="true"/>
+  <style name="def:sub-heading"       foreground="secondary" bold="true"/>
+  <style name="def:link-text"         foreground="primary" underline="single"/>
+  <style name="def:link-destination"  foreground="secondary" italic="true"/>
+  <style name="def:emphasis"          italic="true"/>
+  <style name="def:strong-emphasis"   bold="true"/>
+  <style name="def:deletion"          foreground="error" background="bg_container"/>
+  <style name="def:insertion"         foreground="tertiary" background="bg_container"/>
+
+  <!-- ======================================================================= -->
+  <!-- Diff / Version Control Tokens                                           -->
+  <!-- ======================================================================= -->
+  <style name="diff:added"            foreground="tertiary" background="bg_container"/>
+  <style name="diff:removed"          foreground="error" background="bg_container"/>
+  <style name="diff:changed"          foreground="secondary" background="bg_container"/>
+  <style name="diff:diff"             foreground="fg_variant" bold="true"/>
+  <style name="diff:location"         foreground="primary_dim"/>
+  <style name="diff:special"          foreground="secondary" bold="true"/>
+</style-scheme>

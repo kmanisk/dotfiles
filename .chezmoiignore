@@ -6,6 +6,8 @@ AppData/Local/installer/userdata/**
 **/*history*
 **/*.tmp
 **/*.log
+.config/chezmoi/key.txt
+key.txt
 
 {{- if not (stat (joinPath .chezmoi.homeDir ".config/chezmoi/key.txt")) }}
 .test-secret.txt
@@ -18,6 +20,12 @@ Documents/new 1.txt
 README.md
 install.sh
 linux-bootstrap.sh
+bootstrap.sh
+packages/**
+hardware/**
+systemd/**
+btrfs/**
+sudoers-reference.txt
 idle-bench.ps1
 benchmarks/**
 .fehbg

@@ -1,0 +1,76 @@
+#!/usr/bin/env python3
+"""
+dsp-stat: Quick sanity check for background Audio DSP CPU and RAM usage.
+"""
+import time
+import os
+import sys
+import subprocess
+
+def get_pids():
+    try:
+        out = subprocess.check_output(['pgrep', '-f', 'dusky_audio'], text=True).strip()
+        pids = [int(p) for p in out.splitlines() if int(p) != os.getpid()]
+        return pids
+    except Exception:
+        return []
+
+pids = get_pids()
+if not pids:
+    print("\033[1;31m[-] Audio DSP is currently NOT running (Inactive / Bypass mode).\033[0m")
+    sys.exit(0)
+
+def read_cpu(pid):
+    try:
+        with open(f"/proc/{pid}/stat") as f:
+            fields = f.readline().split()
+            return int(fields[13]) + int(fields[14])
+    except Exception:
+        return 0
+
+def read_total():
+    with open("/proc/stat") as f:
+        return sum([int(x) for x in f.readline().split()[1:]])
+
+def read_mem(pid):
+    rss = 0.0
+    name = f"PID {pid}"
+    try:
+        with open(f"/proc/{pid}/comm") as f:
+            name = f.readline().strip()
+        with open(f"/proc/{pid}/status") as f:
+            for line in f:
+                if line.startswith("VmRSS:"):
+                    rss = float(line.split()[1]) / 1024.0 # MB
+    except Exception:
+        pass
+    return name, rss
+
+t0 = read_total()
+cpu0 = {p: read_cpu(p) for p in pids}
+
+time.sleep(0.5)
+
+t1 = read_total()
+cpu1 = {p: read_cpu(p) for p in pids}
+
+num_cpus = os.cpu_count() or 16
+dt = (t1 - t0) / float(num_cpus) if t1 > t0 else 1.0
+
+total_sys_pct = 0.0
+total_ram_mb = 0.0
+
+print("\033[1;36m┌─── Audio DSP Live Status ────────────────────────────┐\033[0m")
+for p in pids:
+    name, rss = read_mem(p)
+    dp = cpu1.get(p, 0) - cpu0.get(p, 0)
+    thread_pct = (dp / dt) * 100.0 if dt > 0 else 0.0
+    sys_pct = thread_pct / float(num_cpus)
+    total_sys_pct += sys_pct
+    total_ram_mb += rss
+    print(f"│ \033[1;32m●\033[0m \033[1m{name:<18}\033[0m (PID {p:<6}) : {thread_pct:5.2f}% core │ {rss:6.2f} MB RAM │")
+
+print("\033[1;36m├──────────────────────────────────────────────────────┤\033[0m")
+print(f"│ \033[1mTOTAL SYSTEM LOAD  \033[0m : \033[1;33m{total_sys_pct:5.2f}%\033[0m (across all {num_cpus} threads)      │")
+print(f"│ \033[1mTOTAL RAM CONSUMED \033[0m : \033[1;33m{total_ram_mb:5.2f} MB\033[0m                             │")
+print("\033[1;36m└──────────────────────────────────────────────────────┘\033[0m")

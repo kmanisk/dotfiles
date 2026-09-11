@@ -1,0 +1,11 @@
+Target Machine: ASUS TUF Gaming Laptop
+CPU: 13th Gen Intel Core i5-13450HX (16 threads)
+GPU 0 (iGPU): Intel Raptor Lake-S GT1 [UHD Graphics] (Driver: i915 / LIBVA_DRIVER_NAME: iHD)
+GPU 1 (dGPU): NVIDIA GeForce RTX 5050 Mobile (Driver: nvidia, Hybrid mode via supergfxd / prime-run)
+Display: 1920x1200 @ 165Hz
+Kernel Cmdline: BOOT_IMAGE=/@/boot/vmlinuz-linux-cachyos root=UUID=a719a902-b7be-41fb-84a7-4ffbffd4142f rw rootflags=subvol=@ nowatchdog nvme_load=YES loglevel=3
+
+ASUS Controls:
+- asusd service manages charge threshold (60% battery limit)
+- aura_tuf.ron manages keyboard backlighting
+- supergfxd manages GPU switching (Hybrid mode)

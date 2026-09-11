@@ -1,0 +1,44 @@
+[Unit]
+Description=Dusky Audio Visualizer Daemon
+PartOf=graphical-session.target
+After=graphical-session.target pipewire.service wireplumber.service
+StartLimitIntervalSec=30
+StartLimitBurst=5
+
+[Service]
+Type=simple
+
+# Keep Python logs unbuffered in the journal.
+Environment=PYTHONUNBUFFERED=1
+
+# Force GTK to use Wayland. This daemon requires gtk-layer-shell.
+Environment=GDK_BACKEND=wayland
+
+# If you import WAYLAND_DISPLAY into the systemd user environment,
+# you can uncomment this to make failure explicit and early.
+# ConditionEnvironment=WAYLAND_DISPLAY
+
+ExecStart=/usr/bin/python3 %h/user_scripts/way_layers/visualizer/visualizer_daemon.py
+
+Restart=on-failure
+RestartSec=2
+
+TimeoutStopSec=5s
+TimeoutStopFailureMode=kill
+
+KillMode=control-group
+NoNewPrivileges=true
+UMask=077
+
+# Memory accounting.
+# These limits are safer than 100M/150M for some OpenGL drivers.
+# If you want maximum reliability and do not care about limiting memory,
+# remove MemoryHigh and MemoryMax entirely.
+MemoryAccounting=yes
+OOMPolicy=kill
+OOMScoreAdjust=400
+MemoryHigh=256M
+MemoryMax=512M
+
+[Install]
+WantedBy=graphical-session.target

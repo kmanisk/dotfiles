@@ -1,0 +1,525 @@
+/*
+ * =============================================================================
+ * GTK 3 Material You Dynamic Dark Theme (adw-gtk3 Compatibility Layer)
+ * Generated dynamically via Matugen (Arch Linux / Hyprland Rolling Release)
+ * =============================================================================
+ */
+
+/* =============================================================================
+ * 1. Material You Core Brand & Accent Tokens
+ * ============================================================================= */
+@define-color accent_color #a3c9fe;
+@define-color accent_fg_color #00315b;
+@define-color accent_bg_color #a3c9fe;
+@define-color accent_hover_color #a3c9fe;
+@define-color accent_active_color #d3e4ff;
+
+/* =============================================================================
+ * 2. Window, Canvas & Surface Geometry
+ * ============================================================================= */
+@define-color window_bg_color #0c0e13;
+@define-color window_fg_color #e1e2e8;
+@define-color window_border_color #43474e;
+@define-color window_outline_color #43474e;
+
+@define-color view_bg_color #0c0e13;
+@define-color view_fg_color #e1e2e8;
+@define-color view_border_color #43474e;
+
+/* =============================================================================
+ * 3. Headerbars, Titlebars & Tabs
+ * ============================================================================= */
+@define-color headerbar_bg_color #0c0e13;
+@define-color headerbar_fg_color #e1e2e8;
+@define-color headerbar_border_color #43474e;
+@define-color headerbar_backdrop_color #0c0e13;
+@define-color headerbar_shade_color rgba(0, 0, 0, 0.45);
+@define-color headerbar_darker_shade_color rgba(0, 0, 0, 0.65);
+@define-color headerbar_light_shade_color rgba(255, 255, 255, 0.05);
+
+/* =============================================================================
+ * 4. Cards, Dialogs & Elevated Containers
+ * ============================================================================= */
+@define-color card_bg_color #111418;
+@define-color card_fg_color #e1e2e8;
+@define-color card_border_color #43474e;
+@define-color card_shade_color rgba(0, 0, 0, 0.35);
+
+@define-color dialog_bg_color #111418;
+@define-color dialog_fg_color #e1e2e8;
+
+@define-color popover_bg_color #111418;
+@define-color popover_fg_color #e1e2e8;
+@define-color popover_shade_color rgba(0, 0, 0, 0.45);
+
+@define-color shade_color rgba(0, 0, 0, 0.35);
+@define-color scrollbar_outline_color rgba(0, 0, 0, 0.5);
+
+/* =============================================================================
+ * 5. Sidebars & Navigation
+ * ============================================================================= */
+@define-color sidebar_bg_color #0c0e13;
+@define-color sidebar_fg_color #e1e2e8;
+@define-color sidebar_border_color #43474e;
+@define-color sidebar_backdrop_color #0c0e13;
+@define-color sidebar_shade_color rgba(0, 0, 0, 0.25);
+
+@define-color secondary_sidebar_bg_color #0c0e13;
+@define-color secondary_sidebar_fg_color #e1e2e8;
+@define-color secondary_sidebar_backdrop_color #0c0e13;
+@define-color secondary_sidebar_border_color #43474e;
+@define-color secondary_sidebar_shade_color rgba(0, 0, 0, 0.25);
+
+@define-color thumbnail_bg_color #0c0e13;
+@define-color thumbnail_fg_color #e1e2e8;
+
+/* =============================================================================
+ * 6. Functional & State Feedback Colors
+ * ============================================================================= */
+@define-color destructive_bg_color #ffb4ab;
+@define-color destructive_fg_color #690005;
+@define-color destructive_color #ffb4ab;
+@define-color destructive_hover_color #93000a;
+@define-color destructive_active_color #ffdad6;
+
+@define-color success_bg_color #d8bde3;
+@define-color success_fg_color #3c2947;
+@define-color success_color #d8bde3;
+@define-color success_hover_color #d8bde3;
+@define-color success_active_color #f4d9ff;
+
+@define-color warning_bg_color #bbc7db;
+@define-color warning_fg_color #263141;
+@define-color warning_color #bbc7db;
+@define-color warning_hover_color #bbc7db;
+@define-color warning_active_color #d7e3f8;
+
+@define-color error_bg_color #ffb4ab;
+@define-color error_fg_color #690005;
+@define-color error_color #ffb4ab;
+
+@define-color link_color #a3c9fe;
+@define-color link_visited_color #bbc7db;
+
+/* =============================================================================
+ * 7. Canonical GNOME & Libadwaita Numbered Palette Scales
+ * ============================================================================= */
+@define-color blue_1 #1d4875;
+@define-color blue_2 #a3c9fe;
+@define-color blue_3 #a3c9fe;
+@define-color blue_4 #d3e4ff;
+@define-color blue_5 #00315b;
+
+@define-color green_1 #533f5e;
+@define-color green_2 #d8bde3;
+@define-color green_3 #d8bde3;
+@define-color green_4 #f4d9ff;
+@define-color green_5 #3c2947;
+
+@define-color yellow_1 #3c4858;
+@define-color yellow_2 #bbc7db;
+@define-color yellow_3 #bbc7db;
+@define-color yellow_4 #d7e3f8;
+@define-color yellow_5 #263141;
+
+@define-color orange_1 #3c4858;
+@define-color orange_2 #bbc7db;
+@define-color orange_3 #bbc7db;
+@define-color orange_4 #d7e3f8;
+@define-color orange_5 #263141;
+
+@define-color red_1 #93000a;
+@define-color red_2 #ffb4ab;
+@define-color red_3 #ffb4ab;
+@define-color red_4 #ffdad6;
+@define-color red_5 #690005;
+
+@define-color purple_1 #533f5e;
+@define-color purple_2 #d8bde3;
+@define-color purple_3 #d8bde3;
+@define-color purple_4 #f4d9ff;
+@define-color purple_5 #3c2947;
+
+@define-color brown_1 #272a2f;
+@define-color brown_2 #bbc7db;
+@define-color brown_3 #bbc7db;
+@define-color brown_4 #d7e3f8;
+@define-color brown_5 #263141;
+
+@define-color dark_1 #0c0e13;
+@define-color dark_2 #191c20;
+@define-color dark_3 #1d2024;
+@define-color dark_4 #272a2f;
+@define-color dark_5 #32353a;
+
+@define-color light_1 #37393e;
+@define-color light_2 #43474e;
+@define-color light_3 #8d9199;
+@define-color light_4 #c3c6cf;
+@define-color light_5 #e1e2e8;
+
+/* =============================================================================
+ * 8. GTK 3 & adw-gtk3 Canonical Compatibility Aliases
+ * ============================================================================= */
+@define-color theme_fg_color @window_fg_color;
+@define-color theme_text_color @view_fg_color;
+@define-color theme_bg_color @window_bg_color;
+@define-color theme_base_color @view_bg_color;
+@define-color theme_selected_bg_color #a3c9fe;
+@define-color theme_selected_fg_color #00315b;
+
+@define-color insensitive_bg_color #0c0e13;
+@define-color insensitive_fg_color alpha(@window_fg_color, 0.45);
+@define-color insensitive_base_color @view_bg_color;
+
+@define-color theme_unfocused_fg_color alpha(@window_fg_color, 0.7);
+@define-color theme_unfocused_text_color alpha(@view_fg_color, 0.7);
+@define-color theme_unfocused_bg_color @window_bg_color;
+@define-color theme_unfocused_base_color @view_bg_color;
+@define-color theme_unfocused_selected_bg_color #32353a;
+@define-color theme_unfocused_selected_fg_color @window_fg_color;
+@define-color unfocused_insensitive_color alpha(@window_fg_color, 0.3);
+
+@define-color borders #43474e;
+@define-color unfocused_borders #43474e;
+
+@define-color wm_title @window_fg_color;
+@define-color wm_unfocused_title alpha(@window_fg_color, 0.5);
+@define-color wm_bg_a @window_bg_color;
+@define-color wm_bg_b @window_bg_color;
+@define-color wm_shadow rgba(0, 0, 0, 0.5);
+
+@define-color content_view_bg @view_bg_color;
+@define-color text_view_bg @view_bg_color;
+@define-color drop_target_color @accent_color;
+
+/* =============================================================================
+ * 9. Dialogs, Message Boxes & Modal Windows
+ * ============================================================================= */
+messagedialog,
+dialog,
+window.dialog,
+window.messagedialog,
+dialog.csd,
+messagedialog.csd {
+  background-color: @dialog_bg_color;
+  color: @dialog_fg_color;
+}
+
+messagedialog .titlebar,
+messagedialog .titlebar:backdrop,
+dialog .titlebar,
+dialog .titlebar:backdrop,
+window.dialog .titlebar,
+window.dialog headerbar,
+dialog headerbar {
+  background-color: @headerbar_bg_color;
+  color: @headerbar_fg_color;
+  border-style: none;
+  border-bottom: 1px solid @borders;
+}
+
+messagedialog button,
+dialog button {
+  color: @dialog_fg_color;
+}
+
+/* =============================================================================
+ * 10. Popovers & Menus — GTK3 vs GTK4 split
+ *    GTK3 has a single node `popover` (.background) — it must be OPAQUE.
+ *    GTK4 added `popover > contents` (inner bubble); there the outer is
+ *    transparent and the inner gets the color. For GTK3 we set the background
+ *    directly on popover.background (otherwise the os-list dropdown in
+ *    virt-manager and any GtkPopover shows the desktop behind hover rows).
+ *    Menus use `menu/.menu/.context-menu` and are also made opaque here.
+ * ============================================================================= */
+popover.background,
+.popover.background,
+menu,
+.menu,
+.context-menu,
+.csd menu,
+.csd .menu,
+.csd .context-menu {
+  background-color: @popover_bg_color;
+  color: @popover_fg_color;
+  border-radius: 12px;
+  border: 1px solid @borders;
+  box-shadow: none;
+  padding: 4px;
+}
+
+/* GTK4-only inner bubble (dead in GTK3, harmless). Kept for generated gtk4.css compat. */
+popover > contents,
+.popover > contents,
+dropdown popover > contents,
+combobox window.popup > contents {
+  background-color: @popover_bg_color;
+  color: @popover_fg_color;
+  border-radius: 12px;
+  border: 1px solid @borders;
+  box-shadow: none;
+  padding: 4px;
+}
+
+/* Popover/menu windows are WAYLAND CSD popups — kill double shadow/border halos */
+popover,
+popover.menu,
+.popover,
+.popover.menu {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Remove popup window decoration box-shadows that cause dark edge halos in Wayland */
+.csd.popup decoration,
+.popup decoration,
+menubar .csd.popup decoration,
+.menubar .csd.popup decoration {
+  border-radius: 12px;
+  box-shadow: none;
+  border: none;
+}
+
+popover > arrow,
+.popover > arrow {
+  background-color: @popover_bg_color;
+  border: none;
+  box-shadow: none;
+}
+
+menuitem:hover,
+.menuitem:hover,
+modelbutton:hover,
+popover listview row:hover {
+  background-color: alpha(@accent_color, 0.15);
+  color: @window_fg_color;
+  border-radius: 6px;
+}
+
+/* =============================================================================
+ * 11. Tooltips (Zero-Clipping Subsurface CSD Rules)
+ * ============================================================================= */
+tooltip {
+  background-color: transparent;
+  box-shadow: none;
+  border: none;
+  padding: 4px 8px;
+}
+
+tooltip.background {
+  background-color: @dialog_bg_color;
+  color: @dialog_fg_color;
+  border-radius: 8px;
+  border: 1px solid alpha(@dialog_fg_color, 0.15);
+  box-shadow: 0 2px 8px @shade_color;
+}
+
+tooltip decoration,
+tooltip.csd decoration {
+  background-color: transparent;
+  box-shadow: none;
+  border: none;
+}
+
+tooltip * {
+  background-color: transparent;
+  color: @dialog_fg_color;
+}
+
+/* =============================================================================
+ * 12. OSD (On-Screen Displays)
+ * ============================================================================= */
+osd,
+.osd,
+window.osd,
+osd.background {
+  background-color: @dialog_bg_color;
+  color: @dialog_fg_color;
+  border-radius: 12px;
+  border: 1px solid @borders;
+  box-shadow: 0 4px 16px @shade_color;
+}
+
+/* =============================================================================
+ * 13. Form Controls: Switches, Checkboxes, Radios, Sliders
+ * ============================================================================= */
+switch {
+  background-color: @card_bg_color;
+  border-radius: 9999px;
+  border: 1px solid @borders;
+}
+
+switch:checked {
+  background-color: @accent_bg_color;
+  border-color: @accent_bg_color;
+}
+
+switch slider {
+  background-color: @window_fg_color;
+  border-radius: 50%;
+  min-width: 18px;
+  min-height: 18px;
+}
+
+switch:checked slider {
+  background-color: @accent_fg_color;
+}
+
+scale trough {
+  background-color: @card_bg_color;
+  border-radius: 9999px;
+  min-height: 6px;
+}
+
+scale highlight {
+  background-color: @accent_color;
+  border-radius: 9999px;
+}
+
+scale slider {
+  background-color: @accent_color;
+  border-radius: 50%;
+  min-width: 16px;
+  min-height: 16px;
+}
+
+scale slider:hover {
+  background-color: @accent_hover_color;
+}
+
+scale slider:active {
+  background-color: @accent_active_color;
+}
+
+/* =============================================================================
+ * 14. Headerbar Window Controls & Tabs
+ * ============================================================================= */
+headerbar button.titlebutton.close:hover,
+windowcontrols button.close:hover {
+  background-color: @destructive_bg_color;
+  color: @destructive_fg_color;
+}
+
+headerbar button.titlebutton.maximize:hover,
+headerbar button.titlebutton.minimize:hover,
+windowcontrols button.maximize:hover,
+windowcontrols button.minimize:hover {
+  background-color: alpha(@window_fg_color, 0.12);
+  color: @window_fg_color;
+}
+
+notebook > header > tabs > tab:checked {
+  background-color: @card_bg_color;
+  border-bottom: 2px solid @accent_color;
+  color: @window_fg_color;
+}
+
+/* =============================================================================
+ * 15. GtkTextView & GtkSourceView Gutters
+ * ============================================================================= */
+textview border,
+textview border.left,
+textview border.right,
+textview border.top,
+textview border.bottom,
+sourceview gutter,
+gutter,
+gutter.left {
+  background-color: @view_bg_color;
+  color: #8d9199;
+  border-color: @borders;
+}
+
+/* =============================================================================
+ * 16. Suggested actions: readable text on matugen accent (dynamic)
+ *     adw-gtk3 hardcodes `color: white` on button.suggested-action, so any
+ *     light accent (e.g. pink #ffb3b3) yields white-on-pink WCAG 1.7:1 FAIL.
+ *     Override text with Material @accent_fg_color (#561d21) which is 7.7:1.
+ *     .osd excluded — those are dark overlays where white is intentionally correct.
+ *     Destructive is intentionally NOT overridden: its bg is dark translucent
+ *     and its default text @destructive_color (#ffb4ab) is 11:1 on that bg;
+ *     forcing @destructive_fg_color (#690005 dark red) would be 1.4:1 unreadable.
+ * ============================================================================= */
+window:not(.osd) button.suggested-action,
+window:not(.osd) button.suggested-action:hover,
+window:not(.osd) button.suggested-action:active,
+window:not(.osd) button.suggested-action:checked,
+window:not(.osd) button.suggested-action:active:hover,
+window:not(.osd) button.suggested-action:checked:hover,
+window:not(.osd) button.suggested-action:backdrop,
+window:not(.osd) button.suggested-action:hover:backdrop,
+window:not(.osd) button.suggested-action:active:backdrop,
+window:not(.osd) button.suggested-action:checked:backdrop,
+dialog:not(.osd) button.suggested-action,
+dialog:not(.osd) button.suggested-action:hover,
+dialog:not(.osd) button.suggested-action:active,
+dialog:not(.osd) button.suggested-action:checked,
+dialog:not(.osd) button.suggested-action:active:hover,
+dialog:not(.osd) button.suggested-action:checked:hover,
+dialog:not(.osd) button.suggested-action:backdrop,
+dialog:not(.osd) button.suggested-action:hover:backdrop,
+dialog:not(.osd) button.suggested-action:active:backdrop,
+dialog:not(.osd) button.suggested-action:checked:backdrop,
+messagedialog:not(.osd) button.suggested-action,
+messagedialog:not(.osd) button.suggested-action:hover,
+messagedialog:not(.osd) button.suggested-action:active,
+messagedialog:not(.osd) button.suggested-action:checked,
+messagedialog:not(.osd) button.suggested-action:active:hover,
+messagedialog:not(.osd) button.suggested-action:checked:hover,
+messagedialog:not(.osd) button.suggested-action:backdrop,
+messagedialog:not(.osd) button.suggested-action:hover:backdrop,
+window:not(.osd) headerbar button.suggested-action,
+window:not(.osd) headerbar button.suggested-action:hover,
+window:not(.osd) headerbar button.suggested-action:active,
+window:not(.osd) headerbar button.suggested-action:checked,
+window:not(.osd) headerbar button.suggested-action:active:hover,
+window:not(.osd) headerbar button.suggested-action:checked:hover,
+window:not(.osd) headerbar button.suggested-action:backdrop,
+window:not(.osd) headerbar button.suggested-action:hover:backdrop,
+window:not(.osd) headerbar button.suggested-action:active:backdrop,
+window:not(.osd) headerbar button.suggested-action:checked:backdrop,
+window:not(.osd) .titlebar button.suggested-action,
+window:not(.osd) .titlebar button.suggested-action:hover,
+window:not(.osd) .titlebar button.suggested-action:active,
+window:not(.osd) .titlebar button.suggested-action:checked,
+window:not(.osd) .titlebar button.suggested-action:active:hover,
+window:not(.osd) .titlebar button.suggested-action:checked:hover,
+window:not(.osd) .titlebar button.suggested-action:backdrop,
+window:not(.osd) .titlebar button.suggested-action:hover:backdrop,
+dialog:not(.osd) headerbar button.suggested-action,
+dialog:not(.osd) headerbar button.suggested-action:hover,
+dialog:not(.osd) headerbar button.suggested-action:active,
+dialog:not(.osd) headerbar button.suggested-action:checked,
+dialog:not(.osd) headerbar button.suggested-action:backdrop,
+dialog:not(.osd) headerbar button.suggested-action:hover:backdrop,
+messagedialog:not(.osd) headerbar button.suggested-action,
+messagedialog:not(.osd) headerbar button.suggested-action:hover,
+messagedialog:not(.osd) headerbar button.suggested-action:backdrop,
+window.dialog:not(.osd) headerbar button.suggested-action,
+window.dialog:not(.osd) headerbar button.suggested-action:hover,
+window.dialog:not(.osd) headerbar button.suggested-action:backdrop,
+window.messagedialog:not(.osd) headerbar button.suggested-action {
+  color: @accent_fg_color;
+}
+
+button.suggested-action:disabled,
+button.suggested-action:disabled:backdrop,
+headerbar button.suggested-action:disabled,
+.dialog button.suggested-action:disabled,
+.toolbar button.suggested-action:disabled,
+.action-bar button.suggested-action:disabled {
+  opacity: 1;
+  color: @accent_fg_color;
+  background-color: alpha(#a3c9fe, 0.75);
+  border-color: alpha(#a3c9fe, 0.3);
+}
+
+button.suggested-action:disabled label,
+button.suggested-action:disabled image {
+  opacity: 1;
+  color: #00315b;
+}

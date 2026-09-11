@@ -1,0 +1,60 @@
+[Unit]
+Description=Dusky Control Center Daemon
+After=graphical-session.target
+PartOf=graphical-session.target
+
+# --- [THE KEYBIND FIX] ---
+# Overrides Systemd's default crash-loop detection.
+# You can trigger your hotkey up to 50 times in 10 seconds and it will never lock you out.
+StartLimitIntervalSec=10
+StartLimitBurst=50
+
+[Service]
+Type=dbus
+BusName=com.github.dusky.controlcenter
+
+# --- [AGGRESSIVE RAM OPTIMIZATION] ---
+# PYTHONUNBUFFERED=1: Flushes logs immediately for real-time debugging[cite: 3].
+# PYTHONOPTIMIZE=2: Strips __debug__ assertions and docstrings directly from Python's memory footprint.
+# MALLOC_ARENA_MAX=2: Limits glibc memory arenas without causing single-arena lock contention across worker threads.
+# G_SLICE=always-malloc: Disables GTK's custom memory allocator so freed RAM is instantly returned to the OS.
+Environment=PYTHONUNBUFFERED=1 PYTHONOPTIMIZE=2 MALLOC_ARENA_MAX=2 G_SLICE=always-malloc
+
+# Uses your exact path; %h dynamically resolves to your home directory[cite: 3].
+ExecStart=%h/user_scripts/dusky_system/control_center/dusky_control_center.py --gapplication-service
+Slice=app-graphical.slice
+
+# --- [SYSTEMD v254+ CUTTING-EDGE RESTART LOGIC] ---
+Restart=on-failure
+# Bypasses the 'inactive/failed' state entirely, transitioning straight to 'activating' for instant DBus socket recovery.
+RestartMode=direct
+
+# Geometric Exponential Backoff. If it crashes, it restarts in 250ms. 
+# If it keeps crashing, the delay geometrically scales up to 4s to prevent 100% CPU lockups.
+RestartSec=250ms
+RestartSteps=5
+RestartMaxDelaySec=4s
+RestartPreventExitStatus=5
+
+# --- [ANTI-HANG PROTECTION] ---
+# If a subprocess inside the Python script hangs, wait 2 seconds.
+TimeoutStopSec=2s
+# If it doesn't stop gracefully in 2 seconds, bypass standard termination and ruthlessly SIGKILL the cgroup.
+TimeoutStopFailureMode=kill
+
+# --- [MEMORY MANAGEMENT & OOM SYNERGY] ---
+MemoryAccounting=yes
+# If the cgroup gets targeted by systemd-oomd, kill the entire group cleanly instead of leaving zombie processes.
+OOMPolicy=kill
+OOMScoreAdjust=400
+
+# A Control Center parses CSS, grids, and directory paths, requiring more overhead than a simple panel.
+# We set a soft limit of 350MB. If it crosses this, the Arch kernel aggressively pushes idle pages to ZRAM (ZSTD).
+MemoryHigh=350M
+# Absolute hard limit. If a severe memory leak occurs, Systemd kills and restarts it before it takes down Hyprland.
+MemoryMax=750M
+
+SyslogIdentifier=dusky
+
+[Install]
+WantedBy=graphical-session.target

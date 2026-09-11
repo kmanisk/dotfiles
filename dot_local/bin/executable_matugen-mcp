@@ -1,0 +1,250 @@
+#!/usr/bin/env python3
+import json
+import os
+import subprocess
+import sys
+
+def run_cmd(cmd, timeout=30):
+    try:
+        res = subprocess.run(
+            cmd,
+            capture_output=True,
+            text=True,
+            timeout=timeout
+        )
+        if res.returncode != 0:
+            err = res.stderr.strip() or res.stdout.strip() or f"Exit code {res.returncode}"
+            return f"Error ({res.returncode}): {err}"
+        return res.stdout.strip() if res.stdout.strip() else "(ok)"
+    except subprocess.TimeoutExpired:
+        return "Error: Command timed out"
+    except Exception as e:
+        return f"Error: {str(e)}"
+
+def read_message():
+    line = sys.stdin.readline()
+    if not line:
+        return None
+    return json.loads(line)
+
+def write_message(msg):
+    sys.stdout.write(json.dumps(msg) + "\n")
+    sys.stdout.flush()
+
+TOOLS = [
+    {
+        "name": "matugen_apply_image",
+        "description": "Generate and apply a Material You dynamic color theme from a wallpaper/image across all apps (GTK, Qt, Waybar, Hyprland, Kitty, etc.).",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "image_path": {"type": "string", "description": "Absolute path to the wallpaper or image"},
+                "mode": {"type": "string", "enum": ["dark", "light", "smart"], "default": "dark", "description": "Theme mode"},
+                "scheme_type": {
+                    "type": "string",
+                    "enum": [
+                        "scheme-tonal-spot", "scheme-content", "scheme-expressive",
+                        "scheme-fidelity", "scheme-fruit-salad", "scheme-monochrome",
+                        "scheme-neutral", "scheme-rainbow", "scheme-vibrant", "scheme-smart"
+                    ],
+                    "default": "scheme-tonal-spot",
+                    "description": "Material color scheme variant"
+                },
+                "contrast": {"type": "number", "minimum": -1.0, "maximum": 1.0, "default": 0.0, "description": "Contrast adjustment (-1.0 to 1.0)"},
+                "source_color_index": {"type": "number", "default": 0, "description": "Color index (0=dominant, 1=secondary, etc.)"},
+                "dry_run": {"type": "boolean", "default": False, "description": "Simulate generation without writing files or running hooks"}
+            },
+            "required": ["image_path"]
+        }
+    },
+    {
+        "name": "matugen_apply_color",
+        "description": "Generate and apply a Material You theme from a specific HEX color code across all configured desktop templates.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "hex_color": {"type": "string", "description": "Hex color code (e.g. #3b82f6 or 3b82f6)"},
+                "mode": {"type": "string", "enum": ["dark", "light", "smart"], "default": "dark", "description": "Theme mode"},
+                "scheme_type": {
+                    "type": "string",
+                    "enum": [
+                        "scheme-tonal-spot", "scheme-content", "scheme-expressive",
+                        "scheme-fidelity", "scheme-fruit-salad", "scheme-monochrome",
+                        "scheme-neutral", "scheme-rainbow", "scheme-vibrant", "scheme-smart"
+                    ],
+                    "default": "scheme-tonal-spot",
+                    "description": "Material color scheme variant"
+                },
+                "contrast": {"type": "number", "minimum": -1.0, "maximum": 1.0, "default": 0.0, "description": "Contrast adjustment (-1.0 to 1.0)"},
+                "dry_run": {"type": "boolean", "default": False, "description": "Simulate generation without writing files or running hooks"}
+            },
+            "required": ["hex_color"]
+        }
+    },
+    {
+        "name": "matugen_get_palette_json",
+        "description": "Generate complete Material You color palette tokens in JSON format without applying changes to desktop config files.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "source": {"type": "string", "description": "Image path or hex color"},
+                "source_type": {"type": "string", "enum": ["image", "color"], "default": "image", "description": "Type of source input"},
+                "mode": {"type": "string", "enum": ["dark", "light", "smart"], "default": "dark"},
+                "scheme_type": {"type": "string", "default": "scheme-tonal-spot"},
+                "format": {"type": "string", "enum": ["hex", "rgb", "rgba", "hsl"], "default": "hex"}
+            },
+            "required": ["source"]
+        }
+    },
+    {
+        "name": "matugen_extract_source_colors",
+        "description": "Extract top candidate source colors from an image file for palette selection.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "image_path": {"type": "string", "description": "Absolute path to image"}
+            },
+            "required": ["image_path"]
+        }
+    },
+    {
+        "name": "matugen_list_schemes",
+        "description": "List all Material You color scheme types and their design characteristics.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {}
+        }
+    }
+]
+
+SCHEMES_INFO = {
+    "scheme-tonal-spot": "Standard Material You palette. Balanced saturation and tone distribution, ideal for daily desktop use.",
+    "scheme-content": "Preserves the exact chroma and hue of the primary color with minimal tonal shifts.",
+    "scheme-expressive": "High energy with vivid accents and contrasting complementary tones.",
+    "scheme-fidelity": "Prioritizes high visual accuracy to the source color over algorithmic harmonization.",
+    "scheme-fruit-salad": "Playful, colorful palette with diverse hues across containers and accents.",
+    "scheme-monochrome": "Strict single-hue grayscale / muted monochrome palette.",
+    "scheme-neutral": "Understated, muted palette with very low saturation for minimal distraction.",
+    "scheme-rainbow": "High variety across color wheel sectors.",
+    "scheme-vibrant": "Maximum punch and saturation for vibrant contrast on OLED / high-gamut displays.",
+    "scheme-smart": "Adaptive scheme that evaluates source image characteristics to pick the optimal algorithm."
+}
+
+def clean_hex(h):
+    h = h.strip()
+    if not h.startswith("#"):
+        h = "#" + h
+    return h
+
+def main():
+    while True:
+        req = read_message()
+        if req is None:
+            break
+        req_id = req.get("id")
+        method = req.get("method")
+        
+        if method == "initialize":
+            write_message({
+                "jsonrpc": "2.0",
+                "id": req_id,
+                "result": {
+                    "protocolVersion": "2024-11-05",
+                    "capabilities": {
+                        "tools": {}
+                    },
+                    "serverInfo": {
+                        "name": "matugen-mcp",
+                        "version": "1.0.0"
+                    }
+                }
+            })
+        elif method == "notifications/initialized":
+            pass
+        elif method == "tools/list":
+            write_message({
+                "jsonrpc": "2.0",
+                "id": req_id,
+                "result": {
+                    "tools": TOOLS
+                }
+            })
+        elif method == "tools/call":
+            params = req.get("params", {})
+            name = params.get("name")
+            args = params.get("arguments", {})
+            
+            content = ""
+            if name == "matugen_apply_image":
+                img = os.path.expanduser(args["image_path"])
+                mode = args.get("mode", "dark")
+                scheme = args.get("scheme_type", "scheme-tonal-spot")
+                contrast = str(args.get("contrast", 0.0))
+                idx = str(args.get("source_color_index", 0))
+                cmd = [
+                    "matugen", "image", img,
+                    "-m", mode,
+                    "-t", scheme,
+                    "--contrast", contrast,
+                    "--source-color-index", idx
+                ]
+                if args.get("dry_run"):
+                    cmd.append("--dry-run")
+                content = run_cmd(cmd, timeout=45)
+            elif name == "matugen_apply_color":
+                hex_col = clean_hex(args["hex_color"])
+                mode = args.get("mode", "dark")
+                scheme = args.get("scheme_type", "scheme-tonal-spot")
+                contrast = str(args.get("contrast", 0.0))
+                cmd = [
+                    "matugen", "color", "hex", hex_col,
+                    "-m", mode,
+                    "-t", scheme,
+                    "--contrast", contrast
+                ]
+                if args.get("dry_run"):
+                    cmd.append("--dry-run")
+                content = run_cmd(cmd, timeout=45)
+            elif name == "matugen_get_palette_json":
+                src_type = args.get("source_type", "image")
+                src = os.path.expanduser(args["source"])
+                mode = args.get("mode", "dark")
+                scheme = args.get("scheme_type", "scheme-tonal-spot")
+                fmt = args.get("format", "hex")
+                if src_type == "color":
+                    hex_col = clean_hex(src)
+                    cmd = ["matugen", "color", "hex", hex_col, "-m", mode, "-t", scheme, "--dry-run", "--json", fmt]
+                else:
+                    cmd = ["matugen", "image", src, "-m", mode, "-t", scheme, "--source-color-index", "0", "--dry-run", "--json", fmt]
+                content = run_cmd(cmd, timeout=30)
+            elif name == "matugen_extract_source_colors":
+                img = os.path.expanduser(args["image_path"])
+                cmd = ["matugen", "image", img, "--show-source-colors"]
+                content = run_cmd(cmd, timeout=15)
+            elif name == "matugen_list_schemes":
+                content = json.dumps(SCHEMES_INFO, indent=2)
+            else:
+                content = f"Unknown tool: {name}"
+
+            write_message({
+                "jsonrpc": "2.0",
+                "id": req_id,
+                "result": {
+                    "content": [
+                        {"type": "text", "text": content}
+                    ]
+                }
+            })
+        else:
+            if req_id is not None:
+                write_message({
+                    "jsonrpc": "2.0",
+                    "id": req_id,
+                    "error": {
+                        "code": -32601,
+                        "message": f"Method {method} not found"
+                    }
+                })
+
+if __name__ == "__main__":
+    main()

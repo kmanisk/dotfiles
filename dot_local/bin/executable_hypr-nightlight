@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+# ==============================================================================
+# Hyprland Night Light Controller using hyprsunset
+# Supports:
+#   hypr-nightlight toggle
+#   hypr-nightlight adjust <delta>  (e.g. +300 or -300)
+# ==============================================================================
+
+TEMP_FILE="$HOME/.config/nightlight_temp"
+STATE_FILE="/tmp/nightlight_state"
+
+# Default warm temperature (4200K)
+CURRENT_TEMP=4200
+if [[ -f "$TEMP_FILE" ]]; then
+    CURRENT_TEMP=$(cat "$TEMP_FILE" 2>/dev/null)
+fi
+
+ACTION="${1:-toggle}"
+
+apply_temp() {
+    local target_temp="$1"
+    pkill -9 hyprsunset >/dev/null 2>&1
+    nohup hyprsunset -t "$target_temp" >/dev/null 2>&1 &
+    echo "$target_temp" > "$TEMP_FILE"
+    echo "on" > "$STATE_FILE"
+    PERCENT=$(( (6500 - target_temp) * 100 / 4500 ))
+    notify-send -t 1500 -i preferences-desktop-display "Night Light" "Active: ${target_temp}K"
+}
+
+turn_off() {
+    pkill -9 hyprsunset >/dev/null 2>&1
+    echo "off" > "$STATE_FILE"
+    notify-send -t 1500 -i preferences-desktop-display "Night Light" "Disabled (6500K Neutral)"
+}
+
+case "$ACTION" in
+    toggle)
+        if pgrep -x hyprsunset >/dev/null; then
+            turn_off
+        else
+            apply_temp "$CURRENT_TEMP"
+        fi
+        ;;
+    adjust)
+        DELTA="${2:-300}"
+        # If not currently running, turn it on at current temp first
+        if ! pgrep -x hyprsunset >/dev/null; then
+            apply_temp "$CURRENT_TEMP"
+            exit 0
+        fi
+        NEW_TEMP=$(( CURRENT_TEMP + DELTA ))
+        # Clamp between 2000K (very warm) and 6500K (neutral)
+        if (( NEW_TEMP > 6500 )); then
+            NEW_TEMP=6500
+        fi
+        if (( NEW_TEMP < 2000 )); then
+            NEW_TEMP=2000
+        fi
+        CURRENT_TEMP="$NEW_TEMP"
+        if (( CURRENT_TEMP >= 6500 )); then
+            turn_off
+        else
+            apply_temp "$CURRENT_TEMP"
+        fi
+        ;;
+    off)
+        turn_off
+        ;;
+    on)
+        apply_temp "$CURRENT_TEMP"
+        ;;
+esac

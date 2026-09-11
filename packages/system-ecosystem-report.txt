@@ -1,0 +1,12 @@
+# Package Ecosystem Audit (CachyOS Rolling)
+# Generated: Sat Sep 12 01:21:00 IST 2026
+#
+# Flatpak: Not installed on host.
+# Global NPM: No global packages (all local/npx cached).
+# User PIP: System uses externally-managed Python + uv.
+# Cargo: Rust toolchain unconfigured globally.
+#
+# CachyOS Architecture: x86-64-v3
+# Total Official/CachyOS explicit: 251
+# Total CachyOS-repo-specific explicit: 182
+# Total AUR explicit: 8

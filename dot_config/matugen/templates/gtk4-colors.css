@@ -1,0 +1,384 @@
+/*
+ * =============================================================================
+ * GTK 4 & Libadwaita Material You Dynamic Dark Theme
+ * Generated dynamically via Matugen (Arch Linux / Hyprland Rolling Release)
+ * Canonical GNOME / Libadwaita 1.6+ & GTK 4.18+ Specification
+ * =============================================================================
+ */
+
+/* =============================================================================
+ * 1. Material You Core Brand & Accent Tokens
+ * ============================================================================= */
+@define-color accent_color {{colors.primary.default.hex}};
+@define-color accent_fg_color {{colors.on_primary.default.hex}};
+@define-color accent_bg_color {{colors.primary.default.hex}};
+@define-color accent_hover_color {{colors.primary_fixed_dim.default.hex}};
+@define-color accent_active_color {{colors.primary_fixed.default.hex}};
+
+/* =============================================================================
+ * 2. Window, Canvas & Surface Geometry
+ * ============================================================================= */
+@define-color window_bg_color {{colors.surface_container_lowest.default.hex}};
+@define-color window_fg_color {{colors.on_surface.default.hex}};
+@define-color window_border_color {{colors.outline_variant.default.hex}};
+@define-color window_outline_color {{colors.outline_variant.default.hex}};
+
+@define-color view_bg_color {{colors.surface_container_lowest.default.hex}};
+@define-color view_fg_color {{colors.on_surface.default.hex}};
+@define-color view_border_color {{colors.outline_variant.default.hex}};
+
+/* =============================================================================
+ * 3. Headerbars, Titlebars & Tabs
+ * ============================================================================= */
+@define-color headerbar_bg_color {{colors.surface_container_lowest.default.hex}};
+@define-color headerbar_fg_color {{colors.on_surface.default.hex}};
+@define-color headerbar_border_color {{colors.outline_variant.default.hex}};
+@define-color headerbar_backdrop_color {{colors.surface_container_lowest.default.hex}};
+@define-color headerbar_shade_color rgba(0, 0, 0, 0.45);
+@define-color headerbar_darker_shade_color rgba(0, 0, 0, 0.65);
+@define-color headerbar_light_shade_color rgba(255, 255, 255, 0.05);
+
+/* =============================================================================
+ * 4. Cards, Dialogs & Elevated Containers
+ * ============================================================================= */
+@define-color card_bg_color {{colors.surface_dim.default.hex}};
+@define-color card_fg_color {{colors.on_surface.default.hex}};
+@define-color card_border_color {{colors.outline_variant.default.hex}};
+@define-color card_shade_color rgba(0, 0, 0, 0.35);
+
+@define-color dialog_bg_color {{colors.surface_dim.default.hex}};
+@define-color dialog_fg_color {{colors.on_surface.default.hex}};
+
+@define-color popover_bg_color {{colors.surface_dim.default.hex}};
+@define-color popover_fg_color {{colors.on_surface.default.hex}};
+@define-color popover_shade_color rgba(0, 0, 0, 0.45);
+
+@define-color shade_color rgba(0, 0, 0, 0.35);
+@define-color scrollbar_outline_color rgba(0, 0, 0, 0.5);
+
+/* =============================================================================
+ * 5. Sidebars & Navigation
+ * ============================================================================= */
+@define-color sidebar_bg_color {{colors.surface_container_lowest.default.hex}};
+@define-color sidebar_fg_color {{colors.on_surface.default.hex}};
+@define-color sidebar_border_color {{colors.outline_variant.default.hex}};
+@define-color sidebar_backdrop_color {{colors.surface_container_lowest.default.hex}};
+@define-color sidebar_shade_color rgba(0, 0, 0, 0.25);
+
+@define-color secondary_sidebar_bg_color {{colors.surface_container_lowest.default.hex}};
+@define-color secondary_sidebar_fg_color {{colors.on_surface.default.hex}};
+@define-color secondary_sidebar_backdrop_color {{colors.surface_container_lowest.default.hex}};
+@define-color secondary_sidebar_border_color {{colors.outline_variant.default.hex}};
+@define-color secondary_sidebar_shade_color rgba(0, 0, 0, 0.25);
+
+@define-color thumbnail_bg_color {{colors.surface_container_lowest.default.hex}};
+@define-color thumbnail_fg_color {{colors.on_surface.default.hex}};
+
+/* =============================================================================
+ * 6. Functional & State Feedback Colors
+ * ============================================================================= */
+@define-color destructive_bg_color {{colors.error.default.hex}};
+@define-color destructive_fg_color {{colors.on_error.default.hex}};
+@define-color destructive_color {{colors.error.default.hex}};
+@define-color destructive_hover_color {{colors.error_container.default.hex}};
+@define-color destructive_active_color {{colors.on_error_container.default.hex}};
+
+@define-color success_bg_color {{colors.tertiary.default.hex}};
+@define-color success_fg_color {{colors.on_tertiary.default.hex}};
+@define-color success_color {{colors.tertiary.default.hex}};
+@define-color success_hover_color {{colors.tertiary_fixed_dim.default.hex}};
+@define-color success_active_color {{colors.tertiary_fixed.default.hex}};
+
+@define-color warning_bg_color {{colors.secondary.default.hex}};
+@define-color warning_fg_color {{colors.on_secondary.default.hex}};
+@define-color warning_color {{colors.secondary.default.hex}};
+@define-color warning_hover_color {{colors.secondary_fixed_dim.default.hex}};
+@define-color warning_active_color {{colors.secondary_fixed.default.hex}};
+
+@define-color error_bg_color {{colors.error.default.hex}};
+@define-color error_fg_color {{colors.on_error.default.hex}};
+@define-color error_color {{colors.error.default.hex}};
+
+@define-color link_color {{colors.primary.default.hex}};
+@define-color link_visited_color {{colors.secondary.default.hex}};
+
+/* =============================================================================
+ * 7. Canonical GNOME & Libadwaita Numbered Palette Scales
+ * ============================================================================= */
+@define-color blue_1 {{colors.primary_container.default.hex}};
+@define-color blue_2 {{colors.primary.default.hex}};
+@define-color blue_3 {{colors.primary_fixed_dim.default.hex}};
+@define-color blue_4 {{colors.primary_fixed.default.hex}};
+@define-color blue_5 {{colors.on_primary.default.hex}};
+
+@define-color green_1 {{colors.tertiary_container.default.hex}};
+@define-color green_2 {{colors.tertiary.default.hex}};
+@define-color green_3 {{colors.tertiary_fixed_dim.default.hex}};
+@define-color green_4 {{colors.tertiary_fixed.default.hex}};
+@define-color green_5 {{colors.on_tertiary.default.hex}};
+
+@define-color yellow_1 {{colors.secondary_container.default.hex}};
+@define-color yellow_2 {{colors.secondary.default.hex}};
+@define-color yellow_3 {{colors.secondary_fixed_dim.default.hex}};
+@define-color yellow_4 {{colors.secondary_fixed.default.hex}};
+@define-color yellow_5 {{colors.on_secondary.default.hex}};
+
+@define-color orange_1 {{colors.secondary_container.default.hex}};
+@define-color orange_2 {{colors.secondary.default.hex}};
+@define-color orange_3 {{colors.secondary_fixed_dim.default.hex}};
+@define-color orange_4 {{colors.secondary_fixed.default.hex}};
+@define-color orange_5 {{colors.on_secondary.default.hex}};
+
+@define-color red_1 {{colors.error_container.default.hex}};
+@define-color red_2 {{colors.error.default.hex}};
+@define-color red_3 {{colors.error.default.hex}};
+@define-color red_4 {{colors.on_error_container.default.hex}};
+@define-color red_5 {{colors.on_error.default.hex}};
+
+@define-color purple_1 {{colors.tertiary_container.default.hex}};
+@define-color purple_2 {{colors.tertiary.default.hex}};
+@define-color purple_3 {{colors.tertiary_fixed_dim.default.hex}};
+@define-color purple_4 {{colors.tertiary_fixed.default.hex}};
+@define-color purple_5 {{colors.on_tertiary.default.hex}};
+
+@define-color brown_1 {{colors.surface_container_high.default.hex}};
+@define-color brown_2 {{colors.secondary.default.hex}};
+@define-color brown_3 {{colors.secondary_fixed_dim.default.hex}};
+@define-color brown_4 {{colors.secondary_fixed.default.hex}};
+@define-color brown_5 {{colors.on_secondary.default.hex}};
+
+@define-color dark_1 {{colors.surface_container_lowest.default.hex}};
+@define-color dark_2 {{colors.surface_container_low.default.hex}};
+@define-color dark_3 {{colors.surface_container.default.hex}};
+@define-color dark_4 {{colors.surface_container_high.default.hex}};
+@define-color dark_5 {{colors.surface_container_highest.default.hex}};
+
+@define-color light_1 {{colors.surface_bright.default.hex}};
+@define-color light_2 {{colors.outline_variant.default.hex}};
+@define-color light_3 {{colors.outline.default.hex}};
+@define-color light_4 {{colors.on_surface_variant.default.hex}};
+@define-color light_5 {{colors.on_surface.default.hex}};
+
+/* =============================================================================
+ * 8. Dialogs, Message Boxes & Modal Windows
+ * ============================================================================= */
+messagedialog,
+dialog,
+window.dialog,
+window.messagedialog,
+dialog.csd,
+messagedialog.csd {
+  background-color: @dialog_bg_color;
+  color: @dialog_fg_color;
+}
+
+messagedialog .titlebar,
+messagedialog .titlebar:backdrop,
+dialog .titlebar,
+dialog .titlebar:backdrop,
+window.dialog .titlebar,
+window.dialog headerbar,
+dialog headerbar {
+  background-color: @headerbar_bg_color;
+  color: @headerbar_fg_color;
+  border-style: none;
+  border-bottom: 1px solid @borders;
+}
+
+messagedialog button,
+dialog button {
+  color: @dialog_fg_color;
+}
+
+/* =============================================================================
+ * 9. Popovers & Menus (GTK 4 Dedicated Zero-Margin Specification)
+ * ============================================================================= */
+/* In GTK 4, ALL outer popover wrappers MUST be 100% transparent with NO border/shadow */
+popover,
+popover.menu,
+popover.background,
+.popover,
+.popover.menu,
+.popover.background {
+  background-color: transparent;
+  background-image: none;
+  box-shadow: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* In GTK 4, ONLY the inner contents bubble gets the color, single border, radius & NO shadow artifacts */
+popover > contents,
+.popover > contents,
+popover.menu > contents,
+dropdown popover > contents,
+combobox window.popup > contents {
+  background-color: @popover_bg_color;
+  color: @popover_fg_color;
+  border-radius: 12px;
+  border: 1px solid @borders;
+  box-shadow: none;
+  padding: 4px;
+}
+
+popover > arrow,
+.popover > arrow {
+  background-color: @popover_bg_color;
+  border: none;
+  box-shadow: none;
+}
+
+popover modelbutton,
+popover listview row {
+  padding: 4px 8px;
+  border-radius: 6px;
+  color: @popover_fg_color;
+}
+
+popover modelbutton:hover,
+popover listview row:hover {
+  background-color: alpha(@accent_color, 0.15);
+  color: @window_fg_color;
+  border-radius: 6px;
+}
+
+/* =============================================================================
+ * 10. Form Controls: Switches, Checkboxes, Radios, Sliders
+ * ============================================================================= */
+switch {
+  background-color: @card_bg_color;
+  border-radius: 9999px;
+  border: 1px solid @borders;
+}
+
+switch:checked {
+  background-color: @accent_bg_color;
+  border-color: @accent_bg_color;
+}
+
+switch slider {
+  background-color: @window_fg_color;
+  border-radius: 50%;
+  min-width: 18px;
+  min-height: 18px;
+}
+
+switch:checked slider {
+  background-color: @accent_fg_color;
+}
+
+check,
+radio {
+  background-color: @card_bg_color;
+  border: 1px solid @borders;
+  border-radius: 4px;
+}
+
+radio {
+  border-radius: 50%;
+}
+
+check:checked,
+check:indeterminate,
+radio:checked {
+  background-color: @accent_bg_color;
+  color: @accent_fg_color;
+  border-color: @accent_bg_color;
+}
+
+scale trough {
+  background-color: @card_bg_color;
+  border-radius: 9999px;
+  min-height: 6px;
+}
+
+scale highlight {
+  background-color: @accent_color;
+  border-radius: 9999px;
+}
+
+scale slider {
+  background-color: @accent_color;
+  border-radius: 50%;
+  min-width: 16px;
+  min-height: 16px;
+}
+
+scale slider:hover {
+  background-color: @accent_hover_color;
+}
+
+scale slider:active {
+  background-color: @accent_active_color;
+}
+
+/* =============================================================================
+ * 11. Window Controls (Close / Maximize / Minimize)
+ * ============================================================================= */
+windowcontrols button {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+  border-radius: 50%;
+  padding: 4px;
+  color: alpha(@window_fg_color, 0.7);
+}
+
+windowcontrols button:hover {
+  background-color: alpha(@window_fg_color, 0.12);
+  color: @window_fg_color;
+}
+
+windowcontrols button.close:hover {
+  background-color: @destructive_bg_color;
+  color: @destructive_fg_color;
+}
+
+windowcontrols button.maximize:hover,
+windowcontrols button.minimize:hover {
+  background-color: alpha(@window_fg_color, 0.12);
+  color: @window_fg_color;
+}
+
+/* =============================================================================
+ * 12. Fix: Suggested-action disabled contrast (matugen dynamic)
+ *     Root cause: libadwaita filter opacity 50% yields 1.58:1 on tan
+ *     #ffb779/#4c2700 over #130d08 (WCAG fail, "Add" barely visible).
+ *     75% mix restores 4.54:1 (AA) while still indicating disabled.
+ * ============================================================================= */
+button.suggested-action:disabled,
+button.suggested-action:disabled:backdrop,
+menubutton.suggested-action:disabled,
+splitbutton.suggested-action:disabled,
+row.button.suggested-action:disabled,
+headerbar button.suggested-action:disabled,
+dialog button.suggested-action:disabled,
+.action-bar button.suggested-action:disabled {
+  opacity: 1;
+  background-color: color-mix(in srgb, var(--accent-bg-color) 75%, var(--window-bg-color));
+  color: var(--accent-fg-color);
+  border: none;
+}
+
+button.suggested-action:disabled label,
+button.suggested-action:disabled image,
+menubutton.suggested-action:disabled label,
+menubutton.suggested-action:disabled image,
+splitbutton.suggested-action:disabled label,
+splitbutton.suggested-action:disabled image,
+row.button.suggested-action:disabled label {
+  opacity: 1;
+  color: var(--accent-fg-color);
+}
+
+/* Backdrop disabled retains slightly lower mix */
+button.suggested-action:disabled:backdrop {
+  background-color: color-mix(in srgb, var(--accent-bg-color) 55%, var(--window-bg-color));
+}
+
+/* Ensure AdwStatusPage large icons use view_fg for contrast, not muted */
+statuspage > scrolledwindow > viewport > box > clamp > box > .icon {
+  color: var(--view-fg-color);
+  opacity: 0.9;
+}

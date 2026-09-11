@@ -1,0 +1,19 @@
+[Unit]
+Description=Dusky RAM Monitor Daemon
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+# Ensure absolute path matching your structure
+ExecStart=%h/user_scripts/performance/swap_and_ram_monitor_service/dusky_ram_monitor_daemon.sh
+Restart=on-failure
+RestartSec=5
+
+# Modern User-Space Sandboxing
+MemoryDenyWriteExecute=yes
+RestrictNamespaces=yes
+RestrictRealtime=yes
+LockPersonality=yes
+
+[Install]
+WantedBy=graphical-session.target

@@ -1,0 +1,428 @@
+@import url("../matugen/generated/waybar-colors.css");
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   TRANSLUCENCY BASE VARIABLES
+   ───────────────────────────────────────────────────────────────────────────── */
+@define-color glass_bar         transparent;
+@define-color glass_group       alpha(@surface_container, 0.55);
+@define-color glass_module      alpha(@surface_container, 0.55);
+@define-color glass_hover       alpha(@surface_container_high, 0.9);
+@define-color glass_hover_bright alpha(@surface_container_highest, 0.9);
+@define-color glass_tooltip     alpha(@surface, 0.55);
+@define-color glass_battery_charging alpha(@tertiary_container, 0.55);
+@define-color glass_battery_critical alpha(@error, 0.55);
+
+* {
+    border: none;
+    border-radius: 0;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", sans-serif;
+    font-weight: 600;
+    font-size: 11px;
+}
+
+window#waybar {
+    background: @glass_bar;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   GROUP CONTAINERS - COMPACT
+   ───────────────────────────────────────────────────────────────────────────── */
+
+#left-pill,
+#expandable,
+#network-drawer,
+#power-drawer {
+    background-color: @glass_group;
+    border-radius: 12px;
+    border: 1px solid alpha(@outline_variant, 0.18);
+    margin: 2px 2px 2px 2px;
+    padding: 0;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   LEFT PILL & NOTIFICATIONS
+   ───────────────────────────────────────────────────────────────────────────── */
+
+#custom-settings {
+    padding: 0px 12px 0px 8px;
+    margin: 2px 2px 2px 2px;
+    border-radius: 10px;
+    background-color: @glass_module;
+    color: @on_surface;
+    font-size: 14px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#custom-settings:hover {
+    background-color: @glass_hover;
+}
+
+#clock {
+    padding: 0px 12px 0px 8px;
+    margin: 2px 2px 2px 0px;
+    border-radius: 10px;
+    background-color: @glass_module;
+    color: @primary;
+    font-weight: 700;
+    font-size: 11px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#clock:hover {
+    background-color: @glass_hover_bright;
+}
+
+#custom-notification {
+    padding: 2px 10px;
+    border-radius: 12px;
+    border: 1px solid alpha(@outline_variant, 0.18);
+    margin: 2px 2px 2px 2px;
+    background-color: @glass_group;
+    color: @on_surface;
+    font-size: 14px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#custom-notification:hover {
+    background-color: @glass_hover;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   UPDATES DRAWER
+   ───────────────────────────────────────────────────────────────────────────── */
+
+#custom-updates,
+#custom-updates-trigger {
+    padding: 2px 10px;
+    margin: 2px 2px 2px 2px;
+    border-radius: 12px;
+    background-color: @glass_group;
+    border: 1px solid alpha(@outline_variant, 0.18);
+    color: @secondary;
+    font-size: 11px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#custom-updates:hover,
+#custom-updates-trigger:hover {
+    background-color: @glass_hover;
+    color: @primary;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   WORKSPACES
+   ───────────────────────────────────────────────────────────────────────────── */
+
+#workspaces {
+    background: transparent;
+    background-color: transparent;
+    border: none;
+    border-radius: 12px;
+    padding: 0px 2px;
+    margin: 2px 2px 4px 2px;
+}
+
+#workspaces button {
+    padding: 2px 6px 2px 4px;
+    margin: 2px 2px 2px 2px;
+    min-width: 12px;
+    border-radius: 12px;
+    background-color: alpha(@surface_container_highest, 0.35);
+    color: @on_surface_variant;
+    font-size: 10px;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#workspaces button.empty {
+    padding: 2px 6px 2px 4px;
+    margin: 2px 2px 2px 2px;
+    min-width: 12px;
+    border-radius: 12px;
+    background-color: alpha(@surface_container_high, 0.18);
+    color: alpha(@on_surface_variant, 0.4);
+}
+
+#workspaces button.visible {
+    padding: 2px 6px 2px 4px;
+    margin: 2px 2px 2px 2px;
+    min-width: 12px;
+    border-radius: 12px;
+    background-color: alpha(@surface_container_highest, 0.6);
+    color: @on_surface;
+}
+
+#workspaces button.active {
+    padding: 2px 6px 2px 4px;
+    margin: 2px 2px 2px 2px;
+    min-width: 12px;
+    border-radius: 12px;
+    background-image: linear-gradient(135deg, alpha(@primary, 0.95), alpha(@tertiary, 0.8));
+    color: @on_primary;
+    font-weight: 800;
+    box-shadow: none;
+}
+
+#workspaces button:hover {
+    background-color: alpha(@primary, 0.25);
+    color: @primary;
+}
+
+#workspaces button.active:hover {
+    background-image: linear-gradient(135deg, alpha(@primary, 1.0), alpha(@tertiary, 0.9));
+}
+
+#workspaces button.urgent {
+    padding: 2px 6px 2px 4px;
+    margin: 2px 2px 2px 2px;
+    min-width: 12px;
+    border-radius: 12px;
+    background-color: @error;
+    color: @on_error;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0% { background-color: @error; }
+    50% { background-color: alpha(@error, 0.7); }
+    100% { background-color: @error; }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   EXPANDABLE DRAWER - COMPACT
+   ───────────────────────────────────────────────────────────────────────────── */
+
+#custom-expand {
+    font-size: 12px;
+    color: @tertiary;
+    padding: 2px 6px;
+    margin: 2px 2px 2px 2px;
+    min-width: 12px;
+    border-radius: 12px;
+    background-color: @glass_module;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#custom-expand:hover {
+    background-color: @glass_hover;
+}
+
+.expanded-child {
+    background-color: transparent;
+}
+
+#cpu,
+#memory,
+#disk,
+#temperature {
+    padding: 2px 6px;
+    margin: 2px 2px 2px 2px;
+    min-width: 12px;
+    border-radius: 12px;
+    background-color: @glass_module;
+    color: @on_surface_variant;
+    font-size: 10px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#cpu:hover,
+#memory:hover,
+#disk:hover,
+#temperature:hover {
+    background-color: @glass_hover;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   NETWORK DRAWER
+   ───────────────────────────────────────────────────────────────────────────── */
+
+#custom-net-speed {
+    padding: 2px 10px;
+    margin: 2px 2px 2px 2px;
+    border-radius: 12px;
+    background-color: @glass_module;
+    color: @on_surface;
+    font-size: 11px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#custom-net-speed:hover {
+    background-color: @glass_hover;
+}
+
+#custom-net-speed.network-kb { color: @secondary; }
+#custom-net-speed.network-mb { color: @primary; }
+#custom-net-speed.network-disconnected { color: @error; }
+
+#network {
+    padding: 0px 10px 0px 4px;
+    margin: 2px 2px 2px 2px;
+    min-width: 12px;
+    border-radius: 12px;
+    background-color: @glass_module;
+    color: @secondary;
+    font-size: 13px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#network:hover {
+    background-color: @glass_hover;
+}
+
+#network.disconnected { color: @error; }
+#network.linked, #network.ethernet { color: @tertiary; }
+#network.wifi { color: @secondary; }
+
+#bluetooth {
+    padding: 2px 6px;
+    margin: 2px 2px 2px 2px;
+    min-width: 12px;
+    border-radius: 12px;
+    background-color: @glass_module;
+    color: @on_surface;
+    font-size: 11px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#bluetooth:hover {
+    background-color: @glass_hover;
+}
+
+#bluetooth.disabled { color: alpha(@on_surface_variant, 0.4); }
+#bluetooth.connected { color: @primary; }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   BATTERY
+   ───────────────────────────────────────────────────────────────────────────── */
+
+#battery {
+    padding: 2px 6px;
+    margin: 3px 2px 3px 2px;
+    min-width: 12px;
+    border-radius: 12px;
+    background-color: @glass_group;
+    border: 1px solid alpha(@outline_variant, 0.18);
+    color: @on_surface;
+    font-weight: 700;
+    font-size: 11px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#battery:hover {
+    background-color: @glass_hover;
+}
+
+#battery.good { color: @tertiary; }
+#battery.charging,
+#battery.plugged,
+#battery.full {
+    color: @tertiary;
+    background-color: @glass_battery_charging;
+    border: 1px solid alpha(@tertiary, 0.15);
+}
+#battery.warning:not(.charging) { color: @error; }
+#battery.critical:not(.charging) {
+    color: @error;
+    background-color: @glass_battery_critical;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   POWER DRAWER
+   ───────────────────────────────────────────────────────────────────────────── */
+
+#custom-power {
+    padding: 2px 10px;
+    margin: 2px 2px 2px 2px;
+    border-radius: 10px;
+    background-color: @glass_module;
+    color: @error;
+    font-size: 14px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#custom-power:hover {
+    background-color: @error;
+    color: @on_error;
+}
+
+#custom-inhibit-suspend {
+    padding: 2px 10px;
+    margin: 2px 2px 2px 2px;
+    border-radius: 10px;
+    background-color: @glass_module;
+    color: @on_surface_variant;
+    font-size: 13px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#custom-inhibit-suspend:hover {
+    background-color: @glass_hover;
+}
+
+#custom-inhibit-suspend.disabled {
+    color: @tertiary_fixed;
+    background-color: alpha(@tertiary_container, 0.5);
+    font-weight: bold;
+}
+
+#custom-inhibit-suspend.enabled {
+    color: @on_surface_variant;
+    background-color: @glass_module;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   TOOLTIPS
+   ───────────────────────────────────────────────────────────────────────────── */
+
+tooltip decoration {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+tooltip,
+tooltip.background,
+.tooltip {
+    background-color: alpha(@surface_container, 0.57);
+    background: linear-gradient(135deg, alpha(@surface_container, 0.57), alpha(@surface_container_high, 0.57));
+    border: 1px solid alpha(@primary, 0.5);
+    border-radius: 12px;
+    box-shadow: none;
+}
+
+tooltip label,
+.tooltip label {
+    color: @on_surface;
+    padding: 8px 12px;
+    font-family: "JetBrainsMono Nerd Font Propo", "JetBrainsMono Nerd Font", monospace;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   TRANSPARENCY TOGGLE (MASTER SWITCH AT BOTTOM)
+   ───────────────────────────────────────────────────────────────────────────── */
+/* WAYBAR_OPAQUE_SWITCH_START
+
+#left-pill,
+#expandable,
+#network-drawer,
+#power-drawer,
+#custom-notification,
+#custom-updates,
+#custom-updates-trigger,
+#battery {
+    background-color: @surface_container;
+    border: 1px solid @outline_variant;
+}
+
+WAYBAR_OPAQUE_SWITCH_END */

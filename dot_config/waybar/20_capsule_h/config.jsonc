@@ -1,0 +1,279 @@
+{
+  "layer": "top",
+  "position": "top",
+  "fixed-center": true,
+  "spacing": 0,
+  "height": 32,
+  "margin-top": 3,
+  "margin-bottom": 0,
+  "reload_style_on_change": true,
+  "modules-center": [
+    "custom/power",
+    "custom/separator",
+    "clock",
+    "custom/separator",
+    "custom/idle-indicator",
+    "custom/notification",
+    "custom/screenrecording-indicator",
+    "custom/update",
+    "custom/theme",
+    "tray",
+    "custom/separator",
+    "hyprland/workspaces",
+    "custom/separator",
+    "group/center"
+  ],
+  "group/center": {
+    "orientation": "inherit",
+    "modules": [
+      "mpris",
+      "backlight",
+      "bluetooth",
+      "network",
+      "pulseaudio",
+      "battery",
+      "memory",
+      "cpu"
+    ]
+  },
+  "hyprland/workspaces": {
+    "on-click": "activate",
+    "cursor": true,
+    "format": "{id}"
+  },
+  "custom/separator": {
+    "format": "|",
+    "tooltip": false
+  },
+  "custom/update": {
+    "exec": "tail -F ~/.config/dusky/settings/waybar_update_counter_v 2>/dev/null",
+    "return-type": "json",
+    "format": "{}",
+    "tooltip": true,
+    "on-click": "dusky-run kitty --class system_update.sh --hold -e ~/user_scripts/update_dusky/system_update.sh --all"
+  },
+  "custom/theme": {
+    "format": "",
+    "tooltip": true,
+    "tooltip-format": "Switch wallpapers / theme\nLMB: Dark Mode\nRMB: Light Mode\nMMB: Wallpaper Selector",
+    "on-click": "dusky-run \"$HOME/user_scripts/theme_matugen/theme_ctl.sh\" set --mode dark",
+    "on-click-right": "dusky-run \"$HOME/user_scripts/theme_matugen/theme_ctl.sh\" set --mode light",
+    "on-click-middle": "dusky-run ~/user_scripts/images/wallpaper_selector.py"
+  },
+  "custom/idle-indicator": {
+    "format": "{}",
+    "exec": "if pgrep -x 'hypridle' > /dev/null;\nthen echo '{\"text\": \"󰌾\", \"tooltip\": \"Suspend is enabled.\\nClick to disable.\", \"class\": \"enabled\"}';\nelse echo '{\"text\": \"\", \"tooltip\": \"Suspend is disabled.\\nClick to enable.\", \"class\": \"disabled\"}';\nfi",
+    "return-type": "json",
+    "interval": 5,
+    "signal": 9,
+    "on-click": "dusky-run \"$HOME/user_scripts/waybar/toggle_hypridle.sh\"",
+    "escape": true
+  },
+  "custom/notification": {
+    "tooltip-format": "Left Click: Launch Mako\nMiddle Click: Clear All\nRight Click: Do Not Disturb",
+    "format": "{}",
+    "return-type": "json",
+    "exec-if": "which makoctl",
+    "exec": "~/user_scripts/waybar/mako.sh",
+    "interval": 2,
+    "signal": 8,
+    "on-click": "~/user_scripts/rofi/rofi_mako.sh",
+    "on-click-middle": "~/user_scripts/waybar/mako.sh --clear && pkill -RTMIN+8 waybar",
+    "on-click-right": "makoctl mode -t do-not-disturb && pkill -RTMIN+8 waybar",
+    "escape": true
+  },
+  "custom/screenrecording-indicator": {
+    "format": "{}",
+    "exec": "if pgrep -x 'wf-recorder' > /dev/null || pgrep -x 'gpu-screen-recorder' > /dev/null;\nthen echo '{\"text\": \"󰻂\", \"tooltip\": \"Screen Recording in progress\", \"class\": \"active\"}';\nelse echo '{\"text\": \"\", \"tooltip\": \"No active recording\", \"class\": \"inactive\"}';\nfi",
+    "return-type": "json",
+    "interval": 2,
+    "on-click": "dusky-run \"$HOME/user_scripts/dusky_recorder/dusky_recorder.sh\""
+  },
+  "cpu": {
+    "interval": 2,
+    "format": "<span size='9.5pt'></span> {icon} {usage}%",
+    "on-click": "dusky-run kitty --class htop -e htop",
+    "on-click-right": "dusky-run kitty --class sysbench_benchmark.py -e \"$HOME/user_scripts/performance/sysbench_benchmark.py\"",
+    "tooltip-format": "CPU: {usage}%\nAvg Freq: {avg_frequency}GHz",
+    "format-icons": [
+      "<span size='8pt'>━━━━━━━</span>",
+      "<span size='8pt'>■━━━━━━</span>",
+      "<span size='8pt' color='#ff66a9'>■■━━━━━</span>",
+      "<span size='8pt' color='#ff5f94'>■■■━━━━</span>",
+      "<span size='8pt' color='#ff5b7e'>■■■■━━━</span>",
+      "<span size='8pt' color='#fe5968'>■■■■■━━</span>",
+      "<span size='8pt' color='#f65a52'>■■■■■■━</span>",
+      "<span size='8pt' color='#df6124'>■■■■■■■</span>"
+    ]
+  },
+  "memory": {
+    "interval": 2,
+    "format": "<span size='9pt'></span> {icon} {used:0.1f}G",
+    "on-click": "dusky-run kitty --class dusky_disk_monitor_io.py -e \"$HOME/user_scripts/drives/dusky_disk_monitor_io.py\"",
+    "states": {
+      "critical": 80
+    },
+    "tooltip": true,
+    "tooltip-format": "Used {used} GiB\nAvail {avail} GiB\nSwap {swapUsed} GiB",
+    "format-icons": [
+      "<span size='8pt'>━━━━━━━</span>",
+      "<span size='8pt'>■━━━━━━</span>",
+      "<span size='8pt' color='#ef9875'>■■━━━━━</span>",
+      "<span size='8pt' color='#e77b50'>■■■━━━━</span>",
+      "<span size='8pt' color='#df6124'>■■■■━━━</span>",
+      "<span size='8pt' color='#c64e1c'>■■■■■━━</span>",
+      "<span size='8pt' color='#aa4318'>■■■■■■━</span>",
+      "<span size='8pt' color='#722d0f'>■■■■■■■</span>"
+    ]
+  },
+  "clock": {
+    "format": "󰥔 {:%I:%M %p}",
+    "format-alt": "󰥔 {:%I:%M %p - %Y-%m-%d}",
+    "tooltip-format": "<tt><span size='10pt' font='JetBrainsMono Nerd Font'>{calendar}</span></tt>",
+    "calendar": {
+      "mode": "month",
+      "mode-mon-col": 3,
+      "on-click-right": "mode",
+      "format": {
+        "month": "<span color='#ffead3'><b>{}</b></span>",
+        "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+        "today": "<span color='#ff6699'><b>{}</b></span>"
+      }
+    },
+    "on-click": "dusky-run gnome-clocks"
+  },
+  "network": {
+    "format-icons": [
+      "󰤯",
+      "󰤟",
+      "󰤢",
+      "󰤥",
+      "󰤨"
+    ],
+    "format": "{icon}",
+    "format-wifi": "{icon} {signalStrength}%",
+    "format-ethernet": "󰈀 {bandwidthDownBytes:=}",
+    "format-disconnected": "󰤮",
+    "tooltip-format-wifi": "{essid} ({frequency} GHz)\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+    "tooltip-format-ethernet": "⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+    "tooltip-format-disconnected": "Disconnected",
+    "interval": 3,
+    "spacing": 1,
+    "on-click": "foot --app-id=dusky_tui python $HOME/user_scripts/dusky_tui/python/main/main.py $HOME/user_scripts/network_manager/tui_dusky_network.py"
+  },
+  "battery": {
+    "format": "<span size='9.5pt'>󰁹</span> {icon} {capacity}%",
+    "format-discharging": "<span size='9.5pt'>󰁹</span> {icon} {capacity}%",
+    "format-charging": "<span size='9.5pt'>󱐋</span> {icon} {capacity}%",
+    "format-plugged": "<span size='9.5pt'></span> {capacity}%",
+    "format-icons": {
+      "charging": [
+        "<span size='8pt' color='#df6124'>━━━━━━━</span>",
+        "<span size='8pt' color='#d88000'>■━━━━━━</span>",
+        "<span size='8pt' color='#c5a000'>■■━━━━━</span>",
+        "<span size='8pt' color='#b5af00'>■■■━━━━</span>",
+        "<span size='8pt' color='#a2be00'>■■■■━━━</span>",
+        "<span size='8pt' color='#8acc00'>■■■■■━━</span>",
+        "<span size='8pt' color='#68da00'>■■■■■■━</span>",
+        "<span size='8pt' color='#25e712'>■■■■■■■</span>"
+      ],
+      "default": [
+        "<span size='8pt' color='#df6124'>━━━━━━━</span>",
+        "<span size='8pt' color='#d88000'>■━━━━━━</span>",
+        "<span size='8pt' color='#c5a000'>■■━━━━━</span>",
+        "<span size='8pt' color='#b5af00'>■■■━━━━</span>",
+        "<span size='8pt' color='#a2be00'>■■■■━━━</span>",
+        "<span size='8pt' color='#8acc00'>■■■■■━━</span>",
+        "<span size='8pt' color='#68da00'>■■■■■■━</span>",
+        "<span size='8pt' color='#25e712'>■■■■■■■</span>"
+      ]
+    },
+    "tooltip-format-discharging": "{timeTo}",
+    "tooltip-format-charging": "{timeTo}",
+    "interval": 5,
+    "on-click": "dusky-run kitty --class power_saver.sh --hold -e \"$HOME/user_scripts/battery/power_saver.sh\" --interactive",
+    "on-click-right": "dusky-run kitty --class dusky_hypridle.sh -e \"$HOME/user_scripts/hypridle/dusky_hypridle.sh\"",
+    "states": {
+      "warning": 20,
+      "critical": 10
+    }
+  },
+  "bluetooth": {
+    "format": "",
+    "format-disabled": "󰂲",
+    "format-connected": " {num_connections}",
+    "tooltip-format": "Devices connected: {num_connections}",
+    "on-click": "dusky-run blueman-manager",
+    "on-click-right": "dusky-run kitty --class bluetui -e bluetui"
+  },
+  "pulseaudio": {
+    "format": "{icon} {volume}%",
+    "format-muted": "󰖁 Muted",
+    "on-click": "dusky-run pavucontrol",
+    "on-click-right": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+    "tooltip-format": "Volume: {volume}%",
+    "scroll-step": 5,
+    "format-icons": {
+      "headphone": "",
+      "headset": "󰋎",
+      "default": [
+        "",
+        "",
+        ""
+      ]
+    }
+  },
+  "backlight": {
+    "device": "intel_backlight",
+    "format": "{icon} {percent}%",
+    "tooltip-format": "Brightness: {percent}%",
+    "format-icons": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "on-click": "dusky-run \"$HOME/user_scripts/dusky_system/quickpanal/dusky_quickpanal.py\"",
+    "on-click-right": "dusky-run \"$HOME/user_scripts/dusky_system/quickpanal/dusky_quickpanal.py\"",
+    "on-click-middle": "dusky-run \"$HOME/user_scripts/rofi/shader_menu.sh\""
+  },
+  "tray": {
+    "icon-size": 14,
+    "spacing": 5
+  },
+  "mpris": {
+    "format": "{player_icon} {title}",
+    "format-paused": "{status_icon} {title}",
+    "max-length": 22,
+    "player-icons": {
+      "default": "▶",
+      "mpv": "🎵",
+      "spotify": ""
+    },
+    "status-icons": {
+      "paused": "⏸"
+    },
+    "ignored-players": [
+      "firefox",
+      "chromium",
+      "brave"
+    ]
+  },
+  "custom/power": {
+    "format": "",
+    "tooltip": true,
+    "tooltip-format": "Power Menu",
+    "on-click": "dusky-run \"$HOME/user_scripts/wlogout/wlogout_scale.sh\""
+  }
+}

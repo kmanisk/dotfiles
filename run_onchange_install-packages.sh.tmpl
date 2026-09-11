@@ -1,0 +1,60 @@
+{{- if eq .chezmoi.os "linux" -}}
+#!/bin/bash
+# packages/pacman-explicit-official.txt hash: {{ include "packages/pacman-explicit-official.txt" | sha256sum }}
+# packages/cachyos-specific.txt hash: {{ include "packages/cachyos-specific.txt" | sha256sum }}
+# packages/aur-explicit.txt hash: {{ include "packages/aur-explicit.txt" | sha256sum }}
+
+set -euo pipefail
+
+echo "=========================================="
+echo "==> Chezmoi: Syncing system packages..."
+echo "=========================================="
+
+# 1. Snapshot safety check (User rule: snapshot before system changes)
+if command -v snapper >/dev/null 2>&1 && sudo snapper list-configs 2>/dev/null | grep -q root; then
+    echo "Creating pre-package-sync Snapper snapshot..."
+    sudo snapper -c root create -d "chezmoi package sync" -t pre || echo "Snapper snapshot skipped/failed, proceeding..."
+fi
+
+# 2. Determine AUR helper
+if command -v paru >/dev/null 2>&1; then
+    HELPER="paru"
+elif command -v yay >/dev/null 2>&1; then
+    HELPER="yay"
+else
+    HELPER="sudo pacman"
+fi
+
+OFFICIAL_LIST="{{ .chezmoi.sourceDir }}/packages/pacman-explicit-official.txt"
+CACHYOS_LIST="{{ .chezmoi.sourceDir }}/packages/cachyos-specific.txt"
+AUR_LIST="{{ .chezmoi.sourceDir }}/packages/aur-explicit.txt"
+
+# Install official and CachyOS packages
+PKGS=""
+if [ -f "$OFFICIAL_LIST" ]; then
+    PKGS="$PKGS $(grep -vhE '^\s*#|^\s*$' "$OFFICIAL_LIST" || true)"
+fi
+if [ -f "$CACHYOS_LIST" ]; then
+    PKGS="$PKGS $(grep -vhE '^\s*#|^\s*$' "$CACHYOS_LIST" || true)"
+fi
+
+if [ -n "$PKGS" ]; then
+    echo "==> Installing / updating official & CachyOS packages..."
+    $HELPER -S --needed --noconfirm $PKGS
+fi
+
+# Install AUR packages
+if [ -f "$AUR_LIST" ]; then
+    AUR_PKGS=$(grep -vhE '^\s*#|^\s*$' "$AUR_LIST" || true)
+    if [ -n "$AUR_PKGS" ]; then
+        echo "==> Installing / updating AUR packages..."
+        if [ "$HELPER" = "sudo pacman" ]; then
+            echo "WARNING: paru/yay not found. Cannot install AUR packages automatically: $AUR_PKGS"
+        else
+            $HELPER -S --needed --noconfirm $AUR_PKGS
+        fi
+    fi
+fi
+
+echo "==> Package synchronization complete."
+{{- end }}

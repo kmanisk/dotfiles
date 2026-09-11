@@ -3,3 +3,9 @@ AppData/Local/clink/clink_history
 AppData/Local/installer/userdata/
 *.tmp
 *.log
+key.txt
+*.key
+*.pem
+id_*
+!id_*.pub
+
