@@ -10,8 +10,11 @@ bindsym Mod1+Return exec $term
 # App Launcher (Rofi)
 bindsym Mod1+space exec "pkill rofi || rofi -show drun"
 
-# Browser (Windows + Shift + b)
+# Browser (Windows + Shift + b) -> Default Brave on Intel iGPU
 bindsym $mod+Shift+b exec brave-origin
+
+# Browser on NVIDIA GPU (Windows + Alt + b) -> Brave on RTX 5050 (Vulkan)
+bindsym $mod+Mod1+b exec brave-nvidia
 
 # Text Editor
 bindsym $mod+Shift+t exec $term -e nvim
