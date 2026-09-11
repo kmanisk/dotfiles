@@ -29,7 +29,16 @@ The table below summarizes system resource utilization across all measured state
 
 ---
 
-## 2. Audio DSP Pipeline Resource Analysis
+## 2. Direct Comparison: Audio Studio GUI Open vs. Background DSP Only
+
+The test below demonstrates the direct resource impact of having the real-time GTK monitoring dashboard open versus running purely in the background:
+
+| Metric | With GUI Open + "Hear Voice" ON | GUI Closed + Background DSP Only | Improvement / Difference |
+| :--- | :--- | :--- | :--- |
+| **Audio DSP Dedicated CPU (`dusky_audio_dsp`)** | **~28% – 32%** *(single thread)* | **~11.9%** *(single thread)* | **~2.5× lower DSP workload** |
+| **Total Audio Process CPU Overhead** | **~4.5% – 5.5%** *(all threads)* | **~0.7%** *(all threads)* | **~6× – 8× lower system footprint** |
+| **Peak System CPU Spikes** | **26.45%** | **~2.8%** | **Eliminates thread spikes** |
+| **RAM In-Use** | **4,908 MB (4.79 GB)** | **4,785 MB (4.67 GB)** | **Frees ~125 MB RAM** |
 
 ### Background PipeWire Engine vs. Graphical Studio Interface
 - **PipeWire Low-Latency DSP Daemon:**
