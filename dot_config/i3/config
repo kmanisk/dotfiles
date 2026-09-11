@@ -22,8 +22,8 @@ bindsym $mod+e exec thunar
 # Spotify (Windows + m)
 bindsym $mod+m exec spotify
 
-# Steam (Windows + Shift + g)
-bindsym $mod+Shift+g exec steam
+# Steam (Windows + Shift + g) - switches to dedicated Workspace 5 and launches Steam
+bindsym $mod+Shift+g workspace number $ws5; exec steam
 
 # Task Manager (TMOG in floating window)
 bindsym Control+Shift+Escape exec --no-startup-id /usr/bin/TaskManagerOG
@@ -231,12 +231,17 @@ for_window [instance="(?i)^AppRun\.wrapped$"] floating enable, resize set 1200 7
 for_window [instance="(?i)^pkg-float$"] floating enable, resize set 1250 780, move position center
 # Hide outer edge borders when tabs/windows fill the edge
 hide_edge_borders smart
-# Set Workspace 5 to Tabbed mode by default
+# Set Workspace 2 and 5 to Tabbed mode by default
+for_window [workspace="^2$"] layout tabbed
 for_window [workspace="^5$"] layout tabbed
 
 # ==============================================================================
 # Steam & Gaming Rules
 # ==============================================================================
+# Send all Steam windows to dedicated Gaming Workspace (Workspace 5)
+assign [class="(?i)^steam$"] workspace number $ws5
+for_window [class="(?i)^steam$"] move to workspace number $ws5
+
 # Window layout configuration:
 # 1. Main Steam library window opens tiled
 for_window [class="(?i)^steam$" title="^Steam$"] floating disable
