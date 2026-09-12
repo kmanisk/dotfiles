@@ -1,9 +1,9 @@
 {
-  "bg": "#111418",
-  "fg": "#e1e2e8",
-  "accent": "#a3c9fe",
+  "bg": "#0e1416",
+  "fg": "#dee3e5",
+  "accent": "#82d3e2",
   "error": "#ffb4ab",
-  "warning": "#bbc7db",
-  "success": "#d8bde3",
-  "muted": "#43474e"
+  "warning": "#b1cbd0",
+  "success": "#bbc5ea",
+  "muted": "#3f484a"
 }

@@ -32,10 +32,16 @@ hl.on("hyprland.start", function()
     -- make sure to install xorg-xhost beofre uncommenting the following line, sudo pacman -S xorg-xhost
     -- hl.exec_cmd("xhost +si:localuser:root")
 
+    -- Inject Hyprland/Wayland env into systemd user session so services like
+    -- xremap can query the active window via Hyprland IPC (application: filters).
+    -- Must run before restarting xremap.
+    hl.exec_cmd("systemctl --user import-environment WAYLAND_DISPLAY HYPRLAND_INSTANCE_SIGNATURE XDG_CURRENT_DESKTOP")
+    hl.exec_cmd("systemctl --user restart xremap")
+
     -- --- BACKGROUND SERVICES ---
     hl.exec_cmd("awww-daemon")           -- Wallpaper engine
     -- hyprsession disabled (causes window closures and freezing)
-    -- hl.exec_cmd("python3 $HOME/user_scripts/audio/dusky_audio_studio/dusky_audio_studio.py --autostart") -- Dusky Audio Studio & Voice DSP
+    hl.exec_cmd("python3 $HOME/user_scripts/audio/dusky_audio_studio/dusky_audio_studio.py --autostart") -- Dusky Audio Studio & Voice DSP
     -- hl.exec_cmd("$HOME/user_scripts/wayclick/dusky_wayclick.sh") -- Wayclick
 
     -- ---Background wallpaper audio Visvualizer

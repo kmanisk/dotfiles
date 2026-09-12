@@ -30,3 +30,25 @@ version: 1.0.0
 ## Service Policies
 - Keep `ananicy-cpp.service` active. It sets I/O and CPU scheduling priority on the fly when game binaries are detected.
 - Use `systemd-oomd` or `earlyoom` configured by CachyOS defaults; do not override memory pressure parameters manually without testing.
+
+## Performance & Resource Discipline (Anti-Bloat)
+- **Core Principle:** Save disk space, RAM, and CPU cycles as priority #1. Retain what matters (raw responsiveness, lowest input latency, frame pacing, battery thermals) — avoid flashy animations, redundant eye-candy, or heavy background daemons.
+- **Autologin / Display Architecture:** Prefer No-DM Getty autologin (0 MB background RAM overhead) over full display managers.
+- **Headless Over GUI:** Daemons and services must run headless in the background without requiring user interaction or open GUI windows.
+
+## Real-Time Audio & Noise Suppression (Dusky Audio Studio)
+- **Headless DSP Engine:** Dusky Audio Studio runs PipeWire RT low-latency DSP with RNNoise neural suppression (85% gate) headlessly via:
+  ```bash
+  python3 $HOME/user_scripts/audio/dusky_audio_studio/dusky_audio_studio.py --autostart
+  ```
+- Must be launched in Hyprland autostart (`~/.config/hypr/edit_here/source/autostart.lua`).
+- Users should NEVER be required to open the GTK3 GUI window (`Alt + N`) to apply DSP or noise filtering. The GUI is strictly for tweaking sliders and character presets.
+
+## Btrfs Snapshot Hygiene
+- **Snapshot Retention:** Keep only stable, verified baselines. Do not accumulate large batches of transient `snap-pac` pre/post snapshots that hold old package extents.
+- **Space Auditing:** Audit snapshots using `btrfs filesystem du -s /.snapshots/*/snapshot` to measure true exclusive (reclaimable) space versus shared CoW blocks.
+- **Safe Management:** Always use scoped `snapper` subcommands (`snapper -c <config> create/delete/cleanup`) instead of raw unverified `btrfs` subvolume deletion.
+
+## Research & Verification Protocol
+- **Headless Browser & Web Search:** When researching technical topics, kernel options, compositor changes, or package updates, always execute targeted web searches and headless browser reads to verify current upstream behavior.
+- **Skill & Memory Persistence:** Record verified findings, edge cases, and architectural choices into skill markdown files (`SKILL.md`) and project rules so verified insights persist across sessions.

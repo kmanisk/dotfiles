@@ -19,3 +19,10 @@ hl.env("AQ_DRM_DEVICES", resolve_card("0000:00:02.0", "/dev/dri/card1").. ":".. 
 
 -- Intel
 hl.env("LIBVA_DRIVER_NAME", "iHD")
+
+-- Stability: disable explicit-fence passing on multi-GPU scanout.
+-- Mitigates the Mesa 26.2 libgallium abort in dri_create_fence_fd /
+-- CEGLSync::create seen in ~/.cache/hyprland crash reports on this
+-- Intel iGPU + NVIDIA hybrid setup. No latency cost. Takes effect on
+-- full Hyprland restart (logout/login), not on hyprctl reload.
+hl.env("AQ_MGPU_NO_EXPLICIT", "1")

@@ -9,31 +9,31 @@
 /* =============================================================================
  * 1. Material You Core Brand & Accent Tokens
  * ============================================================================= */
-@define-color accent_color #a3c9fe;
-@define-color accent_fg_color #00315b;
-@define-color accent_bg_color #a3c9fe;
-@define-color accent_hover_color #a3c9fe;
-@define-color accent_active_color #d3e4ff;
+@define-color accent_color #82d3e2;
+@define-color accent_fg_color #00363e;
+@define-color accent_bg_color #82d3e2;
+@define-color accent_hover_color #82d3e2;
+@define-color accent_active_color #9eefff;
 
 /* =============================================================================
  * 2. Window, Canvas & Surface Geometry
  * ============================================================================= */
-@define-color window_bg_color #0c0e13;
-@define-color window_fg_color #e1e2e8;
-@define-color window_border_color #43474e;
-@define-color window_outline_color #43474e;
+@define-color window_bg_color #090f10;
+@define-color window_fg_color #dee3e5;
+@define-color window_border_color #3f484a;
+@define-color window_outline_color #3f484a;
 
-@define-color view_bg_color #0c0e13;
-@define-color view_fg_color #e1e2e8;
-@define-color view_border_color #43474e;
+@define-color view_bg_color #090f10;
+@define-color view_fg_color #dee3e5;
+@define-color view_border_color #3f484a;
 
 /* =============================================================================
  * 3. Headerbars, Titlebars & Tabs
  * ============================================================================= */
-@define-color headerbar_bg_color #0c0e13;
-@define-color headerbar_fg_color #e1e2e8;
-@define-color headerbar_border_color #43474e;
-@define-color headerbar_backdrop_color #0c0e13;
+@define-color headerbar_bg_color #090f10;
+@define-color headerbar_fg_color #dee3e5;
+@define-color headerbar_border_color #3f484a;
+@define-color headerbar_backdrop_color #090f10;
 @define-color headerbar_shade_color rgba(0, 0, 0, 0.45);
 @define-color headerbar_darker_shade_color rgba(0, 0, 0, 0.65);
 @define-color headerbar_light_shade_color rgba(255, 255, 255, 0.05);
@@ -41,16 +41,16 @@
 /* =============================================================================
  * 4. Cards, Dialogs & Elevated Containers
  * ============================================================================= */
-@define-color card_bg_color #111418;
-@define-color card_fg_color #e1e2e8;
-@define-color card_border_color #43474e;
+@define-color card_bg_color #0e1416;
+@define-color card_fg_color #dee3e5;
+@define-color card_border_color #3f484a;
 @define-color card_shade_color rgba(0, 0, 0, 0.35);
 
-@define-color dialog_bg_color #111418;
-@define-color dialog_fg_color #e1e2e8;
+@define-color dialog_bg_color #0e1416;
+@define-color dialog_fg_color #dee3e5;
 
-@define-color popover_bg_color #111418;
-@define-color popover_fg_color #e1e2e8;
+@define-color popover_bg_color #0e1416;
+@define-color popover_fg_color #dee3e5;
 @define-color popover_shade_color rgba(0, 0, 0, 0.45);
 
 @define-color shade_color rgba(0, 0, 0, 0.35);
@@ -59,20 +59,20 @@
 /* =============================================================================
  * 5. Sidebars & Navigation
  * ============================================================================= */
-@define-color sidebar_bg_color #0c0e13;
-@define-color sidebar_fg_color #e1e2e8;
-@define-color sidebar_border_color #43474e;
-@define-color sidebar_backdrop_color #0c0e13;
+@define-color sidebar_bg_color #090f10;
+@define-color sidebar_fg_color #dee3e5;
+@define-color sidebar_border_color #3f484a;
+@define-color sidebar_backdrop_color #090f10;
 @define-color sidebar_shade_color rgba(0, 0, 0, 0.25);
 
-@define-color secondary_sidebar_bg_color #0c0e13;
-@define-color secondary_sidebar_fg_color #e1e2e8;
-@define-color secondary_sidebar_backdrop_color #0c0e13;
-@define-color secondary_sidebar_border_color #43474e;
+@define-color secondary_sidebar_bg_color #090f10;
+@define-color secondary_sidebar_fg_color #dee3e5;
+@define-color secondary_sidebar_backdrop_color #090f10;
+@define-color secondary_sidebar_border_color #3f484a;
 @define-color secondary_sidebar_shade_color rgba(0, 0, 0, 0.25);
 
-@define-color thumbnail_bg_color #0c0e13;
-@define-color thumbnail_fg_color #e1e2e8;
+@define-color thumbnail_bg_color #090f10;
+@define-color thumbnail_fg_color #dee3e5;
 
 /* =============================================================================
  * 6. Functional & State Feedback Colors
@@ -83,51 +83,51 @@
 @define-color destructive_hover_color #93000a;
 @define-color destructive_active_color #ffdad6;
 
-@define-color success_bg_color #d8bde3;
-@define-color success_fg_color #3c2947;
-@define-color success_color #d8bde3;
-@define-color success_hover_color #d8bde3;
-@define-color success_active_color #f4d9ff;
+@define-color success_bg_color #bbc5ea;
+@define-color success_fg_color #252f4d;
+@define-color success_color #bbc5ea;
+@define-color success_hover_color #bbc5ea;
+@define-color success_active_color #dbe1ff;
 
-@define-color warning_bg_color #bbc7db;
-@define-color warning_fg_color #263141;
-@define-color warning_color #bbc7db;
-@define-color warning_hover_color #bbc7db;
-@define-color warning_active_color #d7e3f8;
+@define-color warning_bg_color #b1cbd0;
+@define-color warning_fg_color #1c3438;
+@define-color warning_color #b1cbd0;
+@define-color warning_hover_color #b1cbd0;
+@define-color warning_active_color #cde7ed;
 
 @define-color error_bg_color #ffb4ab;
 @define-color error_fg_color #690005;
 @define-color error_color #ffb4ab;
 
-@define-color link_color #a3c9fe;
-@define-color link_visited_color #bbc7db;
+@define-color link_color #82d3e2;
+@define-color link_visited_color #b1cbd0;
 
 /* =============================================================================
  * 7. Canonical GNOME & Libadwaita Numbered Palette Scales
  * ============================================================================= */
-@define-color blue_1 #1d4875;
-@define-color blue_2 #a3c9fe;
-@define-color blue_3 #a3c9fe;
-@define-color blue_4 #d3e4ff;
-@define-color blue_5 #00315b;
+@define-color blue_1 #004e59;
+@define-color blue_2 #82d3e2;
+@define-color blue_3 #82d3e2;
+@define-color blue_4 #9eefff;
+@define-color blue_5 #00363e;
 
-@define-color green_1 #533f5e;
-@define-color green_2 #d8bde3;
-@define-color green_3 #d8bde3;
-@define-color green_4 #f4d9ff;
-@define-color green_5 #3c2947;
+@define-color green_1 #3c4665;
+@define-color green_2 #bbc5ea;
+@define-color green_3 #bbc5ea;
+@define-color green_4 #dbe1ff;
+@define-color green_5 #252f4d;
 
-@define-color yellow_1 #3c4858;
-@define-color yellow_2 #bbc7db;
-@define-color yellow_3 #bbc7db;
-@define-color yellow_4 #d7e3f8;
-@define-color yellow_5 #263141;
+@define-color yellow_1 #334b4f;
+@define-color yellow_2 #b1cbd0;
+@define-color yellow_3 #b1cbd0;
+@define-color yellow_4 #cde7ed;
+@define-color yellow_5 #1c3438;
 
-@define-color orange_1 #3c4858;
-@define-color orange_2 #bbc7db;
-@define-color orange_3 #bbc7db;
-@define-color orange_4 #d7e3f8;
-@define-color orange_5 #263141;
+@define-color orange_1 #334b4f;
+@define-color orange_2 #b1cbd0;
+@define-color orange_3 #b1cbd0;
+@define-color orange_4 #cde7ed;
+@define-color orange_5 #1c3438;
 
 @define-color red_1 #93000a;
 @define-color red_2 #ffb4ab;
@@ -135,29 +135,29 @@
 @define-color red_4 #ffdad6;
 @define-color red_5 #690005;
 
-@define-color purple_1 #533f5e;
-@define-color purple_2 #d8bde3;
-@define-color purple_3 #d8bde3;
-@define-color purple_4 #f4d9ff;
-@define-color purple_5 #3c2947;
+@define-color purple_1 #3c4665;
+@define-color purple_2 #bbc5ea;
+@define-color purple_3 #bbc5ea;
+@define-color purple_4 #dbe1ff;
+@define-color purple_5 #252f4d;
 
-@define-color brown_1 #272a2f;
-@define-color brown_2 #bbc7db;
-@define-color brown_3 #bbc7db;
-@define-color brown_4 #d7e3f8;
-@define-color brown_5 #263141;
+@define-color brown_1 #252b2c;
+@define-color brown_2 #b1cbd0;
+@define-color brown_3 #b1cbd0;
+@define-color brown_4 #cde7ed;
+@define-color brown_5 #1c3438;
 
-@define-color dark_1 #0c0e13;
-@define-color dark_2 #191c20;
-@define-color dark_3 #1d2024;
-@define-color dark_4 #272a2f;
-@define-color dark_5 #32353a;
+@define-color dark_1 #090f10;
+@define-color dark_2 #171d1e;
+@define-color dark_3 #1b2122;
+@define-color dark_4 #252b2c;
+@define-color dark_5 #303637;
 
-@define-color light_1 #37393e;
-@define-color light_2 #43474e;
-@define-color light_3 #8d9199;
-@define-color light_4 #c3c6cf;
-@define-color light_5 #e1e2e8;
+@define-color light_1 #343a3c;
+@define-color light_2 #3f484a;
+@define-color light_3 #899294;
+@define-color light_4 #bfc8ca;
+@define-color light_5 #dee3e5;
 
 /* =============================================================================
  * 8. Dialogs, Message Boxes & Modal Windows

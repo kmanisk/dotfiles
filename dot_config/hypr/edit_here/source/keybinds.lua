@@ -135,8 +135,8 @@ hl.bind("SUPER + B", hl.dsp.workspace.toggle_special("scratch-monitor"), { descr
 hl.bind("SUPER + Z", hl.dsp.workspace.toggle_special("magic"), { description = "Toggle Generic Scratchpad" })
 hl.bind("SUPER + SHIFT + Z", hl.dsp.window.move({ workspace = "special:magic" }), { description = "Move Window to Scratchpad" })
 
--- Gaming Shortcut (Windows + Shift + g): switch to Workspace 5 and launch Steam
-hl.bind("SUPER + SHIFT + G", function()
+-- Gaming Shortcut: switch to Workspace 5 and launch Steam
+hl.bind("ALT + SHIFT + S", function()
     hl.dispatch(hl.dsp.focus({ workspace = "5" }))
     hl.dispatch(hl.dsp.exec_cmd("dusky-run steam"))
 end, { description = "Gaming: Workspace 5 + Launch Steam" })

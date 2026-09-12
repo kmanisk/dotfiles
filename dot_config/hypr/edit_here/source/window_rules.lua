@@ -77,7 +77,9 @@ hl.window_rule({
     fullscreen = true,
     opaque = true,
     no_blur = true,
-    immediate = true, -- Allow tearing for true zero-latency competitive gaming
+    no_shadow = true,
+    no_anim = true,
+    immediate = false, -- Stable baseline: no tearing until compositor is crash-free
     rounding = 0,
 })
 

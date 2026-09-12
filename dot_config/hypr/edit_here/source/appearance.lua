@@ -28,7 +28,7 @@ hl.config({
         resize_on_border = true, -- Enables resizing windows by clicking and dragging on borders and gaps
         extend_border_grab_area = 15, -- Extends click/drag area around the border (needs resize_on_border)
         hover_icon_on_border = true, -- Shows cursor icon when hovering over borders (needs resize_on_border)
-        allow_tearing = true, -- Master switch for allowing tearing to occur
+        allow_tearing = false, -- Stable baseline after Mesa fence crashes: master tearing off until compositor survives gamescope stretch. Per-game immediate stays off too.
         resize_corner = 0 -- Forces floating windows to use specific corner when resized (1-4, 0 to disable)
     },
 
@@ -165,7 +165,7 @@ hl.config({
     },
 
     render = {
-        direct_scanout = 1, -- Bypass compositor for single fullscreen app (zero latency gaming)
+        direct_scanout = 0, -- MUST be 0 on Optimus (Intel iGPU display + NVIDIA dGPU): values 1 or 2 trigger Mesa dri_create_fence_fd abort (CEGLSync::create SIGABRT). Crash 1258 confirmed.
         expand_undersized_textures = true, -- Expand undersized textures vs stretching entire texture
         xp_mode = false, -- Disables back buffer and bottom layer rendering
         ctm_animation = 0, -- Disable fade animation for CTM changes

@@ -1,15 +1,19 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# CS2 Low-Latency Competitive Launcher (Hyprland / Wayland + Gamescope)
+# CS2 Low-Latency Competitive Launcher (Hyprland / Wayland, native)
 # ==============================================================================
 # Target: CachyOS Linux (Kernel 7.2+ BORE/EEVDF)
 # Hardware: Intel i5-13450HX + NVIDIA RTX 5050 Mobile (Optimus)
 # Panel: Physical eDP-1 at 1920x1200 @ 165Hz (16:10)
 #
-# Pipeline:
-#   CS2 (Vulkan, 1440x1080 4:3)
-#     -> Gamescope (stretch 4:3 -> 16:10 @ 165Hz, --immediate-flips)
-#     -> Hyprland Wayland (1920x1200 @ 165Hz physical panel, direct scanout)
+# Pipeline (default stretched):
+#   CS2 (Vulkan, 1440x1080 4:3 -windowed -noborder)
+#     -> nested Gamescope (-S stretch to 1920x1200 fullscreen)
+#     -> Hyprland windowrulev2 immediate+fullscreen (workspace 5)
+#     -> eDP-1 1920x1200 @ 165Hz (physical panel never changed)
+#
+# Nested Gamescope is a Wayland client (no DRM lease); it only scales frames.
+# Bypass: USE_GAMESCOPE=0 cs2-launch (native, letterboxed, lowest overhead).
 #
 # NO xrandr, NO i3, NO polybar, NO feh, NO monitor resolution switching.
 # The physical display remains under Hyprland at 1920x1200@165Hz at all times.
@@ -207,7 +211,13 @@ if [ "$STRETCH_OPT" = "0" ]; then
     USE_GS="${USE_GAMESCOPE:-0}"
 else
     MODE_NAME="COMPETITIVE_STRETCHED"
-    SCALING_MODE="stretch (4:3 -> 16:10)"
+    SCALING_MODE="stretch (4:3 -> 16:10 via nested gamescope, panel stays ${PHYS_W}x${PHYS_H})"
+    # Wayland cannot change the output mode per-app like X11 xrandr could.
+    # The compositor always scans out native res, so a native 1440x1080
+    # fullscreen window gets letterboxed/zoomed instead of stretched.
+    # Standard Hyprland community fix: nested gamescope (a Wayland client,
+    # no DRM lease) renders the game at 4:3 and stretches it to fullscreen.
+    # Override: USE_GAMESCOPE=0 to bypass for testing.
     USE_GS="${USE_GAMESCOPE:-1}"
 
     REQ_RES="${CS2_RES:-1440x1080}"
@@ -246,7 +256,7 @@ if [ "$USE_GS" = "1" ]; then
     fi
 
     GS_VER=$(gamescope --version 2>&1 | grep -o 'version [0-9.]*' | head -n 1) || GS_VER="installed"
-    IMMEDIATE_FLIPS_STATUS="Enabled (--immediate-flips active for minimum presentation queueing)"
+    IMMEDIATE_FLIPS_STATUS="OFF (stable baseline: no --immediate-flips until compositor is crash-free)"
 else
     GS_VER="Bypassed (Native Wayland direct scanout)"
     IMMEDIATE_FLIPS_STATUS="N/A (Managed directly by Hyprland window rule: immediate = true)"
@@ -373,18 +383,24 @@ backup_restore_video_config
 # ------------------------------------------------------------------------------
 # 13. Assemble Execution Command
 # ------------------------------------------------------------------------------
-# Explicit NVIDIA Vulkan Offload Environment
+# Explicit NVIDIA Vulkan Offload Environment (keep standard PRIME offload without overriding VK_DRIVER_FILES)
 export __NV_PRIME_RENDER_OFFLOAD=1
 export __GLX_VENDOR_LIBRARY_NAME=nvidia
 export __VK_LAYER_NV_optimus=NVIDIA_only
-export VK_DRIVER_FILES=/usr/share/vulkan/icd.d/nvidia_icd.json
 
-# CS2 Essential Flags
+# Force native Wayland SDL driver — avoids XWayland detour, gives CS2 direct Wayland presentation
+export SDL_VIDEO_DRIVER=wayland
+export SDL_VIDEO_WAYLAND_MODE_SCALING=stretch
+export SDL_VIDEO_WAYLAND_SCALE_TO_DISPLAY=1
+
+# CS2 Essential Flags (fullscreen mode appended per-branch below)
 CS2_BASE_FLAGS=(
     -vulkan
-    -fullscreen
     -novid
     -nojoy
+    -condebug
+    -refresh 165            # Request 165Hz even when the res is missing from the menu
+    -noabsoluteinput       # Fix cursor confinement / mouse grab on Wayland fullscreen
     +fps_max 0
     +fps_max_ui 0
 )
@@ -425,9 +441,9 @@ echo "    GPU:         $NV_NAME ($NV_VK_DEVICE)"
 echo "    CPU Core:    P-cores [$PCORE_RANGE]"
 
 if [ "$USE_GS" = "1" ]; then
-    # Competitive 4:3 Stretched Mode via Gamescope
-    # Gamescope maps 1440x1080 -> 1920x1200 while physical panel stays 1920x1200@165Hz
-    export ENABLE_GAMESCOPE_WSI=0
+    # Competitive 4:3 Stretched Mode via nested Gamescope
+    # Game renders windowed at 4:3, Gamescope stretches to panel fullscreen.
+    # Physical panel stays 1920x1200@165Hz, so workspace switches are unaffected.
     exec "${TASKSET_CMD[@]}" gamescope \
         -w "$GAME_W" \
         -h "$GAME_H" \
@@ -438,7 +454,6 @@ if [ "$USE_GS" = "1" ]; then
         -f \
         -S stretch \
         --force-grab-cursor \
-        --immediate-flips \
         --prefer-vk-device "$NV_VK_DEVICE" \
         "${GS_MANGO_FLAG[@]}" \
         -- \
@@ -446,13 +461,15 @@ if [ "$USE_GS" = "1" ]; then
         "${WRAP_MANGOHUD[@]}" \
         "${TARGET_BIN[@]}" \
         -w "$GAME_W" -h "$GAME_H" \
+        -windowed -noborder \
         "${CS2_BASE_FLAGS[@]}"
 else
-    # Native Low-Latency Mode: Direct Hyprland Wayland Fullscreen
+    # Native Low-Latency Mode: Direct Hyprland Fullscreen (stretched by compositor)
     exec "${TASKSET_CMD[@]}" \
         "${GAMEMODE_CMD[@]}" \
         "${WRAP_MANGOHUD[@]}" \
         "${TARGET_BIN[@]}" \
-        -w "$PHYS_W" -h "$PHYS_H" \
+        -w "$GAME_W" -h "$GAME_H" \
+        -fullscreen \
         "${CS2_BASE_FLAGS[@]}"
 fi

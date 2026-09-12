@@ -500,13 +500,14 @@ bind \cb "commandline -r 'dall'; commandline -f execute"
 alias prun="gamemoderun prime-run"
 alias gscope="gamescope -W 1920 -H 1200 -r 165 --prime -- gamemoderun"
 alias cachy-sync="sudo cachyos-rate-mirrors && sudo pacman -Syu"
+
 # Fuzzy find: cd to dir or open file in nvim
 function f --description "Fuzzy find: cd to dir or open file in nvim"
     set -l target (
         fd --hidden --exclude .git 2>/dev/null | command fzf \
-            --height 40% \
             --layout reverse \
             --border \
+            --preview-window 'right,50%' \
             --preview 'if test -d {}; eza --tree --level=2 --icons {}; else; bat --color=always --style=numbers --line-range=:200 {}; end'
     )
 
@@ -523,11 +524,18 @@ end
 function c --description "Fuzzy find directory and cd into it"
     set -l dir (
         fd --type d --hidden --exclude .git 2>/dev/null | command fzf \
-            --height 40% \
             --layout reverse \
             --border \
+            --preview-window 'right,50%' \
             --preview 'eza --tree --level=2 --icons {}'
     )
 
     test -n "$dir"; and cd "$dir"
+end
+
+# Autostart Hyprland if logging into TTY1
+if status is-login
+    if test -z "$DISPLAY" -a -z "$WAYLAND_DISPLAY" -a "$XDG_VTNR" = 1
+        exec start-hyprland
+    end
 end
