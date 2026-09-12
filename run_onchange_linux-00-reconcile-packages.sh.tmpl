@@ -2,7 +2,6 @@
 #!/bin/bash
 # common.txt hash: {{ include "packages/common.txt" | sha256sum }}
 # linux-core.txt hash: {{ include "packages/linux-core.txt" | sha256sum }}
-# hyprland.txt hash: {{ include "packages/hyprland.txt" | sha256sum }}
 # gaming.txt hash: {{ include "packages/gaming.txt" | sha256sum }}
 # nvidia.txt hash: {{ include "packages/nvidia.txt" | sha256sum }}
 # asus.txt hash: {{ include "packages/asus.txt" | sha256sum }}
@@ -106,10 +105,6 @@ fi
 LISTS=()
 LISTS+=("{{ .chezmoi.sourceDir }}/packages/common.txt")
 LISTS+=("{{ .chezmoi.sourceDir }}/packages/linux-core.txt")
-
-{{ if $m.features.hyprland -}}
-LISTS+=("{{ .chezmoi.sourceDir }}/packages/hyprland.txt")
-{{ end -}}
 
 {{ if $m.features.gaming -}}
 LISTS+=("{{ .chezmoi.sourceDir }}/packages/gaming.txt")
