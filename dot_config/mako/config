@@ -1,5 +1,0 @@
-include=~/.config/matugen/generated/mako-colors.ini
-
-# Flat corners
-border-radius=0
-icon-border-radius=0
