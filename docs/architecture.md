@@ -63,10 +63,15 @@ Old Provider Cleanup (retire deactivated services or conflicting overrides)
 ```
 
 ### Dynamic Reconciliation via `run_onchange_`
-Rather than one-time execution scripts (`run_once_`), service and package orchestration is handled by `run_onchange_reconcile-services.sh.tmpl` and `run_onchange_reconcile-packages.sh.tmpl`. These scripts compute a cryptographic hash of the machine profile's providers and features. When any provider or feature is changed:
-1. Chezmoi detects the hash change.
-2. The reconciler runs automatically.
-3. Desired services are activated, and retired services (e.g. disabled Bluetooth, deactivated display managers) are cleanly stopped and disabled.
+Rather than one-time execution scripts (`run_once_`), service and package orchestration is cleanly segregated into three specialized, ordered reconcilers:
+- `run_onchange_linux-00-reconcile-packages.sh.tmpl`: Evaluates package manifest hashes, performs Snapper pre-update snapshots, and provisions packages using the declared package manager (`paru`, `yay`, or `pacman`).
+- `run_onchange_linux-10-reconcile-login.sh.tmpl`: Evaluates login and greeter provider hashes, idempotent systemd autologin overrides, and clean retirement of display managers (Ly, SDDM, GDM).
+- `run_onchange_linux-20-reconcile-services.sh.tmpl`: Evaluates system and user service hashes, managing bi-directional service lifecycle (enabling desired units, cleanly disabling and retiring deactivated units).
+
+When any provider, feature, or package manifest is modified:
+1. Chezmoi computes a new cryptographic hash embedded in the reconciler headers.
+2. The relevant reconciler script runs automatically.
+3. Desired state is activated, and retired state (e.g. disabled Bluetooth, retired ASUS daemons, conflicting display managers) is cleaned up.
 
 ---
 

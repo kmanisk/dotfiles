@@ -41,10 +41,11 @@ To add a new machine to the fleet:
    description = "Lenovo ThinkPad X1 Carbon"
    os = "linux"
    distribution = "arch"
-   hostname = "thinkpad"
+   hardware_profile = "thinkpad-x1"
 
-   [machines.my-thinkpad.hardware]
+   [hardware.thinkpad-x1]
    type = "laptop"
+   cpu_vendor = "intel"
    gpu_strategy = "intel-only"
    display_primary = "eDP-1"
    display_resolution = "2880x1800@90Hz"
@@ -60,6 +61,7 @@ To add a new machine to the fleet:
    dns = "systemd-resolved"
    xremap = "user-service"
    audio = "pipewire-standard"
+   browser_secret_store = "basic"
 
    [machines.my-thinkpad.features]
    gaming = false

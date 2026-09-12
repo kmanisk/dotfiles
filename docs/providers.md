@@ -20,20 +20,20 @@ This repository abstracts system components behind provider interfaces, allowing
 
 ## Provider Reconciliation Contracts
 
-Providers in this repository are managed by `run_onchange_reconcile-services.sh.tmpl` and follow a strict **bidirectional reconciliation contract**:
+Providers in this repository are managed by declarative reconcilers (`run_onchange_linux-10-reconcile-login.sh.tmpl` and `run_onchange_linux-20-reconcile-services.sh.tmpl`) and follow a strict **bidirectional reconciliation contract**:
 
 ### 1. Greeter & Autologin Contract
 - **Active State (`login_mode = "getty-tty1-autologin"`, `greeter = "none"`):**
   - Configures `/etc/systemd/system/getty@tty1.service.d/override.conf` for passwordless TTY1 autologin.
-  - Automatically ensures `ly.service` is stopped and disabled to prevent TTY1 contention.
+  - Automatically ensures `ly.service`, `sddm.service`, and `gdm.service` are stopped and disabled to prevent TTY1 contention.
 - **Standby State (`fallback_greeter = "ly"`):**
   - Full Ly configuration, PAM definition, and unit file are archived in `backups/linux/greeters/ly/`.
   - Switching to `greeter = "ly"` automatically removes the getty override and enables `ly.service`.
 
 ### 2. Browser Keyring & Password Store Isolation
 - **The Challenge:** Under headless passwordless autologin, PAM does not receive a password, leaving the GNOME Keyring (`login.keyring`) locked (`Locked = true`). Standard Chromium/Brave browsers attempt to query Secret Service, causing authentication prompts or loss of saved sessions/cookies across reboots.
-- **The Solution:** In `dot_config/brave-flags.conf` and `dot_config/brave-origin-flags.conf`, `--password-store=basic` is explicitly configured. This directs the browser to use its local encryption store, decoupling session persistence from locked PAM keyrings.
-- **Verification:** Verified by `scripts/verify/reproducibility.sh`.
+- **The Solution:** In `dot_config/brave-flags.conf.tmpl` and `dot_config/brave-origin-flags.conf.tmpl`, the browser secret store provider (`browser_secret_store = "basic"`) is configured via `--password-store={{ $secretStore }}`. This directs the browser to use its local encryption store, decoupling session persistence from locked PAM keyrings.
+- **Verification:** Verified by `scripts/verify/providers.sh` and `scripts/verify/security.sh`.
 
 ### 3. Package Manager Provider Contract
 - Safe array invocation: Package commands are declared as bash arrays (`PKG_INSTALL_CMD=(paru -S --needed --noconfirm)`), avoiding fragile shell word splitting.

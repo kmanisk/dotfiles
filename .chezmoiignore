@@ -36,26 +36,25 @@ scoop/persist/windows-terminal/settings/state.json
 scoop/persist/windows-terminal/settings/elevated-state.json
 
 # ==============================================================================
-# Machine & Feature Resolution
+# Machine & Feature Resolution (Safe generic fallback)
 # ==============================================================================
-{{- $machineKey := "asus-tuf-f16" -}}
-{{- if eq .chezmoi.os "windows" -}}
-{{-   $machineKey = "windows-workstation" -}}
-{{- end -}}
+{{- $machineKey := "" -}}
 {{- if hasKey . "machine" -}}
 {{-   $machineKey = .machine -}}
+{{- else if eq .chezmoi.os "windows" -}}
+{{-   $machineKey = "windows-workstation" -}}
+{{- else if eq .chezmoi.os "linux" -}}
+{{-   $machineKey = "generic-linux" -}}
+{{- else -}}
+{{-   fail "Unsupported operating system" -}}
 {{- end -}}
 {{- $m := index .machines $machineKey -}}
 {{- if not $m -}}
-{{-   if eq .chezmoi.os "windows" -}}
-{{-     $m = index .machines "windows-workstation" -}}
-{{-   else -}}
-{{-     $m = index .machines "generic-linux" -}}
-{{-   end -}}
+{{-   fail (printf "Machine profile %q not found in .chezmoidata.toml" $machineKey) -}}
 {{- end -}}
 
 # ==============================================================================
-# Windows Specific Exclusions
+# Windows Specific Exclusions (Ignored on Linux)
 # ==============================================================================
 {{- if ne .chezmoi.os "windows" }}
 AppData/**
@@ -70,7 +69,7 @@ scoop/**
 {{- end }}
 
 # ==============================================================================
-# Linux Specific Exclusions
+# Linux Specific Exclusions (Ignored on Windows)
 # ==============================================================================
 {{- if ne .chezmoi.os "linux" }}
 AGENTS.md

@@ -32,7 +32,7 @@ run_check() {
 }
 
 echo "=============================================================================="
-echo " [SUITE 1] LIVE HOST RUNTIME HEALTH VERIFICATION"
+echo " [SUITE 7/7] LIVE HOST RUNTIME HEALTH VERIFICATION"
 echo " Date: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
 echo "=============================================================================="
 

@@ -3,7 +3,7 @@ encryption = "age"
     identity = "{{ .chezmoi.homeDir }}/.config/chezmoi/key.txt"
     recipient = "age1shu7a5lx3puszpg9r9e39u2t2a6yl3mvnfezhsulfze8335k9fhslf8x78"
 
-{{- $defaultMachine := "asus-tuf-f16" -}}
+{{- $defaultMachine := "generic-linux" -}}
 {{- if eq .chezmoi.os "windows" -}}
 {{-   $defaultMachine = "windows-workstation" -}}
 {{- end -}}
