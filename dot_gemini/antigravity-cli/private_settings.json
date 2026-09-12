@@ -1,6 +1,6 @@
 {
   "artifactReviewPolicy": "always-proceed",
-  "model": "Gemini 3.8 Flash (High)",
+  "model": "Gemini 3.8 Flash (Medium)",
   "permissions": {
     "allow": [
       "command(alacritty)",

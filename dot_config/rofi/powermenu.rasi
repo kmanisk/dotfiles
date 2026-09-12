@@ -21,7 +21,7 @@ window {
     text-color:          @foreground;
     border:              2px;
     border-color:        @border-col;
-    border-radius: 0px;
+    border-radius:       12px;
     width:               360px;
     location:            center;
     anchor:              center;
@@ -43,7 +43,7 @@ prompt {
     background-color:    @background-alt;
     text-color:          @selected;
     padding:             8px 14px;
-    border-radius: 0px;
+    border-radius:       8px;
     font:                "Iosevka Nerd Font Bold 13";
 }
 
@@ -61,7 +61,7 @@ element {
     background-color:    @background-alt;
     text-color:          @foreground;
     orientation:         horizontal;
-    border-radius: 0px;
+    border-radius:       8px;
     padding:             10px 14px;
     cursor:              pointer;
 }
