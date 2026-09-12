@@ -37,7 +37,6 @@ local unbinds = {
     "SUPER + RETURN",
     "ALT + RETURN",
     "ALT + V", -- Remove Dusky QuickPanel shortcut
-    "SUPER + SHIFT + apostrophe", -- Unbind default wallpaper cycling shortcut
 
     -- App shortcuts
     "SUPER + B",
@@ -208,8 +207,7 @@ hl.bind("SUPER + CTRL + L", hl.dsp.exec_cmd("hyprlock"), { description = "Lock S
 hl.bind("SUPER + escape", hl.dsp.exec_cmd("pkill rofi; rofi -show power-menu -modi power-menu:/home/manisk/user_scripts/rofi/powermenu.sh"), { description = "Power Menu" })
 hl.bind("ALT + escape", hl.dsp.exec_cmd("pkill rofi; rofi -show power-menu -modi power-menu:/home/manisk/user_scripts/rofi/powermenu.sh"), { description = "Power Menu" })
 
--- Night Light (hyprsunset) - Windows + Shift + ' and Windows + Shift + N
-hl.bind("SUPER + SHIFT + apostrophe", hl.dsp.exec_cmd("/home/manisk/.local/bin/hypr-nightlight toggle"), { description = "Toggle Night Light" })
+-- Night Light (hyprsunset)
 hl.bind("SUPER + SHIFT + N", hl.dsp.exec_cmd("/home/manisk/.local/bin/hypr-nightlight toggle"), { description = "Toggle Night Light" })
 hl.bind("SUPER + SHIFT + bracketleft", hl.dsp.exec_cmd("/home/manisk/.local/bin/hypr-nightlight adjust -300"), { description = "Increase Night Light Warmth (Warmer)" })
 hl.bind("SUPER + SHIFT + bracketright", hl.dsp.exec_cmd("/home/manisk/.local/bin/hypr-nightlight adjust +300"), { description = "Decrease Night Light Warmth (Cooler)" })
