@@ -8,20 +8,20 @@ export PATH="$HOME/.local/bin:$PATH"
 STATE_FILE="$HOME/.config/polybar/bar_state"
 mkdir -p "$HOME/.config/polybar"
 
+# 1. If Polybar is dead/crashed/not responding to IPC, revive it immediately
+if ! pgrep -x polybar >/dev/null || ! polybar-msg action "#toggle.status" >/dev/null 2>&1; then
+    "$HOME/.config/polybar/launch.sh" --show
+    echo "visible" > "$STATE_FILE"
+    exit 0
+fi
+
+# 2. Polybar is alive: toggle visibility cleanly
 CURRENT_STATE=$(cat "$STATE_FILE" 2>/dev/null || echo "visible")
 
 if [[ "$CURRENT_STATE" == "hidden" ]]; then
-    # Was hidden -> show it
-    if ! pgrep -x polybar >/dev/null; then
-        "$HOME/.config/polybar/launch.sh" --show
-    else
-        polybar-msg cmd show >/dev/null 2>&1
-    fi
+    polybar-msg cmd show >/dev/null 2>&1
     echo "visible" > "$STATE_FILE"
 else
-    # Was visible -> hide it
-    if pgrep -x polybar >/dev/null; then
-        polybar-msg cmd hide >/dev/null 2>&1
-    fi
+    polybar-msg cmd hide >/dev/null 2>&1
     echo "hidden" > "$STATE_FILE"
 fi

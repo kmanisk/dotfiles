@@ -3,18 +3,24 @@
 STATE_FILE="$HOME/.config/polybar/bar_state"
 
 # Terminate already running bar instances cleanly
-killall -q polybar
+polybar-msg cmd quit 2>/dev/null || killall -q polybar
 pkill -9 -x polybar 2>/dev/null
 
-# Wait until all processes have actually shut down
-while pgrep -u $UID -x polybar >/dev/null 2>&1; do
-    sleep 0.1
+# Clean up any stale IPC sockets
+rm -f /run/user/$(id -u)/polybar/ipc.*.sock 2>/dev/null
+
+# Wait until all old processes have actually shut down
+for _ in 1 2 3 4 5; do
+    if ! pgrep -u $(id -u) -x polybar >/dev/null 2>&1; then
+        break
+    fi
+    sleep 0.05
 done
 
-# Primary display detection (avoid spawning multiple stacked bars)
-PRIMARY_MON=$(xrandr --query 2>/dev/null | grep " connected primary" | cut -d" " -f1)
+# Fast primary display detection using xrandr --listmonitors (takes ~30ms vs 1400ms with xrandr --query)
+PRIMARY_MON=$(xrandr --listmonitors 2>/dev/null | awk '/\+/ {print $NF; exit}')
 if [ -z "$PRIMARY_MON" ]; then
-    PRIMARY_MON=$(xrandr --query 2>/dev/null | grep " connected" | cut -d" " -f1 | head -n1)
+    PRIMARY_MON="eDP-1"
 fi
 
 # Launch single polybar instance
@@ -24,8 +30,15 @@ else
     polybar --reload example </dev/null >/dev/null 2>&1 &
 fi
 
+# Wait for IPC channel to become ready
+for _ in $(seq 1 20); do
+    if polybar-msg action "#toggle.status" >/dev/null 2>&1; then
+        break
+    fi
+    sleep 0.05
+done
+
 # Check saved state: if previously hidden and not forced show, hide bar
 if [ -f "$STATE_FILE" ] && [ "$(cat "$STATE_FILE" 2>/dev/null)" = "hidden" ] && [ "$1" != "--show" ]; then
-    sleep 0.2
     polybar-msg cmd hide >/dev/null 2>&1
 fi
