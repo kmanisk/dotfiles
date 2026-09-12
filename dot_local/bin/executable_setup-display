@@ -14,6 +14,8 @@ fi
 # 1. Register 4:3 165Hz modelines if not already present
 xrandr --newmode "1440x1080" 393.00 1440 1560 1720 2000 1080 1083 1087 1192 -hsync +vsync 2>/dev/null || true
 xrandr --addmode "$PRIMARY_OUT" "1440x1080" 2>/dev/null || true
+xrandr --newmode "1440x1080_165.00" 393.00 1440 1560 1720 2000 1080 1083 1087 1192 -hsync +vsync 2>/dev/null || true
+xrandr --addmode "$PRIMARY_OUT" "1440x1080_165.00" 2>/dev/null || true
 
 xrandr --newmode "1344x1008_165.00" 343.25 1344 1464 1608 1872 1008 1011 1015 1112 -hsync +vsync 2>/dev/null || true
 xrandr --addmode "$PRIMARY_OUT" "1344x1008_165.00" 2>/dev/null || true

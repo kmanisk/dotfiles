@@ -7,8 +7,12 @@
 # - Stretched 4:3: Zero-lag Hardware Panel Scaling via Intel Display Controller
 # - CPU Pinning: Physical P-cores 0-11 (Bypasses E-cores to eliminate micro-stutters)
 # - Audio: Low-latency PulseAudio streaming (30ms) & SBC-XQ Bluetooth codec
-# - Power: ASUS Balanced mode
-# ==============================================================================
+export DISPLAY="${DISPLAY:-:0}"
+export SDL_VIDEO_DRIVER=x11
+export SDL_VIDEODRIVER=x11
+export __NV_PRIME_RENDER_OFFLOAD=1
+export __GLX_VENDOR_LIBRARY_NAME=nvidia
+export __VK_LAYER_NV_optimus=NVIDIA_only
 
 # 1. Polybar & Display cleanup handler on exit
 cleanup() {
@@ -55,4 +59,4 @@ if [ $# -eq 0 ] || [[ "$1" == -* ]]; then
 fi
 
 # 6. Launch natively on dedicated NVIDIA RTX 5050 pinned to P-cores 0-11 (Zero Gamescope Lag)
-exec taskset -c 0-11 gamemoderun "$@" -novelocity -nojoy
+exec taskset -c 0-11 gamemoderun "$@" -vulkan -novelocity -nojoy
