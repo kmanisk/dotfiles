@@ -1,6 +1,4 @@
-[user]
-	email = {{ .email }}
-	name = {{ .name }}
+{{ template "git-identity.tmpl" . -}}
 {{- if eq .chezmoi.os "windows" }}
 [credential "helperselector"]
 	selected = manager

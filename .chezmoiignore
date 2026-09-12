@@ -11,10 +11,11 @@ key.txt
 
 {{- if not (stat (joinPath .chezmoi.homeDir ".config/chezmoi/key.txt")) }}
 Documents/new 1.txt
+readonly_Documents/new 1.txt
 {{- end }}
 
 # ==============================================================================
-# Transient / State Files that cause constant git noise
+# Internal Repository Directories & Documentation (Never deploy to $HOME)
 # ==============================================================================
 README.md
 install.sh
@@ -28,11 +29,99 @@ sudoers-reference.txt
 idle-bench.ps1
 benchmarks/**
 .fehbg
+backups/**
+docs/**
+scripts/**
 scoop/persist/windows-terminal/settings/state.json
 scoop/persist/windows-terminal/settings/elevated-state.json
 
 # ==============================================================================
-# Conditional: Ignore Heavy Gaming Folders on Mini Profile or Work Machines
+# Machine & Feature Resolution
+# ==============================================================================
+{{- $machineKey := "asus-tuf-f16" -}}
+{{- if eq .chezmoi.os "windows" -}}
+{{-   $machineKey = "windows-workstation" -}}
+{{- end -}}
+{{- if hasKey . "machine" -}}
+{{-   $machineKey = .machine -}}
+{{- end -}}
+{{- $m := index .machines $machineKey -}}
+{{- if not $m -}}
+{{-   if eq .chezmoi.os "windows" -}}
+{{-     $m = index .machines "windows-workstation" -}}
+{{-   else -}}
+{{-     $m = index .machines "generic-linux" -}}
+{{-   end -}}
+{{- end -}}
+
+# ==============================================================================
+# Windows Specific Exclusions
+# ==============================================================================
+{{- if ne .chezmoi.os "windows" }}
+AppData/**
+Documents/**
+readonly_Documents/**
+scoop/**
+.config/winfetch/**
+.config/es/**
+.config/scoop/**
+.wslconfig
+.chezmoiscripts/**
+{{- end }}
+
+# ==============================================================================
+# Linux Specific Exclusions
+# ==============================================================================
+{{- if ne .chezmoi.os "linux" }}
+AGENTS.md
+.agents/**
+dot_agents/**
+.gemini/**
+dot_gemini/**
+.bashrc
+.bash_profile
+.profile
+.xprofile
+.Xresources
+.imwheelrc
+.local/bin/**
+.local/share/applications/**
+.config/alacritty/**
+.config/brave*.conf
+.config/btop/**
+.config/cava/**
+.config/dunst/**
+.config/fastfetch/**
+.config/fish/**
+.config/fontconfig/**
+.config/foot/**
+.config/ghostty/**
+.config/gtk-3.0/**
+.config/gtk-4.0/**
+.config/hypr/**
+.config/kitty/**
+.config/Kvantum/**
+.config/mako/**
+.config/MangoHud/**
+.config/matugen/**
+.config/mimeapps.list
+.config/pipewire/**
+.config/qt5ct/**
+.config/qt6ct/**
+.config/rofi/**
+.config/swappy/**
+.config/systemd/**
+.config/waybar/**
+.config/wireplumber/**
+.config/wlogout/**
+.config/xremap/**
+.config/xsettingsd/**
+.config/yazi/**
+.config/zellij/**
+{{- end }}
+
+# ==============================================================================
+# Profile & Work Machine Exclusions
 # ==============================================================================
 {{- $profile := "full" }}
 {{- if hasKey . "profile" }}{{ $profile = .profile }}{{ end }}
@@ -50,54 +139,24 @@ readonly_Documents/Hitman Blood Money Demo/**
 readonly_Documents/Max Payne Savegames/**
 readonly_Documents/My Games/**
 readonly_Documents/Need for Speed*/**
-{{- end }}
-
-# ==============================================================================
-# Conditional: Ignore Windows-Specific Paths on Non-Windows OS (Linux / WSL / macOS)
-# ==============================================================================
-{{- if ne .chezmoi.os "windows" }}
-AppData/**
-Documents/**
-scoop/**
-.config/winfetch/**
-.config/es/**
-.config/scoop/**
-.wslconfig
-.chezmoiscripts/**
-{{- end }}
-
-# ==============================================================================
-# Conditional: Ignore Linux-Specific Paths on Non-Linux OS (Windows, macOS, etc.)
-# ==============================================================================
-{{- if ne .chezmoi.os "linux" }}
-.config/i3/**
-.config/polybar/**
-.config/rofi/**
-.config/nvim/**
-.config/zed/**
-.config/yazi/**
-.config/btop/**
-.config/gtk-3.0/**
-.config/gtk-4.0/**
-.config/fish/**
-.config/xremap/**
-.config/i3-resurrect/**
-.config/fontconfig/**
-.config/alacritty/**
-.config/dunst/**
-.config/cava/**
-.config/systemd/**
-.config/pipewire/**
-.config/brave*.conf
-.local/bin/**
-.local/share/applications/**
-.Xresources
-.imwheelrc
-.bashrc
-.bash_profile
-.profile
-.xprofile
-.config/picom/**
 .config/MangoHud/**
 {{- end }}
 
+# ==============================================================================
+# Feature-Toggled Exclusions (Linux)
+# ==============================================================================
+{{- if eq .chezmoi.os "linux" }}
+{{-   if not $m.features.gaming }}
+.config/MangoHud/**
+{{-   end }}
+{{-   if not $m.features.hyprland }}
+.config/hypr/**
+.config/waybar/**
+.config/mako/**
+.config/swappy/**
+.config/wlogout/**
+{{-   end }}
+{{-   if or (eq $m.providers.xremap "none") (not (hasKey $m.providers "xremap")) }}
+.config/xremap/**
+{{-   end }}
+{{- end }}

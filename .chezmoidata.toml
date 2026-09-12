@@ -1,0 +1,134 @@
+# ==============================================================================
+# Chezmoi Master Workstation Data: Architecture Definition
+# Hierarchy: Common -> OS -> Machine -> Hardware -> Providers -> Features
+# ==============================================================================
+
+[defaults]
+email = "mathewmanisk699@gmail.com"
+name = "Kumar Manisk"
+profile = "full"
+isWork = false
+
+[defaults.machines]
+linux = "asus-tuf-f16"
+windows = "windows-workstation"
+
+# ------------------------------------------------------------------------------
+# Machine: ASUS TUF Gaming F16 (FX608J) - Primary Linux Gaming Laptop
+# ------------------------------------------------------------------------------
+[machines.asus-tuf-f16]
+description = "ASUS TUF Gaming F16 (FX608J) - Primary Linux Gaming Laptop"
+os = "linux"
+distribution = "cachyos"
+hostname = "maniskg"
+
+[machines.asus-tuf-f16.hardware]
+type = "laptop"
+chassis = "asus-tuf-f16"
+cpu = "Intel Core i5-13450HX (6P + 4E, 16 Threads)"
+igpu = "Intel Raptor Lake-S UHD Graphics (iHD)"
+dgpu = "NVIDIA GeForce RTX 5050 Mobile (GB207M, 8GB GDDR6)"
+gpu_strategy = "hybrid-optimus-d3cold"
+display_primary = "eDP-1"
+display_resolution = "1920x1200@165Hz"
+display_scale = "1.0"
+storage_type = "nvme"
+filesystem = "btrfs"
+
+[machines.asus-tuf-f16.providers]
+package_manager = "paru"
+greeter = "ly"
+login_mode = "getty-tty1-autologin"
+bootloader = "grub"
+network = "networkmanager"
+dns = "systemd-resolved"
+xremap = "user-service"
+audio = "pipewire-rnnoise"
+
+[machines.asus-tuf-f16.features]
+gaming = true
+development = true
+asus_ctl = true
+bluetooth = true
+hyprland = true
+snapper = true
+hdr = false
+tearing_opt = true
+
+# ------------------------------------------------------------------------------
+# Machine: Windows Workstation (Windows 11)
+# ------------------------------------------------------------------------------
+[machines.windows-workstation]
+description = "Windows 11 Gaming & Workstation Environment"
+os = "windows"
+distribution = "windows11"
+hostname = "manisk-win"
+
+[machines.windows-workstation.hardware]
+type = "desktop"
+chassis = "custom-pc"
+cpu = "x86_64"
+gpu_strategy = "direct"
+display_primary = "DISPLAY1"
+display_resolution = "1920x1080@144Hz"
+display_scale = "1.0"
+storage_type = "nvme"
+filesystem = "ntfs"
+
+[machines.windows-workstation.providers]
+package_manager = "scoop"
+greeter = "windows-logon"
+login_mode = "native"
+bootloader = "windows-boot-manager"
+network = "windows-net"
+dns = "windows-dns"
+xremap = "none"
+audio = "wasapi"
+
+[machines.windows-workstation.features]
+gaming = true
+development = true
+asus_ctl = false
+bluetooth = true
+hyprland = false
+snapper = false
+hdr = false
+tearing_opt = false
+
+# ------------------------------------------------------------------------------
+# Machine: Generic Linux Fallback
+# ------------------------------------------------------------------------------
+[machines.generic-linux]
+description = "Generic Linux Workstation"
+os = "linux"
+distribution = "arch"
+hostname = "archlinux"
+
+[machines.generic-linux.hardware]
+type = "generic"
+gpu_strategy = "integrated"
+display_primary = "eDP-1"
+display_resolution = "1920x1080@60Hz"
+display_scale = "1.0"
+storage_type = "ssd"
+filesystem = "ext4"
+
+[machines.generic-linux.providers]
+package_manager = "pacman"
+greeter = "ly"
+login_mode = "native"
+bootloader = "grub"
+network = "networkmanager"
+dns = "systemd-resolved"
+xremap = "none"
+audio = "pipewire-standard"
+
+[machines.generic-linux.features]
+gaming = false
+development = true
+asus_ctl = false
+bluetooth = true
+hyprland = true
+snapper = false
+hdr = false
+tearing_opt = false
