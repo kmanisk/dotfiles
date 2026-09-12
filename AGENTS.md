@@ -1,7 +1,7 @@
-# AI System Rules — CachyOS + Hyprland Gaming Laptop
+# AI System Rules — CachyOS + i3wm/X11 Gaming Laptop
 
-**Target machine:** CachyOS rolling (BORE/EEVDF, x86-64-v3) · Hyprland (Wayland) @ 1920x1200 165Hz
-**Hardware:** Intel i5-13450HX + GeForce RTX 5050 Mobile (Optimus hybrid) · Btrfs on NVMe · fish + Alacritty
+**Target machine:** CachyOS rolling (BORE/EEVDF, x86-64-v3) · i3wm (X11) @ 1920x1200 165Hz
+**Hardware:** Intel i5-13450HX + GeForce RTX 5050 Mobile (Optimus hybrid) · Btrfs on NVMe · fish + zsh + kitty
 
 Save this file as **`AGENTS.md`** in your project root for per-project rules, or
 **`~/.gemini/AGENTS.md`** for it to apply globally across every project — Antigravity CLI
@@ -28,11 +28,7 @@ or Cursor, both of those now read `AGENTS.md` too, so this one file covers all t
 
 ## 2. Hybrid GPU Strategy (Intel iGPU + RTX 5050 Mobile)
 
-- Desktop session and 2D apps run on the **Intel iGPU** for idle power/thermals. Set:
-  ```
-  env = LIBVA_DRIVER_NAME,iHD
-  ```
-  (not `nvidia` — that fights the power-saving goal by pulling the whole session onto the dGPU.)
+- Desktop session and 2D apps run on the **Intel iGPU** for idle power/thermals (`DISPLAY=:0`, `LIBVA_DRIVER_NAME=iHD`).
 - Games/3D/CUDA offload to the RTX 5050 explicitly, never globally:
   ```
   gamemoderun prime-run %command%
@@ -41,15 +37,11 @@ or Cursor, both of those now read `AGENTS.md` too, so this one file covers all t
 
 ---
 
-## 3. Hyprland Window Rules (corrected)
+## 3. i3 Window Rules (Gaming)
 
 ```ini
-windowrulev2 = immediate, class:^(steam_app_.*)$
-windowrulev2 = fullscreen, class:^(steam_app_.*)$
-windowrulev2 = workspace 5, class:^(steam_app_.*)$
+for_window [class="^steam_app_.*$"] fullscreen enable
 ```
-
-Keep each rule on its own line — a merged/escaped single line will fail to parse.
 
 ---
 

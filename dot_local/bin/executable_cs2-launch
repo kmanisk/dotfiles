@@ -1,475 +1,118 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# CS2 Low-Latency Competitive Launcher (Hyprland / Wayland, native)
+# CS2 High-FPS Native Launcher (ASUS TUF F16 + RTX 5050 Laptop)
 # ==============================================================================
-# Target: CachyOS Linux (Kernel 7.2+ BORE/EEVDF)
-# Hardware: Intel i5-13450HX + NVIDIA RTX 5050 Mobile (Optimus)
-# Panel: Physical eDP-1 at 1920x1200 @ 165Hz (16:10)
-#
-# Pipeline (default stretched):
-#   CS2 (Vulkan, 1440x1080 4:3 -windowed -noborder)
-#     -> nested Gamescope (-S stretch to 1920x1200 fullscreen)
-#     -> Hyprland windowrulev2 immediate+fullscreen (workspace 5)
-#     -> eDP-1 1920x1200 @ 165Hz (physical panel never changed)
-#
-# Nested Gamescope is a Wayland client (no DRM lease); it only scales frames.
-# Bypass: USE_GAMESCOPE=0 cs2-launch (native, letterboxed, lowest overhead).
-#
-# NO xrandr, NO i3, NO polybar, NO feh, NO monitor resolution switching.
-# The physical display remains under Hyprland at 1920x1200@165Hz at all times.
+# - Hardware: ASUS TUF F16 (i5-13450HX + RTX 5050)
+# - Rendering: Direct Native Vulkan on dedicated NVIDIA RTX 5050 (250+ FPS)
+# - Stretched 4:3: Zero-lag Hardware Panel Scaling via Intel Display Controller
+# - CPU Pinning: Physical P-cores 0-11 (Bypasses E-cores to eliminate micro-stutters)
+# - Audio: Low-latency PulseAudio streaming (30ms) & SBC-XQ Bluetooth codec
+# - Power: ASUS Balanced mode
 # ==============================================================================
 
-set -Eeuo pipefail
-
-# ------------------------------------------------------------------------------
-# 1. Signal-Safe Cleanup Handler
-# ------------------------------------------------------------------------------
-GAME_EXIT=0
-
+# 1. Polybar & Display cleanup handler
 cleanup() {
-    local exit_code=$?
     trap - EXIT INT TERM HUP
-    # The physical monitor was never changed, so no xrandr restore or compositor reload is needed.
-    if [ "$exit_code" -ne 0 ] && [ "${GAME_EXIT:-0}" -eq 0 ]; then
-        GAME_EXIT=$exit_code
-    fi
-    exit "${GAME_EXIT:-0}"
+    echo "==> Restoring native display resolution (1920x1200 @ 165Hz)..."
+    xrandr --output eDP-1 --set "scaling mode" "Full aspect" 2>/dev/null || true
+    xrandr --output eDP-1 --mode 1920x1200 --rate 165.00 2>/dev/null || xrandr --output eDP-1 --auto 2>/dev/null || true
+    sh "$HOME/.fehbg" 2>/dev/null || true
+    i3-msg restart 2>/dev/null || true
+    polybar-msg cmd show 2>/dev/null || true
 }
 trap cleanup EXIT INT TERM HUP
 
-# ------------------------------------------------------------------------------
-# 2. Command-Line Arguments & Flags
-# ------------------------------------------------------------------------------
-DIAGNOSTIC_MODE=0
-GAME_ARGS=()
+# 2. Hide status bar
+polybar-msg cmd hide 2>/dev/null || true
 
-while [ $# -gt 0 ]; do
-    case "$1" in
-        --diag|--diagnostic|-d)
-            DIAGNOSTIC_MODE=1
-            shift
-            ;;
-        --help|-h)
-            echo "Usage: cs2-launch [options] [-- Steam / CS2 command arguments]"
-            echo ""
-            echo "Options:"
-            echo "  --diag, -d            Print diagnostic hardware & pipeline summary and exit"
-            echo "  --help, -h            Show this help message"
-            echo ""
-            echo "Environment Overrides:"
-            echo "  CS2_RES               Game render resolution (default: 1440x1080, e.g. 1280x960, 1024x768)"
-            echo "  CS2_STRETCH           1 = Competitive 4:3 stretched via Gamescope (default)"
-            echo "                        0 = Native 16:10 (1920x1200 direct Wayland fullscreen)"
-            echo "  CS2_PCORES            1 = Pin to detected physical P-cores (default: 1)"
-            echo "                        0 = Disable CPU affinity pinning"
-            echo "  MANGOHUD              1 = Enable MangoHud overlay (default: 0, lowest latency)"
-            echo "  ENABLE_MANGOHUD       1 = Same as MANGOHUD=1"
-            echo "  USE_GAMESCOPE         1 = Force Gamescope in native mode"
-            echo "                        0 = Bypass Gamescope in native mode (default for native)"
-            exit 0
-            ;;
-        *)
-            GAME_ARGS+=("$1")
-            shift
-            ;;
-    esac
-done
-
-if [ "${CS2_DIAG:-0}" = "1" ]; then
-    DIAGNOSTIC_MODE=1
-fi
-
-# ------------------------------------------------------------------------------
-# 3. Detect Hyprland Active Monitor (Physical Panel)
-# ------------------------------------------------------------------------------
-detect_monitor() {
-    if ! command -v hyprctl >/dev/null 2>&1; then
-        echo "ERROR: Hyprland monitor detection failed (hyprctl not found in PATH)" >&2
-        return 1
-    fi
-
-    local mon_json
-    mon_json=$(hyprctl monitors -j 2>/dev/null) || {
-        echo "ERROR: Hyprland monitor detection failed (hyprctl returned error)" >&2
-        return 1
-    }
-
-    if [ -z "$mon_json" ] || [ "$mon_json" = "[]" ]; then
-        echo "ERROR: Hyprland monitor detection failed (empty monitor list returned)" >&2
-        return 1
-    fi
-
-    PHYS_NAME=$(jq -r '(.[] | select(.focused == true) // .[0]).name' <<< "$mon_json")
-    PHYS_W=$(jq -r '(.[] | select(.focused == true) // .[0]).width' <<< "$mon_json")
-    PHYS_H=$(jq -r '(.[] | select(.focused == true) // .[0]).height' <<< "$mon_json")
-    PHYS_HZ=$(jq -r '(.[] | select(.focused == true) // .[0]).refreshRate | round' <<< "$mon_json")
-
-    if [ -z "$PHYS_W" ] || [ "$PHYS_W" = "null" ] || [ "$PHYS_W" -le 0 ]; then
-        echo "ERROR: Hyprland monitor detection failed (invalid geometry)" >&2
-        return 1
-    fi
-}
-
-detect_monitor
-
-# ------------------------------------------------------------------------------
-# 4. Detect NVIDIA GPU & Dedicated Vulkan ICD
-# ------------------------------------------------------------------------------
-detect_nvidia() {
-    if [ ! -f "/usr/share/vulkan/icd.d/nvidia_icd.json" ]; then
-        echo "ERROR: Vulkan NVIDIA device not found (missing /usr/share/vulkan/icd.d/nvidia_icd.json)" >&2
-        return 1
-    fi
-
-    if ! command -v nvidia-smi >/dev/null 2>&1; then
-        echo "ERROR: Vulkan NVIDIA device not found (nvidia-smi not installed)" >&2
-        return 1
-    fi
-
-    local smi_out
-    smi_out=$(nvidia-smi --query-gpu=name,driver_version,pci.bus_id --format=csv,noheader 2>/dev/null | head -n 1) || true
-    if [ -z "$smi_out" ]; then
-        echo "ERROR: Vulkan NVIDIA device not found (nvidia-smi query returned empty)" >&2
-        return 1
-    fi
-
-    NV_NAME=$(awk -F',' '{print $1}' <<< "$smi_out" | xargs)
-    NV_DRIVER=$(awk -F',' '{print $2}' <<< "$smi_out" | xargs)
-
-    # Detect PCI Vendor:Device ID (e.g. 10de:2dd8) for Gamescope compositing preference
-    local dev_path
-    dev_path=$(find /sys/bus/pci/devices/ -maxdepth 2 -name vendor -exec grep -l "0x10de" {} + 2>/dev/null | head -n 1)
-    if [ -n "$dev_path" ]; then
-        local pci_dir
-        pci_dir=$(dirname "$dev_path")
-        local ven dev
-        ven=$(cat "$pci_dir/vendor" 2>/dev/null | sed 's/0x//' | tr '[:upper:]' '[:lower:]')
-        dev=$(cat "$pci_dir/device" 2>/dev/null | sed 's/0x//' | tr '[:upper:]' '[:lower:]')
-        NV_VK_DEVICE="${ven}:${dev}"
-    else
-        NV_VK_DEVICE="10de:2dd8"
-    fi
-}
-
-detect_nvidia
-
-# ------------------------------------------------------------------------------
-# 5. Dynamic CPU Affinity: P-Core Detection (Avoid E-Cores)
-# ------------------------------------------------------------------------------
-detect_pcores() {
-    local max_freq
-    max_freq=$(cat /sys/devices/system/cpu/cpu*/cpufreq/cpuinfo_max_freq 2>/dev/null | sort -n | tail -n 1) || true
-    if [ -z "$max_freq" ] || [ "$max_freq" -le 0 ]; then
-        echo "ERROR: P-core detection failed (unable to query CPU max frequency)" >&2
-        return 1
-    fi
-
-    local pcores=()
-    local c id freq
-    for c in /sys/devices/system/cpu/cpu[0-9]*; do
-        id=${c##*cpu}
-        freq=$(cat "$c/cpufreq/cpuinfo_max_freq" 2>/dev/null || echo 0)
-        if [ "$freq" -eq "$max_freq" ]; then
-            pcores+=("$id")
-        fi
-    done
-
-    if [ "${#pcores[@]}" -eq 0 ]; then
-        echo "ERROR: P-core detection failed (no CPUs matched peak frequency of ${max_freq} kHz)" >&2
-        return 1
-    fi
-
-    local sorted=()
-    mapfile -t sorted < <(printf "%s\n" "${pcores[@]}" | sort -n)
-
-    PCORE_RANGE=$(printf "%s\n" "${sorted[@]}" | awk 'NR==1{s=e=$1;next} $1==e+1{e=$1;next} {print (s==e?s:s"-"e); s=e=$1} END{print (s==e?s:s"-"e)}' | paste -sd, -)
-    if [ -z "$PCORE_RANGE" ]; then
-        echo "ERROR: P-core detection failed (failed to format range)" >&2
-        return 1
-    fi
-}
-
-PCORE_OPT="${CS2_PCORES:-1}"
-if [ "$PCORE_OPT" = "1" ]; then
-    detect_pcores
-    TASKSET_CMD=(taskset -c "$PCORE_RANGE")
-else
-    PCORE_RANGE="all (unpinned)"
-    TASKSET_CMD=()
-fi
-
-# ------------------------------------------------------------------------------
-# 6. Mode & Resolution Calculation
-# ------------------------------------------------------------------------------
-STRETCH_OPT="${CS2_STRETCH:-1}"
-
-if [ "$STRETCH_OPT" = "0" ]; then
-    MODE_NAME="NATIVE_LOW_LATENCY"
-    GAME_W="$PHYS_W"
-    GAME_H="$PHYS_H"
-    SCALING_MODE="native (16:10 direct scanout)"
-    USE_GS="${USE_GAMESCOPE:-0}"
-else
-    MODE_NAME="COMPETITIVE_STRETCHED"
-    SCALING_MODE="stretch (4:3 -> 16:10 via nested gamescope, panel stays ${PHYS_W}x${PHYS_H})"
-    # Wayland cannot change the output mode per-app like X11 xrandr could.
-    # The compositor always scans out native res, so a native 1440x1080
-    # fullscreen window gets letterboxed/zoomed instead of stretched.
-    # Standard Hyprland community fix: nested gamescope (a Wayland client,
-    # no DRM lease) renders the game at 4:3 and stretches it to fullscreen.
-    # Override: USE_GAMESCOPE=0 to bypass for testing.
-    USE_GS="${USE_GAMESCOPE:-1}"
-
-    REQ_RES="${CS2_RES:-1440x1080}"
-    case "$REQ_RES" in
-        1440|1440x1080)
-            GAME_W=1440
-            GAME_H=1080
-            ;;
-        1280|1280x960)
-            GAME_W=1280
-            GAME_H=960
-            ;;
-        1024|1024x768)
-            GAME_W=1024
-            GAME_H=768
-            ;;
-        *x*)
-            GAME_W="${REQ_RES%x*}"
-            GAME_H="${REQ_RES#*x}"
-            ;;
-        *)
-            echo "WARN: Unrecognized CS2_RES '$REQ_RES', falling back to 1440x1080" >&2
-            GAME_W=1440
-            GAME_H=1080
-            ;;
-    esac
-fi
-
-# ------------------------------------------------------------------------------
-# 7. Gamescope Validation & Flags
-# ------------------------------------------------------------------------------
-if [ "$USE_GS" = "1" ]; then
-    if ! command -v gamescope >/dev/null 2>&1; then
-        echo "ERROR: Gamescope is not installed" >&2
-        exit 1
-    fi
-
-    GS_VER=$(gamescope --version 2>&1 | grep -o 'version [0-9.]*' | head -n 1) || GS_VER="installed"
-    IMMEDIATE_FLIPS_STATUS="OFF (stable baseline: no --immediate-flips until compositor is crash-free)"
-else
-    GS_VER="Bypassed (Native Wayland direct scanout)"
-    IMMEDIATE_FLIPS_STATUS="N/A (Managed directly by Hyprland window rule: immediate = true)"
-fi
-
-# ------------------------------------------------------------------------------
-# 8. GameMode & ASUS Profile
-# ------------------------------------------------------------------------------
-if command -v gamemoderun >/dev/null 2>&1; then
-    if gamemoded -t >/dev/null 2>&1; then
-        GAMEMODE_STATUS="Active (daemon test passed)"
-    else
-        GAMEMODE_STATUS="Active (gamemoderun wrapper)"
-    fi
-    GAMEMODE_CMD=(gamemoderun)
-else
-    GAMEMODE_STATUS="Unavailable (gamemoderun not found in PATH)"
-    GAMEMODE_CMD=()
-fi
-
-if command -v asusctl >/dev/null 2>&1; then
-    if ! asusctl profile set Balanced >/dev/null 2>&1; then
-        echo "WARN: unable to set ASUS Balanced profile" >&2
+# 2.5 Ensure competitive 1344x1008 video config exists even after game reinstall
+CS2_USER_CFG_DIR=$(find "$HOME/.local/share/Steam/userdata" -maxdepth 5 -type d -path "*/730/local/cfg" 2>/dev/null | head -n1)
+if [ -n "$CS2_USER_CFG_DIR" ] && [ -f "$HOME/.config/cs2/cs2_video.txt" ]; then
+    if [ ! -f "$CS2_USER_CFG_DIR/cs2_video.txt" ]; then
+        echo "==> Restoring backed-up competitive cs2_video.txt..."
+        cp "$HOME/.config/cs2/cs2_video.txt" "$CS2_USER_CFG_DIR/cs2_video.txt"
     fi
 fi
 
-# ------------------------------------------------------------------------------
-# 9. Performance & Audio Notes
-# ------------------------------------------------------------------------------
-# PipeWire detection: Native low-latency audio is handled directly by PipeWire / SDL3.
-# Obsolete SDL_AUDIO_DRIVER=pulseaudio and PULSE_LATENCY_MSEC hacks are omitted.
-#
-# Render Queue Depth: In Vulkan, queue depth is dictated by swapchain present modes
-# (VK_PRESENT_MODE_IMMEDIATE_KHR) and in-engine Reflex (r_low_latency). OpenGL variables
-# like __GL_MaxFramesAllowed have no effect in Vulkan and are omitted.
+# 3. Set ASUS power profile to Balanced as requested
+asusctl profile set Balanced >/dev/null 2>&1 || true
 
-# ------------------------------------------------------------------------------
-# 10. MangoHud Status
-# ------------------------------------------------------------------------------
-MANGOHUD_OPT=0
+# 4. Audio latency optimization: stream unbuffered 30ms frames and ensure SBC-XQ codec
+export SDL_AUDIO_DRIVER=pulseaudio
+export PULSE_LATENCY_MSEC=30
+BT_CARD=$(pactl list cards short 2>/dev/null | grep bluez_card | awk '{print $2}' | head -n1)
+if [ -n "$BT_CARD" ]; then
+    pactl set-card-profile "$BT_CARD" a2dp-sink-sbc_xq 2>/dev/null || true
+fi
+
+# 5. MangoHud Overlay Support (MANGOHUD=1)
 if [ "${MANGOHUD:-0}" = "1" ] || [ "${ENABLE_MANGOHUD:-0}" = "1" ]; then
-    MANGOHUD_OPT=1
-    MANGOHUD_STATUS="Enabled (overlay active; adds slight frame-time overhead)"
+    MANGOHUD_WRAPPER="mangohud"
 else
-    MANGOHUD_STATUS="OFF (pure competitive low-latency path)"
+    MANGOHUD_WRAPPER=""
 fi
 
-# ------------------------------------------------------------------------------
-# 11. Diagnostic Output
-# ------------------------------------------------------------------------------
-if [ "$DIAGNOSTIC_MODE" = "1" ]; then
-    HYPR_VER=$(hyprctl version 2>/dev/null | head -n 1) || HYPR_VER="Hyprland (unknown)"
-    echo "=============================================================================="
-    echo "                  CS2 LAUNCHER DIAGNOSTIC REPORT"
-    echo "=============================================================================="
-    echo "Compositor:                  Hyprland / Wayland"
-    echo "Hyprland version:            $HYPR_VER"
-    echo "Monitor name:                $PHYS_NAME"
-    echo "Physical resolution:         ${PHYS_W}x${PHYS_H} (Physical monitor unchanged)"
-    echo "Refresh rate:                ${PHYS_HZ}Hz"
-    echo "Gamescope version:           $GS_VER"
-    echo "Vulkan GPU:                  $NV_NAME"
-    echo "NVIDIA driver:               $NV_DRIVER"
-    echo "CPU topology:                6 P-cores (12 threads) + 4 E-cores (4 threads) = 16 CPUs"
-    echo "P-core CPUs:                 $PCORE_RANGE"
-    echo "GameMode status:             $GAMEMODE_STATUS"
-    echo "MangoHud status:             $MANGOHUD_STATUS"
-    echo "Selected game resolution:    ${GAME_W}x${GAME_H}"
-    if [ "$USE_GS" = "1" ]; then
-        echo "Gamescope output resolution: ${PHYS_W}x${PHYS_H}"
-    else
-        echo "Gamescope output resolution: N/A (Direct fullscreen under Hyprland)"
-    fi
-    echo "Scaling mode:                $SCALING_MODE"
-    echo "Immediate-flips status:      $IMMEDIATE_FLIPS_STATUS"
-    echo "Performance mode:            $MODE_NAME"
-    echo "=============================================================================="
-    exit 0
+# 6. Resolution Mode Selection: Defaults to 1344x1008 stretched (1008p), set CS2_STRETCH=0 for native
+TARGET_RES="${CS2_RES:-1344x1008}"
+if [ "${CS2_STRETCH:-1}" = "0" ]; then
+    TARGET_RES="native"
 fi
 
-# ------------------------------------------------------------------------------
-# 12. CS2 Config Backup / Restore
-# ------------------------------------------------------------------------------
-backup_restore_video_config() {
-    local backup_dir="$HOME/.config/cs2"
-    local backup_file="$backup_dir/cs2_video.txt"
-    mkdir -p "$backup_dir"
+case "$TARGET_RES" in
+    1344|1344x1008)
+        xrandr --output eDP-1 --set "scaling mode" "Full" 2>/dev/null || true
+        xrandr --output eDP-1 --mode "1344x1008_165.00" --rate 164.89 2>/dev/null || true
+        RES_ARGS=(-w 1344 -h 1008)
+        ;;
+    1280|1280x960)
+        xrandr --output eDP-1 --set "scaling mode" "Full" 2>/dev/null || true
+        xrandr --output eDP-1 --mode "1280x960_165.00" --rate 164.80 2>/dev/null || true
+        RES_ARGS=(-w 1280 -h 960)
+        ;;
+    1024|1024x768)
+        xrandr --output eDP-1 --set "scaling mode" "Full" 2>/dev/null || true
+        xrandr --output eDP-1 --mode "1024x768_165.00" --rate 164.78 2>/dev/null || true
+        RES_ARGS=(-w 1024 -h 768)
+        ;;
+    1440|1440x1080)
+        xrandr --output eDP-1 --set "scaling mode" "Full" 2>/dev/null || true
+        xrandr --output eDP-1 --mode "1440x1080" --rate 164.85 2>/dev/null || true
+        RES_ARGS=(-w 1440 -h 1080)
+        ;;
+    native|1920|1920x1200)
+        xrandr --output eDP-1 --mode 1920x1200 --rate 165.00 2>/dev/null || true
+        RES_ARGS=(-w 1920 -h 1200)
+        ;;
+    *)
+        xrandr --output eDP-1 --set "scaling mode" "Full" 2>/dev/null || true
+        xrandr --output eDP-1 --mode "1344x1008_165.00" --rate 164.89 2>/dev/null || true
+        RES_ARGS=(-w 1344 -h 1008)
+        ;;
+esac
 
-    local steam_dirs=(
-        "$HOME/.local/share/Steam/userdata"
-        "$HOME/.steam/steam/userdata"
-        "$HOME/.steam/root/userdata"
-    )
-
-    local found_cfgs=()
-    for sdir in "${steam_dirs[@]}"; do
-        if [ -d "$sdir" ]; then
-            while IFS= read -r cfg_path; do
-                [ -n "$cfg_path" ] && found_cfgs+=("$cfg_path")
-            done < <(find "$sdir" -maxdepth 3 -type d -path "*/730/local/cfg" 2>/dev/null)
-        fi
-    done
-
-    if [ "${#found_cfgs[@]}" -gt 0 ]; then
-        for cfg_dir in "${found_cfgs[@]}"; do
-            local target_file="$cfg_dir/cs2_video.txt"
-            if [ -f "$backup_file" ]; then
-                if [ ! -f "$target_file" ]; then
-                    echo "==> Restoring backed-up competitive cs2_video.txt -> $target_file"
-                    cp "$backup_file" "$target_file"
-                fi
-            else
-                if [ -f "$target_file" ]; then
-                    echo "==> Preserving initial cs2_video.txt -> $backup_file"
-                    cp "$target_file" "$backup_file"
-                fi
-            fi
-        done
+# Fallback to local game binary if invoked without Steam %command% arguments
+if [ $# -eq 0 ] || [[ "$1" == -* ]]; then
+    if [ -f "$HOME/.local/share/Steam/steamapps/common/Counter-Strike Global Offensive/game/cs2.sh" ]; then
+        set -- "$HOME/.local/share/Steam/steamapps/common/Counter-Strike Global Offensive/game/cs2.sh" "$@"
     fi
-}
+fi
 
-backup_restore_video_config
-
-# ------------------------------------------------------------------------------
-# 13. Assemble Execution Command
-# ------------------------------------------------------------------------------
-# Explicit NVIDIA Vulkan Offload Environment (keep standard PRIME offload without overriding VK_DRIVER_FILES)
-export __NV_PRIME_RENDER_OFFLOAD=1
-export __GLX_VENDOR_LIBRARY_NAME=nvidia
-export __VK_LAYER_NV_optimus=NVIDIA_only
-
-# Force native Wayland SDL driver — avoids XWayland detour, gives CS2 direct Wayland presentation
-export SDL_VIDEO_DRIVER=wayland
-export SDL_VIDEO_WAYLAND_MODE_SCALING=stretch
-export SDL_VIDEO_WAYLAND_SCALE_TO_DISPLAY=1
-
-# CS2 Essential Flags (fullscreen mode appended per-branch below)
-CS2_BASE_FLAGS=(
-    -vulkan
-    -novid
-    -nojoy
-    -condebug
-    -refresh 165            # Request 165Hz even when the res is missing from the menu
-    -noabsoluteinput       # Fix cursor confinement / mouse grab on Wayland fullscreen
-    +fps_max 0
-    +fps_max_ui 0
-)
-
-# Determine base command: forwarded arguments from Steam, or fallback to local binary
-TARGET_BIN=()
-if [ "${#GAME_ARGS[@]}" -gt 0 ]; then
-    TARGET_BIN=("${GAME_ARGS[@]}")
+# 7. Launch CS2 natively on the dedicated NVIDIA GPU (No Gamescope overhead)
+if [ "${USE_GAMESCOPE:-0}" = "1" ] && command -v gamescope >/dev/null 2>&1; then
+    env ENABLE_GAMESCOPE_WSI=0 \
+      taskset -c 0-11 gamescope \
+      -w 1440 -h 1080 -W 1920 -H 1200 -r 165 -o 165 -f -S stretch \
+      --force-grab-cursor --immediate-flips \
+      -- gamemoderun env __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia __VK_LAYER_NV_optimus=NVIDIA_only \
+      $MANGOHUD_WRAPPER "$@" -fullscreen -novid -nojoy +fps_max 0 +fps_max_ui 0
+    GAME_EXIT=$?
 else
-    CS2_BINARY="$HOME/.local/share/Steam/steamapps/common/Counter-Strike Global Offensive/game/bin/linuxsteamrt64/cs2"
-    if [ -x "$CS2_BINARY" ]; then
-        TARGET_BIN=("$CS2_BINARY")
-    else
-        echo "ERROR: No command passed and CS2 binary not found at default Steam path." >&2
-        echo "Set Steam CS2 launch options to:" >&2
-        echo "  /home/manisk/.local/bin/cs2-launch %command%" >&2
-        exit 1
-    fi
+    taskset -c 0-11 gamemoderun env \
+      __NV_PRIME_RENDER_OFFLOAD=1 \
+      __GLX_VENDOR_LIBRARY_NAME=nvidia \
+      __VK_LAYER_NV_optimus=NVIDIA_only \
+      $MANGOHUD_WRAPPER "$@" -fullscreen "${RES_ARGS[@]}" -vulkan -novid -nojoy +fps_max 0 +fps_max_ui 0
+    GAME_EXIT=$?
 fi
 
-# Configure MangoHud
-WRAP_MANGOHUD=()
-GS_MANGO_FLAG=()
-if [ "$MANGOHUD_OPT" = "1" ]; then
-    if [ "$USE_GS" = "1" ]; then
-        GS_MANGO_FLAG=(--mangoapp)
-    else
-        WRAP_MANGOHUD=(mangohud)
-    fi
-fi
-
-# Print launch summary
-echo "==> Launching CS2 [$MODE_NAME]"
-echo "    Render:      ${GAME_W}x${GAME_H}"
-echo "    Display:     $PHYS_NAME (${PHYS_W}x${PHYS_H} @ ${PHYS_HZ}Hz)"
-echo "    Scaling:     $SCALING_MODE"
-echo "    GPU:         $NV_NAME ($NV_VK_DEVICE)"
-echo "    CPU Core:    P-cores [$PCORE_RANGE]"
-
-if [ "$USE_GS" = "1" ]; then
-    # Competitive 4:3 Stretched Mode via nested Gamescope
-    # Game renders windowed at 4:3, Gamescope stretches to panel fullscreen.
-    # Physical panel stays 1920x1200@165Hz, so workspace switches are unaffected.
-    exec "${TASKSET_CMD[@]}" gamescope \
-        -w "$GAME_W" \
-        -h "$GAME_H" \
-        -W "$PHYS_W" \
-        -H "$PHYS_H" \
-        -r "$PHYS_HZ" \
-        -o "$PHYS_HZ" \
-        -f \
-        -S stretch \
-        --force-grab-cursor \
-        --prefer-vk-device "$NV_VK_DEVICE" \
-        "${GS_MANGO_FLAG[@]}" \
-        -- \
-        "${GAMEMODE_CMD[@]}" \
-        "${WRAP_MANGOHUD[@]}" \
-        "${TARGET_BIN[@]}" \
-        -w "$GAME_W" -h "$GAME_H" \
-        -windowed -noborder \
-        "${CS2_BASE_FLAGS[@]}"
-else
-    # Native Low-Latency Mode: Direct Hyprland Fullscreen (stretched by compositor)
-    exec "${TASKSET_CMD[@]}" \
-        "${GAMEMODE_CMD[@]}" \
-        "${WRAP_MANGOHUD[@]}" \
-        "${TARGET_BIN[@]}" \
-        -w "$GAME_W" -h "$GAME_H" \
-        -fullscreen \
-        "${CS2_BASE_FLAGS[@]}"
-fi
+exit ${GAME_EXIT:-0}
