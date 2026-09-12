@@ -1,0 +1,175 @@
+#!/usr/bin/env bash
+# ==============================================================================
+# cs2-netwatch — CS2 Network Diagnostic Monitor
+#
+# Simultaneously tracks:
+#   - Gateway RTT (USB/RNDIS hop: laptop ↔ phone)
+#   - Internet RTT (phone → LTE → Internet)
+#   - Jitter (RTT variance, computed locally)
+#   - RNDIS interface rx/tx drop counters
+#
+# Usage: cs2-netwatch [interface] [gateway] [internet_host]
+#   Defaults auto-detected from routing table.
+#
+# Run this in a terminal while playing CS2. When a hitch occurs:
+#   - Gateway RTT stable + Internet spikes → LTE/carrier issue
+#   - Both spike → USB/RNDIS or phone-side issue
+#   - Both stable + CS2 loss → Valve relay / UDP-specific issue
+# ==============================================================================
+
+set -euo pipefail
+
+# ---------- auto-detect defaults ----------
+IFACE="${1:-$(ip route | awk '/default/{print $5; exit}')}"
+GW="${2:-$(ip route | awk '/default/{print $3; exit}')}"
+INET="${3:-1.1.1.1}"
+INTERVAL=0.5  # seconds between probes
+
+# ---------- validate ----------
+if [[ -z "$IFACE" || -z "$GW" ]]; then
+    echo "ERROR: Could not detect interface/gateway. Run: ip route" >&2
+    exit 1
+fi
+
+# Check fping is available; fall back to ping if not
+if command -v fping &>/dev/null; then
+    USE_FPING=1
+else
+    USE_FPING=0
+fi
+
+# ---------- colours ----------
+RED='\033[0;31m'
+YEL='\033[1;33m'
+GRN='\033[0;32m'
+CYN='\033[0;36m'
+BLD='\033[1m'
+RST='\033[0m'
+
+get_rtt() {
+    # Returns RTT in ms (float) or "LOSS" on packet loss
+    local host="$1"
+    local result
+    result=$(ping -c 1 -W 1 -q "$host" 2>/dev/null | awk -F'/' '/rtt/{print $5}')
+    if [[ -z "$result" ]]; then
+        echo "LOSS"
+    else
+        echo "$result"
+    fi
+}
+
+get_drops() {
+    # Returns "rx_dropped tx_dropped" for the interface
+    local rx tx
+    rx=$(cat "/sys/class/net/${IFACE}/statistics/rx_dropped" 2>/dev/null || echo 0)
+    tx=$(cat "/sys/class/net/${IFACE}/statistics/tx_dropped" 2>/dev/null || echo 0)
+    echo "$rx $tx"
+}
+
+get_errors() {
+    local rx tx
+    rx=$(cat "/sys/class/net/${IFACE}/statistics/rx_errors" 2>/dev/null || echo 0)
+    tx=$(cat "/sys/class/net/${IFACE}/statistics/tx_errors" 2>/dev/null || echo 0)
+    echo "$rx $tx"
+}
+
+colorize_rtt() {
+    local rtt="$1"
+    if [[ "$rtt" == "LOSS" ]]; then
+        echo -e "${RED}${BLD}  LOSS  ${RST}"
+    else
+        local ms="${rtt%.*}"
+        if   (( ms < 30  )); then echo -e "${GRN}${rtt} ms${RST}"
+        elif (( ms < 80  )); then echo -e "${YEL}${rtt} ms${RST}"
+        else                       echo -e "${RED}${BLD}${rtt} ms${RST}"
+        fi
+    fi
+}
+
+# ---------- header ----------
+clear
+echo -e "${BLD}CS2 Network Diagnostic Monitor${RST}"
+echo -e "Interface : ${CYN}${IFACE}${RST}"
+echo -e "Gateway   : ${CYN}${GW}${RST}  (laptop ↔ USB ↔ phone)"
+echo -e "Internet  : ${CYN}${INET}${RST}  (phone ↔ LTE ↔ Internet)"
+echo -e "Interval  : ${INTERVAL}s per probe pair"
+echo ""
+echo -e "${BLD}Interpreting results:${RST}"
+echo -e "  GW=stable + INET=spike  → LTE/carrier problem (no Linux fix)"
+echo -e "  GW=spike  + INET=spike  → USB/RNDIS or phone problem"
+echo -e "  GW=stable + INET=stable + CS2=loss → Valve relay / UDP-specific"
+echo ""
+printf "${BLD}%-6s  %-22s  %-22s  %-8s  %-12s  %-12s${RST}\n" \
+    "Time" "Gateway RTT (phone)" "Internet RTT (LTE)" "Jitter" "rx_drops Δ" "rx_errors Δ"
+printf '%s\n' "$(printf '─%.0s' {1..100})"
+
+# ---------- state ----------
+prev_gw_rtt=""
+prev_drops=""
+prev_errors=""
+prev_rx_drops=0
+prev_rx_errors=0
+
+sample=0
+jitter_sum=0
+jitter_count=0
+last_inet_rtt=""
+
+while true; do
+    ts=$(date '+%H:%M:%S')
+
+    # Probe gateway and internet in parallel
+    gw_rtt=$(get_rtt "$GW" &)
+    inet_rtt=$(get_rtt "$INET" &)
+    wait
+    gw_rtt=$(get_rtt "$GW")
+    inet_rtt=$(get_rtt "$INET")
+
+    # Delta drops
+    read -r rx_drops rx_tx_drops <<< "$(get_drops)"
+    read -r rx_errors rx_tx_errors <<< "$(get_errors)"
+    delta_drops=$(( rx_drops - prev_rx_drops ))
+    delta_errors=$(( rx_errors - prev_rx_errors ))
+    prev_rx_drops=$rx_drops
+    prev_rx_errors=$rx_errors
+
+    # Jitter: stddev of last-to-current inet RTT delta
+    jitter_str=""
+    if [[ "$last_inet_rtt" != "LOSS" && "$last_inet_rtt" != "" && "$inet_rtt" != "LOSS" ]]; then
+        diff=$(awk "BEGIN{d=${inet_rtt}-${last_inet_rtt}; print (d<0)?-d:d}")
+        jitter_str="${diff} ms"
+    fi
+    last_inet_rtt="$inet_rtt"
+
+    # Colour code drop delta
+    if (( delta_drops > 0 )); then
+        drop_str="${RED}${BLD}+${delta_drops}${RST}"
+    else
+        drop_str="${GRN}0${RST}"
+    fi
+
+    if (( delta_errors > 0 )); then
+        err_str="${RED}${BLD}+${delta_errors}${RST}"
+    else
+        err_str="${GRN}0${RST}"
+    fi
+
+    printf "%-6s  %-30s  %-30s  %-16s  %-20b  %-20b\n" \
+        "$ts" \
+        "$(colorize_rtt "$gw_rtt")" \
+        "$(colorize_rtt "$inet_rtt")" \
+        "$jitter_str" \
+        "$drop_str" \
+        "$err_str"
+
+    sample=$(( sample + 1 ))
+
+    # Every 30 samples, print a summary separator
+    if (( sample % 30 == 0 )); then
+        printf '%s\n' "$(printf '─%.0s' {1..100})"
+        echo -e "  ${CYN}[summary at sample ${sample}]  Total rx_drops: ${rx_drops}  Total rx_errors: ${rx_errors}${RST}"
+        printf '%s\n' "$(printf '─%.0s' {1..100})"
+    fi
+
+    sleep "$INTERVAL"
+done
