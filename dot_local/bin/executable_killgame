@@ -14,7 +14,9 @@ xrandr --output eDP-1 --set "scaling mode" "Full aspect" 2>/dev/null || true
 xrandr --output eDP-1 --mode 1920x1200 --rate 165.00 2>/dev/null || xrandr --output eDP-1 --auto 2>/dev/null || true
 sh "$HOME/.fehbg" 2>/dev/null || true
 i3-msg restart 2>/dev/null || true
-polybar-msg cmd show 2>/dev/null || true
+if [ "$(cat "$HOME/.config/polybar/bar_state" 2>/dev/null)" != "hidden" ]; then
+    polybar-msg cmd show 2>/dev/null || true
+fi
 
 # 3. Guidance message
 echo ""

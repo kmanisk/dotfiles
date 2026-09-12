@@ -35,11 +35,13 @@ PERCENT=$(( (NEW_TEMP - 2000) * 100 / 4500 ))
 
 if (( NEW_TEMP >= 6500 )); then
     redshift -x -m randr >/dev/null 2>&1
+    xrandr --output eDP-1 --gamma 1.0:1.0:1.0 --brightness 1.0 >/dev/null 2>&1 || true
     echo "off" > "$STATE_FILE"
     echo "100" > /tmp/xobpipe 2>/dev/null || true
+    notify-send -h string:x-canonical-private-synchronous:nightlight -h int:value:100 -t 1000 -i preferences-desktop-display "Night Light" "6500K (Daylight)" 2>/dev/null || true
 else
-    redshift -x -m randr >/dev/null 2>&1
-    redshift -m randr -O "$NEW_TEMP" >/dev/null 2>&1
+    redshift -r -P -m randr -O "$NEW_TEMP" >/dev/null 2>&1
     echo "on" > "$STATE_FILE"
     echo "$PERCENT" > /tmp/xobpipe 2>/dev/null || true
+    notify-send -h string:x-canonical-private-synchronous:nightlight -h int:value:"$PERCENT" -t 1000 -i preferences-desktop-display "Night Light" "${NEW_TEMP}K" 2>/dev/null || true
 fi

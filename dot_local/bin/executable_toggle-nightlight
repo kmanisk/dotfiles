@@ -29,8 +29,7 @@ done
 
 turn_on() {
     pkill -9 redshift >/dev/null 2>&1
-    redshift -x -m randr >/dev/null 2>&1
-    redshift -m randr -O "$CURRENT_TEMP" >/dev/null 2>&1
+    redshift -r -P -m randr -O "$CURRENT_TEMP" >/dev/null 2>&1
     echo "on" > "$STATE_FILE"
     if (( SILENT == 0 )); then
         echo "manual_on" > "$MANUAL_OVERRIDE_FILE"
@@ -45,9 +44,7 @@ turn_on() {
 turn_off() {
     pkill -9 redshift >/dev/null 2>&1
     redshift -x -m randr >/dev/null 2>&1
-    for out in $(xrandr --query 2>/dev/null | awk '/ connected/ {print $1}'); do
-        xrandr --output "$out" --gamma 1.0:1.0:1.0 --brightness 1.0 >/dev/null 2>&1 || true
-    done
+    xrandr --output eDP-1 --gamma 1.0:1.0:1.0 --brightness 1.0 >/dev/null 2>&1 || true
     echo "off" > "$STATE_FILE"
     if (( SILENT == 0 )); then
         echo "manual_off" > "$MANUAL_OVERRIDE_FILE"

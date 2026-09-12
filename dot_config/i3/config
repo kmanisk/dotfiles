@@ -42,8 +42,11 @@ bindsym $mod+Mod1+2 exec blueman-manager
 bindsym $mod+Mod1+3 exec pavucontrol
 bindsym $mod+Shift+s exec --no-startup-id ~/.local/bin/screenshot-region
 bindsym $mod+Control+p exec --no-startup-id ~/.local/bin/toggle-audio-sink
+bindsym Control+Shift+n exec --no-startup-id ~/.local/bin/toggle-nightlight
 bindsym $mod+Shift+n exec --no-startup-id ~/.local/bin/toggle-nightlight
+bindsym Control+Shift+braceleft exec --no-startup-id ~/.local/bin/adjust-nightlight +250
 bindsym Control+Shift+bracketleft exec --no-startup-id ~/.local/bin/adjust-nightlight +250
+bindsym Control+Shift+quotedbl exec --no-startup-id ~/.local/bin/adjust-nightlight -250
 bindsym Control+Shift+apostrophe exec --no-startup-id ~/.local/bin/adjust-nightlight -250
 
 # Screen Lock (Windows + Ctrl + l)
@@ -178,9 +181,9 @@ bindsym $mod+Shift+period move container to workspace next; workspace next
 # Back and Forth with last workspace
 bindsym $mod+Tab workspace back_and_forth
 
-# Scratchpad (Windows + z / Windows + Shift + z)
-bindsym $mod+Shift+z move scratchpad
-bindsym $mod+z scratchpad show
+# Scratchpad (unbound for now - use `i3-msg 'scratchpad show'` manually)
+#bindsym $mod+Shift+y move scratchpad
+#bindsym $mod+y scratchpad show
 
 # ==============================================================================
 # SESSION & CONFIG RELOAD (with i3-resurrect session manager)
@@ -250,6 +253,8 @@ for_window [class="(?i)^btop$"] floating enable, resize set 1150 720
 for_window [class="(?i)^Task Manager TMOG$"] floating enable, resize set 1200 750, move position center
 for_window [instance="(?i)^AppRun\.wrapped$"] floating enable, resize set 1200 750, move position center
 for_window [instance="(?i)^pkg-float$"] floating enable, resize set 1250 780, move position center
+# Alacritty dropdown scratch terminal - auto-hidden, show via `scratchpad show`
+for_window [instance="scratch-term"] floating enable, resize set 1200 700, move position center, move to scratchpad
 # Hide outer edge borders when tabs/windows fill the edge
 hide_edge_borders smart
 # Set Workspace 2 and 5 to Tabbed mode by default
@@ -346,6 +351,8 @@ exec --no-startup-id dunst
 # exec --no-startup-id picom -b # Disabled globally
 exec --no-startup-id ~/.local/bin/auto-nightlight
 exec --no-startup-id blueman-applet
+# Alacritty scratch terminal - spawns once on login straight into scratchpad
+exec --no-startup-id alacritty --class Alacritty,scratch-term
 # Autotiling: automatically switch horizontal/vertical splits based on focused window dimensions
 exec_always --no-startup-id sh -c 'pkill -x autotiling; sleep 0.2; exec autotiling'
 # CS2 Window Restack Hook: forces CS2 to top of stacking order on workspace focus
