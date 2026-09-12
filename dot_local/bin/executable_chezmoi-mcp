@@ -142,7 +142,7 @@ TOOLS = [
                 "targets": {
                     "type": "array",
                     "items": {"type": "string"},
-                    "description": "Target file paths (e.g. ~/.bashrc or ~/.config/hypr/hyprland.conf)"
+                    "description": "Target file paths (e.g. ~/.bashrc or ~/.config/i3/config)"
                 }
             },
             "required": ["targets"]
@@ -165,7 +165,7 @@ TOOLS = [
     },
     {
         "name": "chezmoi_git",
-        "description": "Execute a git command in the chezmoi source directory (e.g. [\"status\"], [\"log\", \"-n\", \"5\"], [\"commit\", \"-m\", \"update hyprland\"]).",
+        "description": "Execute a git command in the chezmoi source directory (e.g. [\"status\"], [\"log\", \"-n\", \"5\"], [\"commit\", \"-m\", \"update i3 config\"]).",
         "inputSchema": {
             "type": "object",
             "properties": {

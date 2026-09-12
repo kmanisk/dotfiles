@@ -10,7 +10,7 @@ version: 1.0.0
 - **CPU Architecture:** x86-64-v3. Always prefer packages from `[cachyos-v3]` and `[cachyos]` repositories before standard Arch repos or AUR.
 - **Kernel:** Linux-CachyOS with BORE (Burst-Oriented Response Enhancer) or EEVDF scheduler. Do not replace with generic `linux` kernel unless debugging regression.
 - **Dual-GPU Offloading (PRIME):**
-  - Wayland / Hyprland session runs on the integrated Intel Raptor Lake-S UHD GPU for minimal idle power consumption.
+  - i3/X11 session runs on the integrated Intel Raptor Lake-S UHD GPU for minimal idle power consumption.
   - 3D titles and Vulkan workloads run on discrete NVIDIA RTX 5050 Mobile via `prime-run` or `__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia`.
   - Always pair with GameMode: `gamemoderun prime-run %command%`.
 
@@ -36,13 +36,8 @@ version: 1.0.0
 - **Autologin / Display Architecture:** Prefer No-DM Getty autologin (0 MB background RAM overhead) over full display managers.
 - **Headless Over GUI:** Daemons and services must run headless in the background without requiring user interaction or open GUI windows.
 
-## Real-Time Audio & Noise Suppression (Dusky Audio Studio)
-- **Headless DSP Engine:** Dusky Audio Studio runs PipeWire RT low-latency DSP with RNNoise neural suppression (85% gate) headlessly via:
-  ```bash
-  python3 $HOME/user_scripts/audio/dusky_audio_studio/dusky_audio_studio.py --autostart
-  ```
-- Must be launched in Hyprland autostart (`~/.config/hypr/edit_here/source/autostart.lua`).
-- Users should NEVER be required to open the GTK3 GUI window (`Alt + N`) to apply DSP or noise filtering. The GUI is strictly for tweaking sliders and character presets.
+## Audio Pipeline (Stock PipeWire)
+- **No DSP daemon:** stock PipeWire + WirePlumber only; do not add background audio daemons.
 
 ## Btrfs Snapshot Hygiene
 - **Snapshot Retention:** Keep only stable, verified baselines. Do not accumulate large batches of transient `snap-pac` pre/post snapshots that hold old package extents.

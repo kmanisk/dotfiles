@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Standalone Gamescope DRM CS2 test
-# Run from a TTY (not inside Hyprland) to isolate crash path
+# Run from a TTY (not inside a graphical session) to isolate crash path
 set -Eeuo pipefail
 
 # NVIDIA Vulkan offload

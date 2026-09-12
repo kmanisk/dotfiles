@@ -120,28 +120,5 @@ if systemctl --user is-active --quiet "xremap.service" 2>/dev/null; then
 fi
 {{ end }}
 
-# 6. User Services: Hyprland Desktop Services
-{{ if $m.features.hyprland }}
-for usvc in "hypridle.service" "mako.service"; do
-    if systemctl --user list-unit-files "$usvc" &>/dev/null; then
-        if ! systemctl --user is-active --quiet "$usvc"; then
-            echo "    [Hyprland: Enabled] Activating user $usvc..."
-            if [ "$DRY_RUN" -eq 0 ]; then
-                systemctl --user enable "$usvc" 2>/dev/null || true
-            fi
-        fi
-    fi
-done
-{{ else }}
-for usvc in "hypridle.service" "mako.service"; do
-    if systemctl --user is-active --quiet "$usvc" 2>/dev/null; then
-        echo "    [Hyprland: Disabled] Retiring user $usvc..."
-        if [ "$DRY_RUN" -eq 0 ]; then
-            systemctl --user disable --now "$usvc" 2>/dev/null || true
-        fi
-    fi
-done
-{{ end }}
-
 echo "==> System & user daemons reconciliation complete."
 {{ end }}

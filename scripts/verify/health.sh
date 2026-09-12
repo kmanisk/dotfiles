@@ -49,11 +49,10 @@ run_check "NVIDIA dGPU PCI device detected" bash -c "lspci -d 10de: | grep -q 'V
 run_check "NVIDIA kernel driver loaded" bash -c "lsmod | grep -qw nvidia"
 run_check "Optimus dynamic power management in auto" bash -c "cat /sys/bus/pci/devices/0000:01:00.0/power/control | grep -qw auto"
 
-# 3. Audio & Voice DSP Pipeline
-echo -e "\n[Category: Audio & Neural DSP Pipeline]"
+# 3. Audio Pipeline
+echo -e "\n[Category: Audio Pipeline]"
 run_check "PipeWire daemon active" pgrep -x pipewire
 run_check "WirePlumber session manager active" pgrep -x wireplumber
-run_check "Headless Dusky RNNoise Voice DSP engine running" pgrep -f "dusky_audio_studio|dusky_audio_dsp"
 
 # 4. Critical Systemd Units
 echo -e "\n[Category: Systemd System Daemons]"

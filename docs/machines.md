@@ -16,8 +16,8 @@ This repository treats physical and virtual workstations as declared machine tar
   - NVIDIA GeForce RTX 5050 Mobile (GB207M, 8GB GDDR6) suspended in D3cold runtime power management (0W idle).
   - Explicit PRIME render offload: `gamemoderun prime-run %command%`
 - **Filesystem:** Btrfs on NVMe with Snapper snapshot hooks and selective No-CoW for Steam/Wine directories.
-- **Audio:** PipeWire + WirePlumber + Headless Dusky RNNoise Voice DSP engine.
-- **Greeter:** Headless systemd TTY1 getty autologin into Hyprland (0 MB display manager overhead), with Ly preserved in `backups/`.
+- **Audio:** PipeWire + WirePlumber (stock, no DSP daemon).
+- **Greeter:** Headless systemd TTY1 getty autologin into i3/X11 via `startx` (0 MB display manager overhead), with Ly preserved in `backups/`.
 
 ### 2. `windows-workstation` (Windows 11 Workstation)
 - **OS:** Windows 11 Pro 64-bit
@@ -68,7 +68,7 @@ To add a new machine to the fleet:
    development = true
    asus_ctl = false
    bluetooth = true
-   hyprland = true
+   i3 = true
    snapper = true
    hdr = false
    tearing_opt = false

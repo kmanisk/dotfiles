@@ -97,10 +97,8 @@ dot_gemini/**
 .config/ghostty/**
 .config/gtk-3.0/**
 .config/gtk-4.0/**
-.config/hypr/**
 .config/kitty/**
 .config/Kvantum/**
-.config/mako/**
 .config/MangoHud/**
 .config/matugen/**
 .config/mimeapps.list
@@ -108,11 +106,8 @@ dot_gemini/**
 .config/qt5ct/**
 .config/qt6ct/**
 .config/rofi/**
-.config/swappy/**
 .config/systemd/**
-.config/waybar/**
 .config/wireplumber/**
-.config/wlogout/**
 .config/xremap/**
 .config/xsettingsd/**
 .config/yazi/**
@@ -147,13 +142,6 @@ readonly_Documents/Need for Speed*/**
 {{- if eq .chezmoi.os "linux" }}
 {{-   if not $m.features.gaming }}
 .config/MangoHud/**
-{{-   end }}
-{{-   if not $m.features.hyprland }}
-.config/hypr/**
-.config/waybar/**
-.config/mako/**
-.config/swappy/**
-.config/wlogout/**
 {{-   end }}
 {{-   if or (eq $m.providers.xremap "none") (not (hasKey $m.providers "xremap")) }}
 .config/xremap/**

@@ -12,9 +12,9 @@ Features allow modular enablement or suppression of packages, daemons, and confi
 | `development` | Compilers, runtimes, Git LFS, tooling | `true` | `true` | `packages/development.txt` |
 | `asus_ctl` | ASUS TUF WMI, charge limits, supergfxctl | `true` (TUF) | `false` | `packages/asus.txt`, `asusd`, `supergfxd` |
 | `bluetooth` | BlueZ daemon and Blueman integration | `true` | `true` | `bluetooth.service`, `packages/linux-core.txt` |
-| `hyprland` | Hyprland compositor, Waybar, Mako, Rofi | `true` | `false` | `.config/hypr/`, `.config/waybar/`, etc. |
+| `i3` | i3wm tiling WM, Polybar, Dunst, Rofi, Alacritty | `true` | `true` | `.config/i3/`, `packages/i3.txt` |
 | `snapper` | Automated Btrfs pre/post snapshot hooks | `true` | `false` | `snapper-cleanup.timer`, `snap-pac` |
-| `tearing_opt` | Low-latency tearing rules for competitive FPS | `true` | `false` | `appearance.lua`, `window_rules.lua` |
+| `tearing_opt` | Low-latency tearing rules for competitive FPS | `true` | `false` | `.config/i3/config` |
 
 ---
 
@@ -28,7 +28,7 @@ gaming = true
 development = true
 asus_ctl = true
 bluetooth = true
-hyprland = true
+i3 = true
 snapper = true
 hdr = false
 tearing_opt = true

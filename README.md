@@ -1,6 +1,6 @@
 # Modular Cross-Platform Workstation Dotfiles
 
-Fully reproducible, modular, multi-tier workstation architecture for **Linux** (CachyOS / Arch / Hyprland) and **Windows 11** environments, managed with [chezmoi](https://www.chezmoi.io/) and encrypted with [age](https://github.com/FiloSottile/age).
+Fully reproducible, modular, multi-tier workstation architecture for **Linux** (CachyOS / Arch / i3wm+X11) and **Windows 11** environments, managed with [chezmoi](https://www.chezmoi.io/) and encrypted with [age](https://github.com/FiloSottile/age).
 
 ---
 
@@ -46,9 +46,9 @@ Every configuration artifact is evaluated and composed through six distinct laye
 
 | Machine Identifier | Operating System | Chassis / Purpose | Key Providers & Features |
 |---|---|---|---|
-| **`asus-tuf-f16`** | CachyOS Linux (x86-64-v3) | ASUS TUF Gaming F16 Laptop | Hybrid Optimus (iGPU + RTX 5050), Paru, Headless Getty Autologin (Ly standby), Grub, PipeWire RNNoise DSP, Gaming |
+| **`asus-tuf-f16`** | CachyOS Linux (x86-64-v3) | ASUS TUF Gaming F16 Laptop | Hybrid Optimus (iGPU + RTX 5050), Paru, Headless Getty Autologin (Ly standby), Grub, Stock PipeWire, Gaming |
 | **`windows-workstation`** | Windows 11 Pro | Custom Gaming / Dev Workstation | Scoop, Windows Boot Manager, Wasapi, Gaming, Development |
-| **`generic-linux`** | Arch Linux / Derivative | Generic Portable Fallback | Pacman, Grub, NetworkManager, Hyprland |
+| **`generic-linux`** | Arch Linux / Derivative | Generic Portable Fallback | Pacman, Grub, NetworkManager, i3wm |
 
 ---
 
@@ -57,7 +57,7 @@ Every configuration artifact is evaluated and composed through six distinct laye
 Unlike systems with one-time setup scripts, this repository uses **declarative state reconcilers** executed automatically on data or template change:
 - **`run_onchange_linux-00-reconcile-packages.sh.tmpl`**: Reconciles system & AUR packages using safe bash arrays (`paru`, `yay`, or `pacman`), with automatic Snapper pre-update snapshot hooks and dry-run execution modes.
 - **`run_onchange_linux-10-reconcile-login.sh.tmpl`**: Reconciles login and display managers (e.g. configuring headless TTY1 autologin while cleanly retiring Ly, SDDM, or GDM to avoid terminal contention).
-- **`run_onchange_linux-20-reconcile-services.sh.tmpl`**: Reconciles systemd system and user daemons (Bluetooth, ASUS WMI, Snapper cleanup timers, XRemap user services, and Hyprland desktop units). When features or providers are toggled, inactive services are cleanly stopped, disabled, and retired.
+- **`run_onchange_linux-20-reconcile-services.sh.tmpl`**: Reconciles systemd system and user daemons (Bluetooth, ASUS WMI, Snapper cleanup timers, XRemap user services). When features or providers are toggled, inactive services are cleanly stopped, disabled, and retired.
 
 ---
 

@@ -6,7 +6,7 @@ This document details emergency recovery procedures, including restoring the Ly 
 
 ## 1. Restoring Ly Display Manager Fallback
 
-The active system uses a zero-RAM headless systemd getty autologin on TTY1 with `exec start-hyprland` in `~/.config/fish/config.fish`.
+The active system uses a zero-RAM headless systemd getty autologin on TTY1 with `exec startx` in `~/.config/fish/config.fish` (X11/i3 session).
 
 If you ever wish to revert to the Ly display manager (or if TTY autologin fails):
 

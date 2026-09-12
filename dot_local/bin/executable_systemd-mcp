@@ -55,7 +55,7 @@ TOOLS = [
         "inputSchema": {
             "type": "object",
             "properties": {
-                "user": {"type": "boolean", "default": True, "description": "True for user session services (waybar, mako, pipewire, swww), False for system services"},
+                "user": {"type": "boolean", "default": True, "description": "True for user session services (pipewire, xremap, timers), False for system services"},
                 "unit_type": {"type": "string", "default": "service", "description": "Unit type: service, timer, target, socket"},
                 "state": {"type": "string", "description": "Filter by state: active, running, failed, inactive"}
             }
@@ -67,7 +67,7 @@ TOOLS = [
         "inputSchema": {
             "type": "object",
             "properties": {
-                "unit": {"type": "string", "description": "Unit name (e.g. waybar.service, pipewire.service, ananicy-cpp.service)"},
+                "unit": {"type": "string", "description": "Unit name (e.g. polybar.service, pipewire.service, ananicy-cpp.service)"},
                 "user": {"type": "boolean", "default": True, "description": "True for user session units, False for system units"}
             },
             "required": ["unit"]
@@ -80,7 +80,7 @@ TOOLS = [
             "type": "object",
             "properties": {
                 "action": {"type": "string", "enum": ["start", "stop", "restart", "reload", "try-restart"], "description": "Action to perform"},
-                "unit": {"type": "string", "description": "Unit name (e.g. waybar.service, hypridle.service, pipewire.service)"},
+                "unit": {"type": "string", "description": "Unit name (e.g. polybar.service, xremap.service, pipewire.service)"},
                 "user": {"type": "boolean", "default": True, "description": "True for user units, False for system units"}
             },
             "required": ["action", "unit"]
@@ -114,7 +114,7 @@ TOOLS = [
         "inputSchema": {
             "type": "object",
             "properties": {
-                "match": {"type": "string", "description": "Optional binary name or pattern (e.g. Hyprland, cs2, proton, wine)"},
+                "match": {"type": "string", "description": "Optional binary name or pattern (e.g. cs2, proton, wine)"},
                 "limit": {"type": "number", "default": 20, "description": "Maximum number of entries to return"}
             }
         }

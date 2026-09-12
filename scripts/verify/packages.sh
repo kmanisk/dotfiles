@@ -39,7 +39,7 @@ echo "==========================================================================
 
 # 1. Manifest Files Existence & Non-Emptiness
 echo -e "\n[Category: Package File Integrity]"
-MANIFESTS=(common linux-core hyprland gaming nvidia asus audio development aur-explicit)
+MANIFESTS=(common linux-core i3 gaming nvidia asus audio development aur-explicit)
 for m in "${MANIFESTS[@]}"; do
     run_check "Manifest packages/$m.txt exists and is non-empty" test -s "$SCRIPT_DIR/packages/$m.txt"
 done

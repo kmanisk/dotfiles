@@ -9,12 +9,12 @@ This repository abstracts system components behind provider interfaces, allowing
 | Subsystem | Supported Providers | Active Machine (`asus-tuf-f16`) | Notes |
 |---|---|---|---|
 | **Package Manager** | `paru`, `yay`, `pacman`, `scoop` | `paru` | Modeled as safe bash command arrays; checks binary executable |
-| **Login Mode** | `getty-tty1-autologin`, `native` | `getty-tty1-autologin` | Zero-RAM headless autologin on TTY1 -> `start-hyprland` |
+| **Login Mode** | `getty-tty1-autologin`, `native` | `getty-tty1-autologin` | Zero-RAM headless autologin on TTY1 -> `startx` (i3/X11) |
 | **Greeter / Display Mgr** | `none`, `ly`, `sddm`, `windows-logon` | `none` (active) | `fallback_greeter = "ly"` preserved in `backups/linux/greeters/ly/` |
 | **Bootloader** | `grub`, `systemd-boot`, `windows-boot-manager` | `grub` | Declarative `/etc/default/grub` only; NVRAM mutations isolated |
-| **Key Remapping** | `user-service`, `none` | `user-service` | Managed by `xremap-hypr-bin` via user systemd service |
+| **Key Remapping** | `user-service`, `none` | `user-service` | Managed by `xremap-x11-bin` via user systemd service |
 | **GPU Strategy** | `hybrid-optimus-d3cold`, `direct`, `intel-only` | `hybrid-optimus-d3cold` | Intel iGPU desktop session + NVIDIA RTX 5050 D3cold offload |
-| **Audio Engine** | `pipewire-rnnoise`, `pipewire-standard`, `wasapi` | `pipewire-rnnoise` | Headless Dusky Audio Studio RNNoise DSP background daemon |
+| **Audio Engine** | `pipewire-standard`, `wasapi` | `pipewire-standard` | Stock PipeWire + WirePlumber, no DSP daemon |
 
 ---
 

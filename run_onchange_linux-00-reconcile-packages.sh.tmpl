@@ -6,6 +6,7 @@
 # nvidia.txt hash: {{ include "packages/nvidia.txt" | sha256sum }}
 # asus.txt hash: {{ include "packages/asus.txt" | sha256sum }}
 # audio.txt hash: {{ include "packages/audio.txt" | sha256sum }}
+# i3.txt hash: {{ include "packages/i3.txt" | sha256sum }}
 # development.txt hash: {{ include "packages/development.txt" | sha256sum }}
 # aur-explicit.txt hash: {{ include "packages/aur-explicit.txt" | sha256sum }}
 
@@ -116,6 +117,10 @@ LISTS+=("{{ .chezmoi.sourceDir }}/packages/nvidia.txt")
 
 {{ if $m.features.asus_ctl -}}
 LISTS+=("{{ .chezmoi.sourceDir }}/packages/asus.txt")
+{{ end -}}
+
+{{ if $m.features.i3 -}}
+LISTS+=("{{ .chezmoi.sourceDir }}/packages/i3.txt")
 {{ end -}}
 
 {{ if hasPrefix "pipewire" $m.providers.audio -}}

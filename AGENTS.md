@@ -1,7 +1,7 @@
 # AI System Rules — CachyOS + i3wm/X11 Gaming Laptop
 
 **Target machine:** CachyOS rolling (BORE/EEVDF, x86-64-v3) · i3wm (X11) @ 1920x1200 165Hz
-**Hardware:** Intel i5-13450HX + GeForce RTX 5050 Mobile (Optimus hybrid) · Btrfs on NVMe · fish + zsh + kitty
+**Hardware:** Intel i5-13450HX + GeForce RTX 5050 Mobile (Optimus hybrid) · Btrfs on NVMe · fish + zsh + alacritty
 
 Save this file as **`AGENTS.md`** in your project root for per-project rules, or
 **`~/.gemini/AGENTS.md`** for it to apply globally across every project — Antigravity CLI
@@ -110,8 +110,8 @@ token.
 
 ## 7. Community Tools — Verify Before Trusting
 
-Names like `hypruse`, `hyprmcp`, or "community-vetted" server lists should be checked against
-their real GitHub pages (commit activity, real usage) before wiring them in — not taken on
+Any third-party MCP server or "community-vetted" server list should be checked against
+its real package/GitHub page (commit activity, real usage) before wiring it in — not taken on
 the strength of a description alone.
 
 ---
@@ -119,6 +119,6 @@ the strength of a description alone.
 ## 8. Efficiency, Anti-Bloat & Research Philosophy
 
 - **Resource discipline:** Save disk space, RAM, and CPU cycles above all else. Retain what matters (responsiveness, latency, stability) rather than flashy animations, bloated eye-candy, or heavy background daemons.
-- **Headless services:** System features (such as Dusky Audio Studio RNNoise DSP, autologin, clipboard) must run headless in the background; never require manual GUI interaction (`Alt + N`, etc.) to activate essential system functions.
+- **Headless services:** System features (such as autologin, clipboard) must run headless in the background; never require manual GUI interaction to activate essential system functions.
 - **Btrfs snapshot pruning:** Keep only verified stable baselines. Do not allow dozens of transient package snapshots to consume exclusive disk space.
 - **Fact-checked research via headless browser:** When researching technical solutions, driver quirks, or configurations, perform live web searches and headless browser fetches. Record verified outcomes in markdown skill files (`SKILL.md`) for persistent cross-session knowledge.

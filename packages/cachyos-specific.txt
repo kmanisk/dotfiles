@@ -66,11 +66,6 @@ gst-plugins-ugly
 gtk-layer-shell
 hdparm
 hwinfo
-hypridle
-hyprland
-hyprlock
-hyprpicker
-hyprsunset
 inetutils
 inotify-tools
 intel-lpmd
@@ -99,7 +94,6 @@ logrotate
 lsscsi
 lvm2
 ly
-mako
 man-db
 mangohud
 matugen
@@ -168,14 +162,12 @@ vpl-gpu-rt
 vulkan-icd-loader
 vulkan-intel
 vulkan-tools
-waybar
 wget
 which
 wireplumber
 wl-clip-persist
 wl-clipboard
 wpa_supplicant
-xdg-desktop-portal-hyprland
 xdg-user-dirs
 xfsprogs
 xorg-xrandr

@@ -83,11 +83,6 @@ gtk-layer-shell
 hdparm
 hwdetect
 hwinfo
-hypridle
-hyprland
-hyprlock
-hyprpicker
-hyprsunset
 inetutils
 inotify-tools
 intel-gpu-tools
@@ -122,7 +117,6 @@ lsb-release
 lsscsi
 lvm2
 ly
-mako
 man-db
 man-pages
 mangohud
@@ -235,7 +229,6 @@ vpl-gpu-rt
 vulkan-icd-loader
 vulkan-intel
 vulkan-tools
-waybar
 wayland-protocols
 wget
 which
@@ -243,7 +236,6 @@ wireplumber
 wl-clip-persist
 wl-clipboard
 wpa_supplicant
-xdg-desktop-portal-hyprland
 xdg-user-dirs
 xfsprogs
 xorg-xrandr

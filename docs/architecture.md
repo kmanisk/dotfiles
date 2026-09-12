@@ -1,6 +1,6 @@
 # Cross-Platform Workstation Architecture
 
-This repository defines a modular, multi-tier workstation architecture managed entirely through [chezmoi](https://www.chezmoi.io/). It provides a single source of truth for both Linux (CachyOS / Arch / Hyprland) and Windows 11 workstations without fragmentation or platform dilution.
+This repository defines a modular, multi-tier workstation architecture managed entirely through [chezmoi](https://www.chezmoi.io/). It provides a single source of truth for both Linux (CachyOS / Arch / i3wm+X11) and Windows 11 workstations without fragmentation or platform dilution.
 
 ---
 
@@ -118,9 +118,9 @@ Firmware and partition setup are one-time provisioning steps documented in [`doc
   - `login_mode`: `getty-tty1-autologin` (0 MB RAM headless autologin), `native`
   - `greeter`: `none` (active headless), with `fallback_greeter = "ly"` preserved in `backups/`
   - `bootloader`: `grub`, `systemd-boot`, `windows-boot-manager`
-  - `audio`: `pipewire-rnnoise`, `pipewire-standard`, `wasapi`
+  - `audio`: `pipewire-standard`, `wasapi`
   - `xremap`: `user-service`, `none`
 
 ### 6. Feature Layer
 - **Source:** `machines.<id>.features` in `.chezmoidata.toml`.
-- **Flags:** `gaming`, `development`, `asus_ctl`, `bluetooth`, `hyprland`, `snapper`, `tearing_opt`.
+- **Flags:** `gaming`, `development`, `asus_ctl`, `bluetooth`, `i3`, `snapper`, `tearing_opt`.

@@ -79,8 +79,8 @@ if command -v wpctl >/dev/null 2>&1; then
     log "Default Audio Sinks & Sources:"
     wpctl status 2>/dev/null | grep -E "Audio|Sinks|Sources|Streams" -A 10 | head -n 25 | tee -a "$OUT_FILE" || true
 fi
-log "Running DSP Engines:"
-pgrep -fla "dusky_audio_studio|rnnoise" || echo "No active python RNNoise DSP daemon detected"
+log "Running audio pipeline:"
+pgrep -fla "pipewire|wireplumber" | head -n 5 || echo "No PipeWire processes detected"
 
 # 7. Greeter & Login
 log "\n[7. GREETER & AUTOLOGIN CONFIGURATION]"

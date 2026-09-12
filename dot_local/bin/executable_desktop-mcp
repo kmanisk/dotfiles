@@ -46,7 +46,7 @@ def write_message(msg):
 TOOLS = [
     {
         "name": "desktop_notify",
-        "description": "Send a desktop notification to the Wayland notification daemon (Mako).",
+        "description": "Send a desktop notification via notify-send (Dunst on X11).",
         "inputSchema": {
             "type": "object",
             "properties": {
