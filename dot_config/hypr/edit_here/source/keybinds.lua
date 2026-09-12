@@ -210,9 +210,9 @@ hl.bind("ALT + escape", hl.dsp.exec_cmd("pkill rofi; rofi -show power-menu -modi
 
 -- Night Light (hyprsunset)
 hl.bind("SUPER + SHIFT + N", hl.dsp.exec_cmd("/home/manisk/.local/bin/hypr-nightlight toggle"), { description = "Toggle Night Light" })
-hl.bind("SUPER + SHIFT + bracketleft", hl.dsp.exec_cmd("/home/manisk/.local/bin/hypr-nightlight adjust -300"), { description = "Increase Night Light Warmth (Warmer / More Yellow)" })
-hl.bind("SUPER + SHIFT + apostrophe", hl.dsp.exec_cmd("/home/manisk/.local/bin/hypr-nightlight adjust +300"), { description = "Reduce Night Light (Cooler / Less Yellow)" })
-hl.bind("SUPER + SHIFT + bracketright", hl.dsp.exec_cmd("/home/manisk/.local/bin/hypr-nightlight adjust +300"), { description = "Reduce Night Light (Cooler / Less Yellow)" })
+hl.bind("SUPER + SHIFT + bracketleft", hl.dsp.exec_cmd("/home/manisk/.local/bin/hypr-nightlight adjust +300"), { description = "Reduce Night Light (Cooler / Less Yellow)" })
+hl.bind("SUPER + SHIFT + apostrophe", hl.dsp.exec_cmd("/home/manisk/.local/bin/hypr-nightlight adjust -300"), { description = "Increase Night Light (Warmer / More Yellow)" })
+hl.bind("SUPER + SHIFT + bracketright", hl.dsp.exec_cmd("/home/manisk/.local/bin/hypr-nightlight adjust -300"), { description = "Increase Night Light (Warmer / More Yellow)" })
 
 -- Clipboard Manager (Alt + V)
 hl.bind("ALT + V", hl.dsp.exec_cmd("pkill rofi; rofi -modi \"clipboard:" .. dusky_scripts .. "rofi/rofi_clipboard.sh\" -show clipboard"), { description = "Clipboard Manager (Rofi)" })
