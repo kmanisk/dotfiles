@@ -2,18 +2,32 @@
 #!/bin/bash
 set -euo pipefail
 
+{{ $machineKey := "asus-tuf-f16" -}}
+{{ if hasKey . "machine" }}{{ $machineKey = .machine }}{{ end -}}
+{{ $m := index .machines $machineKey -}}
+{{ if not $m }}{{ $m = index .machines "generic-linux" }}{{ end -}}
+
 echo "=========================================="
 echo "==> Chezmoi: Enabling intentional services"
+echo "==> Machine: {{ $machineKey }}"
 echo "=========================================="
 
 SERVICES=(
     "ananicy-cpp.service"
-    "asusd.service"
-    "supergfxd.service"
-    "bluetooth.service"
     "fstrim.timer"
-    "snapper-cleanup.timer"
 )
+
+{{ if $m.features.bluetooth -}}
+SERVICES+=("bluetooth.service")
+{{ end -}}
+
+{{ if $m.features.asus_ctl -}}
+SERVICES+=("asusd.service" "supergfxd.service")
+{{ end -}}
+
+{{ if $m.features.snapper -}}
+SERVICES+=("snapper-cleanup.timer")
+{{ end }}
 
 for svc in "${SERVICES[@]}"; do
     if systemctl list-unit-files "$svc" &>/dev/null; then
@@ -22,6 +36,7 @@ for svc in "${SERVICES[@]}"; do
     fi
 done
 
+{{ if $m.features.asus_ctl -}}
 # Hardware Tuning via asusctl if available
 if command -v asusctl >/dev/null 2>&1; then
     echo "Configuring ASUS battery limit to 60%..."
@@ -29,13 +44,17 @@ if command -v asusctl >/dev/null 2>&1; then
     echo "Setting ASUS active profile to Balanced..."
     asusctl profile set Balanced 2>/dev/null || true
 fi
+{{ end }}
 
-# Enable user services if user systemd session is active
-USER_SERVICES=(
-    "xremap.service"
-    "hypridle.service"
-    "mako.service"
-)
+USER_SERVICES=()
+
+{{ if eq $m.providers.xremap "user-service" -}}
+USER_SERVICES+=("xremap.service")
+{{ end -}}
+
+{{ if $m.features.hyprland -}}
+USER_SERVICES+=("hypridle.service" "mako.service")
+{{ end }}
 
 for usvc in "${USER_SERVICES[@]}"; do
     if systemctl --user list-unit-files "$usvc" &>/dev/null; then
@@ -45,4 +64,4 @@ for usvc in "${USER_SERVICES[@]}"; do
 done
 
 echo "==> Service enablement complete."
-{{- end }}
+{{ end }}
