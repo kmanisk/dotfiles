@@ -72,6 +72,37 @@ def trust_device(object_path, dev_name):
     except Exception as e:
         print(f"[-] Failed to trust device {object_path}: {e}", file=sys.stderr)
 
+def auto_connect_trusted_audio():
+    """On boot, connect all paired+trusted Bluetooth audio devices that are in range."""
+    try:
+        om = Gio.DBusProxy.new_sync(
+            bus,
+            Gio.DBusProxyFlags.NONE,
+            None,
+            'org.bluez',
+            '/',
+            'org.freedesktop.DBus.ObjectManager',
+            None
+        )
+        objects = om.GetManagedObjects()
+        for path, ifaces in objects.items():
+            if 'org.bluez.Device1' in ifaces:
+                props = ifaces['org.bluez.Device1']
+                paired   = props.get('Paired', False)
+                trusted  = props.get('Trusted', False)
+                connected = props.get('Connected', False)
+                uuids    = props.get('UUIDs', [])
+                name     = props.get('Name', 'Unknown')
+                is_audio = any("110b" in u.lower() or "110a" in u.lower() for u in uuids)
+                if paired and trusted and not connected and is_audio:
+                    mac = path.split("dev_")[-1].replace("_", ":")
+                    print(f"[+] Boot auto-connect: {name} ({mac})")
+                    subprocess.Popen(["bluetoothctl", "connect", mac],
+                                     stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    except Exception as e:
+        print(f"Error in auto_connect_trusted_audio: {e}", file=sys.stderr)
+    return False  # GLib.timeout_add: do not repeat
+
 def check_all_devices():
     try:
         om = Gio.DBusProxy.new_sync(
@@ -94,6 +125,7 @@ def check_all_devices():
                     trust_device(path, name)
     except Exception as e:
         print(f"Error checking devices: {e}", file=sys.stderr)
+
 
 def on_signal(connection, sender_name, object_path, interface_name, signal_name, parameters, user_data):
     if interface_name == 'org.freedesktop.DBus.Properties' and signal_name == 'PropertiesChanged':
@@ -154,6 +186,9 @@ def on_signal(connection, sender_name, object_path, interface_name, signal_name,
 
 def main():
     check_all_devices()
+    # After 5s, attempt to reconnect any trusted audio devices not yet connected
+    # (handles boot scenario where BlueZ starts before headset radio wakes up)
+    GLib.timeout_add(5000, auto_connect_trusted_audio)
     bus.signal_subscribe(
         'org.bluez',
         None,
