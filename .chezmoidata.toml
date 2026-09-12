@@ -4,8 +4,6 @@
 # ==============================================================================
 
 [defaults]
-email = "mathewmanisk699@gmail.com"
-name = "Kumar Manisk"
 profile = "full"
 isWork = false
 
@@ -14,13 +12,52 @@ linux = "asus-tuf-f16"
 windows = "windows-workstation"
 
 # ------------------------------------------------------------------------------
-# Machine: ASUS TUF Gaming F16 (FX608J) - Primary Linux Gaming Laptop
+# 1. Composable Hardware Profiles
 # ------------------------------------------------------------------------------
+[hardware.asus-tuf-f16]
+type = "laptop"
+chassis = "asus-tuf-f16"
+cpu = "Intel Core i5-13450HX (6P + 4E, 16 Threads)"
+igpu = "Intel Raptor Lake-S UHD Graphics (iHD)"
+dgpu = "NVIDIA GeForce RTX 5050 Mobile (GB207M, 8GB GDDR6)"
+gpu_strategy = "hybrid-optimus-d3cold"
+display_primary = "eDP-1"
+display_resolution = "1920x1200@165Hz"
+display_scale = "1.0"
+storage_type = "nvme"
+filesystem = "btrfs"
+
+[hardware.custom-desktop]
+type = "desktop"
+chassis = "custom-pc"
+cpu = "x86_64"
+gpu_strategy = "direct"
+display_primary = "DISPLAY1"
+display_resolution = "1920x1080@144Hz"
+display_scale = "1.0"
+storage_type = "nvme"
+filesystem = "ntfs"
+
+[hardware.generic-laptop]
+type = "generic"
+gpu_strategy = "integrated"
+display_primary = "eDP-1"
+display_resolution = "1920x1080@60Hz"
+display_scale = "1.0"
+storage_type = "ssd"
+filesystem = "ext4"
+
+# ------------------------------------------------------------------------------
+# 2. Composable Machine Definitions
+# ------------------------------------------------------------------------------
+
+# 1. Primary Linux Gaming Laptop (ASUS TUF Gaming F16 FX608J)
 [machines.asus-tuf-f16]
 description = "ASUS TUF Gaming F16 (FX608J) - Primary Linux Gaming Laptop"
 os = "linux"
 distribution = "cachyos"
 hostname = "maniskg"
+hardware_profile = "asus-tuf-f16"
 
 [machines.asus-tuf-f16.hardware]
 type = "laptop"
@@ -37,9 +74,10 @@ filesystem = "btrfs"
 
 [machines.asus-tuf-f16.providers]
 package_manager = "paru"
-greeter = "ly"
-login_mode = "getty-tty1-autologin"
-bootloader = "grub"
+greeter = "none"                       # Headless: no GUI display manager active
+login_mode = "getty-tty1-autologin"    # Active: headless systemd TTY1 getty autologin -> start-hyprland
+fallback_greeter = "ly"                # Cold standby: Ly greeter config & service preserved in backups/
+bootloader = "grub"                    # Declarative /etc/default/grub (NVRAM/ESP installation separate)
 network = "networkmanager"
 dns = "systemd-resolved"
 xremap = "user-service"
@@ -55,14 +93,13 @@ snapper = true
 hdr = false
 tearing_opt = true
 
-# ------------------------------------------------------------------------------
-# Machine: Windows Workstation (Windows 11)
-# ------------------------------------------------------------------------------
+# 2. Primary Windows Workstation Environment
 [machines.windows-workstation]
 description = "Windows 11 Gaming & Workstation Environment"
 os = "windows"
 distribution = "windows11"
 hostname = "manisk-win"
+hardware_profile = "custom-desktop"
 
 [machines.windows-workstation.hardware]
 type = "desktop"
@@ -95,14 +132,13 @@ snapper = false
 hdr = false
 tearing_opt = false
 
-# ------------------------------------------------------------------------------
-# Machine: Generic Linux Fallback
-# ------------------------------------------------------------------------------
+# 3. Generic Portable Linux Fallback
 [machines.generic-linux]
 description = "Generic Linux Workstation"
 os = "linux"
 distribution = "arch"
 hostname = "archlinux"
+hardware_profile = "generic-laptop"
 
 [machines.generic-linux.hardware]
 type = "generic"
@@ -115,8 +151,9 @@ filesystem = "ext4"
 
 [machines.generic-linux.providers]
 package_manager = "pacman"
-greeter = "ly"
+greeter = "none"
 login_mode = "native"
+fallback_greeter = "ly"
 bootloader = "grub"
 network = "networkmanager"
 dns = "systemd-resolved"

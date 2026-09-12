@@ -8,8 +8,8 @@ encryption = "age"
 {{-   $defaultMachine = "windows-workstation" -}}
 {{- end -}}
 {{- $machine := promptStringOnce . "machine" "Machine identifier (e.g. asus-tuf-f16, windows-workstation, generic-linux)" $defaultMachine -}}
-{{- $email := promptStringOnce . "email" "Git email address" "mathewmanisk699@gmail.com" -}}
-{{- $name := promptStringOnce . "name" "Git user name" "Kumar Manisk" -}}
+{{- $email := promptStringOnce . "email" "Git email address" "user@example.com" -}}
+{{- $name := promptStringOnce . "name" "Git user name" "Workstation User" -}}
 {{- $profile := promptChoiceOnce . "profile" "Installation profile (mini/full)" (list "mini" "full") "full" -}}
 {{- $isWork := promptBoolOnce . "isWork" "Is this a work machine" false -}}
 

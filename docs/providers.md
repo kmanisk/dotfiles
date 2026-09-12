@@ -1,38 +1,45 @@
-# Provider Abstraction Matrix
+# Provider Abstraction Matrix & Reconciliation Contracts
 
-This repository abstracts system components behind provider interfaces, allowing the same machine definition logic to configure different backend tools.
+This repository abstracts system components behind provider interfaces, allowing the same machine definition logic to configure different backend tools and dynamically reconcile them.
 
 ---
 
 ## Provider Matrix
 
-| Subsystem | Supported Providers | Machine Target | Notes |
+| Subsystem | Supported Providers | Active Machine (`asus-tuf-f16`) | Notes |
 |---|---|---|---|
-| **Package Manager** | `paru`, `yay`, `pacman`, `scoop`, `winget` | Linux / Windows | Resolved in `run_onchange_install-packages.sh.tmpl` |
-| **Greeter / Display Manager** | `ly`, `sddm`, `greetd`, `windows-logon`, `none` | Linux / Windows | Ly preserved in `backups/linux/greeters/ly/` |
-| **Login Mode** | `getty-tty1-autologin`, `native` | Linux | Headless TTY1 autologin saves ~150-200MB RAM |
-| **Bootloader** | `grub`, `systemd-boot`, `windows-boot-manager` | Linux / Windows | Dual-boot NVMe setup backed up in `backups/` |
-| **Network Management** | `networkmanager`, `systemd-networkd`, `windows-net` | Linux / Windows | NetworkManager active on Arch |
-| **DNS Resolution** | `systemd-resolved`, `dnsmasq`, `windows-dns` | Linux / Windows | Caching stub resolver at 127.0.0.53 |
-| **Key Remapping** | `user-service`, `system-service`, `none` | Linux | Managed by `xremap-hypr-bin` via user systemd unit |
-| **GPU Strategy** | `hybrid-optimus-d3cold`, `direct`, `intel-only` | Linux / Windows | Intel iGPU session + NVIDIA D3cold suspend |
-| **Audio Engine** | `pipewire-rnnoise`, `pipewire-standard`, `wasapi` | Linux / Windows | Dusky Audio Studio headless PipeWire filter |
+| **Package Manager** | `paru`, `yay`, `pacman`, `scoop` | `paru` | Modeled as safe bash command arrays; checks binary executable |
+| **Login Mode** | `getty-tty1-autologin`, `native` | `getty-tty1-autologin` | Zero-RAM headless autologin on TTY1 -> `start-hyprland` |
+| **Greeter / Display Mgr** | `none`, `ly`, `sddm`, `windows-logon` | `none` (active) | `fallback_greeter = "ly"` preserved in `backups/linux/greeters/ly/` |
+| **Bootloader** | `grub`, `systemd-boot`, `windows-boot-manager` | `grub` | Declarative `/etc/default/grub` only; NVRAM mutations isolated |
+| **Key Remapping** | `user-service`, `none` | `user-service` | Managed by `xremap-hypr-bin` via user systemd service |
+| **GPU Strategy** | `hybrid-optimus-d3cold`, `direct`, `intel-only` | `hybrid-optimus-d3cold` | Intel iGPU desktop session + NVIDIA RTX 5050 D3cold offload |
+| **Audio Engine** | `pipewire-rnnoise`, `pipewire-standard`, `wasapi` | `pipewire-rnnoise` | Headless Dusky Audio Studio RNNoise DSP background daemon |
 
 ---
 
-## Provider Contracts
+## Provider Reconciliation Contracts
 
-### 1. Package Manager Provider
-- Must support automated non-interactive batch installation (`--needed --noconfirm` or equivalent).
-- Must respect pre-update safety snapshots on Btrfs systems.
+Providers in this repository are managed by `run_onchange_reconcile-services.sh.tmpl` and follow a strict **bidirectional reconciliation contract**:
 
-### 2. GPU Strategy Provider
-- On `hybrid-optimus-d3cold`:
-  - Compositor and session MUST run on the Intel iGPU (`LIBVA_DRIVER_NAME=iHD`).
-  - dGPU stays in `suspended` runtime state (0 W) until explicitly offloaded via `prime-run` or `gamemoderun`.
-  - Multi-GPU explicit fence race condition avoided via `AQ_MGPU_NO_EXPLICIT=1` in `gpu.lua`.
+### 1. Greeter & Autologin Contract
+- **Active State (`login_mode = "getty-tty1-autologin"`, `greeter = "none"`):**
+  - Configures `/etc/systemd/system/getty@tty1.service.d/override.conf` for passwordless TTY1 autologin.
+  - Automatically ensures `ly.service` is stopped and disabled to prevent TTY1 contention.
+- **Standby State (`fallback_greeter = "ly"`):**
+  - Full Ly configuration, PAM definition, and unit file are archived in `backups/linux/greeters/ly/`.
+  - Switching to `greeter = "ly"` automatically removes the getty override and enables `ly.service`.
 
-### 3. Audio Provider
-- On `pipewire-rnnoise`:
-  - Must run headlessly in background without requiring open GUI windows.
-  - Low-latency real-time thread priority configured via `realtime-privileges`.
+### 2. Browser Keyring & Password Store Isolation
+- **The Challenge:** Under headless passwordless autologin, PAM does not receive a password, leaving the GNOME Keyring (`login.keyring`) locked (`Locked = true`). Standard Chromium/Brave browsers attempt to query Secret Service, causing authentication prompts or loss of saved sessions/cookies across reboots.
+- **The Solution:** In `dot_config/brave-flags.conf` and `dot_config/brave-origin-flags.conf`, `--password-store=basic` is explicitly configured. This directs the browser to use its local encryption store, decoupling session persistence from locked PAM keyrings.
+- **Verification:** Verified by `scripts/verify/reproducibility.sh`.
+
+### 3. Package Manager Provider Contract
+- Safe array invocation: Package commands are declared as bash arrays (`PKG_INSTALL_CMD=(paru -S --needed --noconfirm)`), avoiding fragile shell word splitting.
+- Execution checks test the actual executable binary name (`command -v paru`), safely supporting multi-word commands like `sudo pacman`.
+- Snapshot hook: Before batch installation, Snapper pre-update snapshots are triggered if root Btrfs is present.
+
+### 4. Bootloader Configuration vs. Firmware Boundary
+- **What Chezmoi Manages:** Declarative configuration files (`/etc/default/grub`, kernel parameters, theme settings).
+- **What Chezmoi Does Not Manage:** Firmware NVRAM modifications (`efibootmgr`, `grub-install`). These are strictly one-time installation actions executed during initial OS bootstrap.

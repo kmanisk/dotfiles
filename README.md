@@ -46,9 +46,29 @@ Every configuration artifact is evaluated and composed through six distinct laye
 
 | Machine Identifier | Operating System | Chassis / Purpose | Key Providers & Features |
 |---|---|---|---|
-| **`asus-tuf-f16`** | CachyOS Linux (x86-64-v3) | ASUS TUF Gaming F16 Laptop | Hybrid Optimus (iGPU + RTX 5050), Paru, Headless Getty Autologin, Grub, PipeWire RNNoise DSP, Gaming |
+| **`asus-tuf-f16`** | CachyOS Linux (x86-64-v3) | ASUS TUF Gaming F16 Laptop | Hybrid Optimus (iGPU + RTX 5050), Paru, Headless Getty Autologin (Ly standby), Grub, PipeWire RNNoise DSP, Gaming |
 | **`windows-workstation`** | Windows 11 Pro | Custom Gaming / Dev Workstation | Scoop, Windows Boot Manager, Wasapi, Gaming, Development |
 | **`generic-linux`** | Arch Linux / Derivative | Generic Portable Fallback | Pacman, Grub, NetworkManager, Hyprland |
+
+---
+
+## Dynamic State Reconciliation
+
+Unlike systems with one-time setup scripts, this repository uses **declarative state reconcilers** (`run_onchange_reconcile-services.sh.tmpl` and `run_onchange_reconcile-packages.sh.tmpl`). When a provider or feature is changed:
+- **Desired state is activated**: Selected packages and services are installed and enabled.
+- **Retired state is cleaned up**: Disabled services (e.g. switching greeters or disabling Bluetooth) are automatically stopped, disabled, and conflicting overrides removed.
+
+---
+
+## Verification Tooling
+
+The repository provides two independent automated test suites in `scripts/verify/`:
+
+| Suite | Runner Script | Scope | Checks |
+|---|---|---|---|
+| **Declarative Architecture & Reproducibility** | [`scripts/verify/reproducibility.sh`](scripts/verify/reproducibility.sh) | Machine data model, template compilation, package closure, `.chezmoiignore` directory isolation, browser keyring autologin protection, secret scanning | 35/35 Passing |
+| **Live Host Runtime Health** | [`scripts/verify/health.sh`](scripts/verify/health.sh) | Active drivers (iGPU + RTX 5050 D3cold), PipeWire/WirePlumber, headless RNNoise DSP daemon, systemd timers, ASUS WMI | 18/18 Passing |
+| **Master Runner** | [`scripts/verify/system.sh`](scripts/verify/system.sh) | Executes both suites sequentially | 53/53 Passing |
 
 ---
 
@@ -66,7 +86,7 @@ cp /path/to/key.txt ~/.config/chezmoi/key.txt && chmod 600 ~/.config/chezmoi/key
 # 3. Initialize and apply
 chezmoi init --apply https://github.com/kmanisk/dotfiles.git
 
-# 4. Verify system health
+# 4. Verify system reproducibility and host health
 ~/.local/share/chezmoi/scripts/verify/system.sh
 ```
 
@@ -81,26 +101,13 @@ iwr -useb https://raw.githubusercontent.com/kmanisk/dotfiles/master/scripts/boot
 
 ---
 
-## Daily Operations
-
-| Command | Description |
-|---|---|
-| `chezmoi diff` | Show pending differences against local machine state |
-| `chezmoi apply` | Safely apply repository configuration to host |
-| `chezmoi update` | Pull remote git updates and apply cleanly |
-| `chezmoi add <path>` | Track a new configuration file |
-| `chezmoi add --encrypt <path>` | Track a file with Age ASCII-armored encryption |
-| `~/.local/share/chezmoi/scripts/verify/system.sh` | Run automated 18-point system health verification |
-| `~/.local/share/chezmoi/scripts/audit/system-report.sh` | Generate comprehensive, sanitized hardware & service report |
-
----
-
 ## Documentation Index
 
-- [Architecture & Layer Design](docs/architecture.md): In-depth breakdown of the 6-layer model.
+- [Architecture & Layer Design](docs/architecture.md): The 6-layer model, reconciliation contracts, and firmware boundaries.
 - [Bootstrap Guide](docs/bootstrap.md): Complete setup procedures for fresh machines.
 - [Machine Profiles](docs/machines.md): Hardware specifications and instructions for adding new devices.
-- [Provider Matrix](docs/providers.md): Abstraction matrix for package managers, greeters, bootloaders, and audio.
+- [Provider Matrix](docs/providers.md): Abstraction matrix, browser keyring autologin isolation, and contracts.
+- [Package Manifests](packages/README.md): Declarative package sets vs. audit snapshots.
 - [Feature Flags](docs/features.md): Modular flags for gaming, development, ASUS control, and Snapper.
-- [Disaster Recovery](docs/recovery.md): Restoring Ly display manager, rolling back Btrfs snapshots, and recovering configs.
+- [Disaster Recovery](docs/recovery.md): Restoring Ly display manager fallback, rolling back Btrfs snapshots, and recovering configs.
 - [Hardware Audit & Platform Quirks](docs/audit.md): Hybrid GPU power management, Mesa explicit sync workarounds, and telemetry.
