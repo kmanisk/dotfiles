@@ -42,9 +42,7 @@ bindsym $mod+Mod1+2 exec blueman-manager
 bindsym $mod+Mod1+3 exec pavucontrol
 bindsym $mod+Shift+s exec --no-startup-id ~/.local/bin/screenshot-region
 bindsym $mod+Control+p exec --no-startup-id ~/.local/bin/toggle-audio-sink
-bindsym Control+Shift+n exec --no-startup-id ~/.local/bin/toggle-nightlight
 bindsym Mod1+Shift+n exec --no-startup-id ~/.local/bin/toggle-nightlight
-bindsym $mod+Shift+n exec --no-startup-id ~/.local/bin/toggle-nightlight
 
 # Alt + Shift + { (increase / cooler) & Alt + Shift + " (decrease / warmer)
 bindsym Mod1+Shift+braceleft exec --no-startup-id ~/.local/bin/adjust-nightlight +250
@@ -140,11 +138,11 @@ bindsym $mod+i workspace number $ws2
 bindsym $mod+o workspace number $ws3
 bindsym $mod+p workspace number $ws4
 
-# Top-Row Right-Hand Move Window (Windows + Shift + u i o p)
-bindsym $mod+Shift+u move container to workspace number $ws1
-bindsym $mod+Shift+i move container to workspace number $ws2
-bindsym $mod+Shift+o move container to workspace number $ws3
-bindsym $mod+Shift+p move container to workspace number $ws4
+# Top-Row Right-Hand Move Window + follow it (Windows + Shift + u i o p)
+bindsym $mod+Shift+u move container to workspace number $ws1; workspace number $ws1
+bindsym $mod+Shift+i move container to workspace number $ws2; workspace number $ws2
+bindsym $mod+Shift+o move container to workspace number $ws3; workspace number $ws3
+bindsym $mod+Shift+p move container to workspace number $ws4; workspace number $ws4
 
 # Standard Number Workspace Switching (Windows + 1..0)
 bindsym $mod+1 workspace number $ws1

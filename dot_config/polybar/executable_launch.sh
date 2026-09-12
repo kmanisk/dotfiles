@@ -38,7 +38,6 @@ for _ in $(seq 1 20); do
     sleep 0.05
 done
 
-# Check saved state: if previously hidden and not forced show, hide bar
-if [ -f "$STATE_FILE" ] && [ "$(cat "$STATE_FILE" 2>/dev/null)" = "hidden" ] && [ "$1" != "--show" ]; then
-    polybar-msg cmd hide >/dev/null 2>&1
-fi
+# Enforce persisted visibility via the single authority (hidden is absolute).
+# bar-apply retries the hide IPC so slow starts can't leave the bar visible.
+"$HOME/.local/bin/bar-apply" >/dev/null 2>&1

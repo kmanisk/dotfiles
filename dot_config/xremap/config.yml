@@ -9,13 +9,13 @@ modmap:
         alone_timeout_millis: 200
 
 keymap:
-  # --- Kitty-specific overrides (must come BEFORE general CapsLock layer) ---
-  - name: Kitty overrides
+  # --- Alacritty-specific overrides (must come BEFORE general CapsLock layer) ---
+  - name: Alacritty overrides
     application:
-      only: ["kitty"]
+      only: ["Alacritty"]
     remap:
-      Alt-c: C-S-c # Alt+C → Ctrl+Shift+C (copy in kitty)
-      CapsLock-DOT: C-S-v # CapsLock+. → Alt+Shift+V (paste in kitty)
+      Alt-c: C-S-c # Alt+C → Ctrl+Shift+C (copy in Alacritty)
+      CapsLock-DOT: C-S-v # CapsLock+. → Ctrl+Shift+V (paste in Alacritty)
 
   # --- CapsLock layer ---
   - name: CapsLock layer

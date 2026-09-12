@@ -36,15 +36,21 @@ for arg in "$@"; do
         random)
             CATEGORY="random"
             ;;
+        blxss|ambient)
+            CATEGORY="blxss"
+            ;;
     esac
 done
 
-CATEGORIES=("creepy" "gaming")
+CATEGORIES=("blxss")
 if [[ -z "$CATEGORY" || "$CATEGORY" == "random" ]]; then
     CATEGORY="${CATEGORIES[$RANDOM % ${#CATEGORIES[@]}]}"
 fi
 
 case "$CATEGORY" in
+    blxss)
+        DISPLAY_NAME="blxss ambient"
+        ;;
     creepy)
         DISPLAY_NAME="Creepy & Dark"
         ;;
