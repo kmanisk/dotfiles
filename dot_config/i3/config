@@ -5,7 +5,7 @@ floating_modifier $mod
 # ==============================================================================
 # TERMINAL & APPLICATION LAUNCHERS
 # ==============================================================================
-set $term kitty
+set $term alacritty
 bindsym Mod1+Return exec $term
 bindsym $mod+Return exec $term
 
@@ -28,8 +28,8 @@ bindsym $mod+e exec thunar
 # Spotify (Windows + m)
 bindsym $mod+m exec spotify
 
-# Steam (Windows + Shift + g) - switches to dedicated Workspace 5 and launches Steam
-bindsym $mod+Shift+g workspace number $ws5; exec steam
+# Steam (Alt + Shift + s) - gaming workspace 5; starts Steam only if not running
+bindsym Mod1+Shift+s exec --no-startup-id ~/.local/bin/steam-workspace
 
 # Task Manager (TMOG in floating window)
 bindsym Control+Shift+Escape exec --no-startup-id /usr/bin/TaskManagerOG
@@ -43,7 +43,16 @@ bindsym $mod+Mod1+3 exec pavucontrol
 bindsym $mod+Shift+s exec --no-startup-id ~/.local/bin/screenshot-region
 bindsym $mod+Control+p exec --no-startup-id ~/.local/bin/toggle-audio-sink
 bindsym Control+Shift+n exec --no-startup-id ~/.local/bin/toggle-nightlight
+bindsym Mod1+Shift+n exec --no-startup-id ~/.local/bin/toggle-nightlight
 bindsym $mod+Shift+n exec --no-startup-id ~/.local/bin/toggle-nightlight
+
+# Alt + Shift + { (increase / cooler) & Alt + Shift + " (decrease / warmer)
+bindsym Mod1+Shift+braceleft exec --no-startup-id ~/.local/bin/adjust-nightlight +250
+bindsym Mod1+Shift+bracketleft exec --no-startup-id ~/.local/bin/adjust-nightlight +250
+bindsym Mod1+Shift+quotedbl exec --no-startup-id ~/.local/bin/adjust-nightlight -250
+bindsym Mod1+Shift+apostrophe exec --no-startup-id ~/.local/bin/adjust-nightlight -250
+
+# Ctrl + Shift + { & Ctrl + Shift + "
 bindsym Control+Shift+braceleft exec --no-startup-id ~/.local/bin/adjust-nightlight +250
 bindsym Control+Shift+bracketleft exec --no-startup-id ~/.local/bin/adjust-nightlight +250
 bindsym Control+Shift+quotedbl exec --no-startup-id ~/.local/bin/adjust-nightlight -250
@@ -181,9 +190,10 @@ bindsym $mod+Shift+period move container to workspace next; workspace next
 # Back and Forth with last workspace
 bindsym $mod+Tab workspace back_and_forth
 
-# Scratchpad (unbound for now - use `i3-msg 'scratchpad show'` manually)
-#bindsym $mod+Shift+y move scratchpad
-#bindsym $mod+y scratchpad show
+# Scratchpad dropdowns - toggle scripts spawn the window if it was closed,
+# so the keys never go silently dead (plain `scratchpad show` can't do that)
+bindsym Control+space exec --no-startup-id ~/.local/bin/scratch-toggle term
+bindsym $mod+n exec --no-startup-id ~/.local/bin/scratch-toggle notes
 
 # ==============================================================================
 # SESSION & CONFIG RELOAD (with i3-resurrect session manager)
@@ -229,7 +239,7 @@ client.background       #282828
 ########################################################################
 ########################################################################
 
-exec --no-startup-id "i3-msg 'workspace 1; exec kitty'"
+exec --no-startup-id "i3-msg 'workspace 1; exec alacritty'"
 
 ########################################################################
 ########################################################################
@@ -253,8 +263,10 @@ for_window [class="(?i)^btop$"] floating enable, resize set 1150 720
 for_window [class="(?i)^Task Manager TMOG$"] floating enable, resize set 1200 750, move position center
 for_window [instance="(?i)^AppRun\.wrapped$"] floating enable, resize set 1200 750, move position center
 for_window [instance="(?i)^pkg-float$"] floating enable, resize set 1250 780, move position center
-# Alacritty dropdown scratch terminal - auto-hidden, show via `scratchpad show`
-for_window [instance="scratch-term"] floating enable, resize set 1200 700, move position center, move to scratchpad
+# Alacritty dropdown scratch terminal - auto-hidden, toggle via Ctrl+Space
+for_window [instance="scratch-term"] floating enable, resize set 1700 1000, move position center, move to scratchpad
+# Notes scratchpad - nvim with notes.md, auto-hidden, toggle via Win+n
+for_window [instance="scratch-notes"] floating enable, resize set 1400 900, move position center, move to scratchpad
 # Hide outer edge borders when tabs/windows fill the edge
 hide_edge_borders smart
 # Set Workspace 2 and 5 to Tabbed mode by default
@@ -353,6 +365,8 @@ exec --no-startup-id ~/.local/bin/auto-nightlight
 exec --no-startup-id blueman-applet
 # Alacritty scratch terminal - spawns once on login straight into scratchpad
 exec --no-startup-id alacritty --class Alacritty,scratch-term
+# Notes scratchpad - nvim with notes.md, spawns once on login straight into scratchpad
+exec --no-startup-id alacritty --class Alacritty,scratch-notes -e nvim /home/manisk/notes.md
 # Autotiling: automatically switch horizontal/vertical splits based on focused window dimensions
 exec_always --no-startup-id sh -c 'pkill -x autotiling; sleep 0.2; exec autotiling'
 # CS2 Window Restack Hook: forces CS2 to top of stacking order on workspace focus
