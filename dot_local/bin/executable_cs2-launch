@@ -10,14 +10,13 @@
 # - Power: ASUS Balanced mode
 # ==============================================================================
 
-# 1. Polybar & Display cleanup handler
+# 1. Polybar & Display cleanup handler on exit
 cleanup() {
     trap - EXIT INT TERM HUP
     echo "==> Restoring native display resolution (1920x1200 @ 165Hz)..."
     xrandr --output eDP-1 --set "scaling mode" "Full aspect" 2>/dev/null || true
-    xrandr --output eDP-1 --mode 1920x1200 --rate 165.00 2>/dev/null || xrandr --output eDP-1 --auto 2>/dev/null || true
+    xrandr --output eDP-1 --mode "1920x1200" --rate 165.00 2>/dev/null || xrandr --output eDP-1 --auto 2>/dev/null || true
     sh "$HOME/.fehbg" 2>/dev/null || true
-    i3-msg restart 2>/dev/null || true
     polybar-msg cmd show 2>/dev/null || true
 }
 trap cleanup EXIT INT TERM HUP
@@ -25,94 +24,35 @@ trap cleanup EXIT INT TERM HUP
 # 2. Hide status bar
 polybar-msg cmd hide 2>/dev/null || true
 
-# 2.5 Ensure competitive 1344x1008 video config exists even after game reinstall
-CS2_USER_CFG_DIR=$(find "$HOME/.local/share/Steam/userdata" -maxdepth 5 -type d -path "*/730/local/cfg" 2>/dev/null | head -n1)
-if [ -n "$CS2_USER_CFG_DIR" ] && [ -f "$HOME/.config/cs2/cs2_video.txt" ]; then
-    if [ ! -f "$CS2_USER_CFG_DIR/cs2_video.txt" ]; then
-        echo "==> Restoring backed-up competitive cs2_video.txt..."
-        cp "$HOME/.config/cs2/cs2_video.txt" "$CS2_USER_CFG_DIR/cs2_video.txt"
-    fi
-fi
+# 3. Set Intel display controller hardware scaling to Full (Zero-lag stretched 4:3)
+xrandr --output eDP-1 --set "scaling mode" "Full" 2>/dev/null || true
 
-# 3. Set ASUS power profile to Balanced as requested
-asusctl profile set Balanced >/dev/null 2>&1 || true
-
-# 4. Audio latency optimization: stream unbuffered 30ms frames and ensure SBC-XQ codec
-export SDL_AUDIO_DRIVER=pulseaudio
-export PULSE_LATENCY_MSEC=30
-BT_CARD=$(pactl list cards short 2>/dev/null | grep bluez_card | awk '{print $2}' | head -n1)
-if [ -n "$BT_CARD" ]; then
-    pactl set-card-profile "$BT_CARD" a2dp-sink-sbc_xq 2>/dev/null || true
-fi
-
-# 5. MangoHud Overlay Support (MANGOHUD=1)
-if [ "${MANGOHUD:-0}" = "1" ] || [ "${ENABLE_MANGOHUD:-0}" = "1" ]; then
-    MANGOHUD_WRAPPER="mangohud"
-else
-    MANGOHUD_WRAPPER=""
-fi
-
-# 6. Resolution Mode Selection: Defaults to 1344x1008 stretched (1008p), set CS2_STRETCH=0 for native
-TARGET_RES="${CS2_RES:-1344x1008}"
-if [ "${CS2_STRETCH:-1}" = "0" ]; then
-    TARGET_RES="native"
-fi
-
+# 4. Switch to 4:3 165Hz mode
+TARGET_RES="${CS2_RES:-1440x1080}"
 case "$TARGET_RES" in
     1344|1344x1008)
-        xrandr --output eDP-1 --set "scaling mode" "Full" 2>/dev/null || true
         xrandr --output eDP-1 --mode "1344x1008_165.00" --rate 164.89 2>/dev/null || true
-        RES_ARGS=(-w 1344 -h 1008)
         ;;
     1280|1280x960)
-        xrandr --output eDP-1 --set "scaling mode" "Full" 2>/dev/null || true
         xrandr --output eDP-1 --mode "1280x960_165.00" --rate 164.80 2>/dev/null || true
-        RES_ARGS=(-w 1280 -h 960)
         ;;
     1024|1024x768)
-        xrandr --output eDP-1 --set "scaling mode" "Full" 2>/dev/null || true
         xrandr --output eDP-1 --mode "1024x768_165.00" --rate 164.78 2>/dev/null || true
-        RES_ARGS=(-w 1024 -h 768)
-        ;;
-    1440|1440x1080)
-        xrandr --output eDP-1 --set "scaling mode" "Full" 2>/dev/null || true
-        xrandr --output eDP-1 --mode "1440x1080" --rate 164.85 2>/dev/null || true
-        RES_ARGS=(-w 1440 -h 1080)
         ;;
     native|1920|1920x1200)
-        xrandr --output eDP-1 --mode 1920x1200 --rate 165.00 2>/dev/null || true
-        RES_ARGS=(-w 1920 -h 1200)
+        xrandr --output eDP-1 --mode "1920x1200" --rate 165.00 2>/dev/null || true
         ;;
-    *)
-        xrandr --output eDP-1 --set "scaling mode" "Full" 2>/dev/null || true
-        xrandr --output eDP-1 --mode "1344x1008_165.00" --rate 164.89 2>/dev/null || true
-        RES_ARGS=(-w 1344 -h 1008)
+    1440|1440x1080|*)
+        xrandr --output eDP-1 --mode "1440x1080" --rate 164.85 2>/dev/null || xrandr --output eDP-1 --mode "1440x1080_165.00" 2>/dev/null || true
         ;;
 esac
 
-# Fallback to local game binary if invoked without Steam %command% arguments
+# 5. Fallback to local game binary if invoked without Steam %command% arguments
 if [ $# -eq 0 ] || [[ "$1" == -* ]]; then
     if [ -f "$HOME/.local/share/Steam/steamapps/common/Counter-Strike Global Offensive/game/cs2.sh" ]; then
         set -- "$HOME/.local/share/Steam/steamapps/common/Counter-Strike Global Offensive/game/cs2.sh" "$@"
     fi
 fi
 
-# 7. Launch CS2 natively on the dedicated NVIDIA GPU (No Gamescope overhead)
-if [ "${USE_GAMESCOPE:-0}" = "1" ] && command -v gamescope >/dev/null 2>&1; then
-    env ENABLE_GAMESCOPE_WSI=0 \
-      taskset -c 0-11 gamescope \
-      -w 1440 -h 1080 -W 1920 -H 1200 -r 165 -o 165 -f -S stretch \
-      --force-grab-cursor --immediate-flips \
-      -- gamemoderun env __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia __VK_LAYER_NV_optimus=NVIDIA_only \
-      $MANGOHUD_WRAPPER "$@" -fullscreen -novid -nojoy +fps_max 0 +fps_max_ui 0
-    GAME_EXIT=$?
-else
-    taskset -c 0-11 gamemoderun env \
-      __NV_PRIME_RENDER_OFFLOAD=1 \
-      __GLX_VENDOR_LIBRARY_NAME=nvidia \
-      __VK_LAYER_NV_optimus=NVIDIA_only \
-      $MANGOHUD_WRAPPER "$@" -fullscreen "${RES_ARGS[@]}" -vulkan -novid -nojoy +fps_max 0 +fps_max_ui 0
-    GAME_EXIT=$?
-fi
-
-exit ${GAME_EXIT:-0}
+# 6. Launch natively on dedicated NVIDIA RTX 5050 pinned to P-cores 0-11 (Zero Gamescope Lag)
+exec taskset -c 0-11 gamemoderun "$@" -novelocity -nojoy
