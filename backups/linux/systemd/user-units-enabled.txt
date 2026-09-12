@@ -1,0 +1,15 @@
+UNIT FILE                   STATE   PRESET
+dusky_clipboard.service     enabled enabled
+dusky_polkit.service        enabled enabled
+hypridle.service            enabled enabled
+mako.service                enabled enabled
+wireplumber.service         enabled enabled
+xdg-user-dirs.service       enabled enabled
+xremap.service              enabled enabled
+gnome-keyring-daemon.socket enabled enabled
+p11-kit-server.socket       enabled enabled
+pipewire-pulse.socket       enabled enabled
+pipewire.socket             enabled enabled
+nightlight-auto.timer       enabled enabled
+
+12 unit files listed.
