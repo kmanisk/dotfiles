@@ -3,53 +3,75 @@
 # Hyprland Night Light Controller using hyprsunset
 # Supports:
 #   hypr-nightlight toggle
+#   hypr-nightlight on
+#   hypr-nightlight off
 #   hypr-nightlight adjust <delta>  (e.g. +300 or -300)
 # ==============================================================================
 
 TEMP_FILE="$HOME/.config/nightlight_temp"
 STATE_FILE="/tmp/nightlight_state"
 
-# Default warm temperature (4200K)
 CURRENT_TEMP=4200
 if [[ -f "$TEMP_FILE" ]]; then
     CURRENT_TEMP=$(cat "$TEMP_FILE" 2>/dev/null)
 fi
+if [[ -z "$CURRENT_TEMP" || "$CURRENT_TEMP" -lt 2000 || "$CURRENT_TEMP" -gt 6500 ]]; then
+    CURRENT_TEMP=4200
+fi
 
 ACTION="${1:-toggle}"
 
-apply_temp() {
-    local target_temp="$1"
-    pkill -9 hyprsunset >/dev/null 2>&1
-    nohup hyprsunset -t "$target_temp" >/dev/null 2>&1 &
-    echo "$target_temp" > "$TEMP_FILE"
-    echo "on" > "$STATE_FILE"
-    PERCENT=$(( (6500 - target_temp) * 100 / 4500 ))
-    notify-send -t 1500 -i preferences-desktop-display "Night Light" "Active: ${target_temp}K"
+is_active() {
+    systemctl --user is-active --quiet hyprsunset.service || pgrep -x hyprsunset >/dev/null 2>&1
 }
 
 turn_off() {
-    pkill -9 hyprsunset >/dev/null 2>&1
+    systemctl --user stop hyprsunset.service 2>/dev/null || true
+    pkill -9 hyprsunset 2>/dev/null || true
     echo "off" > "$STATE_FILE"
     notify-send -t 1500 -i preferences-desktop-display "Night Light" "Disabled (6500K Neutral)"
 }
 
+turn_on_default() {
+    systemctl --user restart hyprsunset.service 2>/dev/null || true
+    echo "on" > "$STATE_FILE"
+    notify-send -t 1500 -i preferences-desktop-display "Night Light" "Active (Scheduled Warmth)"
+}
+
+apply_manual_temp() {
+    local target_temp="$1"
+    systemctl --user stop hyprsunset.service 2>/dev/null || true
+    pkill -9 hyprsunset 2>/dev/null || true
+    sleep 0.1
+    # Run via systemd-run or background
+    hyprsunset -t "$target_temp" </dev/null >/dev/null 2>&1 &
+    disown
+    echo "$target_temp" > "$TEMP_FILE"
+    echo "on" > "$STATE_FILE"
+    notify-send -t 1500 -i preferences-desktop-display "Night Light" "Active: ${target_temp}K"
+}
+
 case "$ACTION" in
     toggle)
-        if pgrep -x hyprsunset >/dev/null; then
+        if is_active; then
             turn_off
         else
-            apply_temp "$CURRENT_TEMP"
+            turn_on_default
         fi
+        ;;
+    on)
+        turn_on_default
+        ;;
+    off)
+        turn_off
         ;;
     adjust)
         DELTA="${2:-300}"
-        # If not currently running, turn it on at current temp first
-        if ! pgrep -x hyprsunset >/dev/null; then
-            apply_temp "$CURRENT_TEMP"
+        if ! is_active; then
+            turn_on_default
             exit 0
         fi
         NEW_TEMP=$(( CURRENT_TEMP + DELTA ))
-        # Clamp between 2000K (very warm) and 6500K (neutral)
         if (( NEW_TEMP > 6500 )); then
             NEW_TEMP=6500
         fi
@@ -60,13 +82,7 @@ case "$ACTION" in
         if (( CURRENT_TEMP >= 6500 )); then
             turn_off
         else
-            apply_temp "$CURRENT_TEMP"
+            apply_manual_temp "$CURRENT_TEMP"
         fi
-        ;;
-    off)
-        turn_off
-        ;;
-    on)
-        apply_temp "$CURRENT_TEMP"
         ;;
 esac

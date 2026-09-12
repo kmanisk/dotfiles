@@ -10,4 +10,7 @@ unset __GLX_VENDOR_LIBRARY_NAME
 unset LIBVA_DRIVER_NAME
 unset NVD_BACKEND
 
+# Force desktop UI / font scaling for 16" 1920x1200 Display (Hyprland 1.5x scale)
+export STEAM_FORCE_DESKTOPUI_SCALING="${STEAM_FORCE_DESKTOPUI_SCALING:-1.35}"
+
 exec /usr/bin/steam "$@"

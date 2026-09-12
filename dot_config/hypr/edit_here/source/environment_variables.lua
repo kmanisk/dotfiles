@@ -23,3 +23,5 @@ hl.env("HYPRCURSOR_THEME", "Dusky")
 hl.env("ELECTRON_OZONE_PLATFORM_HINT", "auto")
 hl.env("SDL_VIDEODRIVER", "wayland")
 hl.env("_JAVA_AWT_WM_NONREPARENTING", "1")
+hl.env("STEAM_FORCE_DESKTOPUI_SCALING", "1.35")
+
