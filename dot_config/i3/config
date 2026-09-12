@@ -43,8 +43,8 @@ bindsym $mod+Mod1+3 exec pavucontrol
 bindsym $mod+Shift+s exec --no-startup-id ~/.local/bin/screenshot-region
 bindsym $mod+Control+p exec --no-startup-id ~/.local/bin/toggle-audio-sink
 bindsym $mod+Shift+n exec --no-startup-id ~/.local/bin/toggle-nightlight
-bindsym $mod+Control+bracketleft exec --no-startup-id ~/.local/bin/adjust-nightlight +250
-bindsym $mod+Control+apostrophe exec --no-startup-id ~/.local/bin/adjust-nightlight -250
+bindsym Control+Shift+bracketleft exec --no-startup-id ~/.local/bin/adjust-nightlight +250
+bindsym Control+Shift+apostrophe exec --no-startup-id ~/.local/bin/adjust-nightlight -250
 
 # Screen Lock (Windows + Ctrl + l)
 bindsym $mod+Control+l exec "sleep 0.1 && i3lock --blur 5"
