@@ -14,7 +14,14 @@ export __NV_PRIME_RENDER_OFFLOAD=1
 export __GLX_VENDOR_LIBRARY_NAME=nvidia
 export __VK_LAYER_NV_optimus=NVIDIA_only
 
-# 1. Polybar, Display & Hook cleanup handler on exit
+# Record whether picom was running before we touched anything
+if pgrep -x "picom" >/dev/null 2>&1; then
+    WAS_PICOM_RUNNING=1
+else
+    WAS_PICOM_RUNNING=0
+fi
+
+# 1. Polybar, Display, Picom & Hook cleanup handler on exit
 cleanup() {
     trap - EXIT INT TERM HUP
     echo "==> Restoring native display resolution (1920x1200 @ 165Hz)..."
@@ -23,16 +30,25 @@ cleanup() {
     xrandr --output eDP-1 --mode "1920x1200" --rate 165.00 2>/dev/null || xrandr --output eDP-1 --auto 2>/dev/null || true
     sh "$HOME/.fehbg" 2>/dev/null || true
     polybar-msg cmd show 2>/dev/null || true
+    # Restore picom compositor for desktop smooth scrolling
+    if [ "$WAS_PICOM_RUNNING" -eq 1 ]; then
+        picom -b --config "$HOME/.config/picom/picom.conf" 2>/dev/null || picom -b 2>/dev/null || true
+    fi
 }
 trap cleanup EXIT INT TERM HUP
 
-# 2. Hide status bar
+# 2. Stop picom compositor for zero-latency direct scanout during gameplay
+if [ "$WAS_PICOM_RUNNING" -eq 1 ]; then
+    killall picom 2>/dev/null || pkill -x picom 2>/dev/null || true
+fi
+
+# 3. Hide status bar
 polybar-msg cmd hide 2>/dev/null || true
 
-# 3. Set Intel display controller hardware scaling to Full (Zero-lag stretched 4:3)
+# 4. Set Intel display controller hardware scaling to Full (Zero-lag stretched 4:3)
 xrandr --output eDP-1 --set "scaling mode" "Full" 2>/dev/null || true
 
-# 4. Switch to 4:3 165Hz mode
+# 5. Switch to 4:3 165Hz mode
 TARGET_RES="${CS2_RES:-1440x1080}"
 case "$TARGET_RES" in
     1344|1344x1008)
@@ -52,20 +68,20 @@ case "$TARGET_RES" in
         ;;
 esac
 
-# 5. Start i3 workspace restack hook to eliminate Steam bleed-through on workspace switches
+# 6. Start i3 workspace restack hook to eliminate Steam bleed-through on workspace switches
 if ! pgrep -f "cs2-restack-hook" >/dev/null 2>&1; then
     "$HOME/.local/bin/cs2-restack-hook" &
     HOOK_PID=$!
 fi
 
-# 6. Fallback to local game binary if invoked without Steam %command% arguments
+# 7. Fallback to local game binary if invoked without Steam %command% arguments
 if [ $# -eq 0 ] || [[ "$1" == -* ]]; then
     if [ -f "$HOME/.local/share/Steam/steamapps/common/Counter-Strike Global Offensive/game/cs2.sh" ]; then
         set -- "$HOME/.local/share/Steam/steamapps/common/Counter-Strike Global Offensive/game/cs2.sh" "$@"
     fi
 fi
 
-# 7. Launch natively on dedicated NVIDIA RTX 5050 pinned to P-cores 0-11
+# 8. Launch natively on dedicated NVIDIA RTX 5050 pinned to P-cores 0-11
 # Uncapped FPS (+fps_max 0 +fps_max_ui 0), skip intro (-novid), disable joystick/velocity overhead
 taskset -c 0-11 gamemoderun "$@" -vulkan -novelocity -nojoy -novid +fps_max 0 +fps_max_ui 0
 GAME_EXIT=$?

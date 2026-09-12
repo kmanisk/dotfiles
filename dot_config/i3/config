@@ -343,7 +343,7 @@ exec_always --no-startup-id ~/.local/bin/setup-display
 exec_always --no-startup-id sh -c 'sleep 0.5 && ~/.fehbg'
 
 exec --no-startup-id dunst
-# exec --no-startup-id picom # Disabled for clean baseline (Phase 7)
+exec --no-startup-id picom -b
 exec --no-startup-id ~/.local/bin/auto-nightlight
 exec --no-startup-id blueman-applet
 # Autotiling: automatically switch horizontal/vertical splits based on focused window dimensions
