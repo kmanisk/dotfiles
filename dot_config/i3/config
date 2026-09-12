@@ -348,6 +348,8 @@ exec --no-startup-id ~/.local/bin/auto-nightlight
 exec --no-startup-id blueman-applet
 # Autotiling: automatically switch horizontal/vertical splits based on focused window dimensions
 exec_always --no-startup-id sh -c 'pkill -x autotiling; sleep 0.2; exec autotiling'
+# CS2 Window Restack Hook: forces CS2 to top of stacking order on workspace focus
+exec_always --no-startup-id sh -c 'pkill -f cs2-restack-hook; sleep 0.2; exec ~/.local/bin/cs2-restack-hook'
 # Auto-restore previous workspace session on login / startup
 exec --no-startup-id sh -c 'sleep 1.2 && ~/.local/bin/i3-session-restore --all'
 exec_always --no-startup-id gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'

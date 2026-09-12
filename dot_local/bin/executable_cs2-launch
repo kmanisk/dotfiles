@@ -14,10 +14,11 @@ export __NV_PRIME_RENDER_OFFLOAD=1
 export __GLX_VENDOR_LIBRARY_NAME=nvidia
 export __VK_LAYER_NV_optimus=NVIDIA_only
 
-# 1. Polybar & Display cleanup handler on exit
+# 1. Polybar, Display & Hook cleanup handler on exit
 cleanup() {
     trap - EXIT INT TERM HUP
     echo "==> Restoring native display resolution (1920x1200 @ 165Hz)..."
+    [ -n "$HOOK_PID" ] && kill "$HOOK_PID" 2>/dev/null || true
     xrandr --output eDP-1 --set "scaling mode" "Full aspect" 2>/dev/null || true
     xrandr --output eDP-1 --mode "1920x1200" --rate 165.00 2>/dev/null || xrandr --output eDP-1 --auto 2>/dev/null || true
     sh "$HOME/.fehbg" 2>/dev/null || true
@@ -51,12 +52,22 @@ case "$TARGET_RES" in
         ;;
 esac
 
-# 5. Fallback to local game binary if invoked without Steam %command% arguments
+# 5. Start i3 workspace restack hook to eliminate Steam bleed-through on workspace switches
+if ! pgrep -f "cs2-restack-hook" >/dev/null 2>&1; then
+    "$HOME/.local/bin/cs2-restack-hook" &
+    HOOK_PID=$!
+fi
+
+# 6. Fallback to local game binary if invoked without Steam %command% arguments
 if [ $# -eq 0 ] || [[ "$1" == -* ]]; then
     if [ -f "$HOME/.local/share/Steam/steamapps/common/Counter-Strike Global Offensive/game/cs2.sh" ]; then
         set -- "$HOME/.local/share/Steam/steamapps/common/Counter-Strike Global Offensive/game/cs2.sh" "$@"
     fi
 fi
 
-# 6. Launch natively on dedicated NVIDIA RTX 5050 pinned to P-cores 0-11 (Zero Gamescope Lag)
-exec taskset -c 0-11 gamemoderun "$@" -vulkan -novelocity -nojoy
+# 7. Launch natively on dedicated NVIDIA RTX 5050 pinned to P-cores 0-11
+# Uncapped FPS (+fps_max 0 +fps_max_ui 0), skip intro (-novid), disable joystick/velocity overhead
+taskset -c 0-11 gamemoderun "$@" -vulkan -novelocity -nojoy -novid +fps_max 0 +fps_max_ui 0
+GAME_EXIT=$?
+
+exit ${GAME_EXIT:-0}
