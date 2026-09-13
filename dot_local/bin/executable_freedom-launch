@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# ==============================================================================
+# Freedom Fighters Optimized Launcher (CachyOS + Intel i5 / RTX 5050 Laptop)
+# ==============================================================================
+# - Dedicated NVIDIA RTX 5050 PRIME render offload
+# - Native CachyOS Proton (proton-cachyos-slr) with ntsync support
+# - D8VK / D3D8 translation override
+# - FPS cap (120 FPS) to prevent Glacier engine physics glitches on 165Hz panel
+# ==============================================================================
+set -euo pipefail
+
+export DISPLAY="${DISPLAY:-:0}"
+export __NV_PRIME_RENDER_OFFLOAD=1
+export __GLX_VENDOR_LIBRARY_NAME=nvidia
+export __VK_LAYER_NV_optimus=NVIDIA_only
+export WINEDLLOVERRIDES="d3d8=n,b"
+export DXVK_FRAME_RATE="${DXVK_FRAME_RATE:-120}"
+
+STEAM_DIR="$HOME/.local/share/Steam"
+COMPAT_DATA="$STEAM_DIR/steamapps/compatdata/1347780"
+GAME_DIR="/mnt/Games/SteamLibrary/steamapps/common/Freedom_Fighters"
+PROTON_BIN="/usr/share/steam/compatibilitytools.d/proton-cachyos-slr/proton"
+
+mkdir -p "$COMPAT_DATA"
+
+export STEAM_COMPAT_CLIENT_INSTALL_PATH="$STEAM_DIR"
+export STEAM_COMPAT_DATA_PATH="$COMPAT_DATA"
+
+if [ $# -eq 0 ]; then
+    exec "$PROTON_BIN" run "$GAME_DIR/Freedom.Exe" -SKIP_LAUNCHER
+elif [ "$1" = "--config" ] || [ "$1" = "--launcher" ]; then
+    exec "$PROTON_BIN" run "$GAME_DIR/Launcher.exe"
+elif [[ "$1" == *.exe ]] || [[ "$1" == *.Exe ]]; then
+    exec "$PROTON_BIN" run "$@"
+else
+    exec "$@"
+fi
